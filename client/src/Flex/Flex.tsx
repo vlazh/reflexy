@@ -3,8 +3,7 @@ import * as classNames from 'classnames';
 import { exclude } from './utils';
 import * as css from './Flex.css';
 
-// const PREFIX = 'flexbox--';
-const PREFIX = '';
+const PREFIX = 'reflexy__';
 
 export type Align = 'center' | 'flex-start' | 'flex-end';
 export type JustifyContent = Align | 'space-between' | 'space-around';

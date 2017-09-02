@@ -28,8 +28,8 @@ export default webpackMerge(
 
     output: {
       filename: '[name].js',
-      // library: 'reflexy',
-      // libraryTarget: 'umd',
+      library: 'reflexy',
+      libraryTarget: 'umd',
     },
 
     externals: {
@@ -63,17 +63,17 @@ export default webpackMerge(
                 name: '[1]',
               },
             },
-            // { loader: 'extract-loader' },
-            // {
-            //   loader: 'css-loader',
-            //   options: {
-            //     modules: true,
-            //     camelCase: false,
-            //     sourceMap: false,
-            //     localIdentName: '[name]__[local]',
-            //     importLoaders: 1,
-            //   },
-            // },
+            { loader: 'extract-loader' },
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                camelCase: false,
+                sourceMap: false,
+                localIdentName: '[local]',
+                importLoaders: 1,
+              },
+            },
             {
               loader: 'postcss-loader',
               options: {
