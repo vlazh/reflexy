@@ -1,6 +1,11 @@
-*
-
-!package.json
-!README.md
-!LICENSE
-!dist/*
+.vscode/
+client/
+config/
+.babelrc
+.gitignore
+.npmignore
+stylelint.config.js
+tsconfig.json
+webpack.config.client.babel.js
+webpack.config.common.babel.js
+yarn.lock
