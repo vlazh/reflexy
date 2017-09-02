@@ -17,7 +17,7 @@ export default webpackMerge(
     context: paths.client.sources,
 
     entry: {
-      reflexbox: './index',
+      lib: './index',
     },
 
     resolve: {
@@ -28,7 +28,7 @@ export default webpackMerge(
 
     output: {
       filename: '[name].js',
-      library: 'reflexbox',
+      library: 'reflexy',
       libraryTarget: 'umd',
     },
 

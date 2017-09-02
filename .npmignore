@@ -9,3 +9,4 @@ tsconfig.json
 webpack.config.client.babel.js
 webpack.config.common.babel.js
 yarn.lock
+dist/lib.js
