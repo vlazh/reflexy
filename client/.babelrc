@@ -1,0 +1,4 @@
+{
+  "extends": "../.babelrc",
+  "presets": [["env", { "modules": false }], "react"]
+}
