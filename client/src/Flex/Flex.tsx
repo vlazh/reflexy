@@ -22,12 +22,17 @@ export type Fill = 'v' | 'h' | 'all';
 
 export interface Props
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> {
-  /** Sets `display` to `inline-flex` */
+  /** Sets `display` to `inline-flex`. */
   inline?: boolean;
+  /** Sets `align-content` to corresponding value. */
   alignContent?: AlignContent;
+  /** Sets `align-items` to corresponding value. */
   alignItems?: AlignItems;
+  /** Sets `align-self` to corresponding value. */
   alignSelf?: AlignSelf;
+  /** Sets `justify-content` to corresponding value. */
   justifyContent?: JustifyContent;
+  /** Sets `flex-basis` to corresponding value. */
   flexBasis?: FlexBasis;
   /** Sets `flow-direction` to `row`. */
   row?: boolean;
@@ -49,6 +54,11 @@ export interface Props
   tagName?: string;
 }
 
+/**
+ * Flexbox container.
+ * Default style is just `display: flex;`.
+ * @param props Also apply all props of `React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>`.
+ */
 export default function Flex(props: Props) {
   const restProps = exclude(props);
   restProps.className = props2className(props);
