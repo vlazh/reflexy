@@ -94,6 +94,11 @@ Default style is just `display: flex;`
 * `tagName?: string;` - Html tag name for output container. Takes a precedence over `component`.
 * and all other props of html element.
 
+## TODO
+
+* `flex-grow`
+* `flex-shrink`
+
 ## License
 
 [MIT](https://opensource.org/licenses/mit-license.php)
