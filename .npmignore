@@ -1,4 +1,6 @@
 .vscode/
+.history/
+.awcache/
 client/
 config/
 .babelrc
