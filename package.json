@@ -1,6 +1,6 @@
 {
   "name": "reflexy",
-  "version": "0.2.6",
+  "version": "1.0.0",
   "description": "reflexy",
   "main": "./dist/index.js",
   "typings": "dist/index.d.ts",
