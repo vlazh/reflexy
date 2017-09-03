@@ -1,9 +1,9 @@
 {
   "name": "reflexy",
   "version": "1.0.1",
-  "description": "reflexy",
+  "description": "Flexbox layout react components",
   "main": "./dist/index.js",
-  "typings": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "clean": "rimraf dist/*",
     "build": "npm run clean && tsc --project ./tsconfig.json && webpack --config webpack.config.client.babel.js",
@@ -27,7 +27,7 @@
     "url": "https://github.com/vlazh/reflexy"
   },
   "bugs": {
-    "url": "https://github.com/vlazh/valtors/issues"
+    "url": "https://github.com/vlazh/reflexy/issues"
   },
   "keywords": [
     "react",
