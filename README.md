@@ -20,7 +20,7 @@ With **Reflexy**
   ```js
   <header class="...">{children}</header>
   ```
-* You can tweak you own react component with flexbox layout:
+* You can tweak you own react component with flexbox layout (your component must accept className through props):
   ```js
   <Flex component={MyComponent} column alignSelf="center" myProp="myPropValue" className={styles['my-class']}>{children}</Flex>
   ```

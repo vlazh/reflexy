@@ -59,7 +59,7 @@ export interface Props
   vfill?: boolean;
   /** Stretch by v - vertical or h - horizontal or all - both. */
   fill?: Fill;
-  /** Sets React component as a container. */
+  /** Sets React component as a container. Component must accept className through props. */
   component?: React.ComponentType<any>;
   /** Html tag name for output container. Takes a precedence over `component`. */
   tagName?: string;
@@ -68,7 +68,7 @@ export interface Props
 /**
  * Flexbox container.
  * Default style is just `display: flex;`.
- * @param props Also apply all props of `React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>`.
+ * @param props Also accepts all props of `React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>`.
  */
 export default function Flex(props: Props) {
   const restProps = exclude(props);
