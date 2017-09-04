@@ -10,7 +10,10 @@ export function exclude(props: Props): Props {
   delete result.alignItems;
   delete result.alignSelf;
   delete result.justifyContent;
+  delete result.basis;
   delete result.flexBasis;
+  delete result.grow;
+  delete result.shrink;
   delete result.row;
   delete result.column;
   delete result.reverse;

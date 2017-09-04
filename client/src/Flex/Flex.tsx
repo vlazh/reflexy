@@ -19,6 +19,11 @@ export type FlexBasis =
   | 'min-content'
   | 'max-content';
 export type Fill = 'v' | 'h' | 'all';
+/* prettier-ignore */
+export type NumColumn = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17  | 18 | 19 | 20 | 21 | 22 | 23 | 24;
+/* prettier-ignore */
+export type NumStrColumn = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | '13' | '14' | '15' | '16' | '17 ' | '18' | '19' | '20' | '21' | '22' | '23' | '24';
+export type Column = NumColumn | NumStrColumn;
 
 export interface Props
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> {
@@ -33,7 +38,13 @@ export interface Props
   /** Sets `justify-content` to corresponding value. */
   justifyContent?: JustifyContent;
   /** Sets `flex-basis` to corresponding value. */
+  basis?: FlexBasis;
+  /** @deprecated Use `basis` instead. */
   flexBasis?: FlexBasis;
+  /** Sets `flex-grow` to corresponding value. */
+  grow?: Column;
+  /** Sets `flex-shrink` to corresponding value. */
+  shrink?: Column;
   /** Sets `flow-direction` to `row`. */
   row?: boolean;
   /** Sets `flow-direction` to `column`. Takes a precedence over `row`. */
@@ -62,6 +73,7 @@ export interface Props
 export default function Flex(props: Props) {
   const restProps = exclude(props);
   restProps.className = props2className(props);
+  // restProps.style = Object.assign(props2Style(props), props.style);
 
   if (props.tagName) {
     return React.createElement(props.tagName, restProps);
@@ -74,6 +86,9 @@ function props2className(props: Props): string {
   const column = !!props.column;
   const row = !column && !!props.row;
   const reverse = props.reverse ? '-reverse' : '';
+  const basis = props.basis || props.flexBasis;
+  const grow = props.grow && +props.grow >= 0 && +props.grow <= 24 && props.grow;
+  const shrink = props.shrink && +props.shrink >= 0 && +props.shrink <= 24 && props.shrink;
 
   const className = classNames(
     props.inline ? css[`${PREFIX}display-inline-flex`] : css[`${PREFIX}display-flex`],
@@ -81,7 +96,9 @@ function props2className(props: Props): string {
     props.alignItems && css[`${PREFIX}align-items-${props.alignItems}`],
     props.alignSelf && css[`${PREFIX}align-self-${props.alignSelf}`],
     props.justifyContent && css[`${PREFIX}justify-content-${props.justifyContent}`],
-    props.flexBasis && css[`${PREFIX}flex-basis-${props.flexBasis}`],
+    basis && css[`${PREFIX}flex-basis-${basis}`],
+    grow && css[`${PREFIX}flex-grow-${grow}`],
+    shrink && css[`${PREFIX}flex-shrink-${shrink}`],
     row && css[`${PREFIX}row${reverse}`],
     column && css[`${PREFIX}column${reverse}`],
     props.wrap && css[`${PREFIX}wrap`],
@@ -93,3 +110,19 @@ function props2className(props: Props): string {
 
   return className;
 }
+
+/* 
+function props2Style(props: Props) {
+  const style: any = {};
+
+  const basis = props.basis && !(props.basis in flexBasis) && props.basis;
+  const grow = props.grow && +props.grow > 24 && props.grow;
+  const shrink = props.shrink && +props.shrink > 24 && props.shrink;
+
+  if (basis) style.flexBasis = basis;
+  if (grow) style.flexGrow = grow;
+  if (shrink) style.flexShrink = shrink;
+
+  return style;
+}
+ */
