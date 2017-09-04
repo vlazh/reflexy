@@ -82,7 +82,9 @@ Default style is just `display: flex;`
 * `alignItems?: 'center' | 'flex-start' | 'flex-end' | 'stretch' | 'baseline';` - Sets `align-items` to corresponding value.
 * `alignSelf?: 'center' | 'flex-start' | 'flex-end' | 'stretch' | 'baseline' | 'auto';` - Sets `align-self` to corresponding value.
 * `justifyContent?: 'center' | 'flex-start' | 'flex-end' | 'space-between' | 'space-around';` - Sets `justify-content` to corresponding value.
-* `flexBasis?: 'none' | 'auto' | 'fill' | 'content' |fit-content' | 'min-content' | 'max-content';` - Sets `flex-basis` to corresponding value.
+* `basis?: 'none' | 'auto' | 'fill' | 'content' |fit-content' | 'min-content' | 'max-content';` - Sets `flex-basis` to corresponding value.
+* `grow?: 0..24;` - Sets `flex-grow` to corresponding value.
+* `shrink?: 0..24;` - Sets `flex-shrink` to corresponding value.
 * `row?: boolean;` - Sets `flow-direction` to `row`.
 * `column?: boolean;` - Sets `flow-direction` to `column`. Takes a precedence over `row`.
 * `reverse?: boolean;` - Used with `row` or `col`. Sets `flow-direction` to `column-reverse` or `row-reverse`.
@@ -96,8 +98,8 @@ Default style is just `display: flex;`
 
 ## TODO
 
-* `flex-grow`
-* `flex-shrink`
+- [x] `flex-grow`
+- [x] `flex-shrink`
 
 ## License
 
