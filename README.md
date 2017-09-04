@@ -6,7 +6,9 @@ With **Reflexy**
 * You don't need to worry about the prefixes of different browsers - **Reflexy** use an [autoprefixer](https://github.com/postcss/autoprefixer).
 * You don't need to do a concatenation of a lot of css classes:
   ```js
-  <div className={classNames(styles['flex'], styles['flex-column'], styles['flex-align-center'], ...)}>{children}</div>
+  <div className={classNames(styles['flex'], styles['flex-column'], styles['flex-align-center'], ...)}>
+    {children}
+  </div>
   ```
   vs
   ```js
@@ -22,7 +24,15 @@ With **Reflexy**
   ```
 * You can tweak you own react component with flexbox layout (your component must accept className through props):
   ```js
-  <Flex component={MyComponent} column alignSelf="center" myProp="myPropValue" className={styles['my-class']}>{children}</Flex>
+  <Flex
+    component={MyComponent}
+    column
+    alignSelf="center"
+    myProp="myPropValue"
+    className={styles['my-class']}
+  >
+    {children}
+  </Flex>
   ```
   will be
   ```js
@@ -77,24 +87,24 @@ import { Flex } from 'reflexy';
 
 Default style is just `display: flex;`
 
-* `inline?: boolean;` - Sets `display` to `inline-flex`.
-* `alignContent?: 'center' | 'flex-start' | 'flex-end' | 'space-between' | 'space-around' | 'stretch';` - Sets `align-content` to corresponding value.
-* `alignItems?: 'center' | 'flex-start' | 'flex-end' | 'stretch' | 'baseline';` - Sets `align-items` to corresponding value.
-* `alignSelf?: 'center' | 'flex-start' | 'flex-end' | 'stretch' | 'baseline' | 'auto';` - Sets `align-self` to corresponding value.
-* `justifyContent?: 'center' | 'flex-start' | 'flex-end' | 'space-between' | 'space-around';` - Sets `justify-content` to corresponding value.
-* `basis?: 'none' | 'auto' | 'fill' | 'content' |fit-content' | 'min-content' | 'max-content';` - Sets `flex-basis` to corresponding value.
-* `grow?: 0..24;` - Sets `flex-grow` to corresponding value.
-* `shrink?: 0..24;` - Sets `flex-shrink` to corresponding value.
-* `row?: boolean;` - Sets `flow-direction` to `row`.
-* `column?: boolean;` - Sets `flow-direction` to `column`. Takes a precedence over `row`.
-* `reverse?: boolean;` - Used with `row` or `col`. Sets `flow-direction` to `column-reverse` or `row-reverse`.
-* `wrap?: boolean;` - Sets `flex-wrap` to `wrap`.
-* `hfill?: boolean;` - Stretch by horizontal.
-* `vfill?: boolean;` - Stretch by vertical.
-* `fill?: 'v' | 'h' | 'all';` - Stretch by v - vertical or h - horizontal or all - both.
-* `component?: React.ComponentType<any>;` - Sets React component as a container.
-* `tagName?: string;` - Html tag name for output container. Takes a precedence over `component`.
-* and all other props of html element.
+- `inline?: boolean;` - Sets `display` to `inline-flex`.
+- `alignContent?: 'center' | 'flex-start' | 'flex-end' | 'space-between' | 'space-around' | 'stretch';` - Sets `align-content` to corresponding value.
+- `alignItems?: 'center' | 'flex-start' | 'flex-end' | 'stretch' | 'baseline';` - Sets `align-items` to corresponding value.
+- `alignSelf?: 'center' | 'flex-start' | 'flex-end' | 'stretch' | 'baseline' | 'auto';` - Sets `align-self` to corresponding value.
+- `justifyContent?: 'center' | 'flex-start' | 'flex-end' | 'space-between' | 'space-around';` - Sets `justify-content` to corresponding value.
+- `basis?: 'none' | 'auto' | 'fill' | 'content' |fit-content' | 'min-content' | 'max-content';` - Sets `flex-basis` to corresponding value.
+- `grow?: 0..24;` - Sets `flex-grow` to corresponding value.
+- `shrink?: 0..24;` - Sets `flex-shrink` to corresponding value.
+- `row?: boolean;` - Sets `flow-direction` to `row`.
+- `column?: boolean;` - Sets `flow-direction` to `column`. Takes a precedence over `row`.
+- `reverse?: boolean;` - Used with `row` or `col`. Sets `flow-direction` to `column-reverse` or `row-reverse`.
+- `wrap?: boolean;` - Sets `flex-wrap` to `wrap`.
+- `hfill?: boolean;` - Stretch by horizontal.
+- `vfill?: boolean;` - Stretch by vertical.
+- `fill?: 'v' | 'h' | 'all';` - Stretch by v - vertical or h - horizontal or all - both.
+- `component?: React.ComponentType<any>;` - Sets React component as a container. Component must accept className through props.
+- `tagName?: string;` - Html tag name for output container. Takes a precedence over `component`.
+- and all other props of html element.
 
 ## TODO
 
