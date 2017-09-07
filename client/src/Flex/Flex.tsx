@@ -63,6 +63,8 @@ export interface Props
   component?: React.ComponentType<any>;
   /** Html tag name for output container. Takes a precedence over `component`. */
   tagName?: string;
+  /** For accepts `component` props. */
+  [key: string]: any;
 }
 
 /**
