@@ -108,8 +108,7 @@ Default style is just `display: flex;`
 
 ## TODO
 
-- [x] `flex-grow`
-- [x] `flex-shrink`
+If you need more features or you find a bug, please, open an issue or make PR.
 
 ## License
 
