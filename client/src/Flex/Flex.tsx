@@ -18,7 +18,7 @@ export type FlexBasis =
   | 'fit-content'
   | 'min-content'
   | 'max-content';
-export type Fill = 'v' | 'h' | 'all';
+export type Fill = 'v' | 'h' | 'all' | boolean;
 /* prettier-ignore */
 export type NumColumn = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17  | 18 | 19 | 20 | 21 | 22 | 23 | 24;
 /* prettier-ignore */
@@ -49,7 +49,7 @@ export interface Props
   row?: boolean;
   /** Sets `flow-direction` to `column`. Takes a precedence over `row`. */
   column?: boolean;
-  /** Used with `row` or `col`. Sets `flow-direction` to `column-reverse` or `row-reverse` */
+  /** Used with `row` or `col`. Sets `flow-direction` to `column-reverse` or `row-reverse`. */
   reverse?: boolean;
   /** Sets `flex-wrap` to `wrap`. */
   wrap?: boolean;
@@ -57,7 +57,7 @@ export interface Props
   hfill?: boolean;
   /** Stretch by vertical. */
   vfill?: boolean;
-  /** Stretch by v - vertical or h - horizontal or all - both. */
+  /** Stretch by v - vertical or h - horizontal or all - both. Also accept boolean value: `true` is equals to `all`. */
   fill?: Fill;
   /** Sets React component as a container. Component must accept className through props. */
   component?: React.ComponentType<any>;
@@ -89,6 +89,7 @@ function props2className(props: Props): string {
   const basis = props.basis || props.flexBasis;
   const grow = props.grow && +props.grow >= 0 && +props.grow <= 24 && props.grow;
   const shrink = props.shrink && +props.shrink >= 0 && +props.shrink <= 24 && props.shrink;
+  const fill = props.fill === true ? css[`${PREFIX}fill-all`] : props.fill;
 
   const className = classNames(
     props.inline ? css[`${PREFIX}display-inline-flex`] : css[`${PREFIX}display-flex`],
@@ -104,7 +105,7 @@ function props2className(props: Props): string {
     props.wrap && css[`${PREFIX}wrap`],
     props.hfill && css[`${PREFIX}fill-h`],
     props.vfill && css[`${PREFIX}fill-v`],
-    props.fill && css[`${PREFIX}fill-${props.fill}`],
+    fill && css[`${PREFIX}fill-${fill}`],
     props.className
   );
 

@@ -101,7 +101,7 @@ Default style is just `display: flex;`
 - `wrap?: boolean;` - Sets `flex-wrap` to `wrap`.
 - `hfill?: boolean;` - Stretch by horizontal.
 - `vfill?: boolean;` - Stretch by vertical.
-- `fill?: 'v' | 'h' | 'all';` - Stretch by v - vertical or h - horizontal or all - both.
+- `fill?: 'v' | 'h' | 'all';` - Stretch by v - vertical or h - horizontal or all - both. Also accept boolean value: `true` is equals to `all`.
 - `component?: React.ComponentType<any>;` - Sets React component as a container. Component must accept className through props.
 - `tagName?: string;` - Html tag name for output container. Takes a precedence over `component`.
 - and all other props of html element.
