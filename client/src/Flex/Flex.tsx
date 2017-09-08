@@ -91,7 +91,7 @@ function props2className(props: Props): string {
   const basis = props.basis || props.flexBasis;
   const grow = props.grow && +props.grow >= 0 && +props.grow <= 24 && props.grow;
   const shrink = props.shrink && +props.shrink >= 0 && +props.shrink <= 24 && props.shrink;
-  const fill = props.fill === true ? css[`${PREFIX}fill-all`] : props.fill;
+  const fill = props.fill === true ? 'all' : props.fill;
 
   const className = classNames(
     props.inline ? css[`${PREFIX}display-inline-flex`] : css[`${PREFIX}display-flex`],
