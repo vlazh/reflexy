@@ -5,7 +5,7 @@ import * as css from './Flex.css';
 
 const PREFIX = 'reflexy__';
 
-export type Align = 'center' | 'flex-start' | 'flex-end';
+export type Align = 'initial' | 'inherit' | 'center' | 'flex-start' | 'flex-end';
 export type JustifyContent = Align | 'space-between' | 'space-around';
 export type AlignItems = Align | 'stretch' | 'baseline';
 export type AlignSelf = AlignItems | 'auto';

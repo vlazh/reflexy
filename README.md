@@ -88,10 +88,10 @@ import { Flex } from 'reflexy';
 Default style is just `display: flex;`
 
 - `inline?: boolean;` - Sets `display` to `inline-flex`.
-- `alignContent?: 'center' | 'flex-start' | 'flex-end' | 'space-between' | 'space-around' | 'stretch';` - Sets `align-content` to corresponding value.
-- `alignItems?: 'center' | 'flex-start' | 'flex-end' | 'stretch' | 'baseline';` - Sets `align-items` to corresponding value.
-- `alignSelf?: 'center' | 'flex-start' | 'flex-end' | 'stretch' | 'baseline' | 'auto';` - Sets `align-self` to corresponding value.
-- `justifyContent?: 'center' | 'flex-start' | 'flex-end' | 'space-between' | 'space-around';` - Sets `justify-content` to corresponding value.
+- `alignContent?: 'center' | 'flex-start' | 'flex-end' | 'space-between' | 'space-around' | 'stretch' | 'initial' | 'inherit';` - Sets `align-content` to corresponding value.
+- `alignItems?: 'center' | 'flex-start' | 'flex-end' | 'stretch' | 'baseline' | 'initial' | 'inherit';` - Sets `align-items` to corresponding value.
+- `alignSelf?: 'center' | 'flex-start' | 'flex-end' | 'stretch' | 'baseline' | 'auto' | 'initial' | 'inherit';` - Sets `align-self` to corresponding value.
+- `justifyContent?: 'center' | 'flex-start' | 'flex-end' | 'space-between' | 'space-around' | 'initial' | 'inherit';` - Sets `justify-content` to corresponding value.
 - `basis?: 'none' | 'auto' | 'fill' | 'content' |fit-content' | 'min-content' | 'max-content';` - Sets `flex-basis` to corresponding value.
 - `grow?: 0..24;` - Sets `flex-grow` to corresponding value.
 - `shrink?: 0..24;` - Sets `flex-shrink` to corresponding value.
