@@ -90,8 +90,10 @@ function props2className(props: FlexProps): string {
   const row = !column && !!props.row;
   const reverse = props.reverse ? '-reverse' : '';
   const basis = props.basis || props.flexBasis;
-  const grow = props.grow != null && +props.grow >= 0 && +props.grow <= 24 && +props.grow;
-  const shrink = props.shrink != null && +props.shrink >= 0 && +props.shrink <= 24 && +props.shrink;
+  const grow =
+    props.grow != null && (+props.grow >= 0 && +props.grow <= 24 && +props.grow).toString();
+  const shrink =
+    props.shrink != null && (+props.shrink >= 0 && +props.shrink <= 24 && +props.shrink).toString();
   const fill = props.fill === true ? 'all' : props.fill;
 
   const className = classNames(

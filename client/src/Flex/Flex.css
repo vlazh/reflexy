@@ -139,8 +139,7 @@
   flex-basis: auto;
 }
 
-.reflexy__flex-basis-none,
-.reflexy__flex-basis-0 {
+.reflexy__flex-basis-none {
   flex-basis: 0;
 }
 
