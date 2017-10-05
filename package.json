@@ -38,8 +38,8 @@
   "devDependencies": {
     "@types/classnames": "^2.2.3",
     "@types/css-modules": "^1.0.0",
-    "@types/react": "^16.0.5",
-    "autoprefixer": "^7.1.3",
+    "@types/react": "^16.0.9",
+    "autoprefixer": "^7.1.4",
     "awesome-typescript-loader": "^3.2.3",
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.2",
@@ -54,24 +54,24 @@
     "extract-loader": "^1.0.1",
     "file-loader": "^0.11.2",
     "postcss-loader": "^2.0.6",
-    "prettier": "^1.6.1",
-    "prettier-eslint": "^7.1.0",
-    "rimraf": "^2.6.1",
-    "stylelint": "^8.0.0",
+    "prettier": "^1.7.4",
+    "prettier-eslint": "^8.2.0",
+    "rimraf": "^2.6.2",
+    "stylelint": "^8.1.1",
     "stylelint-config-css-modules": "^1.1.0",
     "stylelint-config-standard": "^17.0.0",
     "stylelint-scss": "^2.1.0",
     "tslint": "^5.7.0",
     "tslint-config-prettier": "^1.4.0",
-    "tslint-consistent-codestyle": "^1.6.0",
+    "tslint-consistent-codestyle": "^1.7.0",
     "tslint-eslint-rules": "^4.1.1",
     "tslint-react": "^3.2.0",
-    "typescript": "^2.5.2",
-    "webpack": "^3.5.5",
+    "typescript": "^2.5.3",
+    "webpack": "^3.6.0",
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "react": "^15.6.1"
+    "react": "^16.0.0"
   }
 }
