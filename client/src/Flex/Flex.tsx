@@ -25,7 +25,7 @@ export type NumColumn = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 1
 export type NumStrColumn = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | '13' | '14' | '15' | '16' | '17 ' | '18' | '19' | '20' | '21' | '22' | '23' | '24';
 export type Column = NumColumn | NumStrColumn | boolean;
 
-export interface FlexProps<P = {}> {
+export interface FlexProps {
   /** Sets `display` to `inline-flex`. */
   inline?: boolean;
   /** Sets `align-content` to corresponding value. */
@@ -58,22 +58,24 @@ export interface FlexProps<P = {}> {
   vfill?: boolean;
   /** Stretch by v - vertical or h - horizontal or all - both. Also accepts boolean value: `true` is equals to `all`. */
   fill?: Fill;
-  /** Sets React component as a container. Component must accept className through props. Takes a precedence over `domElement`. */
-  component?: React.ComponentType<P>;
+  /** Sets React component as a container. Component must accept className through props. */
+  component?: React.ComponentType<any>;
   /** Html tag name for output container. Takes a precedence over `component`. */
   tagName?: string;
   /** */
   className?: string;
+  /** For accepts `component` props. */
+  [key: string]: any;
 }
 
-export type Props<P> = FlexProps<P> & P;
+export interface Props extends React.HTMLAttributes<HTMLElement>, FlexProps {}
 
 /**
  * Flexbox container.
  * Default style is just `display: flex;`.
- * @param props
+ * @param props Also accepts all props of `React.HTMLAttributes<HTMLElement>`.
  */
-export default function Flex<P = React.HTMLAttributes<HTMLDivElement>>(props: Props<P>) {
+export default function Flex(props: Props) {
   const restProps = exclude(props);
   restProps.className = props2className(props);
 
@@ -81,11 +83,7 @@ export default function Flex<P = React.HTMLAttributes<HTMLDivElement>>(props: Pr
     return React.createElement(props.tagName, restProps);
   }
 
-  if (props.component) {
-    return <props.component {...restProps} />;
-  }
-
-  return <div {...restProps} />;
+  return props.component ? <props.component {...restProps} /> : <div {...restProps} />;
 }
 
 function props2className(props: FlexProps): string {
