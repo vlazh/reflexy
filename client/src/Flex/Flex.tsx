@@ -25,7 +25,7 @@ export type NumColumn = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 1
 export type NumStrColumn = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | '13' | '14' | '15' | '16' | '17 ' | '18' | '19' | '20' | '21' | '22' | '23' | '24';
 export type Column = NumColumn | NumStrColumn | boolean;
 
-export interface FlexProps {
+export interface FlexProps<P = {}> {
   /** Sets `display` to `inline-flex`. */
   inline?: boolean;
   /** Sets `align-content` to corresponding value. */
@@ -58,31 +58,34 @@ export interface FlexProps {
   vfill?: boolean;
   /** Stretch by v - vertical or h - horizontal or all - both. Also accepts boolean value: `true` is equals to `all`. */
   fill?: Fill;
-  /** Sets React component as a container. Component must accept className through props. */
-  component?: React.ComponentType<any>;
+  /** Sets React component as a container. Component must accept className through props. Takes a precedence over `domElement`. */
+  component?: React.ComponentType<P>;
   /** Html tag name for output container. Takes a precedence over `component`. */
   tagName?: string;
-  /** For accepts `component` props. */
-  [key: string]: any;
+  /** */
+  className?: string;
 }
 
-export interface Props extends React.HTMLAttributes<HTMLElement>, FlexProps {}
+export type Props<P> = FlexProps<P> & P;
 
 /**
  * Flexbox container.
  * Default style is just `display: flex;`.
- * @param props Also accepts all props of `React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>`.
+ * @param props
  */
-export default function Flex(props: Props) {
+export default function Flex<P = React.HTMLAttributes<HTMLDivElement>>(props: Props<P>) {
   const restProps = exclude(props);
   restProps.className = props2className(props);
-  // restProps.style = Object.assign(props2Style(props), props.style);
 
   if (props.tagName) {
     return React.createElement(props.tagName, restProps);
   }
 
-  return props.component ? <props.component {...restProps} /> : <div {...restProps} />;
+  if (props.component) {
+    return <props.component {...restProps} />;
+  }
+
+  return <div {...restProps} />;
 }
 
 function props2className(props: FlexProps): string {
@@ -116,19 +119,3 @@ function props2className(props: FlexProps): string {
 
   return className;
 }
-
-/* 
-function props2Style(props: Props) {
-  const style: any = {};
-
-  const basis = props.basis && !(props.basis in flexBasis) && props.basis;
-  const grow = props.grow && +props.grow > 24 && props.grow;
-  const shrink = props.shrink && +props.shrink > 24 && props.shrink;
-
-  if (basis) style.flexBasis = basis;
-  if (grow) style.flexGrow = grow;
-  if (shrink) style.flexShrink = shrink;
-
-  return style;
-}
- */

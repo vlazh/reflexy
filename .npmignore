@@ -1,6 +1,7 @@
 .vscode/
 .history/
 .awcache/
+.idea/
 client/
 config/
 .babelrc
@@ -8,7 +9,9 @@ config/
 .npmignore
 stylelint.config.js
 tsconfig.json
+tslint.json
 webpack.config.client.babel.js
 webpack.config.common.babel.js
 yarn.lock
 dist/lib.js
+dist/test/
