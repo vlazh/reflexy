@@ -18,6 +18,7 @@ export function exclude(props: Props): Props {
   delete result.column;
   delete result.reverse;
   delete result.wrap;
+  delete result.order;
   delete result.hfill;
   delete result.vfill;
   delete result.fill;

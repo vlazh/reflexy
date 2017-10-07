@@ -11,9 +11,9 @@ const paths = {
   },
 
   client: {
-    root: path.resolve(baseDir, 'client'),
-    sources: path.resolve(baseDir, 'client/src'),
-    assets: path.resolve(baseDir, 'client/src/assets'),
+    root: path.resolve(baseDir, 'lib'),
+    sources: path.resolve(baseDir, 'lib/src'),
+    assets: path.resolve(baseDir, 'lib/src/assets'),
     output: {
       path: path.resolve(baseDir, 'dist'),
       // If multiple webpack configurations (i.e. client and server)

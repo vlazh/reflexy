@@ -11,7 +11,7 @@ export default webpackMerge(
     outputPublicPath: paths.client.output.publicPath,
   }),
   {
-    name: 'client',
+    name: 'lib',
     target: 'web',
 
     context: paths.client.sources,
@@ -74,13 +74,7 @@ export default webpackMerge(
                 importLoaders: 1,
               },
             },
-            {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: false,
-                plugins: loader => [autoprefixer()],
-              },
-            },
+            { loader: 'postcss-loader' },
           ],
         },
       ],

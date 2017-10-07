@@ -52,6 +52,8 @@ export interface FlexProps {
   reverse?: boolean;
   /** Sets `flex-wrap` to `wrap` or `wrap-reverse`. */
   wrap?: boolean | 'reverse';
+  /** Sets `order` to corresponding value. */
+  order?: number;
   /** Stretch by horizontal. */
   hfill?: boolean;
   /** Stretch by vertical. */
@@ -78,6 +80,7 @@ export interface Props extends React.HTMLAttributes<HTMLElement>, FlexProps {}
 export default function Flex(props: Props) {
   const restProps = exclude(props);
   restProps.className = props2className(props);
+  restProps.style = props2style(props);
 
   if (props.tagName) {
     return React.createElement(props.tagName, restProps);
@@ -117,4 +120,8 @@ function props2className(props: FlexProps): string {
   );
 
   return className;
+}
+
+function props2style(props: FlexProps): React.CSSProperties | void {
+  return props.order ? { order: props.order } : undefined;
 }

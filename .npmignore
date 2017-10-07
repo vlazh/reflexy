@@ -2,7 +2,7 @@
 .history/
 .awcache/
 .idea/
-client/
+lib/
 config/
 .babelrc
 .gitignore

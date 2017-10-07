@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "./client/src",
+    "baseUrl": "./lib/src",
     "outDir": "dist",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -18,5 +18,5 @@
     "experimentalDecorators": true
   },
   "exclude": ["node_modules"],
-  "files": ["./client/src/index.ts"]
+  "files": ["./lib/src/index.ts", "./lib/src/test/flex.tsx"]
 }

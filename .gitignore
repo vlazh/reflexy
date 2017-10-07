@@ -19,4 +19,4 @@ tmp
 *.iml
 .vscode/
 .history/
-client/src/test/
+lib/src/test/
