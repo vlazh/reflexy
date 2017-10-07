@@ -98,7 +98,7 @@ Default style is just `display: flex;`
 - `row?: boolean;` - Sets `flow-direction` to `row`.
 - `column?: boolean;` - Sets `flow-direction` to `column`. Takes a precedence over `row`.
 - `reverse?: boolean;` - Used with `row` or `col`. Sets `flow-direction` to `column-reverse` or `row-reverse`.
-- `wrap?: boolean;` - Sets `flex-wrap` to `wrap`.
+- `wrap?: boolean | 'reverse';` - Sets `flex-wrap` to `wrap` or `wrap-reverse`.
 - `hfill?: boolean;` - Stretch by horizontal.
 - `vfill?: boolean;` - Stretch by vertical.
 - `fill?: 'v' | 'h' | 'all';` - Stretch by v - vertical or h - horizontal or all - both. Also accepts boolean value: `true` is equals to `all`.

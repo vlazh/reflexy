@@ -50,8 +50,8 @@ export interface FlexProps {
   column?: boolean;
   /** Used with `row` or `col`. Sets `flow-direction` to `column-reverse` or `row-reverse`. */
   reverse?: boolean;
-  /** Sets `flex-wrap` to `wrap`. */
-  wrap?: boolean;
+  /** Sets `flex-wrap` to `wrap` or `wrap-reverse`. */
+  wrap?: boolean | 'reverse';
   /** Stretch by horizontal. */
   hfill?: boolean;
   /** Stretch by vertical. */
@@ -95,6 +95,7 @@ function props2className(props: FlexProps): string {
     props.grow != null && (+props.grow >= 0 && +props.grow <= 24 && +props.grow).toString();
   const shrink =
     props.shrink != null && (+props.shrink >= 0 && +props.shrink <= 24 && +props.shrink).toString();
+  const wrap = props.wrap && (`wrap` + typeof props.wrap === 'string' ? `-${props.wrap}` : '');
   const fill = props.fill === true ? 'all' : props.fill;
 
   const className = classNames(
@@ -108,7 +109,7 @@ function props2className(props: FlexProps): string {
     shrink && css[`${PREFIX}flex-shrink-${shrink}`],
     row && css[`${PREFIX}row${reverse}`],
     column && css[`${PREFIX}column${reverse}`],
-    props.wrap && css[`${PREFIX}wrap`],
+    wrap && css[`${PREFIX}${wrap}`],
     props.hfill && css[`${PREFIX}fill-h`],
     props.vfill && css[`${PREFIX}fill-v`],
     fill && css[`${PREFIX}fill-${fill}`],
