@@ -7,9 +7,11 @@ config/
 .babelrc
 .gitignore
 .npmignore
-stylelint.config.js
+.stylelintrc
 tsconfig.json
+tsconfig.webpack.json
 tslint.json
+postcss.config.js
 webpack.config.client.babel.js
 webpack.config.common.babel.js
 yarn.lock
