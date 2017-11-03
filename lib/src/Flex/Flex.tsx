@@ -70,12 +70,15 @@ export interface FlexProps {
   [key: string]: any;
 }
 
-export interface Props extends React.HTMLAttributes<HTMLElement>, FlexProps {}
+export type DivTagProps = React.HTMLAttributes<HTMLDivElement>;
+
+export type UserTagProps = React.HTMLAttributes<Element> & { tagName: string };
+
+export type Props = (DivTagProps | UserTagProps) & FlexProps;
 
 /**
  * Flexbox container.
  * Default style is just `display: flex;`.
- * @param props Also accepts all props of `React.HTMLAttributes<HTMLElement>`.
  */
 export default function Flex(props: Props) {
   const restProps = exclude(props);
