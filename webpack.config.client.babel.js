@@ -46,7 +46,7 @@ export default webpackMerge(
               loader: 'awesome-typescript-loader',
               options: {
                 configFileName: './tsconfig.webpack.json',
-                useBabel: true, // Also sets "target": "es201*" and "jsx": "preserve" in tsconfig.json
+                useBabel: false, // Also sets "target": "es201*" and "jsx": "preserve" in tsconfig.json
                 useCache: false,
               },
             },
