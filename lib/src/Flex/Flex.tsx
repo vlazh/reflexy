@@ -70,14 +70,9 @@ export interface FlexProps {
   [key: string]: any;
 }
 
-export type Ref<T> = (instance: T | null) => void;
+export type DivTagProps = React.HTMLAttributes<HTMLDivElement>;
 
-export type DivTagProps = React.HTMLAttributes<HTMLDivElement> & { ref?: Ref<HTMLDivElement> };
-
-export type UserTagProps = React.HTMLAttributes<Element> & {
-  ref?: Ref<Element>;
-  tagName: string;
-};
+export type UserTagProps = React.HTMLAttributes<Element> & { tagName: string };
 
 export type Props = (DivTagProps | UserTagProps) & FlexProps;
 
