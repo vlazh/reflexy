@@ -1,5 +1,3 @@
 {
-  "extends": ["stylelint-config-standard", "stylelint-config-css-modules"],
-  "plugins": ["stylelint-scss"],
-  "ignoreFiles": ["dist/**/*"]
+  "extends": ["@vzh/configs/css/stylelintrc.json"]
 }

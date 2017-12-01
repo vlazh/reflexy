@@ -1,30 +1,27 @@
 import webpackMerge from 'webpack-merge';
-import commonConfig from '@vzh/configs/webpack/common.config.js';
-import paths from './config/paths';
+import path from 'path';
+import commonConfig from '@vzh/configs/webpack/common.config';
+import paths from '@vzh/configs/paths';
+import loaders from '@vzh/configs/webpack/loaders';
 
 export default webpackMerge(
   commonConfig({
-    outputPath: paths.client.output.path,
+    outputPath: path.resolve(paths.root, 'dist'),
     outputPublicPath: paths.client.output.publicPath,
   }),
   {
-    name: 'lib',
-    target: 'web',
-
     context: paths.client.sources,
 
-    entry: {
-      lib: './index',
-    },
-
-    resolve: {
-      modules: [paths.nodeModules.path, paths.client.sources, paths.context],
-    },
+    entry: { lib: './index' },
 
     devtool: '',
 
     output: {
       filename: '[name].js',
+    },
+
+    resolve: {
+      modules: [paths.nodeModules.path, paths.client.sources, paths.root],
     },
 
     externals: {
@@ -36,16 +33,7 @@ export default webpackMerge(
         {
           test: /\.tsx?$/,
           include: [paths.client.sources],
-          use: [
-            {
-              loader: 'awesome-typescript-loader',
-              options: {
-                configFileName: './tsconfig.webpack.json',
-                useBabel: false, // Also sets "target": "es201*" and "jsx": "preserve" in tsconfig.json
-                useCache: false,
-              },
-            },
-          ],
+          use: loaders.ats({ tsconfig: './tsconfig.webpack.json' }),
         },
         {
           test: /\.css$/,
