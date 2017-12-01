@@ -1,9 +1,3 @@
 {
-  "presets": [["env", { "targets": { "node": "current" } }]],
-  "plugins": [
-    "transform-class-properties",
-    "transform-object-rest-spread",
-    "transform-decorators-legacy"
-  ],
-  "retainLines": true
+  "extends": "@vzh/configs/lib/babel/common.babelrc.json"
 }

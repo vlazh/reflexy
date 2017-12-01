@@ -1,8 +1,5 @@
-import webpack from 'webpack';
 import webpackMerge from 'webpack-merge';
-import autoprefixer from 'autoprefixer';
-import commonConfig from './webpack.config.common.babel';
-import reactEnv from './config/env';
+import commonConfig from '@vzh/configs/lib/webpack/common.config.js';
 import paths from './config/paths';
 
 export default webpackMerge(
@@ -28,8 +25,6 @@ export default webpackMerge(
 
     output: {
       filename: '[name].js',
-      library: 'reflexy',
-      libraryTarget: 'umd',
     },
 
     externals: {

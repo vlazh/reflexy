@@ -1,22 +1,11 @@
 {
+  "extends": "./node_modules/@vzh/configs/lib/ts/common.tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./lib/src",
     "outDir": "dist",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "target": "es2015",
-    "jsx": "react",
     "lib": ["dom", "es2016"],
     "declaration": true,
-    "sourceMap": false,
-    "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "strictNullChecks": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "experimentalDecorators": true
+    "sourceMap": false
   },
-  "exclude": ["node_modules"],
   "files": ["./lib/src/index.ts", "./lib/src/test/flex.tsx"]
 }
