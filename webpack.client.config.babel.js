@@ -1,5 +1,5 @@
 import webpackMerge from 'webpack-merge';
-import commonConfig from '@vzh/configs/lib/webpack/common.config.js';
+import commonConfig from '@vzh/configs/webpack/common.config.js';
 import paths from './config/paths';
 
 export default webpackMerge(

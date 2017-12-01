@@ -10,13 +10,13 @@
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@types/css-modules/-/css-modules-1.0.0.tgz#effcbc81d169df021b19d9be92eb14a118613ef0"
 
-"@types/react@^16.0.22":
-  version "16.0.22"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.0.22.tgz#19ad106e124aceebd2b4d430a278d55413ee8759"
+"@types/react@^16.0.25":
+  version "16.0.25"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.0.25.tgz#bf696b83fe480c5e0eff4335ee39ebc95884a1ed"
 
-"@vzh/configs@^0.6.10":
-  version "0.6.10"
-  resolved "https://registry.yarnpkg.com/@vzh/configs/-/configs-0.6.10.tgz#ce98e359a16204106398abde70274cac26ca6825"
+"@vzh/configs@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@vzh/configs/-/configs-0.7.0.tgz#d60141d12a7e7d6de92ba9bd9b4f858c6c6d1b0a"
 
 abbrev@1:
   version "1.1.0"
