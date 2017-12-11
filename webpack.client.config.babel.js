@@ -21,7 +21,7 @@ export default webpackMerge(
     },
 
     resolve: {
-      modules: [paths.nodeModules.path, paths.client.sources, paths.root],
+      modules: [paths.nodeModules.root, paths.client.sources, paths.root],
     },
 
     externals: {

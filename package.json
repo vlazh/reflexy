@@ -39,9 +39,9 @@
   "devDependencies": {
     "@types/classnames": "^2.2.3",
     "@types/css-modules": "^1.0.0",
-    "@types/react": "^16.0.25",
-    "@vzh/configs": "^0.10.2",
-    "autoprefixer": "^7.1.6",
+    "@types/react": "^16.0.28",
+    "@vzh/configs": "^0.16.0",
+    "autoprefixer": "^7.2.2",
     "awesome-typescript-loader": "^3.4.1",
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -58,18 +58,18 @@
     "stylelint": "^8.3.1",
     "stylelint-config-css-modules": "^1.1.0",
     "stylelint-config-standard": "^18.0.0",
-    "stylelint-scss": "^2.1.0",
+    "stylelint-scss": "^2.2.0",
     "tslint": "^5.8.0",
     "tslint-config-prettier": "^1.6.0",
-    "tslint-consistent-codestyle": "^1.10.2",
+    "tslint-consistent-codestyle": "^1.11.0",
     "tslint-eslint-rules": "^4.1.1",
     "tslint-react": "^3.2.0",
     "typescript": "^2.6.2",
-    "webpack": "^3.9.1",
+    "webpack": "^3.10.0",
     "webpack-merge": "^4.1.1"
   },
   "dependencies": {
-    "classnames": "^2.2.5"
+    "classnames": ">= 2.2.5"
   },
   "peerDependencies": {
     "react": ">= 15.x"

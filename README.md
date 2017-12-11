@@ -105,6 +105,8 @@ Default style is just `display: flex;`
 - `fill?: 'v' | 'h' | 'all';` - Stretch by v - vertical or h - horizontal or all - both. Also accepts boolean value: `true` is equals to `all`.
 - `component?: React.ComponentType<any>;` - Sets React component as a container. Component must accept className through props.
 - `tagName?: string;` - Html tag name for output container. Takes a precedence over `component`.
+- `center?: boolean;` - Sets `justifyContent` and `alignItems` to `center`. Takes a precedence over `justifyContent` and `alignItems`.
+- `className?: string;` - CSS class name.
 - and all other props of html element.
 
 ## TODO
