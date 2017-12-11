@@ -64,7 +64,9 @@ export interface FlexProps {
   component?: React.ComponentType<any>;
   /** Html tag name for output container. Takes a precedence over `component`. */
   tagName?: string;
-  /** */
+  /** Sets `justifyContent` and `alignItems` to `center`. Takes a precedence over `justifyContent` and `alignItems`. */
+  center?: boolean;
+  /** CSS class name. */
   className?: string;
   /** For accepts `component` props. */
   [key: string]: any;
@@ -103,13 +105,15 @@ function props2className(props: FlexProps): string {
     props.shrink != null && (+props.shrink >= 0 && +props.shrink <= 24 && +props.shrink).toString();
   const wrap = props.wrap && (`wrap` + typeof props.wrap === 'string' ? `-${props.wrap}` : '');
   const fill = props.fill === true ? 'all' : props.fill;
+  const alignItems = props.center ? 'center' : props.alignItems;
+  const justifyContent = props.center ? 'center' : props.justifyContent;
 
   const className = classNames(
     props.inline ? css[`${PREFIX}display-inline-flex`] : css[`${PREFIX}display-flex`],
     props.alignContent && css[`${PREFIX}align-content-${props.alignContent}`],
-    props.alignItems && css[`${PREFIX}align-items-${props.alignItems}`],
+    alignItems && css[`${PREFIX}align-items-${alignItems}`],
     props.alignSelf && css[`${PREFIX}align-self-${props.alignSelf}`],
-    props.justifyContent && css[`${PREFIX}justify-content-${props.justifyContent}`],
+    justifyContent && css[`${PREFIX}justify-content-${justifyContent}`],
     basis && css[`${PREFIX}flex-basis-${basis}`],
     grow && css[`${PREFIX}flex-grow-${grow}`],
     shrink && css[`${PREFIX}flex-shrink-${shrink}`],
