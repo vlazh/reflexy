@@ -24,6 +24,7 @@ export function exclude(props: Props): Props {
   delete result.fill;
   delete result.component;
   delete result.tagName;
+  delete result.center;
 
   return result;
 }
