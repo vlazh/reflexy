@@ -103,7 +103,7 @@ function props2className(props: FlexProps): string {
     props.grow != null && (+props.grow >= 0 && +props.grow <= 24 && +props.grow).toString();
   const shrink =
     props.shrink != null && (+props.shrink >= 0 && +props.shrink <= 24 && +props.shrink).toString();
-  const wrap = props.wrap && (`wrap` + typeof props.wrap === 'string' ? `-${props.wrap}` : '');
+  const wrap = props.wrap && `wrap` + (typeof props.wrap === 'string' ? `-${props.wrap}` : '');
   const fill = props.fill === true ? 'all' : props.fill;
   const alignItems = props.center ? 'center' : props.alignItems;
   const justifyContent = props.center ? 'center' : props.justifyContent;
