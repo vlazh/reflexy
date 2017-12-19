@@ -107,6 +107,7 @@ Default style is just `display: flex;`
 - `tagName?: string;` - Html tag name for output container. Takes a precedence over `component`.
 - `center?: boolean;` - Sets `justifyContent` and `alignItems` to `center`. Takes a precedence over `justifyContent` and `alignItems`.
 - `className?: string;` - CSS class name.
+- `style?: React.CSSProperties;` - Inline styles.
 - and all other props of html element.
 
 ## TODO

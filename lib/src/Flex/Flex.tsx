@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
-import { exclude } from './utils';
+// import { exclude } from './utils';
 import * as css from './Flex.css';
 
 const PREFIX = 'reflexy__';
@@ -68,6 +68,8 @@ export interface FlexProps {
   center?: boolean;
   /** CSS class name. */
   className?: string;
+  /** Inline styles. */
+  style?: React.CSSProperties;
   /** For accepts `component` props. */
   [key: string]: any;
 }
@@ -92,6 +94,34 @@ export default function Flex(props: Props) {
   }
 
   return props.component ? <props.component {...restProps} /> : <div {...restProps} />;
+}
+
+function exclude(props: FlexProps): Partial<FlexProps> {
+  const {
+    inline,
+    alignContent,
+    alignItems,
+    alignSelf,
+    justifyContent,
+    basis,
+    flexBasis,
+    grow,
+    shrink,
+    row,
+    column,
+    reverse,
+    wrap,
+    order,
+    hfill,
+    vfill,
+    fill,
+    component,
+    tagName,
+    center,
+    ...rest
+  } = props;
+
+  return rest;
 }
 
 function props2className(props: FlexProps): string {
@@ -129,6 +159,15 @@ function props2className(props: FlexProps): string {
   return className;
 }
 
-function props2style(props: FlexProps): React.CSSProperties | void {
-  return props.order ? { order: props.order } : undefined;
+function props2style(props: Partial<FlexProps>): React.CSSProperties | undefined {
+  const { style, order } = props;
+
+  if (!style && !order) {
+    return undefined;
+  }
+
+  return {
+    ...style,
+    ...order ? { order } : undefined,
+  };
 }
