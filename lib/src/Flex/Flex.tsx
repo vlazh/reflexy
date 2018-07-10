@@ -1,7 +1,6 @@
-import * as React from 'react';
-import * as classNames from 'classnames';
-// import { exclude } from './utils';
-import * as css from './Flex.css';
+import React from 'react';
+import classNames from 'classnames';
+import css from './Flex.css';
 
 const PREFIX = 'reflexy__';
 
