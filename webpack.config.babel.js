@@ -51,7 +51,6 @@ export default webpackMerge(
               loader: 'css-loader',
               options: {
                 modules: true,
-                camelCase: false,
                 sourceMap: false,
                 localIdentName: '[local]',
                 importLoaders: 1,
