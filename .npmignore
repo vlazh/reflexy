@@ -1,8 +1,8 @@
-*
-*/
-!dist/
-dist/lib.js
-dist/test/
+/*
+/*/
+!/dist/
+/dist/lib.js
+/dist/test/
 !package.json
 !README.md
 !LICENSE
