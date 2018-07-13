@@ -44,9 +44,9 @@
   dependencies:
     csstype "^2.2.0"
 
-"@vzh/configs@^1.21.0":
-  version "1.21.0"
-  resolved "https://registry.yarnpkg.com/@vzh/configs/-/configs-1.21.0.tgz#e1293e80a2d08a1d77402fa22613b58148b28449"
+"@vzh/configs@^1.21.1":
+  version "1.21.1"
+  resolved "https://registry.yarnpkg.com/@vzh/configs/-/configs-1.21.1.tgz#641c5fc63038ad3e359c3e1b454e28d127909315"
 
 "@webassemblyjs/ast@1.5.13":
   version "1.5.13"
