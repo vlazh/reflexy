@@ -85,30 +85,32 @@ import { Flex } from 'reflexy';
 
 ### Flex
 
-Default style is just `display: flex;`
+Default style is just `display: flex`.
 
-- `inline?: boolean;` - Sets `display` to `inline-flex`.
-- `alignContent?: 'center' | 'flex-start' | 'flex-end' | 'space-between' | 'space-around' | 'stretch' | 'initial' | 'inherit';` - Sets `align-content` to corresponding value.
-- `alignItems?: 'center' | 'flex-start' | 'flex-end' | 'stretch' | 'baseline' | 'initial' | 'inherit';` - Sets `align-items` to corresponding value.
-- `alignSelf?: 'center' | 'flex-start' | 'flex-end' | 'stretch' | 'baseline' | 'auto' | 'initial' | 'inherit';` - Sets `align-self` to corresponding value.
-- `justifyContent?: 'center' | 'flex-start' | 'flex-end' | 'space-between' | 'space-around' | 'initial' | 'inherit';` - Sets `justify-content` to corresponding value.
-- `basis?: 'none' | 'auto' | 'fill' | 'content' |fit-content' | 'min-content' | 'max-content';` - Sets `flex-basis` to corresponding value.
-- `grow?: 0..24;` - Sets `flex-grow` to corresponding value. Also accepts boolean value: `true` is equals to `1`, `false` is equals to `0`.
-- `shrink?: 0..24;` - Sets `flex-shrink` to corresponding value. Also accepts boolean value: `true` is equals to `1`, `false` is equals to `0`.
-- `row?: boolean;` - Sets `flow-direction` to `row`.
-- `column?: boolean;` - Sets `flow-direction` to `column`. Takes a precedence over `row`.
-- `reverse?: boolean;` - Used with `row` or `col`. Sets `flow-direction` to `column-reverse` or `row-reverse`.
-- `wrap?: boolean | 'reverse';` - Sets `flex-wrap` to `wrap` or `wrap-reverse`.
-- `order?: number;` - Sets `order` to corresponding value.
-- `hfill?: boolean;` - Stretch by horizontal.
-- `vfill?: boolean;` - Stretch by vertical.
-- `fill?: 'v' | 'h' | 'all';` - Stretch by v - vertical or h - horizontal or all - both. Also accepts boolean value: `true` is equals to `all`.
-- `component?: React.ComponentType<any>;` - Sets React component as a container. Component must accept className through props.
-- `tagName?: string;` - Html tag name for output container. Takes a precedence over `component`.
-- `center?: boolean;` - Sets `justifyContent` and `alignItems` to `center`. Takes a precedence over `justifyContent` and `alignItems`.
-- `className?: string;` - CSS class name.
-- `style?: React.CSSProperties;` - Inline styles.
-- and all other props of html element.
+| Prop | Type | Description |
+|:---|:---|:---|
+| `inline?` | `boolean` | Sets `display` to `inline-flex`.|
+| `alignContent?` | `'center' \| 'flex-start' \| 'flex-end' \| 'space-between' \| 'space-around' \| 'stretch' \| 'initial' \| 'inherit'` | Sets `align-content` to corresponding value. |
+| `alignItems?` | `'center' \| 'flex-start' \| 'flex-end' \| 'stretch' \| 'baseline' \| 'initial' \| 'inherit'` | Sets `align-items` to corresponding value. |
+| `alignSelf?` | `'center' \| 'flex-start' \| 'flex-end' \| 'stretch' \| 'baseline' \| 'auto' \| 'initial' \| 'inherit'` | Sets `align-self` to corresponding value. |
+| `justifyContent?` | `'center' \| 'flex-start' \| 'flex-end' \| 'space-between' \| 'space-around' \| 'initial' \| 'inherit'` | Sets `justify-content` to corresponding value. |
+| `basis?` | `'none' \| 'auto' \| 'fill' \| 'content' \|fit-content' \| 'min-content' \| 'max-content'` | Sets `flex-basis` to corresponding value. |
+| `grow?` | `0..24 \| boolean` | Sets `flex-grow` to corresponding value. `true` is equals to `1`, `false` is equals to `0`. |
+| `shrink?` | `0..24 \| boolean` | Sets `flex-shrink` to corresponding value. `true` is equals to `1`, `false` is equals to `0`. |
+| `row?` | `boolean` | Sets `flow-direction` to `row`. |
+| `column?` | `boolean` | Sets `flow-direction` to `column`. Takes a precedence over `row`. |
+| `reverse?` | `boolean` | Used with `row` or `col`. Sets `flow-direction` to `column-reverse` or `row-reverse`. |
+| `wrap?` | `boolean \| 'reverse'` | Sets `flex-wrap` to `wrap` or `wrap-reverse`. |
+| `order?` | `number` | Sets `order` to corresponding value. |
+| `hfill?` | `boolean` | Stretch by horizontal. |
+| `vfill?` | `boolean` | Stretch by vertical. |
+| `fill?` | `'v' \| 'h' \| 'all' \| boolean` | Stretch by v - vertical or h - horizontal or all - both. `true` is equals to `all`. |
+| `component?` | `React.ComponentType<any>` | Sets React component as a container. Component must accept className through props. |
+| `tagName?` | `string` | Html tag name for output container. Takes a precedence over `component`. |
+| `center?` | `boolean` | Sets `justifyContent` and `alignItems` to  `center`. Takes a precedence over `justifyContent` and `alignItems`. |
+| `className?` | `string` | CSS class name. |
+| `style?` | `React.CSSProperties` | Inline styles. |
+| and all other props of html element |
 
 ## TODO
 
