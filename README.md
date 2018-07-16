@@ -83,8 +83,6 @@ import { Flex } from 'reflexy';
 
 ## Props
 
-### Flex
-
 Default style is just `display: flex`.
 
 | Prop | Type | Description |
