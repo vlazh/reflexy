@@ -2,6 +2,8 @@
   "client": {
     "root": "lib",
 
+    "tsconfig": "../tsconfig.webpack.json",
+
     "output": {
       "root": ""
     }

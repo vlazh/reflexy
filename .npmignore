@@ -1,7 +1,7 @@
 /*
 /*/
 !/dist/
-/dist/lib.js
+/dist/js/
 /dist/test/
 !package.json
 !README.md
