@@ -28,7 +28,7 @@ export type ColumnID = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13
 export type ColumnStringID = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | '13' | '14' | '15' | '16' | '17 ' | '18' | '19' | '20' | '21' | '22' | '23' | '24';
 export type Column = ColumnID | ColumnStringID | boolean;
 
-export interface FlexProps {
+export interface FlexProps<P = any> {
   /** Sets `display` to `inline-flex`. */
   inline?: boolean;
   /** Sets `align-content` to corresponding value. */
@@ -64,12 +64,7 @@ export interface FlexProps {
   /** Stretch by v - vertical or h - horizontal or all - both. Also accepts boolean value: `true` is equals to `all`. */
   fill?: Fill;
   /** Sets React component as a container. Component must accept className through props. Or html tag name for output container. */
-  component?: React.ComponentType<any> | string;
-  /**
-   * Html tag name for output container. Takes a precedence over `component`.
-   * @deprecated
-   */
-  tagName?: string;
+  component?: React.ComponentType<P> | string;
   /** CSS class name. */
   className?: string;
   /** Inline styles. */
@@ -79,22 +74,21 @@ export interface FlexProps {
 /** For accepts `component` props. */
 export type AnyProps = Record<PropertyKey, any>;
 
-export type DivTagProps = React.HTMLAttributes<HTMLDivElement>;
-
-export type UserTagProps = React.HTMLAttributes<Element> & { tagName: string };
-
-export type Props = (UserTagProps | DivTagProps) & FlexProps & AnyProps;
+type ExternalProps<P> = undefined extends P
+  ? React.DetailedHTMLProps<React.HTMLAttributes<Element>, Element>
+  : { [K in keyof P]: P[K] };
 
 /**
  * Flexbox container.
  * Default style is just `display: flex;`.
+ * Example: `<Flex<JSX.IntrinsicElements['button']> ... />`.
  */
-export default function Flex(props: Props) {
+export default function Flex<P = undefined>(props: FlexProps<P> & ExternalProps<P>) {
   const restProps = exclude(props);
-  restProps.className = props2className(props);
+  restProps.className = props2className(props as any);
   restProps.style = props2style(props);
 
-  const tag = props.tagName || typeof props.component === 'string' ? props.component : null;
+  const tag = typeof props.component === 'string' ? props.component : undefined;
   if (tag) {
     return React.createElement(tag, restProps);
   }
@@ -103,7 +97,7 @@ export default function Flex(props: Props) {
 }
 
 type RestProps = Omit<
-  FlexProps,
+  FlexProps<any>,
   | 'inline'
   | 'alignContent'
   | 'alignItems'
@@ -121,11 +115,10 @@ type RestProps = Omit<
   | 'vfill'
   | 'fill'
   | 'component'
-  | 'tagName'
   | 'center'
 >;
 
-function exclude(props: FlexProps): RestProps {
+function exclude<P>(props: Partial<FlexProps<P>>): RestProps {
   const {
     inline,
     alignContent,
@@ -144,7 +137,6 @@ function exclude(props: FlexProps): RestProps {
     vfill,
     fill,
     component,
-    tagName,
     center,
     ...rest
   } = props;
@@ -152,7 +144,7 @@ function exclude(props: FlexProps): RestProps {
   return rest;
 }
 
-function props2className(props: FlexProps): string {
+function props2className<P>(props: Partial<FlexProps<P>>): string {
   const column = !!props.column;
   const row = !column && !!props.row;
   const reverse = props.reverse ? '-reverse' : '';
@@ -186,7 +178,7 @@ function props2className(props: FlexProps): string {
   return className;
 }
 
-function props2style(props: Partial<FlexProps>): React.CSSProperties | undefined {
+function props2style<P>(props: Partial<FlexProps<P>>): React.CSSProperties | undefined {
   const { style, order } = props;
 
   if (!style && !order) {
