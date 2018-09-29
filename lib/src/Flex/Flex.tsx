@@ -81,7 +81,7 @@ type ExternalProps<P> = undefined extends P
 /**
  * Flexbox container.
  * Default style is just `display: flex;`.
- * Example: `<Flex<JSX.IntrinsicElements['button']> ... />`.
+ * Example: `<Flex<JSX.IntrinsicElements['button']> component="button" ... />`.
  */
 export default function Flex<P = undefined>(props: FlexProps<P> & ExternalProps<P>) {
   const restProps = exclude(props);

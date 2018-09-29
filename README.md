@@ -91,7 +91,7 @@ import { Flex } from 'reflexy';
 <Flex component={MyComponent}>...</Flex>
 
 // Type checking by Flex and HTMLButtonElement props.
-<Flex<JSX.IntrinsicElements['button'] autoFocus>...</Flex>
+<Flex<JSX.IntrinsicElements['button']> component="button" autoFocus>...</Flex>
 ```
 
 ## Props
