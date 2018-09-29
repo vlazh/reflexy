@@ -74,11 +74,24 @@ npm install --save react reflexy
 ```js
 import { Flex } from 'reflexy';
 
-...
-
 <Flex row justifyContent="center">
   ...
 </Flex>
+```
+
+## Usage in TypeScript
+
+```ts
+import { Flex } from 'reflexy';
+
+// Type checking by Flex and HTMLElement props.
+<Flex component="header">...</Flex>
+
+// Type checking by Flex and MyComponent props.
+<Flex component={MyComponent}>...</Flex>
+
+// Type checking by Flex and HTMLButtonElement props.
+<Flex<JSX.IntrinsicElements['button'] autoFocus>...</Flex>
 ```
 
 ## Props
