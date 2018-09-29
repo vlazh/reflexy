@@ -116,7 +116,7 @@ Default style is just `display: flex`.
 | `hfill?` | `boolean` | Stretch by horizontal. |
 | `vfill?` | `boolean` | Stretch by vertical. |
 | `fill?` | `'v' \| 'h' \| 'all' \| boolean` | Stretch by v - vertical or h - horizontal or all - both. `true` is equals to `all`. |
-| `component?` | `React.ComponentType<any>` \| `string` | Sets React component as a container. Component must accept className through props. |
+| `component?` | `React.ComponentType<any>` \| `string` | Sets React component or html tag name as a container. React component must accept className through props. |
 | `center?` | `boolean` | Sets `justifyContent` and `alignItems` to  `center`. Takes a precedence over `justifyContent` and `alignItems`. |
 | `className?` | `string` | CSS class name. |
 | `style?` | `React.CSSProperties` | Inline styles. |
