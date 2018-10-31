@@ -1,7 +1,6 @@
 import React from 'react';
 import { Globals, ContentDistribution, ContentPosition, SelfPosition } from 'csstype';
 import classNames from 'classnames';
-import { Omit } from '../types';
 import css from './Flex.css';
 
 const PREFIX = 'reflexy__';
@@ -71,54 +70,35 @@ export interface FlexProps<P = any> {
   style?: React.CSSProperties;
 }
 
-/** For accepts `component` props. */
-export type AnyProps = Record<PropertyKey, any>;
-
 type ExternalProps<P> = undefined extends P
   ? React.DetailedHTMLProps<React.HTMLAttributes<Element>, Element>
   : { [K in keyof P]: P[K] };
+
+type Props<P> = FlexProps<P> &
+  ExternalProps<P> & { className?: string; style?: React.CSSProperties };
 
 /**
  * Flexbox container.
  * Default style is just `display: flex;`.
  * Example: `<Flex<JSX.IntrinsicElements['button']> component="button" ... />`.
  */
-export default function Flex<P = undefined>(props: FlexProps<P> & ExternalProps<P>) {
+export default function Flex<P = any>(props: Props<P>) {
   const restProps = exclude(props);
-  restProps.className = props2className(props as any);
+  restProps.className = props2className(props);
   restProps.style = props2style(props);
 
-  const tag = typeof props.component === 'string' ? props.component : undefined;
-  if (tag) {
-    return React.createElement(tag, restProps);
+  if (typeof props.component === 'string') {
+    return React.createElement(props.component, restProps);
   }
 
-  return props.component ? <props.component {...restProps} /> : <div {...restProps} />;
+  if (props.component) {
+    return React.createElement(props.component as React.ComponentType<any>, restProps);
+  }
+
+  return <div {...restProps} />;
 }
 
-type RestProps = Omit<
-  FlexProps<any>,
-  | 'inline'
-  | 'alignContent'
-  | 'alignItems'
-  | 'alignSelf'
-  | 'justifyContent'
-  | 'basis'
-  | 'grow'
-  | 'shrink'
-  | 'row'
-  | 'column'
-  | 'reverse'
-  | 'wrap'
-  | 'order'
-  | 'hfill'
-  | 'vfill'
-  | 'fill'
-  | 'component'
-  | 'center'
->;
-
-function exclude<P>(props: Partial<FlexProps<P>>): RestProps {
+function exclude<P>(props: FlexProps<P>) {
   const {
     inline,
     alignContent,
@@ -144,7 +124,7 @@ function exclude<P>(props: Partial<FlexProps<P>>): RestProps {
   return rest;
 }
 
-function props2className<P>(props: Partial<FlexProps<P>>): string {
+function props2className<P>(props: FlexProps<P>): string {
   const column = !!props.column;
   const row = !column && !!props.row;
   const reverse = props.reverse ? '-reverse' : '';
@@ -178,7 +158,7 @@ function props2className<P>(props: Partial<FlexProps<P>>): string {
   return className;
 }
 
-function props2style<P>(props: Partial<FlexProps<P>>): React.CSSProperties | undefined {
+function props2style<P>(props: FlexProps<P>): React.CSSProperties | undefined {
   const { style, order } = props;
 
   if (!style && !order) {
