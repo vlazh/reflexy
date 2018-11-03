@@ -27,7 +27,14 @@ export type ColumnID = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13
 export type ColumnStringID = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | '13' | '14' | '15' | '16' | '17 ' | '18' | '19' | '20' | '21' | '22' | '23' | '24';
 export type Column = ColumnID | ColumnStringID | boolean;
 
-export interface FlexProps<P = any> {
+export interface Styleable {
+  /** CSS class name. */
+  className?: string;
+  /** Inline styles. */
+  style?: React.CSSProperties;
+}
+
+export interface FlexProps<P = any> extends Styleable {
   /** Sets `display` to `inline-flex`. */
   inline?: boolean;
   /** Sets `align-content` to corresponding value. */
@@ -64,41 +71,43 @@ export interface FlexProps<P = any> {
   fill?: Fill;
   /** Sets React component as a container. Component must accept className through props. Or html tag name for output container. */
   component?: React.ComponentType<P> | string;
-  /** CSS class name. */
-  className?: string;
-  /** Inline styles. */
-  style?: React.CSSProperties;
+}
+
+interface RefForwardable<T> {
+  componentRef?: React.Ref<T>;
 }
 
 type ExternalProps<P> = undefined extends P
   ? React.DetailedHTMLProps<React.HTMLAttributes<Element>, Element>
   : { [K in keyof P]: P[K] };
 
-type Props<P> = FlexProps<P> &
-  ExternalProps<P> & { className?: string; style?: React.CSSProperties };
+type Props<P, R> = FlexProps<P> & ExternalProps<P> & RefForwardable<R>;
 
 /**
  * Flexbox container.
  * Default style is just `display: flex;`.
  * Example: `<Flex<JSX.IntrinsicElements['button']> component="button" ... />`.
  */
-export default function Flex<P = any>(props: Props<P>) {
+export default function Flex<P = any, R = any>(props: Props<P, R>) {
   const restProps = exclude(props);
   restProps.className = props2className(props);
   restProps.style = props2style(props);
+  restProps.ref = props.componentRef;
+
+  if (!props.component) {
+    return React.createElement('div', restProps);
+  }
 
   if (typeof props.component === 'string') {
     return React.createElement(props.component, restProps);
   }
 
-  if (props.component) {
-    return React.createElement(props.component as React.ComponentType<any>, restProps);
-  }
-
-  return <div {...restProps} />;
+  return React.createElement(props.component, restProps as P);
 }
 
-function exclude<P>(props: FlexProps<P>) {
+function exclude<P, R>(
+  props: Readonly<Props<P, R>>
+): ExternalProps<P> & Styleable & React.ClassAttributes<any> {
   const {
     inline,
     alignContent,
@@ -117,9 +126,10 @@ function exclude<P>(props: FlexProps<P>) {
     vfill,
     fill,
     component,
+    componentRef,
     center,
     ...rest
-  } = props;
+  } = props as any;
 
   return rest;
 }
