@@ -16,20 +16,18 @@ With **Reflexy**
   ```
 * You can replace default output `div` tag:
   ```js
-  <Flex component="header">{children}</Flex>
+  <Flex component={<header />}>{children}</Flex>
   ```
   output:
   ```js
   <header class="...">{children}</header>
   ```
-* You can tweak you own react component with flexbox layout (your component must accept className through props):
+* You can tweak you own react component with flexbox layout (your component must accept className and style through props):
   ```js
   <Flex
-    component={MyComponent}
+    component={<MyComponent myProp="myPropValue" className={styles['my-class']} />}
     column
     alignSelf="center"
-    myProp="myPropValue"
-    className={styles['my-class']}
   >
     {children}
   </Flex>
@@ -77,21 +75,14 @@ import { Flex } from 'reflexy';
 <Flex row justifyContent="center">
   ...
 </Flex>
-```
 
-## Usage in TypeScript
+<Flex row justifyContent="center" component={<button />}>
+  ...
+</Flex>
 
-```ts
-import { Flex } from 'reflexy';
-
-// Type checking by Flex and HTMLElement props.
-<Flex component="header">...</Flex>
-
-// Type checking by Flex and MyComponent props.
-<Flex component={MyComponent}>...</Flex>
-
-// Type checking by Flex and HTMLButtonElement props.
-<Flex<JSX.IntrinsicElements['button']> component="button" autoFocus>...</Flex>
+<Flex row justifyContent="center" componentRef={componentRef}>
+  ...
+</Flex>
 ```
 
 ## Props
@@ -116,11 +107,12 @@ Default style is just `display: flex`.
 | `hfill?` | `boolean` | Stretch by horizontal. |
 | `vfill?` | `boolean` | Stretch by vertical. |
 | `fill?` | `'v' \| 'h' \| 'all' \| boolean` | Stretch by v - vertical or h - horizontal or all - both. `true` is equals to `all`. |
-| `component?` | `React.ComponentType<any>` \| `string` | Sets React component or html tag name as a container. React component must accept className through props. |
 | `center?` | `boolean` | Sets `justifyContent` and `alignItems` to  `center`. Takes a precedence over `justifyContent` and `alignItems`. |
 | `className?` | `string` | CSS class name. |
 | `style?` | `React.CSSProperties` | Inline styles. |
-| and all other props of html element |
+| `component?` | `React.ReactElement<P>` | Sets custom react component as a container. React component must accept className and style through props. |
+| `componentRef?` | `React.Ref<HTMLDivElement>` | Ref for container. Used if `component` is `undefined`. |
+| html div props | `React.HTMLAttributes<HTMLDivElement>` | Used if `component` is `undefined`. |
 
 ## TODO
 

@@ -34,7 +34,7 @@ export interface Styleable {
   style?: React.CSSProperties;
 }
 
-export interface FlexProps<P = any> extends Styleable {
+export interface FlexProps extends Styleable {
   /** Sets `display` to `inline-flex`. */
   inline?: boolean;
   /** Sets `align-content` to corresponding value. */
@@ -69,45 +69,63 @@ export interface FlexProps<P = any> extends Styleable {
   vfill?: boolean;
   /** Stretch by v - vertical or h - horizontal or all - both. Also accepts boolean value: `true` is equals to `all`. */
   fill?: Fill;
-  /** Sets React component as a container. Component must accept className through props. Or html tag name for output container. */
-  component?: React.ComponentType<P> | string;
 }
 
-interface RefForwardable<T> {
-  componentRef?: React.Ref<T>;
+export interface Componentable<P> {
+  /**
+   * Sets custom react component as a container.
+   * Component must accept className and style through props.
+   */
+  component?: React.ReactElement<P & Styleable>;
+  /** Used if `component` is undefined */
+  componentRef?: React.Ref<HTMLDivElement>;
 }
 
-type ExternalProps<P> = undefined extends P
-  ? React.DetailedHTMLProps<React.HTMLAttributes<Element>, Element>
-  : { [K in keyof P]: P[K] };
+export interface Childrenable {
+  children?: React.ReactNode;
+}
 
-type Props<P, R> = FlexProps<P> & ExternalProps<P> & RefForwardable<R>;
+export type AdditionalProps<P> = undefined extends P
+  ? Componentable<P> & { componentRef?: undefined } // component: ReactElement
+  : React.HTMLAttributes<HTMLDivElement> & Componentable<P> & { component?: undefined }; // component: undefined
+
+export type AllProps<P> = FlexProps & AdditionalProps<P> & Childrenable;
 
 /**
  * Flexbox container.
  * Default style is just `display: flex;`.
- * Example: `<Flex<JSX.IntrinsicElements['button']> component="button" ... />`.
+ * Example: `<Flex component={<button />} ... />`
  */
-export default function Flex<P = any, R = any>(props: Props<P, R>) {
+export default function Flex<P = {}>(props: AllProps<P>) {
   const restProps = exclude(props);
   restProps.className = props2className(props);
   restProps.style = props2style(props);
-  restProps.ref = props.componentRef;
 
+  // render div
   if (!props.component) {
-    return React.createElement('div', restProps);
+    restProps.ref = (props as AllProps<{}>).componentRef;
+    return React.createElement<React.HTMLAttributes<HTMLDivElement>>('div', restProps);
   }
 
-  if (typeof props.component === 'string') {
-    return React.createElement(props.component, restProps);
-  }
-
-  return React.createElement(props.component, restProps as P);
+  // render custom component with flex props
+  const component: React.ReactElement<P & Styleable & Childrenable> = React.Children.only(
+    props.component
+  );
+  const styles: Styleable = {
+    className: classNames(restProps.className, component.props.className),
+    style: { ...component.props.style, ...restProps.style },
+  };
+  return React.cloneElement<P & Styleable>(
+    component,
+    styles as P & Styleable,
+    component.props.children,
+    props.children
+  );
 }
 
-function exclude<P, R>(
-  props: Readonly<Props<P, R>>
-): ExternalProps<P> & Styleable & React.ClassAttributes<any> {
+function exclude<P>(
+  props: AllProps<P>
+): AdditionalProps<P> & Styleable & React.ClassAttributes<any> {
   const {
     inline,
     alignContent,
@@ -134,7 +152,7 @@ function exclude<P, R>(
   return rest;
 }
 
-function props2className<P>(props: FlexProps<P>): string {
+function props2className(props: FlexProps): string {
   const column = !!props.column;
   const row = !column && !!props.row;
   const reverse = props.reverse ? '-reverse' : '';
@@ -142,7 +160,7 @@ function props2className<P>(props: FlexProps<P>): string {
     props.grow != null && (+props.grow >= 0 && +props.grow <= 24 && +props.grow).toString();
   const shrink =
     props.shrink != null && (+props.shrink >= 0 && +props.shrink <= 24 && +props.shrink).toString();
-  const wrap = props.wrap && `wrap` + (typeof props.wrap === 'string' ? `-${props.wrap}` : '');
+  const wrap = props.wrap && `wrap${typeof props.wrap === 'string' ? `-${props.wrap}` : ''}`;
   const fill = props.fill === true ? 'all' : props.fill;
   const alignItems = props.center ? 'center' : props.alignItems;
   const justifyContent = props.center ? 'center' : props.justifyContent;
@@ -168,15 +186,12 @@ function props2className<P>(props: FlexProps<P>): string {
   return className;
 }
 
-function props2style<P>(props: FlexProps<P>): React.CSSProperties | undefined {
+function props2style(props: FlexProps): React.CSSProperties | undefined {
   const { style, order } = props;
 
   if (!style && !order) {
     return undefined;
   }
 
-  return {
-    ...style,
-    ...(order ? { order } : undefined),
-  };
+  return { ...style, order };
 }

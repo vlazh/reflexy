@@ -637,10 +637,10 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
-"@vzh/configs@^2.15.1":
-  version "2.15.1"
-  resolved "https://registry.yarnpkg.com/@vzh/configs/-/configs-2.15.1.tgz#bbdc7993f895aa1647dc9bdd96c11cfacd6044dc"
-  integrity sha512-xpCyG7D2yN+MLRuofRlWy0igSwKKG/x8K72D8kt5tYgxe0stvk2uTbKXJwqpF1IYoIlM7csV8GnheACAKofd+A==
+"@vzh/configs@^2.16.0":
+  version "2.16.0"
+  resolved "https://registry.yarnpkg.com/@vzh/configs/-/configs-2.16.0.tgz#9d44fe13c24bbdd52fdfdedf227f86c48aa53df2"
+  integrity sha512-gVSGKeWK9TEzuW9eo/Gpa/e0omWukOFOdAALboeOKoxMcM7ERuYv5O1GhY9JxKtdG+Zz55Ay8xSqNe5f78X4Hg==
 
 "@webassemblyjs/ast@1.7.11":
   version "1.7.11"
@@ -2056,7 +2056,7 @@ csso@^3.5.0:
   dependencies:
     css-tree "1.0.0-alpha.29"
 
-csstype@^2.2.0:
+csstype@^2.2.0, csstype@^2.5.7:
   version "2.5.7"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.5.7.tgz#bf9235d5872141eccfb2d16d82993c6b149179ff"
   integrity sha512-Nt5VDyOTIIV4/nRFswoCKps1R5CD1hkiyjBE9/thNaNZILLEviVw9yWQw15+O+CpNjQKB/uvdcxFFOrSflY3Yw==
