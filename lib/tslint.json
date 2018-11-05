@@ -1,3 +1,0 @@
-{
-  "extends": ["@vzh/configs/tslint/react.tslint.json"]
-}
