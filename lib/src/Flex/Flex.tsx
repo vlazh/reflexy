@@ -91,13 +91,17 @@ export type AdditionalProps<P> = undefined extends P
 
 export type AllProps<P> = FlexProps & AdditionalProps<P> & Childrenable;
 
+type Omit<A extends object, K extends string | number | symbol> = Pick<A, Exclude<keyof A, K>>;
+
 /**
  * Flexbox container.
  * Default style is just `display: flex;`.
  * Example: `<Flex component={<button />} ... />`
  */
 export default function Flex<P = {}>(props: AllProps<P>) {
-  const restProps = exclude(props);
+  const restProps: ReturnType<typeof omitFlexProps> &
+    Styleable &
+    React.ClassAttributes<any> = omitFlexProps(props);
   restProps.className = props2className(props);
   restProps.style = props2style(props);
 
@@ -111,27 +115,29 @@ export default function Flex<P = {}>(props: AllProps<P>) {
   const component: React.ReactElement<P & Styleable & Childrenable> = React.Children.only(
     props.component
   );
-  const styles: Styleable = {
+  const componentProps: typeof restProps = {
+    ...restProps, // copy all data-* attrs and other
     className: classNames(restProps.className, component.props.className),
     style: { ...component.props.style, ...restProps.style },
   };
   return React.cloneElement<P & Styleable>(
     component,
-    styles as P & Styleable,
+    componentProps as P & Styleable,
     component.props.children,
     props.children
   );
 }
 
-function exclude<P>(
+export function omitFlexProps<P>(
   props: AllProps<P>
-): AdditionalProps<P> & Styleable & React.ClassAttributes<any> {
+): Omit<AllProps<P>, keyof FlexProps | keyof Componentable<P>> {
   const {
     inline,
     alignContent,
     alignItems,
     alignSelf,
     justifyContent,
+    center,
     basis,
     grow,
     shrink,
@@ -143,16 +149,17 @@ function exclude<P>(
     hfill,
     vfill,
     fill,
+    className,
+    style,
     component,
     componentRef,
-    center,
     ...rest
   } = props as any;
 
   return rest;
 }
 
-function props2className(props: FlexProps): string {
+export function props2className(props: FlexProps): string {
   const column = !!props.column;
   const row = !column && !!props.row;
   const reverse = props.reverse ? '-reverse' : '';
@@ -186,7 +193,7 @@ function props2className(props: FlexProps): string {
   return className;
 }
 
-function props2style(props: FlexProps): React.CSSProperties | undefined {
+export function props2style(props: FlexProps): React.CSSProperties | undefined {
   const { style, order } = props;
 
   if (!style && !order) {
