@@ -1,7 +1,7 @@
 import React from 'react';
 import { Globals, ContentDistribution, ContentPosition, SelfPosition } from 'csstype';
 import classNames from 'classnames';
-import css from './Flex.css';
+import './Flex.css';
 
 const PREFIX = 'reflexy__';
 
@@ -173,20 +173,20 @@ export function props2className(props: FlexProps): string {
   const justifyContent = props.center ? 'center' : props.justifyContent;
 
   const className = classNames(
-    props.inline ? css[`${PREFIX}display-inline-flex`] : css[`${PREFIX}display-flex`],
-    props.alignContent && css[`${PREFIX}align-content-${props.alignContent}`],
-    alignItems && css[`${PREFIX}align-items-${alignItems}`],
-    props.alignSelf && css[`${PREFIX}align-self-${props.alignSelf}`],
-    justifyContent && css[`${PREFIX}justify-content-${justifyContent}`],
-    props.basis && css[`${PREFIX}flex-basis-${props.basis}`],
-    grow && css[`${PREFIX}flex-grow-${grow}`],
-    shrink && css[`${PREFIX}flex-shrink-${shrink}`],
-    row && css[`${PREFIX}row${reverse}`],
-    column && css[`${PREFIX}column${reverse}`],
-    wrap && css[`${PREFIX}${wrap}`],
-    props.hfill && css[`${PREFIX}fill-h`],
-    props.vfill && css[`${PREFIX}fill-v`],
-    fill && css[`${PREFIX}fill-${fill}`],
+    props.inline ? `${PREFIX}display-inline-flex` : `${PREFIX}display-flex`,
+    props.alignContent && `${PREFIX}align-content-${props.alignContent}`,
+    alignItems && `${PREFIX}align-items-${alignItems}`,
+    props.alignSelf && `${PREFIX}align-self-${props.alignSelf}`,
+    justifyContent && `${PREFIX}justify-content-${justifyContent}`,
+    props.basis && `${PREFIX}flex-basis-${props.basis}`,
+    grow && `${PREFIX}flex-grow-${grow}`,
+    shrink && `${PREFIX}flex-shrink-${shrink}`,
+    row && `${PREFIX}row${reverse}`,
+    column && `${PREFIX}column${reverse}`,
+    wrap && `${PREFIX}${wrap}`,
+    props.hfill && `${PREFIX}fill-h`,
+    props.vfill && `${PREFIX}fill-v`,
+    fill && `${PREFIX}fill-${fill}`,
     props.className
   );
 
