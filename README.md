@@ -53,16 +53,10 @@ npm install --save react reflexy
   test: /\.css$/,
   include: path.join(__dirname, 'node_modules'),
   // or
-  include: /reflexy/
+  include: /reflexy/,
   use: [
     { loader: 'style-loader' },
-    {
-      loader: 'css-loader',
-      options: {
-        modules: true,
-        localIdentName: '[local]',
-      },
-    },
+    { loader: 'css-loader' },
   ],
 },
 ```
