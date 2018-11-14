@@ -120,9 +120,9 @@ export default function Flex<P = {}>(props: AllProps<P>) {
     className: classNames(restProps.className, component.props.className),
     style: { ...component.props.style, ...restProps.style },
   };
-  return React.cloneElement<P & Styleable>(
+  return React.cloneElement<any>(
     component,
-    componentProps as P & Styleable,
+    componentProps,
     component.props.children,
     props.children
   );
