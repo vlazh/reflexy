@@ -77,17 +77,17 @@ function Space<P = {}>(props: SpaceProps & AllProps<P>) {
     typeof pSize === 'number' ? `${pSize}${spaceMeasure}` : `${spaceSizes[pSize]}${spaceMeasure}`;
 
   const styles: React.CSSProperties = {
-    margin: m != null ? toCssValue(m, marginSize) : undefined,
-    marginTop: mt != null ? toCssValue(mt, marginSize) : undefined,
-    marginRight: mr != null ? toCssValue(mr, marginSize) : undefined,
-    marginBottom: mb != null ? toCssValue(mb, marginSize) : undefined,
-    marginLeft: ml != null ? toCssValue(ml, marginSize) : undefined,
+    ...(m != null ? { margin: toCssValue(m, marginSize) } : undefined),
+    ...(mt != null ? { marginTop: toCssValue(mt, marginSize) } : undefined),
+    ...(mr != null ? { marginRight: toCssValue(mr, marginSize) } : undefined),
+    ...(mb != null ? { marginBottom: toCssValue(mb, marginSize) } : undefined),
+    ...(ml != null ? { marginLeft: toCssValue(ml, marginSize) } : undefined),
 
-    padding: p != null ? toCssValue(p, paddingSize) : undefined,
-    paddingTop: pt != null ? toCssValue(pt, paddingSize) : undefined,
-    paddingRight: pr != null ? toCssValue(pr, paddingSize) : undefined,
-    paddingBottom: pb != null ? toCssValue(pb, paddingSize) : undefined,
-    paddingLeft: pl != null ? toCssValue(pl, paddingSize) : undefined,
+    ...(p != null ? { padding: toCssValue(p, paddingSize) } : undefined),
+    ...(pt != null ? { paddingTop: toCssValue(pt, paddingSize) } : undefined),
+    ...(pr != null ? { paddingRight: toCssValue(pr, paddingSize) } : undefined),
+    ...(pb != null ? { paddingBottom: toCssValue(pb, paddingSize) } : undefined),
+    ...(pl != null ? { paddingLeft: toCssValue(pl, paddingSize) } : undefined),
 
     ...style,
   };
