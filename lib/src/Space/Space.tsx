@@ -6,27 +6,46 @@ export type DefaultSpaceSize = 's' | 'm' | 'l';
 const spaceMeasure = 'rem';
 
 const spaceSizes: Record<DefaultSpaceSize, number> = {
+  /* small size */
   s: 0.5,
+  /** medium size */
   m: 1,
+  /** large size */
   l: 2,
 };
 
 export interface SpaceProps {
+  /** Size of margin */
   mSize?: DefaultSpaceSize | number;
+  /** margin */
   m?: boolean | number;
+  /** margin-top */
   mt?: boolean | number;
+  /** margin-right */
   mr?: boolean | number;
+  /** margin-bottom */
   mb?: boolean | number;
+  /** margin-left */
   ml?: boolean | number;
+  /** margin by x axis: margin-left & margin-right */
   mx?: boolean | number;
+  /** margin by y axis: margin-top & margin-bottom */
   my?: boolean | number;
+  /** Size of padding */
   pSize?: DefaultSpaceSize | number;
+  /** padding */
   p?: boolean;
+  /** padding-top */
   pt?: boolean;
+  /** padding-right */
   pr?: boolean;
+  /** padding-bottom */
   pb?: boolean;
+  /** padding-left */
   pl?: boolean;
+  /** padding by x axis: padding-left & padding-right */
   px?: boolean;
+  /** padding by y axis: padding-top & padding-bottom */
   py?: boolean;
 }
 
@@ -76,7 +95,9 @@ function Space<P = {}>(props: SpaceProps & AllProps<P>) {
   return <Flex style={styles} {...rest} />;
 }
 
+/** Predefined default space sizes */
 Space.spaceSizes = spaceSizes;
+/** Default measure of space */
 Space.spaceMeasure = spaceMeasure;
 
 Space.S = <P extends any>({
