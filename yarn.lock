@@ -205,10 +205,10 @@
     "@types/uglify-js" "*"
     source-map "^0.6.0"
 
-"@vzh/configs@^3.9.0":
-  version "3.9.0"
-  resolved "https://registry.yarnpkg.com/@vzh/configs/-/configs-3.9.0.tgz#0991a2a29091d52b13c94f9cf851dc46a0f30c72"
-  integrity sha512-EXNxnwcJbg+jHgMpmhpHmh7OT54qX+SopPg8858AHWkrS8nA0DkyyyXnCMwTLGT5CNhRT2u3zjxKqqjvJ7pieg==
+"@vzh/configs@^3.9.1":
+  version "3.9.1"
+  resolved "https://registry.yarnpkg.com/@vzh/configs/-/configs-3.9.1.tgz#d33e823c9267aa2f137fd75ee681561d229f434d"
+  integrity sha512-v3cKaKHmlVVwrLtZmN/MRhq+4UWMa50yc8/ttU5vBCIl16HC8OmH0dFqxKfjMm675ln1oU3kxd2ljnQINMVQgQ==
 
 "@webassemblyjs/ast@1.7.11":
   version "1.7.11"
