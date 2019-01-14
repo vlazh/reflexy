@@ -1,11 +1,13 @@
 import webpackMerge from 'webpack-merge';
-import clientConfigAts from '@vzh/configs/webpack/client.config.ats';
-import { defaultRules } from '@vzh/configs/webpack/client.config';
-import loaders from '@vzh/configs/webpack/loaders';
+import clientConfig, { clientDefaultRules } from '@vzh/configs/webpack/client.config';
+import loaders, { TsLoaderType } from '@vzh/configs/webpack/loaders';
+
+console.log('Start...');
 
 export default webpackMerge(
-  clientConfigAts({
-    rhl: false,
+  clientConfig({
+    useTypeScript: true,
+    tsLoaderType: TsLoaderType.ATL,
 
     entry: {
       lib: ['./index'],
@@ -13,7 +15,7 @@ export default webpackMerge(
 
     rules: {
       cssRule: {
-        ...defaultRules.cssRule,
+        ...clientDefaultRules.cssRule,
         use: [
           {
             loader: 'file-loader',
