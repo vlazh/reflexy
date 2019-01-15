@@ -210,6 +210,11 @@
   resolved "https://registry.yarnpkg.com/@vzh/configs/-/configs-3.9.1.tgz#d33e823c9267aa2f137fd75ee681561d229f434d"
   integrity sha512-v3cKaKHmlVVwrLtZmN/MRhq+4UWMa50yc8/ttU5vBCIl16HC8OmH0dFqxKfjMm675ln1oU3kxd2ljnQINMVQgQ==
 
+"@vzh/ts-types@>= 0.4":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@vzh/ts-types/-/ts-types-0.4.0.tgz#65fd8d664beca22157e5ac4c94bd558504002cc2"
+  integrity sha512-xha2W7qY0DN/HkuIvbjCtJJeuxecvXWZ62jFTx505O+RlM/dfTYMaySWAYu1kLnc2l+aM34QRGtiRjOf4+B2Wg==
+
 "@webassemblyjs/ast@1.7.11":
   version "1.7.11"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.7.11.tgz#b988582cafbb2b095e8b556526f30c90d057cace"
@@ -1120,7 +1125,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.6:
+"classnames@>= 2.2":
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
