@@ -1,30 +1,33 @@
 import React from 'react';
-import { Globals, ContentDistribution, ContentPosition, SelfPosition } from 'csstype';
+import { ContentDistribution } from 'csstype';
 import classNames from 'classnames';
+import { Omit } from '@vzh/ts-types';
 import './Flex.css';
 
-const PREFIX = 'reflexy__';
+const CSS_PREFIX = 'reflexy__';
 
-export type Align = Globals | ContentDistribution | ContentPosition;
-export type JustifyContent = Align | 'left' | 'normal' | 'right';
-export type AlignItems = Globals | SelfPosition | 'baseline' | 'normal' | 'stretch';
+type Globals = 'inherit' | 'initial' | 'unset';
+type FlexPosition = 'center' | 'flex-end' | 'flex-start';
+
+export type JustifyContent = Globals | ContentDistribution | FlexPosition;
+
+export type AlignItems = Globals | FlexPosition | 'baseline' | 'stretch';
+
 export type AlignSelf = AlignItems | 'auto';
-export type AlignContent = Align | 'baseline' | 'normal';
-export type FlexBasis =
-  | Globals
-  | '-webkit-auto'
-  | 'auto'
-  | 'available'
-  | 'content'
-  | 'fit-content'
-  | 'max-content'
-  | 'min-content'
-  | number;
+
+export type AlignContent = Globals | ContentDistribution | FlexPosition;
+
+export type FlexBasis = Globals | 'auto' | 'content';
+
+export type FlexWrap = Globals | 'nowrap' | 'wrap' | 'wrap-reverse';
+
 export type Fill = 'v' | 'h' | 'all' | boolean;
+
 // prettier-ignore
-export type ColumnID = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17  | 18 | 19 | 20 | 21 | 22 | 23 | 24;
+type ColumnID = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17  | 18 | 19 | 20 | 21 | 22 | 23 | 24;
 // prettier-ignore
-export type ColumnStringID = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | '13' | '14' | '15' | '16' | '17 ' | '18' | '19' | '20' | '21' | '22' | '23' | '24';
+type ColumnStringID = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | '13' | '14' | '15' | '16' | '17 ' | '18' | '19' | '20' | '21' | '22' | '23' | '24';
+
 export type Column = ColumnID | ColumnStringID | boolean;
 
 export interface Styleable {
@@ -37,6 +40,14 @@ export interface Styleable {
 export interface FlexProps extends Styleable {
   /** Sets `display` to `inline-flex`. */
   inline?: boolean;
+  /** Sets `flow-direction` to `row`. */
+  row?: boolean;
+  /** Sets `flow-direction` to `column`. Takes a precedence over `row`. */
+  column?: boolean;
+  /** Used with `row` or `col`. Sets `flow-direction` to `column-reverse` or `row-reverse`. */
+  reverse?: boolean;
+  /** Sets `flex-wrap` to corresponding value. Also accepts boolean value: `true` equals to `wrap`, `false` equals to `nowrap`. */
+  wrap?: FlexWrap | boolean;
   /** Sets `align-content` to corresponding value. */
   alignContent?: AlignContent;
   /** Sets `align-items` to corresponding value. */
@@ -49,18 +60,10 @@ export interface FlexProps extends Styleable {
   center?: boolean;
   /** Sets `flex-basis` to corresponding value. */
   basis?: FlexBasis;
-  /** Sets `flex-grow` to corresponding value. Also accepts boolean value: `true` is equals to `1`, `false` is equals to `0`. */
+  /** Sets `flex-grow` to corresponding value. Also accepts boolean value: `true` equals to `1`, `false` equals to `0`. */
   grow?: Column;
-  /** Sets `flex-shrink` to corresponding value. Also accepts boolean value: `true` is equals to `1`, `false` is equals to `0`. */
+  /** Sets `flex-shrink` to corresponding value. Also accepts boolean value: `true` equals to `1`, `false` equals to `0`. */
   shrink?: Column;
-  /** Sets `flow-direction` to `row`. */
-  row?: boolean;
-  /** Sets `flow-direction` to `column`. Takes a precedence over `row`. */
-  column?: boolean;
-  /** Used with `row` or `col`. Sets `flow-direction` to `column-reverse` or `row-reverse`. */
-  reverse?: boolean;
-  /** Sets `flex-wrap` to `wrap` or `wrap-reverse`. */
-  wrap?: boolean | 'reverse';
   /** Sets `order` to corresponding value. */
   order?: number;
   /** Stretch by horizontal. */
@@ -91,8 +94,6 @@ export type AdditionalProps<P> = undefined extends P
 
 export type AllProps<P> = FlexProps & AdditionalProps<P> & Childrenable;
 
-type Omit<A extends object, K extends string | number | symbol> = Pick<A, Exclude<keyof A, K>>;
-
 /**
  * Flexbox container.
  * Default style is just `display: flex;`.
@@ -107,7 +108,7 @@ export default function Flex<P = {}>(props: AllProps<P>) {
 
   // render div
   if (!props.component) {
-    restProps.ref = (props as AllProps<{}>).componentRef;
+    restProps.ref = props.componentRef;
     return React.createElement<React.HTMLAttributes<HTMLDivElement>>('div', restProps);
   }
 
@@ -154,9 +155,9 @@ export function omitFlexProps<P>(
     component,
     componentRef,
     ...rest
-  } = props as any;
+  } = props;
 
-  return rest;
+  return rest as Omit<AllProps<P>, keyof FlexProps | keyof Componentable<P>>;
 }
 
 export function props2className(props: FlexProps): string {
@@ -167,26 +168,27 @@ export function props2className(props: FlexProps): string {
     props.grow != null && (+props.grow >= 0 && +props.grow <= 24 && +props.grow).toString();
   const shrink =
     props.shrink != null && (+props.shrink >= 0 && +props.shrink <= 24 && +props.shrink).toString();
-  const wrap = props.wrap && `wrap${typeof props.wrap === 'string' ? `-${props.wrap}` : ''}`;
-  const fill = props.fill === true ? 'all' : props.fill;
+  // const wrap = props.wrap != null && (props.wrap === false || props.wrap === '' && 'nowrap' ) && `wrap${typeof props.wrap === 'string' ? `-${props.wrap}` : ''}`;
+  const wrap = (props.wrap === false && 'nowrap') || (props.wrap === true && 'wrap') || props.wrap;
   const alignItems = props.center ? 'center' : props.alignItems;
   const justifyContent = props.center ? 'center' : props.justifyContent;
+  const fill = props.fill === true ? 'all' : props.fill;
 
   const className = classNames(
-    props.inline ? `${PREFIX}display-inline-flex` : `${PREFIX}display-flex`,
-    props.alignContent && `${PREFIX}align-content-${props.alignContent}`,
-    alignItems && `${PREFIX}align-items-${alignItems}`,
-    props.alignSelf && `${PREFIX}align-self-${props.alignSelf}`,
-    justifyContent && `${PREFIX}justify-content-${justifyContent}`,
-    props.basis && `${PREFIX}flex-basis-${props.basis}`,
-    grow && `${PREFIX}flex-grow-${grow}`,
-    shrink && `${PREFIX}flex-shrink-${shrink}`,
-    row && `${PREFIX}row${reverse}`,
-    column && `${PREFIX}column${reverse}`,
-    wrap && `${PREFIX}${wrap}`,
-    props.hfill && `${PREFIX}fill-h`,
-    props.vfill && `${PREFIX}fill-v`,
-    fill && `${PREFIX}fill-${fill}`,
+    `${CSS_PREFIX}display--${props.inline ? 'inline-flex' : 'flex'}`,
+    row && `${CSS_PREFIX}row${reverse}`,
+    column && `${CSS_PREFIX}column${reverse}`,
+    wrap && `${CSS_PREFIX}wrap--${wrap}`,
+    alignItems && `${CSS_PREFIX}align-items--${alignItems}`,
+    props.alignContent && `${CSS_PREFIX}align-content--${props.alignContent}`,
+    props.alignSelf && `${CSS_PREFIX}align-self--${props.alignSelf}`,
+    justifyContent && `${CSS_PREFIX}justify-content--${justifyContent}`,
+    props.basis && `${CSS_PREFIX}flex-basis--${props.basis}`,
+    grow && `${CSS_PREFIX}flex-grow--${grow}`,
+    shrink && `${CSS_PREFIX}flex-shrink--${shrink}`,
+    props.hfill && `${CSS_PREFIX}fill-h`,
+    props.vfill && `${CSS_PREFIX}fill-v`,
+    fill && `${CSS_PREFIX}fill-${fill}`,
     props.className
   );
 
