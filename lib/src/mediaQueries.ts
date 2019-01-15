@@ -56,7 +56,6 @@ export function initMediaQueries(onChange?: typeof changeBreakpoint) {
     console.warn('Media queries already initialized.');
     return;
   }
-  // console.time('mq');
   Object.getOwnPropertyNames(mediaQueries).forEach(groupKey => {
     Object.getOwnPropertyNames(mediaQueries[groupKey]).forEach(key => {
       const mq = window.matchMedia(mediaQueries[groupKey][key]);
@@ -68,11 +67,9 @@ export function initMediaQueries(onChange?: typeof changeBreakpoint) {
       changeBreakpoint(groupKey as BreakpointGroup, key as Breakpoint, mq.matches);
     });
   });
-  // console.timeEnd('mq');
 }
 
 function changeBreakpoint(group: BreakpointGroup, bp: Breakpoint, matches: boolean) {
-  console.log('changeBreakpoint', bp, matches);
   if (matches) {
     currentBreakpoint = { group, value: bp };
   }
