@@ -2,8 +2,6 @@ import webpackMerge from 'webpack-merge';
 import clientConfig, { clientDefaultRules } from '@vzh/configs/webpack/client.config';
 import loaders, { TsLoaderType } from '@vzh/configs/webpack/loaders';
 
-console.log('Build started...');
-
 export default webpackMerge(
   clientConfig({
     useTypeScript: true,
@@ -14,6 +12,7 @@ export default webpackMerge(
     },
 
     rules: {
+      cssNodeModulesRule: {},
       cssRule: {
         ...clientDefaultRules.cssRule,
         use: [
