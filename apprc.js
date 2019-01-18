@@ -2,7 +2,7 @@ module.exports = {
   client: {
     root: 'lib',
 
-    webpackConfig: 'webpack.config.ts',
+    webpackConfig: 'webpack.config.babel.js',
     tsconfig: '../tsconfig.webpack.json',
 
     html: { template: '' },
