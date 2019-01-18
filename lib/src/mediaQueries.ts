@@ -40,9 +40,9 @@ export const mediaQueries = Object.freeze({
   },
   [BreakpointGroup.Desktop]: {
     [Breakpoint.DesktopS]:
-      'only screen and (min-device-width: 1024px) and (max-device-width: 1024px)',
+      'only screen and (min-device-width: 1024px) and (max-device-width: 1366px)',
     [Breakpoint.DesktopM]:
-      'only screen and (min-device-width: 1025px) and (max-device-width: 1920px)',
+      'only screen and (min-device-width: 1367px) and (max-device-width: 1920px)',
     [Breakpoint.DesktopL]: 'only screen and (min-device-width: 1921px)',
   },
 });
