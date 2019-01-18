@@ -40,11 +40,10 @@ export const mediaQueries = Object.freeze({
   },
   [BreakpointGroup.Desktop]: {
     [Breakpoint.DesktopS]:
-      'only screen and (min-device-width: 1024px) and (max-device-width: 1024px) and (orientation: portrait), only screen and (min-device-height: 1024px) and (max-device-height: 1024px) and (orientation: landscape)',
+      'only screen and (min-device-width: 1024px) and (max-device-width: 1024px)',
     [Breakpoint.DesktopM]:
-      'only screen and (min-device-width: 1025px) and (max-device-width: 1919px) and (orientation: portrait), only screen and (min-device-height: 1025px) and (max-device-height: 1919px) and (orientation: landscape)',
-    [Breakpoint.DesktopL]:
-      'only screen and (min-device-width: 1920px) and (orientation: portrait), only screen and (min-device-height: 1920px) and (orientation: landscape)',
+      'only screen and (min-device-width: 1025px) and (max-device-width: 1920px)',
+    [Breakpoint.DesktopL]: 'only screen and (min-device-width: 1921px)',
   },
 });
 
@@ -77,4 +76,22 @@ function changeBreakpoint(group: BreakpointGroup, bp: Breakpoint, matches: boole
 
 export function getCurrentBreakpoint() {
   return currentBreakpoint;
+}
+
+export function exportMediaQueries() {
+  return Object.getOwnPropertyNames(mediaQueries).reduce((resultMap, groupKey) => {
+    const groupQuery = Object.getOwnPropertyNames(mediaQueries[groupKey])
+      .map(key => mediaQueries[groupKey][key])
+      .join(', ');
+
+    const children = Object.getOwnPropertyNames(mediaQueries[groupKey]).reduce(
+      (acc, key) => ({
+        ...acc,
+        [`--${key}`]: mediaQueries[groupKey][key],
+      }),
+      {}
+    );
+
+    return { ...resultMap, [`--${groupKey}`]: groupQuery, ...children };
+  }, {});
 }
