@@ -63,7 +63,7 @@ export function initMediaQueries(onChange?: typeof changeBreakpoint) {
         onChange && onChange(groupKey as BreakpointGroup, key as Breakpoint, event.matches);
       });
       // Call listener explicitly at runtime for initialize currentBreakpoint with right value
-      changeBreakpoint(groupKey as BreakpointGroup, key as Breakpoint, mq.matches);
+      mq.matches && changeBreakpoint(groupKey as BreakpointGroup, key as Breakpoint, mq.matches);
     });
   });
 }
@@ -78,6 +78,7 @@ export function getCurrentBreakpoint() {
   return currentBreakpoint;
 }
 
+/** Export map of custom media queries for using it in postcss-custom-media. */
 export function exportMediaQueries() {
   return Object.getOwnPropertyNames(mediaQueries).reduce((resultMap, groupKey) => {
     const groupQuery = Object.getOwnPropertyNames(mediaQueries[groupKey])
