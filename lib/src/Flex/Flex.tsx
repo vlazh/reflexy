@@ -77,10 +77,11 @@ export interface FlexProps extends Styleable {
 export interface Componentable<P> {
   /**
    * Sets custom react component as a container.
-   * Component must accept className and style through props.
-   */
+   * Component must accept className and style through props. */
   component?: React.ReactElement<P & Styleable>;
-  /** Used if `component` is undefined */
+  /**
+   * Ref for container.
+   * Used if `component` is undefined */
   componentRef?: React.Ref<HTMLDivElement>;
 }
 

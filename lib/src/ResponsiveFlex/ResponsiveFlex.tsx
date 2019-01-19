@@ -3,7 +3,7 @@ import { getCurrentBreakpoint as getCurrent, initMediaQueries, Breakpoints } fro
 import Flex, { FlexProps } from '../Flex';
 
 export interface ResponsiveFlexProps extends FlexProps {
-  /** Set flex props per breakpoint */
+  /** Sets flex props per breakpoint */
   breakpoints: { [P in Breakpoints]?: FlexProps };
 }
 
