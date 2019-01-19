@@ -1,6 +1,6 @@
 # Reflexy [![npm package](https://img.shields.io/npm/v/reflexy.svg?style=flat-square)](https://www.npmjs.org/package/reflexy)
 
-**Reflexy** is a React components for flexbox layout:
+**Reflexy** is React Components for Flexbox Layout:
 
 - [Flex](#Flex) - flexbox layout.
 - [ResponsiveFlex](#ResponsiveFlex) - flexbox layout with breakpoins. **In Beta**
