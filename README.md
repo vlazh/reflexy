@@ -23,8 +23,9 @@ npm install --save react reflexy
   // or
   include: /reflexy/,
   use: [
-    { loader: 'style-loader' },
-    { loader: 'css-loader' },
+    // ...
+    { loader: 'css-loader', options: { modules: true } }, // enabled css-modules is necessary
+    // ...
   ],
 },
 ```

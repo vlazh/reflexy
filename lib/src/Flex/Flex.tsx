@@ -1,10 +1,7 @@
 import React from 'react';
 import { ContentDistribution } from 'csstype';
 import classNames from 'classnames';
-import { Omit } from '@vzh/ts-types';
-import './Flex.css';
-
-const CSS_PREFIX = 'reflexy__';
+import css from './Flex.css';
 
 type Globals = 'inherit' | 'initial' | 'unset';
 type FlexPosition = 'center' | 'flex-end' | 'flex-start';
@@ -78,7 +75,7 @@ export interface Componentable<P> {
   /**
    * Sets custom react component as a container.
    * Component must accept className and style through props. */
-  component?: React.ReactElement<P & Styleable>;
+  component?: React.ReactElement<P & Styleable & Childrenable>;
   /**
    * Ref for container.
    * Used if `component` is undefined */
@@ -89,50 +86,16 @@ export interface Childrenable {
   children?: React.ReactNode;
 }
 
+export type CustomComponentProps<P> = Componentable<P> & { componentRef?: undefined };
+export type DivComponentProps = React.HTMLAttributes<HTMLDivElement> &
+  Componentable<{}> & { component?: undefined };
 export type AdditionalProps<P> = undefined extends P
-  ? Componentable<P> & { componentRef?: undefined } // component: ReactElement
-  : React.HTMLAttributes<HTMLDivElement> & Componentable<P> & { component?: undefined }; // component: undefined
+  ? CustomComponentProps<P> // component: ReactElement
+  : DivComponentProps; // component: undefined
 
 export type AllProps<P> = FlexProps & AdditionalProps<P> & Childrenable;
 
-/**
- * Flexbox container.
- * Default style is just `display: flex;`.
- * Example: `<Flex component={<button />} ... />`
- */
-export default function Flex<P = {}>(props: AllProps<P>) {
-  const restProps: ReturnType<typeof omitFlexProps> &
-    Styleable &
-    React.ClassAttributes<any> = omitFlexProps(props);
-  restProps.className = props2className(props);
-  restProps.style = props2style(props);
-
-  // render div
-  if (!props.component) {
-    restProps.ref = props.componentRef;
-    return React.createElement<React.HTMLAttributes<HTMLDivElement>>('div', restProps);
-  }
-
-  // render custom component with flex props
-  const component: React.ReactElement<P & Styleable & Childrenable> = React.Children.only(
-    props.component
-  );
-  const componentProps: typeof restProps = {
-    ...restProps, // copy all data-* attrs and other
-    className: classNames(restProps.className, component.props.className),
-    style: { ...component.props.style, ...restProps.style },
-  };
-  return React.cloneElement<any>(
-    component,
-    componentProps,
-    component.props.children,
-    props.children
-  );
-}
-
-export function omitFlexProps<P>(
-  props: AllProps<P>
-): Omit<AllProps<P>, keyof FlexProps | keyof Componentable<P>> {
+export function omitFlexProps<P>(props: AllProps<P> & Componentable<P>): Styleable & Childrenable {
   const {
     inline,
     alignContent,
@@ -151,14 +114,12 @@ export function omitFlexProps<P>(
     hfill,
     vfill,
     fill,
-    className,
-    style,
     component,
     componentRef,
     ...rest
   } = props;
 
-  return rest as Omit<AllProps<P>, keyof FlexProps | keyof Componentable<P>>;
+  return rest;
 }
 
 export function props2className(props: FlexProps): string {
@@ -176,20 +137,20 @@ export function props2className(props: FlexProps): string {
   const fill = props.fill === true ? 'all' : props.fill;
 
   const className = classNames(
-    `${CSS_PREFIX}display--${props.inline ? 'inline-flex' : 'flex'}`,
-    row && `${CSS_PREFIX}row${reverse}`,
-    column && `${CSS_PREFIX}column${reverse}`,
-    wrap && `${CSS_PREFIX}wrap--${wrap}`,
-    alignItems && `${CSS_PREFIX}align-items--${alignItems}`,
-    props.alignContent && `${CSS_PREFIX}align-content--${props.alignContent}`,
-    props.alignSelf && `${CSS_PREFIX}align-self--${props.alignSelf}`,
-    justifyContent && `${CSS_PREFIX}justify-content--${justifyContent}`,
-    props.basis && `${CSS_PREFIX}flex-basis--${props.basis}`,
-    grow && `${CSS_PREFIX}flex-grow--${grow}`,
-    shrink && `${CSS_PREFIX}flex-shrink--${shrink}`,
-    props.hfill && `${CSS_PREFIX}fill-h`,
-    props.vfill && `${CSS_PREFIX}fill-v`,
-    fill && `${CSS_PREFIX}fill-${fill}`,
+    css[`display--${props.inline ? 'inline-flex' : 'flex'}`],
+    row && css[`row${reverse}`],
+    column && css[`column${reverse}`],
+    wrap && css[`wrap--${wrap}`],
+    alignItems && css[`align-items--${alignItems}`],
+    props.alignContent && css[`align-content--${props.alignContent}`],
+    props.alignSelf && css[`align-self--${props.alignSelf}`],
+    justifyContent && css[`justify-content--${justifyContent}`],
+    props.basis && css[`flex-basis--${props.basis}`],
+    grow && css[`flex-grow--${grow}`],
+    shrink && css[`flex-shrink--${shrink}`],
+    props.hfill && css['fill-h'],
+    props.vfill && css['fill-v'],
+    fill && css[`fill-${fill}`],
     props.className
   );
 
@@ -204,4 +165,38 @@ export function props2style(props: FlexProps): React.CSSProperties | undefined {
   }
 
   return { ...style, order };
+}
+
+/**
+ * Flexbox container.
+ * Default style is just `display: flex;`.
+ * Example: `<Flex component={<button />} ... />`
+ */
+// React.ReactElement<any, string | ((props: any) => React.ReactElement<any, string | any | (new (props: any) => React.Component<any, any, any>)> | null) | (new (props: any) => React.Component<any, any, any>)>;
+export default function Flex<P = {}>(
+  props: AllProps<P>
+): React.ReactElement<AllProps<P> | React.HTMLAttributes<HTMLDivElement>> {
+  const nextProps = omitFlexProps(props);
+  nextProps.className = props2className(props);
+  nextProps.style = props2style(props);
+
+  // render div
+  if (!props.component) {
+    (nextProps as React.ClassAttributes<HTMLDivElement>).ref = props.componentRef;
+    return React.createElement<React.HTMLAttributes<HTMLDivElement>>('div', nextProps);
+  }
+
+  // render custom component with flex props
+  const component: CustomComponentProps<P>['component'] = React.Children.only(props.component);
+  const componentProps: typeof nextProps = {
+    ...nextProps, // copy all data-* attrs and other
+    className: classNames(nextProps.className, component.props.className),
+    style: { ...component.props.style, ...nextProps.style },
+  };
+  return React.cloneElement<AllProps<P> | React.HTMLAttributes<HTMLDivElement>>(
+    component,
+    componentProps,
+    component.props.children,
+    props.children
+  );
 }
