@@ -1,5 +1,5 @@
 import React from 'react';
-import Flex, { AllProps } from '../Flex';
+import Flex, { FlexAllProps } from '../Flex';
 
 export type DefaultSpaceSize = 's' | 'm' | 'l';
 
@@ -53,7 +53,7 @@ function toCssValue(v: boolean | number, size: string) {
   return v === true ? size : `${+v}${spaceMeasure}`;
 }
 
-function Space<P = {}>(props: SpaceProps & AllProps<P>) {
+function Space(props: SpaceProps & FlexAllProps): ReturnType<typeof Flex> {
   const {
     mSize = 'm',
     m,
@@ -100,22 +100,16 @@ Space.spaceSizes = spaceSizes;
 /** Default measure of space */
 Space.spaceMeasure = spaceMeasure;
 
-Space.S = <P extends any>({
-  mSize,
-  pSize,
-  ...rest
-}: SpaceProps & AllProps<P> & React.Attributes) => <Space mSize="s" pSize="s" {...rest} />;
+Space.S = ({ mSize, pSize, ...rest }: SpaceProps & FlexAllProps & React.Attributes) => (
+  <Space mSize="s" pSize="s" {...rest} />
+);
 
-Space.M = <P extends any>({
-  mSize,
-  pSize,
-  ...rest
-}: SpaceProps & AllProps<P> & React.Attributes) => <Space mSize="m" pSize="m" {...rest} />;
+Space.M = ({ mSize, pSize, ...rest }: SpaceProps & FlexAllProps & React.Attributes) => (
+  <Space mSize="m" pSize="m" {...rest} />
+);
 
-Space.L = <P extends any>({
-  mSize,
-  pSize,
-  ...rest
-}: SpaceProps & AllProps<P> & React.Attributes) => <Space mSize="l" pSize="l" {...rest} />;
+Space.L = ({ mSize, pSize, ...rest }: SpaceProps & FlexAllProps & React.Attributes) => (
+  <Space mSize="l" pSize="l" {...rest} />
+);
 
 export default Space;

@@ -71,31 +71,72 @@ export interface FlexProps extends Styleable {
   fill?: Fill;
 }
 
-export interface Componentable<P> {
+export interface Childrenable {
+  children?: React.ReactNode;
+}
+
+export interface Componentable {
   /**
    * Sets custom react component as a container.
    * Component must accept className and style through props. */
-  component?: React.ReactElement<P & Styleable & Childrenable>;
+  component?: React.ReactElement<Styleable & Childrenable>;
   /**
    * Ref for container.
    * Used if `component` is undefined */
   componentRef?: React.Ref<HTMLDivElement>;
 }
 
-export interface Childrenable {
-  children?: React.ReactNode;
+// component: ReactElement
+export type CustomComponentProps = Componentable & { componentRef?: undefined };
+// component: undefined
+export type DivComponentProps = React.HTMLAttributes<HTMLDivElement> &
+  Componentable & { component?: undefined };
+
+export type FlexAdditionalProps = CustomComponentProps | DivComponentProps;
+
+// export type FlexAdditionalProps<P> = {
+//   /**
+//    * Sets custom react component as a container.
+//    * Component must accept className and style through props. */
+//   component?: undefined extends P ? React.ReactElement<P & Styleable & Childrenable> : never;
+//   /**
+//    * Ref for container.
+//    * Used if `component` is undefined */
+//   componentRef?: undefined extends P ? never : React.Ref<HTMLDivElement>;
+// } & (undefined extends P ? {} : React.HTMLAttributes<HTMLDivElement>);
+
+export type FlexAllProps = FlexProps & FlexAdditionalProps & Childrenable;
+
+/**
+ * Flexbox container.
+ * Default style is just `display: flex;`.
+ * Example: `<Flex component={<button />} ... />`
+ */
+// React.ReactElement<any, string | ((props: any) => React.ReactElement<any, string | any | (new (props: any) => React.Component<any, any, any>)> | null) | (new (props: any) => React.Component<any, any, any>)>;
+export default function Flex(
+  props: FlexAllProps
+): React.ReactElement<(Styleable & Childrenable) | React.HTMLAttributes<HTMLDivElement>> {
+  const nextProps = omitFlexProps(props);
+  nextProps.className = props2className(props);
+  nextProps.style = props2style(props);
+
+  // render div
+  if (!props.component) {
+    (nextProps as React.ClassAttributes<HTMLDivElement>).ref = props.componentRef;
+    return React.createElement('div', nextProps);
+  }
+
+  // render custom component with flex props
+  const component = React.Children.only(props.component);
+  const componentProps: typeof nextProps = {
+    ...nextProps, // copy all data-* attrs and other
+    className: classNames(nextProps.className, component.props.className),
+    style: { ...component.props.style, ...nextProps.style },
+  };
+  return React.cloneElement(component, componentProps, component.props.children, props.children);
 }
 
-export type CustomComponentProps<P> = Componentable<P> & { componentRef?: undefined };
-export type DivComponentProps = React.HTMLAttributes<HTMLDivElement> &
-  Componentable<{}> & { component?: undefined };
-export type AdditionalProps<P> = undefined extends P
-  ? CustomComponentProps<P> // component: ReactElement
-  : DivComponentProps; // component: undefined
-
-export type AllProps<P> = FlexProps & AdditionalProps<P> & Childrenable;
-
-export function omitFlexProps<P>(props: AllProps<P> & Componentable<P>): Styleable & Childrenable {
+export function omitFlexProps(props: FlexAllProps): Styleable & Childrenable {
   const {
     inline,
     alignContent,
@@ -165,38 +206,4 @@ export function props2style(props: FlexProps): React.CSSProperties | undefined {
   }
 
   return { ...style, order };
-}
-
-/**
- * Flexbox container.
- * Default style is just `display: flex;`.
- * Example: `<Flex component={<button />} ... />`
- */
-// React.ReactElement<any, string | ((props: any) => React.ReactElement<any, string | any | (new (props: any) => React.Component<any, any, any>)> | null) | (new (props: any) => React.Component<any, any, any>)>;
-export default function Flex<P = {}>(
-  props: AllProps<P>
-): React.ReactElement<AllProps<P> | React.HTMLAttributes<HTMLDivElement>> {
-  const nextProps = omitFlexProps(props);
-  nextProps.className = props2className(props);
-  nextProps.style = props2style(props);
-
-  // render div
-  if (!props.component) {
-    (nextProps as React.ClassAttributes<HTMLDivElement>).ref = props.componentRef;
-    return React.createElement<React.HTMLAttributes<HTMLDivElement>>('div', nextProps);
-  }
-
-  // render custom component with flex props
-  const component: CustomComponentProps<P>['component'] = React.Children.only(props.component);
-  const componentProps: typeof nextProps = {
-    ...nextProps, // copy all data-* attrs and other
-    className: classNames(nextProps.className, component.props.className),
-    style: { ...component.props.style, ...nextProps.style },
-  };
-  return React.cloneElement<AllProps<P> | React.HTMLAttributes<HTMLDivElement>>(
-    component,
-    componentProps,
-    component.props.children,
-    props.children
-  );
 }

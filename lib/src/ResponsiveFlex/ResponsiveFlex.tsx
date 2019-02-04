@@ -1,11 +1,13 @@
 import React from 'react';
 import { getCurrentBreakpoint as getCurrent, initMediaQueries, Breakpoints } from '../mediaQueries';
-import Flex, { FlexProps } from '../Flex';
+import Flex, { FlexProps, FlexAllProps } from '../Flex';
 
 export interface ResponsiveFlexProps extends FlexProps {
   /** Sets flex props per breakpoint */
   breakpoints: { [P in Breakpoints]?: FlexProps };
 }
+
+export type ResponsiveFlexAllProps = ResponsiveFlexProps & FlexAllProps;
 
 function mergeBreakpointsProps({ breakpoints, ...rest }: ResponsiveFlexProps): FlexProps {
   const currentBreakpoint = ResponsiveFlex.getCurrentBreakpoint();
@@ -19,7 +21,7 @@ function mergeBreakpointsProps({ breakpoints, ...rest }: ResponsiveFlexProps): F
   return rest;
 }
 
-function ResponsiveFlex(props: ResponsiveFlexProps) {
+function ResponsiveFlex(props: ResponsiveFlexAllProps): ReturnType<typeof Flex> {
   // Lazy init media queries
   if (!ResponsiveFlex.getCurrentBreakpoint()) {
     ResponsiveFlex.initialize();
