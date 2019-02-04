@@ -94,17 +94,6 @@ export type DivComponentProps = React.HTMLAttributes<HTMLDivElement> &
 
 export type FlexAdditionalProps = CustomComponentProps | DivComponentProps;
 
-// export type FlexAdditionalProps<P> = {
-//   /**
-//    * Sets custom react component as a container.
-//    * Component must accept className and style through props. */
-//   component?: undefined extends P ? React.ReactElement<P & Styleable & Childrenable> : never;
-//   /**
-//    * Ref for container.
-//    * Used if `component` is undefined */
-//   componentRef?: undefined extends P ? never : React.Ref<HTMLDivElement>;
-// } & (undefined extends P ? {} : React.HTMLAttributes<HTMLDivElement>);
-
 export type FlexAllProps = FlexProps & FlexAdditionalProps & Childrenable;
 
 /**
