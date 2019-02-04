@@ -681,10 +681,10 @@
     lodash.unescape "4.0.1"
     semver "5.5.0"
 
-"@vzh/configs@^3.12.0":
-  version "3.12.0"
-  resolved "https://registry.yarnpkg.com/@vzh/configs/-/configs-3.12.0.tgz#04697cdd3ca89d9136360360f940dfae52fbd6f6"
-  integrity sha512-kknmKFBQaIchGHXz6st7bnmpQJT3XQlwgpqHpU8F83nGzGvYk+iSH65Pzif2DZg5EgF2JvwwZALhMfOmmuXAyw==
+"@vzh/configs@^3.13.0":
+  version "3.13.0"
+  resolved "https://registry.yarnpkg.com/@vzh/configs/-/configs-3.13.0.tgz#42718ed349646ef47dce813f82094cf6f3a13bfa"
+  integrity sha512-07OyAm1WELpvPjRNEwhQ0E/N+f5pCzUVF6Vf80mCHJhRDkqqYjQZi07E3+Y6x41oDVhm0sdWTkQnyH/UKnsy8w==
 
 acorn-jsx@^5.0.0:
   version "5.0.1"
@@ -4890,7 +4890,7 @@ type-check@~0.3.2:
   dependencies:
     prelude-ls "~1.1.2"
 
-typescript@^3.3.1:
+typescript@^3.2.4:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.3.1.tgz#6de14e1db4b8a006ac535e482c8ba018c55f750b"
   integrity sha512-cTmIDFW7O0IHbn1DPYjkiebHxwtCMU+eTy30ZtJNBPF9j2O1ITu5XH2YnBeVRKWHqF+3JQwWJv0Q0aUgX8W7IA==
