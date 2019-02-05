@@ -49,7 +49,7 @@ export interface SpaceProps {
   py?: boolean;
 }
 
-function toCssValue(v: boolean | number, size: string) {
+function toCssValue(v: boolean | number, size: string): string {
   return v === true ? size : `${+v}${spaceMeasure}`;
 }
 
