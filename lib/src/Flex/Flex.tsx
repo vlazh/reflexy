@@ -194,8 +194,12 @@ export function props2className(props: FlexProps): string {
 export function props2style(props: FlexProps): React.CSSProperties | undefined {
   const { style, order } = props;
 
-  if (!style && !order) {
+  if (style == null && order == null) {
     return undefined;
+  }
+
+  if (order == null) {
+    return style;
   }
 
   return { ...style, order };
