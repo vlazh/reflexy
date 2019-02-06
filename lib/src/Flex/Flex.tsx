@@ -122,6 +122,10 @@ export default function Flex(
     className: classNames(nextProps.className, component.props.className),
     style: { ...component.props.style, ...nextProps.style },
   };
+  // For elements such as input which not supports children
+  if (!component.props.children && !props.children) {
+    return React.cloneElement(component, componentProps);
+  }
   return React.cloneElement(component, componentProps, component.props.children, props.children);
 }
 
