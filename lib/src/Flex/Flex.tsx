@@ -53,7 +53,7 @@ export interface FlexProps extends Styleable {
   alignSelf?: AlignSelf;
   /** Sets `justify-content` to corresponding value. */
   justifyContent?: JustifyContent;
-  /** Sets `justifyContent` and `alignItems` to `center`. Takes a precedence over `justifyContent` and `alignItems`. */
+  /** Sets `justifyContent` and `alignItems` to `center`. `justifyContent` and `alignItems` take a precedence over `center`. */
   center?: boolean;
   /** Sets `flex-basis` to corresponding value. */
   basis?: FlexBasis;
@@ -166,8 +166,8 @@ export function props2className(props: FlexProps): string {
     props.shrink != null && (+props.shrink >= 0 && +props.shrink <= 24 && +props.shrink).toString();
   // const wrap = props.wrap != null && (props.wrap === false || props.wrap === '' && 'nowrap' ) && `wrap${typeof props.wrap === 'string' ? `-${props.wrap}` : ''}`;
   const wrap = (props.wrap === false && 'nowrap') || (props.wrap === true && 'wrap') || props.wrap;
-  const alignItems = props.center ? 'center' : props.alignItems;
-  const justifyContent = props.center ? 'center' : props.justifyContent;
+  const alignItems = props.alignItems || (props.center && 'center');
+  const justifyContent = props.justifyContent || (props.center && 'center');
   const fill = props.fill === true ? 'all' : props.fill;
 
   const className = classNames(
