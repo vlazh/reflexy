@@ -21,6 +21,11 @@ export enum Breakpoint {
 
 export type Breakpoints = BreakpointGroup | Breakpoint;
 
+export interface CurrentBreakpoint {
+  group: BreakpointGroup;
+  value: Breakpoint;
+}
+
 export const mediaQueries = Object.freeze({
   [BreakpointGroup.Phone]: {
     [Breakpoint.PhoneS]:
@@ -47,10 +52,10 @@ export const mediaQueries = Object.freeze({
   },
 });
 
-let currentBreakpoint: { group: BreakpointGroup; value: Breakpoint } | undefined;
+let currentBreakpoint: CurrentBreakpoint | undefined;
 
 /** Init all media queries for handle changes */
-export function initMediaQueries(onChange?: typeof changeBreakpoint) {
+export function initMediaQueries(onChange?: typeof changeBreakpoint): void {
   if (currentBreakpoint != null) {
     console.warn('Media queries already initialized.');
     return;
@@ -68,18 +73,18 @@ export function initMediaQueries(onChange?: typeof changeBreakpoint) {
   });
 }
 
-function changeBreakpoint(group: BreakpointGroup, bp: Breakpoint, matches: boolean) {
+function changeBreakpoint(group: BreakpointGroup, bp: Breakpoint, matches: boolean): void {
   if (matches) {
     currentBreakpoint = { group, value: bp };
   }
 }
 
-export function getCurrentBreakpoint() {
+export function getCurrentBreakpoint(): typeof currentBreakpoint {
   return currentBreakpoint;
 }
 
 /** Export map of custom media queries for using it in postcss-custom-media. */
-export function exportMediaQueries() {
+export function exportMediaQueries(): Record<string, string> {
   return Object.getOwnPropertyNames(mediaQueries).reduce((resultMap, groupKey) => {
     const groupQuery = Object.getOwnPropertyNames(mediaQueries[groupKey])
       .map(key => mediaQueries[groupKey][key])
