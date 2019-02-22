@@ -49,11 +49,13 @@ export interface SpaceProps {
   py?: boolean;
 }
 
+export type SpaceAllProps = SpaceProps & FlexAllProps;
+
 function toCssValue(v: boolean | number, size: string): string {
   return v === true ? size : `${+v}${spaceMeasure}`;
 }
 
-function Space(props: SpaceProps & FlexAllProps): ReturnType<typeof Flex> {
+function Space(props: SpaceAllProps): ReturnType<typeof Flex> {
   const {
     mSize = 'm',
     m,
