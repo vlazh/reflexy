@@ -34,19 +34,19 @@ export interface SpaceProps {
   /** Size of padding */
   pSize?: DefaultSpaceSize | number;
   /** padding */
-  p?: boolean;
+  p?: boolean | number;
   /** padding-top */
-  pt?: boolean;
+  pt?: boolean | number;
   /** padding-right */
-  pr?: boolean;
+  pr?: boolean | number;
   /** padding-bottom */
-  pb?: boolean;
+  pb?: boolean | number;
   /** padding-left */
-  pl?: boolean;
+  pl?: boolean | number;
   /** padding by x axis: padding-left & padding-right */
-  px?: boolean;
+  px?: boolean | number;
   /** padding by y axis: padding-top & padding-bottom */
-  py?: boolean;
+  py?: boolean | number;
 }
 
 export type SpaceAllProps = SpaceProps & FlexAllProps;
