@@ -1,9 +1,9 @@
 import React from 'react';
 import ResponsiveFlex from '../ResponsiveFlex';
-import { mergeBreakpointsProps, BreakpointsProps } from '../BreakpointsProps';
+import { mergeResponsiveProps, ResponsiveProps } from '../responsive';
 import Space, { SpaceAllProps } from '../Space';
 
-export type ResponsiveSpaceAllProps = BreakpointsProps<SpaceAllProps> & SpaceAllProps;
+export type ResponsiveSpaceAllProps = ResponsiveProps<SpaceAllProps> & SpaceAllProps;
 
 function ResponsiveSpace(props: ResponsiveSpaceAllProps): ReturnType<typeof Space> {
   // Lazy init media queries
@@ -11,7 +11,7 @@ function ResponsiveSpace(props: ResponsiveSpaceAllProps): ReturnType<typeof Spac
     ResponsiveFlex.initialize();
   }
 
-  const mergedProps = mergeBreakpointsProps(props);
+  const mergedProps = mergeResponsiveProps(props);
   return <Space {...mergedProps} />;
 }
 

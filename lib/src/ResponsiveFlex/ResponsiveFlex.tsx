@@ -4,10 +4,10 @@ import {
   isInitialized as isInited,
   getCurrentBreakpoint as getCurrent,
 } from '../mediaQueries';
-import { mergeBreakpointsProps, BreakpointsProps } from '../BreakpointsProps';
+import { mergeResponsiveProps, ResponsiveProps } from '../responsive';
 import Flex, { FlexAllProps } from '../Flex';
 
-export type ResponsiveFlexAllProps = BreakpointsProps<FlexAllProps> & FlexAllProps;
+export type ResponsiveFlexAllProps = ResponsiveProps<FlexAllProps> & FlexAllProps;
 
 function ResponsiveFlex(props: ResponsiveFlexAllProps): ReturnType<typeof Flex> {
   // Lazy init media queries
@@ -15,7 +15,7 @@ function ResponsiveFlex(props: ResponsiveFlexAllProps): ReturnType<typeof Flex> 
     ResponsiveFlex.initialize();
   }
 
-  const mergedProps = mergeBreakpointsProps(props);
+  const mergedProps = mergeResponsiveProps(props);
   return <Flex {...mergedProps} />;
 }
 
