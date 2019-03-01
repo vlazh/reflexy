@@ -4,8 +4,8 @@ export {
   Breakpoint,
   BreakpointGroup,
   Breakpoints,
+  CurrentBreakpoint,
   getCurrentBreakpoint,
-  exportMediaQueries,
 } from './mediaQueries';
 export { ResponsiveProps } from './responsive';
 export { default as ResponsiveFlex } from './ResponsiveFlex';
