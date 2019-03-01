@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { ContentDistribution } from 'csstype';
 import classNames from 'classnames';
 import css from './Flex.css';
@@ -99,17 +99,12 @@ export type FlexAllProps = FlexProps & FlexAdditionalProps & Childrenable;
  * Default style is just `display: flex;`.
  * Example: `<Flex component={<button />} ... />`
  */
-export default function Flex(
-  props: FlexAllProps
-): React.ReactElement<(Styleable & Childrenable) | React.HTMLAttributes<HTMLDivElement>> {
-  const nextProps = useMemo<Styleable & Childrenable>(
-    () => ({
-      className: props2className(props),
-      style: props2style(props),
-      children: props.children,
-    }),
-    [props]
-  );
+export default function Flex(props: FlexAllProps): JSX.Element {
+  const nextProps: Styleable & Childrenable = {
+    className: props2className(props),
+    style: props2style(props),
+    children: props.children,
+  };
 
   // render div
   if (!props.component) {

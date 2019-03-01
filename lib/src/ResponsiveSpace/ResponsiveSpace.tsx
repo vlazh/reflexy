@@ -1,13 +1,13 @@
 import React from 'react';
-import Space, { SpaceAllProps } from '../Space';
-import mergeBreakpointsProps, { BreakpointsProps } from '../ResponsiveFlex/mergeBreakpointsProps';
 import ResponsiveFlex from '../ResponsiveFlex';
+import { mergeBreakpointsProps, BreakpointsProps } from '../BreakpointsProps';
+import Space, { SpaceAllProps } from '../Space';
 
 export type ResponsiveSpaceAllProps = BreakpointsProps<SpaceAllProps> & SpaceAllProps;
 
 function ResponsiveSpace(props: ResponsiveSpaceAllProps): ReturnType<typeof Space> {
   // Lazy init media queries
-  if (!ResponsiveFlex.getCurrentBreakpoint()) {
+  if (!ResponsiveFlex.isInitialized()) {
     ResponsiveFlex.initialize();
   }
 

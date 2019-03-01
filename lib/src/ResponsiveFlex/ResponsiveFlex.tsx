@@ -1,13 +1,17 @@
 import React from 'react';
-import { getCurrentBreakpoint as getCurrent, initMediaQueries } from '../mediaQueries';
+import {
+  initMediaQueries,
+  isInitialized as isInited,
+  getCurrentBreakpoint as getCurrent,
+} from '../mediaQueries';
+import { mergeBreakpointsProps, BreakpointsProps } from '../BreakpointsProps';
 import Flex, { FlexAllProps } from '../Flex';
-import mergeBreakpointsProps, { BreakpointsProps } from './mergeBreakpointsProps';
 
 export type ResponsiveFlexAllProps = BreakpointsProps<FlexAllProps> & FlexAllProps;
 
 function ResponsiveFlex(props: ResponsiveFlexAllProps): ReturnType<typeof Flex> {
   // Lazy init media queries
-  if (!ResponsiveFlex.getCurrentBreakpoint()) {
+  if (!ResponsiveFlex.isInitialized()) {
     ResponsiveFlex.initialize();
   }
 
@@ -15,6 +19,7 @@ function ResponsiveFlex(props: ResponsiveFlexAllProps): ReturnType<typeof Flex> 
   return <Flex {...mergedProps} />;
 }
 
+ResponsiveFlex.isInitialized = isInited;
 ResponsiveFlex.initialize = initMediaQueries;
 ResponsiveFlex.getCurrentBreakpoint = getCurrent;
 
