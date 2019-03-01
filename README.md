@@ -4,7 +4,8 @@
 
 - [Flex](#Flex) - flexbox layout.
 - [ResponsiveFlex](#ResponsiveFlex) - flexbox layout with breakpoins. **In Beta**
-- [Space](#Space) - flexbox layout with paddings and margins support. **In Beta**
+- [Space](#Space) - flexbox layout with paddings and margins support.
+- [ResponsiveSpace](#ResponsiveSpace) - Like Space but with breakpoins. **In Beta**
 
 ## Installation
 
@@ -103,9 +104,9 @@ import { ResponsiveFlex } from 'reflexy';
 
 All props of [Flex](#Flex) and:
 
-| Prop          | Type                                 | Description                     |
-| :------------ | :----------------------------------- | :------------------------------ |
-| `breakpoints` | `{ [P in Breakpoints]?: FlexProps }` | Sets flex props per breakpoint. |
+| Prop          | Type                                 | Description                |
+| :------------ | :----------------------------------- | :------------------------- |
+| `breakpoints` | `{ [P in Breakpoints]?: FlexProps }` | Sets props per breakpoint. |
 
 ### Breakpoints
 
@@ -165,6 +166,34 @@ All props of [Flex](#Flex) and:
 | `pl?`    | `boolean \| number`           | `padding-left`                                        |
 | `px?`    | `boolean \| number`           | `padding` by x axis: `padding-left` & `padding-right` |
 | `py?`    | `boolean \| number`           | `padding` by y axis: `padding-top` & `padding-bottom` |
+
+### Space Statics
+
+| Prop           | Type                                | Description                                            |
+| :------------- | :---------------------------------- | :----------------------------------------------------- |
+| `S`            | `Space`                             | Space component with `mSize` and `pSize` equal to `s`. |
+| `M`            | `Space`                             | Space component with `mSize` and `pSize` equal to `m`. |
+| `L`            | `Space`                             | Space component with `mSize` and `pSize` equal to `l`. |
+| `spaceSizes`   | `Record<'s' \| 'm' \| 'l', number>` | Space sizes. Default: `{ s: 0.5, m: 1, l: 2 }`.        |
+| `spaceMeasure` | `Record<'s' \| 'm' \| 'l', number>` | Measure of space. Default: `rem`.                      |
+
+## [ResponsiveSpace](#ResponsiveSpace)
+
+### Usage
+
+Same as [ResponsiveFlex](#ResponsiveFlex)
+
+### ResponsiveSpace Props
+
+All props of [Space](#Space) and:
+
+| Prop          | Type                                              | Description                |
+| :------------ | :------------------------------------------------ | :------------------------- |
+| `breakpoints` | `{ [P in Breakpoints]?: SpaceProps & FlexProps }` | Sets props per breakpoint. |
+
+### Breakpoints
+
+Same as in [ResponsiveFlex](#ResponsiveFlex)
 
 ## License
 
