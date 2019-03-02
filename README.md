@@ -111,15 +111,15 @@ All props of [Flex](#Flex) and:
 
 ### ViewSize
 
-| Name  | Description                                  |
-| :---- | :------------------------------------------- |
-| `xxs` | (max-width: 479px)'                          |
-| `xs`  | (min-width: 480px) and (max-width: 767px)'   |
-| `s`   | (min-width: 768px) and (max-width: 991px)'   |
-| `m`   | (min-width: 992px) and (max-width: 1279px)'  |
-| `l`   | (min-width: 1280px) and (max-width: 1919px)' |
-| `xl`  | (min-width: 1920px) and (max-width: 2559px)' |
-| `xxl` | (min-width: 2560px)'                         |
+| Name  | Description                                   |
+| :---- | :-------------------------------------------- |
+| `xxs` | `(max-width: 479px)`                          |
+| `xs`  | `(min-width: 480px) and (max-width: 767px)`   |
+| `s`   | `(min-width: 768px) and (max-width: 991px)`   |
+| `m`   | `(min-width: 992px) and (max-width: 1279px)`  |
+| `l`   | `(min-width: 1280px) and (max-width: 1919px)` |
+| `xl`  | `(min-width: 1920px) and (max-width: 2559px)` |
+| `xxl` | `(min-width: 2560px)`                         |
 
 ## [Space](#Space)
 
