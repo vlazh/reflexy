@@ -1,61 +1,31 @@
 /* https://mediag.com/news/popular-screen-resolutions-designing-for-all/ */
-/* http://screensiz.es/ */
+/* http://viewportsizes.com */
 
-export enum BreakpointGroup {
-  Phone = 'phone',
-  Tablet = 'tablet',
-  Desktop = 'desktop',
+export enum ViewSize {
+  xxs = 'xxs',
+  xs = 'xs',
+  s = 's',
+  m = 'm',
+  l = 'l',
+  xl = 'xl',
+  xxl = 'xxl',
 }
 
-export enum Breakpoint {
-  PhoneS = 'phone-s',
-  PhoneM = 'phone-m',
-  PhoneL = 'phone-l',
-  TabletS = 'tablet-s',
-  TabletM = 'tablet-m',
-  TabletL = 'tablet-l',
-  DesktopS = 'desktop-s',
-  DesktopM = 'desktop-m',
-  DesktopL = 'desktop-l',
-}
-
-export type Breakpoints = BreakpointGroup | Breakpoint;
-
-export interface CurrentBreakpoint {
-  group: BreakpointGroup;
-  value: Breakpoint;
-}
-
-export const mediaQueries = Object.freeze({
-  [BreakpointGroup.Phone]: {
-    [Breakpoint.PhoneS]:
-      'only screen and (max-width: 320px) and (orientation: portrait), only screen and (max-height: 320px) and (orientation: landscape)',
-    [Breakpoint.PhoneM]:
-      'only screen and (min-width: 321px) and (max-width: 414px) and (orientation: portrait), only screen and (min-height: 321px) and (max-height: 414px) and (orientation: landscape)',
-    [Breakpoint.PhoneL]:
-      'only screen and (min-width: 415px) and (max-width: 480px) and (orientation: portrait), only screen and (min-height: 415px) and (max-height: 480px) and (orientation: landscape)',
-  },
-  [BreakpointGroup.Tablet]: {
-    [Breakpoint.TabletS]:
-      'only screen and (min-width: 481px) and (max-width: 600px) and (orientation: portrait), only screen and (min-height: 481px) and (max-height: 600px) and (orientation: landscape)',
-    [Breakpoint.TabletM]:
-      'only screen and (min-width: 601px) and (max-width: 768px) and (orientation: portrait), only screen and (min-height: 601px) and (max-height: 768px) and (orientation: landscape)',
-    [Breakpoint.TabletL]:
-      'only screen and (min-width: 769px) and (max-width: 1023px) and (orientation: portrait), only screen and (min-height: 769px) and (max-height: 1023px) and (orientation: landscape)',
-  },
-  [BreakpointGroup.Desktop]: {
-    [Breakpoint.DesktopS]: 'only screen and (min-width: 1024px) and (max-width: 1366px)',
-    [Breakpoint.DesktopM]: 'only screen and (min-width: 1367px) and (max-width: 1920px)',
-    [Breakpoint.DesktopL]: 'only screen and (min-width: 1921px)',
-  },
+export const mediaQueries: Record<ViewSize, string> = Object.freeze({
+  [ViewSize.xxs]: 'only screen and (max-width: 479px)',
+  [ViewSize.xs]: 'only screen and (min-width: 480px) and (max-width: 767px)',
+  [ViewSize.s]: 'only screen and (min-width: 768px) and (max-width: 991px)',
+  [ViewSize.m]: 'only screen and (min-width: 992px) and (max-width: 1279px)',
+  [ViewSize.l]: 'only screen and (min-width: 1280px) and (max-width: 1919px)',
+  [ViewSize.xl]: 'only screen and (min-width: 1920px) and (max-width: 2559px)',
+  [ViewSize.xxl]: 'only screen and (min-width: 2560px)',
 });
 
-let currentBreakpoint: CurrentBreakpoint | undefined;
-
+let currentViewSize: ViewSize | undefined;
 let initialized = false;
 
-export function getCurrentBreakpoint(): typeof currentBreakpoint {
-  return currentBreakpoint;
+export function getCurrentViewSize(): typeof currentViewSize {
+  return currentViewSize;
 }
 
 export function isInitialized(): typeof initialized {
@@ -63,48 +33,37 @@ export function isInitialized(): typeof initialized {
 }
 
 /** Init all media queries for handle changes */
-export function initMediaQueries(onChange?: typeof changeBreakpoint): void {
+export function initMediaQueries(onChange?: (viewSize: ViewSize, matches: boolean) => void): void {
   if (initialized) {
     console.warn('Media queries already initialized.');
     return;
   }
 
-  Object.getOwnPropertyNames(mediaQueries).forEach(groupKey => {
-    Object.getOwnPropertyNames(mediaQueries[groupKey]).forEach(key => {
-      const mq = window.matchMedia(mediaQueries[groupKey][key]);
-      mq.addEventListener('change', event => {
-        changeBreakpoint(groupKey as BreakpointGroup, key as Breakpoint, event.matches);
-        onChange && onChange(groupKey as BreakpointGroup, key as Breakpoint, event.matches);
-      });
-      // Call listener explicitly at runtime for initialize currentBreakpoint with right value
-      mq.matches && changeBreakpoint(groupKey as BreakpointGroup, key as Breakpoint, mq.matches);
+  Object.getOwnPropertyNames(mediaQueries).forEach(key => {
+    const viewSize = key as ViewSize;
+    const mq = window.matchMedia(mediaQueries[viewSize]);
+    mq.addEventListener('change', event => {
+      event.matches && changeViewSize(viewSize);
+      onChange && onChange(viewSize, event.matches);
     });
+    // Call listener explicitly at runtime for initialize currentViewport with right value
+    mq.matches && changeViewSize(viewSize);
   });
 
   initialized = true;
 }
 
-function changeBreakpoint(group: BreakpointGroup, bp: Breakpoint, matches: boolean): void {
-  if (matches) {
-    currentBreakpoint = { group, value: bp };
-  }
+function changeViewSize(viewSize: ViewSize): void {
+  currentViewSize = viewSize;
 }
 
 /** Export map of custom media queries for using it in postcss-custom-media. */
 export function exportMediaQueries(): Record<string, string> {
-  return Object.getOwnPropertyNames(mediaQueries).reduce((resultMap, groupKey) => {
-    const groupQuery = Object.getOwnPropertyNames(mediaQueries[groupKey])
-      .map(key => mediaQueries[groupKey][key])
-      .join(', ');
-
-    const children = Object.getOwnPropertyNames(mediaQueries[groupKey]).reduce(
-      (acc, key) => ({
-        ...acc,
-        [`--${key}`]: mediaQueries[groupKey][key],
-      }),
-      {}
-    );
-
-    return { ...resultMap, [`--${groupKey}`]: groupQuery, ...children };
-  }, {});
+  return Object.getOwnPropertyNames(mediaQueries).reduce(
+    (acc, key) => ({
+      ...acc,
+      [`--${key}`]: mediaQueries[key],
+    }),
+    {}
+  );
 }

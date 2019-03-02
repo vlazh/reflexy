@@ -1,12 +1,6 @@
 export { default as Flex } from './Flex';
 export * from './Flex';
-export {
-  Breakpoint,
-  BreakpointGroup,
-  Breakpoints,
-  CurrentBreakpoint,
-  getCurrentBreakpoint,
-} from './mediaQueries';
+export { ViewSize, getCurrentViewSize } from './mediaQueries';
 export { ResponsiveProps } from './responsive';
 export { default as ResponsiveFlex } from './ResponsiveFlex';
 export * from './ResponsiveFlex';

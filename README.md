@@ -92,8 +92,8 @@ import { ResponsiveFlex } from 'reflexy';
   row
   order={1}
   breakpoints={{
-    desktop: { column: true, order: 2 },
-    'phone-m': { alignItems: 'center', order: 4 },
+    l: { column: true, order: 2 },
+    xxs: { alignItems: 'center', order: 4 },
   }}
 >
   ...
@@ -104,26 +104,22 @@ import { ResponsiveFlex } from 'reflexy';
 
 All props of [Flex](#Flex) and:
 
-| Prop          | Type                                 | Description                |
-| :------------ | :----------------------------------- | :------------------------- |
-| `breakpoints` | `{ [P in Breakpoints]?: FlexProps }` | Sets props per breakpoint. |
+| Prop                 | Type                              | Description                                                                                              |
+| :------------------- | :-------------------------------- | :------------------------------------------------------------------------------------------------------- |
+| `strictBreakpoints?` | `boolean`                         | `true` - don't merge breakpoints props up to current size and use breakpoint props of current size only. |
+| `breakpoints`        | `{ [P in ViewSize]?: FlexProps }` | Props per breakpoint.                                                                                    |
 
 ### Breakpoints
 
-```
-phone
-phone-s
-phone-m
-phone-l
-tablet
-tablet-s
-tablet-m
-tablet-l
-desktop
-desktop-s
-desktop-m
-desktop-l
-```
+| Name  | Description                                  |
+| :---- | :------------------------------------------- |
+| `xxs` | (max-width: 479px)'                          |
+| `xs`  | (min-width: 480px) and (max-width: 767px)'   |
+| `s`   | (min-width: 768px) and (max-width: 991px)'   |
+| `m`   | (min-width: 992px) and (max-width: 1279px)'  |
+| `l`   | (min-width: 1280px) and (max-width: 1919px)' |
+| `xl`  | (min-width: 1920px) and (max-width: 2559px)' |
+| `xxl` | (min-width: 2560px)'                         |
 
 ## [Space](#Space)
 
@@ -187,9 +183,10 @@ Same as [ResponsiveFlex](#ResponsiveFlex)
 
 All props of [Space](#Space) and:
 
-| Prop          | Type                                              | Description                |
-| :------------ | :------------------------------------------------ | :------------------------- |
-| `breakpoints` | `{ [P in Breakpoints]?: SpaceProps & FlexProps }` | Sets props per breakpoint. |
+| Prop                 | Type                              | Description                                                                                              |
+| :------------------- | :-------------------------------- | :------------------------------------------------------------------------------------------------------- |
+| `strictBreakpoints?` | `boolean`                         | `true` - don't merge breakpoints props up to current size and use breakpoint props of current size only. |
+| `breakpoints`        | `{ [P in ViewSize]?: FlexProps }` | Props per breakpoint.                                                                                    |
 
 ### Breakpoints
 

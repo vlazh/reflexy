@@ -1,8 +1,8 @@
 import React from 'react';
 import {
   initMediaQueries,
-  isInitialized as isInited,
-  getCurrentBreakpoint as getCurrent,
+  isInitialized as isInit,
+  getCurrentViewSize as getCurrent,
 } from '../mediaQueries';
 import { mergeResponsiveProps, ResponsiveProps } from '../responsive';
 import Flex, { FlexAllProps } from '../Flex';
@@ -19,8 +19,8 @@ function ResponsiveFlex(props: ResponsiveFlexAllProps): ReturnType<typeof Flex> 
   return <Flex {...mergedProps} />;
 }
 
-ResponsiveFlex.isInitialized = isInited;
+ResponsiveFlex.isInitialized = isInit;
 ResponsiveFlex.initialize = initMediaQueries;
-ResponsiveFlex.getCurrentBreakpoint = getCurrent;
+ResponsiveFlex.getCurrentViewSize = getCurrent;
 
 export default ResponsiveFlex;
