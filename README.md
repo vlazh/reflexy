@@ -109,7 +109,7 @@ All props of [Flex](#Flex) and:
 | `strictBreakpoints?` | `boolean`                         | `true` - don't merge breakpoints props up to current size and use breakpoint props of current size only. |
 | `breakpoints`        | `{ [P in ViewSize]?: FlexProps }` | Props per breakpoint.                                                                                    |
 
-### Breakpoints
+### ViewSize
 
 | Name  | Description                                  |
 | :---- | :------------------------------------------- |
@@ -183,12 +183,12 @@ Same as [ResponsiveFlex](#ResponsiveFlex)
 
 All props of [Space](#Space) and:
 
-| Prop                 | Type                              | Description                                                                                              |
-| :------------------- | :-------------------------------- | :------------------------------------------------------------------------------------------------------- |
-| `strictBreakpoints?` | `boolean`                         | `true` - don't merge breakpoints props up to current size and use breakpoint props of current size only. |
-| `breakpoints`        | `{ [P in ViewSize]?: FlexProps }` | Props per breakpoint.                                                                                    |
+| Prop                 | Type                                           | Description                                                                                              |
+| :------------------- | :--------------------------------------------- | :------------------------------------------------------------------------------------------------------- |
+| `strictBreakpoints?` | `boolean`                                      | `true` - don't merge breakpoints props up to current size and use breakpoint props of current size only. |
+| `breakpoints`        | `{ [P in ViewSize]?: SpaceProps & FlexProps }` | Props per breakpoint.                                                                                    |
 
-### Breakpoints
+### ViewSize
 
 Same as in [ResponsiveFlex](#ResponsiveFlex)
 
