@@ -7,6 +7,37 @@
 - [Space](#Space) - flexbox layout with paddings and margins support.
 - [ResponsiveSpace](#ResponsiveSpace) - Like Space but with breakpoins. **In Beta**
 
+and [custom media queries](#mq):
+
+| Name    | Value                                         |
+| :------ | :-------------------------------------------- |
+| `--xxs` | `(max-width: 479px)`                          |
+| `--xs`  | `(min-width: 480px) and (max-width: 767px)`   |
+| `--s`   | `(min-width: 768px) and (max-width: 991px)`   |
+| `--m`   | `(min-width: 992px) and (max-width: 1279px)`  |
+| `--l`   | `(min-width: 1280px) and (max-width: 1919px)` |
+| `--xl`  | `(min-width: 1920px) and (max-width: 2559px)` |
+| `--xxl` | `(min-width: 2560px)`                         |
+
+Custom media queries can be used with [postcss-custom-media](https://github.com/postcss/postcss-custom-media#importfrom).
+Example of configuration with [preset-env](https://preset-env.cssdb.org/):
+
+```js
+const { exportMediaQueries } = require('reflexy/mediaQueries');
+
+module.exports = {
+  plugins: {
+    'postcss-preset-env': {
+      features: {
+        'custom-media-queries': {
+          importFrom: [{ customMedia: exportMediaQueries() }],
+        },
+      },
+    },
+  },
+};
+```
+
 ## Installation
 
 ```sh
@@ -111,15 +142,7 @@ All props of [Flex](#Flex) and:
 
 ### ViewSize
 
-| Name  | Description                                   |
-| :---- | :-------------------------------------------- |
-| `xxs` | `(max-width: 479px)`                          |
-| `xs`  | `(min-width: 480px) and (max-width: 767px)`   |
-| `s`   | `(min-width: 768px) and (max-width: 991px)`   |
-| `m`   | `(min-width: 992px) and (max-width: 1279px)`  |
-| `l`   | `(min-width: 1280px) and (max-width: 1919px)` |
-| `xl`  | `(min-width: 1920px) and (max-width: 2559px)` |
-| `xxl` | `(min-width: 2560px)`                         |
+Same as [Custom media queries](#mq) but names without prefix `--`.
 
 ## [Space](#Space)
 
