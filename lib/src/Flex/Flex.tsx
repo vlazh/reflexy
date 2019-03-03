@@ -78,21 +78,9 @@ export interface Componentable {
    * Sets custom react component as a container.
    * Component must accept className and style through props. */
   component?: React.ReactElement<Styleable & Childrenable>;
-  /**
-   * Ref for container.
-   * Used if `component` is undefined */
-  componentRef?: React.Ref<HTMLDivElement>;
 }
 
-// component: ReactElement
-export type CustomComponentProps = Componentable & { componentRef?: undefined };
-// component: undefined
-export type DivComponentProps = React.HTMLAttributes<HTMLDivElement> &
-  Componentable & { component?: undefined };
-
-export type FlexAdditionalProps = CustomComponentProps | DivComponentProps;
-
-export type FlexAllProps = FlexProps & FlexAdditionalProps & Childrenable;
+export type FlexAllProps = FlexProps & Componentable & Childrenable;
 
 /**
  * Flexbox container.
@@ -106,9 +94,8 @@ export default function Flex(props: FlexAllProps): JSX.Element {
     children: props.children,
   };
 
-  // render div
+  // render div with flex props
   if (!props.component) {
-    (nextProps as React.ClassAttributes<HTMLDivElement>).ref = props.componentRef;
     return React.createElement('div', nextProps);
   }
 
@@ -119,7 +106,7 @@ export default function Flex(props: FlexAllProps): JSX.Element {
     className: classNames(nextProps.className, component.props.className),
     style: { ...component.props.style, ...nextProps.style },
   };
-  // For elements such as input which not supports children
+  // for elements such as input which not supports children
   if (!component.props.children && !props.children) {
     return React.cloneElement(component, componentProps);
   }
