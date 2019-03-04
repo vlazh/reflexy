@@ -108,8 +108,6 @@ Default style is just `display: flex`.
 | `className?`      | `string`                                                                                                                                          | CSS class name.                                                                                                           |
 | `style?`          | `React.CSSProperties`                                                                                                                             | Inline styles.                                                                                                            |
 | `component?`      | `React.ReactElement<P & { className?: strin, style?: React.CSSProperties }>`                                                                      | Sets custom react component as a container. Component must accept className and style through props.                      |
-| `componentRef?`   | `React.Ref<HTMLDivElement>`                                                                                                                       | Ref for container. Used if `component` is `undefined`.                                                                    |
-| html div props    | `React.HTMLAttributes<HTMLDivElement>`                                                                                                            | Used if `component` is `undefined`.                                                                                       |
 
 ## [ResponsiveFlex](#ResponsiveFlex)
 
