@@ -80,40 +80,54 @@ export interface Componentable {
   component?: React.ReactElement<Styleable & Childrenable>;
 }
 
-export type FlexAllProps = FlexProps & Componentable & Childrenable;
+export interface ContainerRef {
+  /**
+   * Ref of the default container.
+   * Used if `component` is undefined */
+  containerRef?: React.Ref<HTMLDivElement>;
+}
+
+export type FlexAllProps = FlexProps & Styleable & Childrenable & Componentable & ContainerRef;
 
 /**
  * Flexbox container.
  * Default style is just `display: flex;`.
  * Example: `<Flex component={<button />} ... />`
  */
-export default function Flex(props: FlexAllProps): JSX.Element {
-  const nextProps: Styleable & Childrenable = {
-    className: props2className(props),
-    style: props2style(props),
-    children: props.children,
-  };
 
+export default function Flex(props: FlexAllProps): JSX.Element {
   // render div with flex props
   if (!props.component) {
-    return React.createElement('div', nextProps);
+    const nextProps: Styleable & React.RefAttributes<HTMLDivElement> = {
+      className: props2className(props),
+      style: props2style(props),
+      ref: props.containerRef,
+    };
+    return React.createElement('div', nextProps, props.children);
+  }
+
+  if (process.env.NODE_ENV !== 'production') {
+    if (props.containerRef) {
+      console.warn(
+        '`containerRef` prop can only be used if `component` prop is undefined, so it will be ignored.'
+      );
+    }
   }
 
   // render custom component with flex props
   const component = React.Children.only(props.component);
-  const componentProps: typeof nextProps = {
-    ...nextProps,
-    className: classNames(nextProps.className, component.props.className),
-    style: { ...component.props.style, ...nextProps.style },
+  const nextProps: Styleable = {
+    className: props2className(props, component.props.className),
+    style: props2style(props, component.props.style),
   };
   // for elements such as input which not supports children
   if (!component.props.children && !props.children) {
-    return React.cloneElement(component, componentProps);
+    return React.cloneElement(component, nextProps);
   }
-  return React.cloneElement(component, componentProps, component.props.children, props.children);
+  return React.cloneElement(component, nextProps, props.children, component.props.children);
 }
 
-export function props2className(props: FlexProps): string {
+export function props2className(props: FlexProps, extClassName?: string): string {
   const column = !!props.column;
   const row = !column && !!props.row;
   const reverse = props.reverse ? '-reverse' : '';
@@ -143,26 +157,25 @@ export function props2className(props: FlexProps): string {
     shrink && css[`flex-shrink--${shrink}`],
     hfill && css['fill-h'],
     vfill && css['fill-v'],
-    props.className
+    props.className,
+    extClassName
   );
 
   return className;
 }
 
-export function props2style({
-  style,
-  order,
-  hfill,
-  vfill,
-}: FlexProps): React.CSSProperties | undefined {
+export function props2style(
+  { style, order, hfill, vfill }: FlexProps,
+  extStyle?: React.CSSProperties
+): React.CSSProperties | undefined {
   const width =
     hfill != null && typeof hfill === 'number' ? `${Math.min(hfill, 1) * 100}%` : undefined;
   const height =
     vfill != null && typeof vfill === 'number' ? `${Math.min(vfill, 1) * 100}%` : undefined;
 
-  if (order == null && width == null && height == null) {
+  if (order == null && width == null && height == null && extStyle == null) {
     return style;
   }
 
-  return { ...style, order, width, height };
+  return { ...style, order, width, height, ...extStyle };
 }
