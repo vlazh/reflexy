@@ -80,14 +80,7 @@ export interface Componentable {
   component?: React.ReactElement<Styleable & Childrenable>;
 }
 
-export interface ContainerRef {
-  /**
-   * Ref of the default container.
-   * Used if `component` is undefined */
-  containerRef?: React.Ref<HTMLDivElement>;
-}
-
-export type FlexAllProps = FlexProps & Styleable & Childrenable & Componentable & ContainerRef;
+export type FlexAllProps = FlexProps & Styleable & Childrenable & Componentable;
 
 /**
  * Flexbox container.
@@ -101,17 +94,8 @@ export default function Flex(props: FlexAllProps): JSX.Element {
     const nextProps: Styleable & React.RefAttributes<HTMLDivElement> = {
       className: props2className(props),
       style: props2style(props),
-      ref: props.containerRef,
     };
     return React.createElement('div', nextProps, props.children);
-  }
-
-  if (process.env.NODE_ENV !== 'production') {
-    if (props.containerRef) {
-      console.warn(
-        '`containerRef` prop can only be used if `component` prop is undefined, so it will be ignored.'
-      );
-    }
   }
 
   // render custom component with flex props
