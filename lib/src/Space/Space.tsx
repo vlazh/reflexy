@@ -3,9 +3,7 @@ import Flex, { FlexAllProps } from '../Flex';
 
 export type DefaultSpaceSize = 's' | 'm' | 'l';
 
-const spaceMeasure = 'rem';
-
-const spaceSizes: Record<DefaultSpaceSize, number> = {
+const defaultSpaceSizes: Record<DefaultSpaceSize, number> = {
   /* small size */
   s: 0.5,
   /** medium size */
@@ -15,6 +13,8 @@ const spaceSizes: Record<DefaultSpaceSize, number> = {
 };
 
 export interface SpaceProps {
+  /** Measure unit of space */
+  unit?: string;
   /** Size of margin */
   mSize?: DefaultSpaceSize | number;
   /** margin */
@@ -51,8 +51,8 @@ export interface SpaceProps {
 
 export type SpaceAllProps = SpaceProps & FlexAllProps;
 
-function toCssValue(v: boolean | number, size: string): string {
-  return v === true ? size : `${+v}${spaceMeasure}`;
+function toCssValue(v: boolean | number, size: string, unit: string): string {
+  return v === true ? size : `${+v}${unit}`;
 }
 
 function Space(props: SpaceAllProps): ReturnType<typeof Flex> {
@@ -67,6 +67,7 @@ function Space(props: SpaceAllProps): ReturnType<typeof Flex> {
     px,
     py,
 
+    unit = Space.defaultUnit,
     style,
     ...other
   } = props;
@@ -74,22 +75,22 @@ function Space(props: SpaceAllProps): ReturnType<typeof Flex> {
   const { mt = my, mr = mx, mb = my, ml = mx, pt = py, pr = px, pb = py, pl = px, ...rest } = other;
 
   const marginSize =
-    typeof mSize === 'number' ? `${mSize}${spaceMeasure}` : `${spaceSizes[mSize]}${spaceMeasure}`;
+    typeof mSize === 'number' ? `${mSize}${unit}` : `${Space.defaultSizes[mSize]}${unit}`;
   const paddingSize =
-    typeof pSize === 'number' ? `${pSize}${spaceMeasure}` : `${spaceSizes[pSize]}${spaceMeasure}`;
+    typeof pSize === 'number' ? `${pSize}${unit}` : `${Space.defaultSizes[pSize]}${unit}`;
 
   const styles: React.CSSProperties = {
-    ...(m != null ? { margin: toCssValue(m, marginSize) } : undefined),
-    ...(mt != null ? { marginTop: toCssValue(mt, marginSize) } : undefined),
-    ...(mr != null ? { marginRight: toCssValue(mr, marginSize) } : undefined),
-    ...(mb != null ? { marginBottom: toCssValue(mb, marginSize) } : undefined),
-    ...(ml != null ? { marginLeft: toCssValue(ml, marginSize) } : undefined),
+    ...(m != null ? { margin: toCssValue(m, marginSize, unit) } : undefined),
+    ...(mt != null ? { marginTop: toCssValue(mt, marginSize, unit) } : undefined),
+    ...(mr != null ? { marginRight: toCssValue(mr, marginSize, unit) } : undefined),
+    ...(mb != null ? { marginBottom: toCssValue(mb, marginSize, unit) } : undefined),
+    ...(ml != null ? { marginLeft: toCssValue(ml, marginSize, unit) } : undefined),
 
-    ...(p != null ? { padding: toCssValue(p, paddingSize) } : undefined),
-    ...(pt != null ? { paddingTop: toCssValue(pt, paddingSize) } : undefined),
-    ...(pr != null ? { paddingRight: toCssValue(pr, paddingSize) } : undefined),
-    ...(pb != null ? { paddingBottom: toCssValue(pb, paddingSize) } : undefined),
-    ...(pl != null ? { paddingLeft: toCssValue(pl, paddingSize) } : undefined),
+    ...(p != null ? { padding: toCssValue(p, paddingSize, unit) } : undefined),
+    ...(pt != null ? { paddingTop: toCssValue(pt, paddingSize, unit) } : undefined),
+    ...(pr != null ? { paddingRight: toCssValue(pr, paddingSize, unit) } : undefined),
+    ...(pb != null ? { paddingBottom: toCssValue(pb, paddingSize, unit) } : undefined),
+    ...(pl != null ? { paddingLeft: toCssValue(pl, paddingSize, unit) } : undefined),
 
     ...style,
   };
@@ -98,9 +99,9 @@ function Space(props: SpaceAllProps): ReturnType<typeof Flex> {
 }
 
 /** Predefined default space sizes */
-Space.spaceSizes = spaceSizes;
+Space.defaultSizes = defaultSpaceSizes;
 /** Default measure of space */
-Space.spaceMeasure = spaceMeasure;
+Space.defaultUnit = 'rem';
 
 Space.S = ({ mSize, pSize, ...rest }: SpaceProps & FlexAllProps & React.Attributes) => (
   <Space mSize="s" pSize="s" {...rest} />

@@ -167,6 +167,7 @@ All props of [Flex](#Flex) and:
 
 | Prop     | Type                          | Description                                           |
 | :------- | :---------------------------- | :---------------------------------------------------- |
+| `unit?`  | `string`                      | Measure unit of space                                 |
 | `mSize?` | `'s' \| 'm' \| 'l' \| number` | Size of `margin`                                      |
 | `m?`     | `boolean \| number`           | `margin`                                              |
 | `mt?`    | `boolean \| number`           | `margin-top`                                          |
@@ -191,8 +192,8 @@ All props of [Flex](#Flex) and:
 | `S`            | `Space`                             | Space component with `mSize` and `pSize` equal to `s`. |
 | `M`            | `Space`                             | Space component with `mSize` and `pSize` equal to `m`. |
 | `L`            | `Space`                             | Space component with `mSize` and `pSize` equal to `l`. |
-| `spaceSizes`   | `Record<'s' \| 'm' \| 'l', number>` | Space sizes. Default: `{ s: 0.5, m: 1, l: 2 }`.        |
-| `spaceMeasure` | `Record<'s' \| 'm' \| 'l', number>` | Measure of space. Default: `rem`.                      |
+| `defaultSizes` | `Record<'s' \| 'm' \| 'l', number>` | Space sizes. Default: `{ s: 0.5, m: 1, l: 2 }`.        |
+| `defaultUnit`  | `string`                            | Measure unit of space. Default: `rem`.                 |
 
 ## [ResponsiveSpace](#ResponsiveSpace)
 
