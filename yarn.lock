@@ -701,10 +701,10 @@
     lodash.unescape "4.0.1"
     semver "5.5.0"
 
-"@vzh/configs@^3.16.1":
-  version "3.16.1"
-  resolved "https://registry.yarnpkg.com/@vzh/configs/-/configs-3.16.1.tgz#aaec774a9fdfbde85d8b234ada4a183d9b69bc6d"
-  integrity sha512-K6zdSXsRI3IHYzh11fwduuUsMn5e+x5v1vTDzQk1HMfckXMfdu20xEi1AVIJ7RwMwivBPN1yi4mZ35dzqCTydA==
+"@vzh/configs@^3.16.2":
+  version "3.16.2"
+  resolved "https://registry.yarnpkg.com/@vzh/configs/-/configs-3.16.2.tgz#f382a37599c7269fd482a65769e82a51003b96f0"
+  integrity sha512-y3DU3IrM0fVo4zbA0dD80MrpBcuEqUZrOf7REwUDE2Zw0M0OZWyYx7iQQ8YzrYxqZ2JZEXJq9oJSCe6yZ2SvWw==
 
 acorn-jsx@^5.0.0:
   version "5.0.1"
