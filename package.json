@@ -1,6 +1,6 @@
 {
   "name": "reflexy",
-  "version": "2.14.1",
+  "version": "2.15.0",
   "description": "Flexbox layout react components",
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
