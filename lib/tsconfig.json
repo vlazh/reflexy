@@ -1,10 +1,12 @@
 {
   "extends": "../node_modules/@vzh/configs/ts/dev.tsconfig.json",
   "compilerOptions": {
+    "isolatedModules": false,
     "baseUrl": "./src",
     "outDir": "../dist",
     "declaration": true,
-    "sourceMap": false
+    "sourceMap": false,
+    "incremental": false
   },
   "files": ["./src/index.ts", "./src/test/flex.tsx"]
 }
