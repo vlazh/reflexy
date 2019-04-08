@@ -42,10 +42,10 @@ export function initMediaQueries(onChange?: (viewSize: ViewSize, matches: boolea
   Object.getOwnPropertyNames(mediaQueries).forEach(key => {
     const viewSize = key as ViewSize;
     const mq = window.matchMedia(mediaQueries[viewSize]);
-    mq.addEventListener('change', event => {
+    mq.onchange = event => {
       event.matches && changeViewSize(viewSize);
       onChange && onChange(viewSize, event.matches);
-    });
+    };
     // Call listener explicitly at runtime for initialize currentViewport with right value
     mq.matches && changeViewSize(viewSize);
   });
