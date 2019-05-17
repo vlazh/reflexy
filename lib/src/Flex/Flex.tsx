@@ -69,18 +69,14 @@ export interface FlexProps extends Styleable {
   fill?: boolean;
 }
 
-export interface Childrenable {
-  children?: React.ReactNode;
-}
-
 export interface Componentable {
   /**
    * Sets custom react component as a container.
    * Component must accept className and style through props. */
-  component?: React.ReactElement<Styleable & Childrenable>;
+  component?: React.ReactElement<React.PropsWithChildren<Styleable>>;
 }
 
-export type FlexAllProps = FlexProps & Styleable & Childrenable & Componentable;
+export type FlexAllProps = React.PropsWithChildren<FlexProps & Componentable>;
 
 /**
  * Flexbox container.
