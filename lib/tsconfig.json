@@ -1,5 +1,5 @@
 {
-  "extends": "../node_modules/@vzh/configs/ts/dev.tsconfig.json",
+  "extends": "@vzh/configs/ts/dev.tsconfig.json",
   "compilerOptions": {
     "isolatedModules": false,
     "baseUrl": "./src",

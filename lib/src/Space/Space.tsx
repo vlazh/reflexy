@@ -1,16 +1,8 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-object-literal-type-assertion */
+import React, { useMemo } from 'react';
 import Flex, { FlexAllProps } from '../Flex';
 
 export type DefaultSpaceSize = 's' | 'm' | 'l';
-
-const defaultSpaceSizes: Record<DefaultSpaceSize, number> = {
-  /* small size */
-  s: 0.5,
-  /** medium size */
-  m: 1,
-  /** large size */
-  l: 2,
-};
 
 export interface SpaceProps {
   /** Measure unit of space */
@@ -51,57 +43,76 @@ export interface SpaceProps {
 
 export type SpaceAllProps = SpaceProps & FlexAllProps;
 
-function toCssValue(v: boolean | number, size: string, unit: string): string {
-  return v === true ? size : `${+v}${unit}`;
+function toCssValue(value: boolean | number, size: number, unit: string): string {
+  return value === true ? `${size}${unit}` : `${+value * size}${unit}`;
 }
 
-function Space(props: SpaceAllProps): ReturnType<typeof Flex> {
-  const {
-    mSize = 'm',
-    m,
-    mx,
-    my,
+function Space({
+  mSize = 'm',
+  m,
+  mx,
+  my,
 
-    pSize = 'm',
-    p,
-    px,
-    py,
+  pSize = 'm',
+  p,
+  px,
+  py,
 
-    unit = Space.defaultUnit,
-    style,
-    ...other
-  } = props;
-
+  unit = Space.defaultUnit,
+  style,
+  ...other
+}: SpaceAllProps): ReturnType<typeof Flex> {
   const { mt = my, mr = mx, mb = my, ml = mx, pt = py, pr = px, pb = py, pl = px, ...rest } = other;
 
-  const marginSize =
-    typeof mSize === 'number' ? `${mSize}${unit}` : `${Space.defaultSizes[mSize]}${unit}`;
-  const paddingSize =
-    typeof pSize === 'number' ? `${pSize}${unit}` : `${Space.defaultSizes[pSize]}${unit}`;
+  const marginSize = useMemo(
+    () => (typeof mSize === 'number' ? mSize : Space.defaultSizes[mSize]),
+    [mSize]
+  );
+  const paddingSize = useMemo(
+    () => (typeof pSize === 'number' ? pSize : Space.defaultSizes[pSize]),
+    [pSize]
+  );
 
-  const styles: React.CSSProperties = {
-    ...(m != null ? { margin: toCssValue(m, marginSize, unit) } : undefined),
-    ...(mt != null ? { marginTop: toCssValue(mt, marginSize, unit) } : undefined),
-    ...(mr != null ? { marginRight: toCssValue(mr, marginSize, unit) } : undefined),
-    ...(mb != null ? { marginBottom: toCssValue(mb, marginSize, unit) } : undefined),
-    ...(ml != null ? { marginLeft: toCssValue(ml, marginSize, unit) } : undefined),
+  const spaceStyles: React.CSSProperties = useMemo(
+    () =>
+      Object.entries({
+        margin: m != null ? toCssValue(m, marginSize, unit) : undefined,
+        marginTop: mt != null ? toCssValue(mt, marginSize, unit) : undefined,
+        marginRight: mr != null ? toCssValue(mr, marginSize, unit) : undefined,
+        marginBottom: mb != null ? toCssValue(mb, marginSize, unit) : undefined,
+        marginLeft: ml != null ? toCssValue(ml, marginSize, unit) : undefined,
 
-    ...(p != null ? { padding: toCssValue(p, paddingSize, unit) } : undefined),
-    ...(pt != null ? { paddingTop: toCssValue(pt, paddingSize, unit) } : undefined),
-    ...(pr != null ? { paddingRight: toCssValue(pr, paddingSize, unit) } : undefined),
-    ...(pb != null ? { paddingBottom: toCssValue(pb, paddingSize, unit) } : undefined),
-    ...(pl != null ? { paddingLeft: toCssValue(pl, paddingSize, unit) } : undefined),
+        padding: p != null ? toCssValue(p, paddingSize, unit) : undefined,
+        paddingTop: pt != null ? toCssValue(pt, paddingSize, unit) : undefined,
+        paddingRight: pr != null ? toCssValue(pr, paddingSize, unit) : undefined,
+        paddingBottom: pb != null ? toCssValue(pb, paddingSize, unit) : undefined,
+        paddingLeft: pl != null ? toCssValue(pl, paddingSize, unit) : undefined,
+      })
+        .filter(([_, v]) => !!v)
+        .reduce((acc, [k, v]) => {
+          acc[k] = v;
+          return acc;
+        }, {}),
+    [m, marginSize, mb, ml, mr, mt, p, paddingSize, pb, pl, pr, pt, unit]
+  );
 
-    ...style,
-  };
+  const styles = style ? { ...spaceStyles, ...style } : spaceStyles;
 
   return <Flex style={styles} {...rest} />;
 }
 
-/** Predefined default space sizes */
-Space.defaultSizes = defaultSpaceSizes;
 /** Default measure of space */
 Space.defaultUnit = 'rem';
+
+/** Predefined default space sizes */
+Space.defaultSizes = {
+  /* small size */
+  s: 0.5,
+  /** medium size */
+  m: 1,
+  /** large size */
+  l: 2,
+} as Record<DefaultSpaceSize, number>;
 
 Space.S = ({ mSize, pSize, ...rest }: SpaceProps & FlexAllProps & React.Attributes) => (
   <Space mSize="s" pSize="s" {...rest} />

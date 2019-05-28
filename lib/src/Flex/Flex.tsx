@@ -87,7 +87,7 @@ export type FlexAllProps = React.PropsWithChildren<FlexProps & Componentable>;
 export default function Flex(props: FlexAllProps): JSX.Element {
   // render div with flex props
   if (!props.component) {
-    const nextProps: Styleable & React.RefAttributes<HTMLDivElement> = {
+    const nextProps: Styleable = {
       className: props2className(props),
       style: props2style(props),
     };
