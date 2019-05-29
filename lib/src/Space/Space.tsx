@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-object-literal-type-assertion */
 import React, { useMemo } from 'react';
-import Flex, { FlexAllProps } from '../Flex';
+import Flex, { ComponentOrElement, FlexAllProps } from '../Flex';
 
 export type DefaultSpaceSize = 's' | 'm' | 'l';
 
@@ -41,13 +41,15 @@ export interface SpaceProps {
   py?: boolean | number;
 }
 
-export type SpaceAllProps = SpaceProps & FlexAllProps;
+export type SpaceAllProps<
+  C extends ComponentOrElement = React.ElementType<JSX.IntrinsicElements['div']>
+> = SpaceProps & FlexAllProps<C>;
 
 function toCssValue(value: boolean | number, size: number, unit: string): string {
   return value === true ? `${size}${unit}` : `${+value * size}${unit}`;
 }
 
-function Space({
+function Space<C extends ComponentOrElement = React.ElementType<JSX.IntrinsicElements['div']>>({
   mSize = 'm',
   m,
   mx,
@@ -61,7 +63,7 @@ function Space({
   unit = Space.defaultUnit,
   style,
   ...other
-}: SpaceAllProps): ReturnType<typeof Flex> {
+}: SpaceAllProps<C>): JSX.Element {
   const { mt = my, mr = mx, mb = my, ml = mx, pt = py, pr = px, pb = py, pl = px, ...rest } = other;
 
   const marginSize = useMemo(
@@ -114,16 +116,22 @@ Space.defaultSizes = {
   l: 2,
 } as Record<DefaultSpaceSize, number>;
 
-Space.S = ({ mSize, pSize, ...rest }: SpaceProps & FlexAllProps & React.Attributes) => (
-  <Space mSize="s" pSize="s" {...rest} />
-);
+Space.S = <C extends ComponentOrElement = React.ElementType<JSX.IntrinsicElements['div']>>({
+  mSize,
+  pSize,
+  ...rest
+}: SpaceAllProps<C> & React.Attributes) => <Space mSize="s" pSize="s" {...rest as any} />;
 
-Space.M = ({ mSize, pSize, ...rest }: SpaceProps & FlexAllProps & React.Attributes) => (
-  <Space mSize="m" pSize="m" {...rest} />
-);
+Space.M = <C extends ComponentOrElement = React.ElementType<JSX.IntrinsicElements['div']>>({
+  mSize,
+  pSize,
+  ...rest
+}: SpaceAllProps<C> & React.Attributes) => <Space mSize="m" pSize="m" {...rest as any} />;
 
-Space.L = ({ mSize, pSize, ...rest }: SpaceProps & FlexAllProps & React.Attributes) => (
-  <Space mSize="l" pSize="l" {...rest} />
-);
+Space.L = <C extends ComponentOrElement = React.ElementType<JSX.IntrinsicElements['div']>>({
+  mSize,
+  pSize,
+  ...rest
+}: SpaceAllProps<C> & React.Attributes) => <Space mSize="l" pSize="l" {...rest as any} />;
 
 export default Space;

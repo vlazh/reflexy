@@ -5,11 +5,15 @@ import {
   getCurrentViewSize as getCurrent,
 } from '../mediaQueries';
 import { mergeResponsiveProps, ResponsiveProps } from '../responsive';
-import Flex, { FlexAllProps } from '../Flex';
+import Flex, { FlexAllProps, ComponentOrElement } from '../Flex';
 
-export type ResponsiveFlexAllProps = ResponsiveProps<FlexAllProps> & FlexAllProps;
+export type ResponsiveFlexAllProps<
+  C extends ComponentOrElement = React.ElementType<JSX.IntrinsicElements['div']>
+> = ResponsiveProps<FlexAllProps<C>> & FlexAllProps<C>;
 
-function ResponsiveFlex(props: ResponsiveFlexAllProps): ReturnType<typeof Flex> {
+function ResponsiveFlex<
+  C extends ComponentOrElement = React.ElementType<JSX.IntrinsicElements['div']>
+>(props: ResponsiveFlexAllProps<C>): JSX.Element {
   // Lazy init media queries
   if (!ResponsiveFlex.isInitialized()) {
     ResponsiveFlex.initialize();

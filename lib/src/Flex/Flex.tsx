@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { ContentDistribution } from 'csstype';
 import classNames from 'classnames';
 import css from './Flex.css';
@@ -69,45 +69,154 @@ export interface FlexProps extends Styleable {
   fill?: boolean;
 }
 
-export interface Componentable {
+export type ComponentOrElement<CP extends React.PropsWithChildren<Styleable> = any> =
+  | React.ElementType<CP>
+  | React.ReactElement<CP>;
+
+export type Componentable<C extends ComponentOrElement> = {
   /**
    * Sets custom react component as a container.
    * Component must accept className and style through props. */
-  component?: React.ReactElement<React.PropsWithChildren<Styleable>>;
-}
+  component?: C;
+} & (C extends React.ElementType<infer P>
+  ? (C extends (React.ComponentClass<any> & React.ClassAttributes<infer T>)
+      ? (P & { componentRef?: React.Ref<T> })
+      : P)
+  : {});
+// ? (C extends React.ReactHTMLElement<infer T> ? (P & { componentRef?: React.Ref<T> }) : P)
+// : {});
+// ? (C extends ({
+//     [K in keyof JSX.IntrinsicElements]: P extends JSX.IntrinsicElements[K] ? K : never
+//   }[keyof JSX.IntrinsicElements])
+//     ? (React.PropsWithoutRef<P> & { componentRef?: React.Ref<C> })
+//     : P)
+// : {});
 
-export type FlexAllProps = React.PropsWithChildren<FlexProps & Componentable>;
+export type FlexAllProps<
+  C extends ComponentOrElement = React.ElementType<JSX.IntrinsicElements['div']>
+> = React.PropsWithChildren<FlexProps & Componentable<C>>;
 
 /**
  * Flexbox container.
  * Default style is just `display: flex;`.
  * Example: `<Flex component={<button />} ... />`
+ * Example: `<Flex component="button" ... />`
+ * Example: `<Flex component={MyComponent} ... />`
  */
+export default function Flex<
+  C extends ComponentOrElement = React.ElementType<JSX.IntrinsicElements['div']>
+>({
+  component = 'div',
+  inline,
+  row,
+  column,
+  reverse,
+  wrap,
+  alignContent,
+  alignItems,
+  alignSelf,
+  justifyContent,
+  center,
+  basis,
+  grow,
+  shrink,
+  order,
+  hfill,
+  vfill,
+  fill,
+  className,
+  style,
+  children,
+  ...rest
+}: FlexAllProps<C>): JSX.Element {
+  const cls = useMemo(
+    () =>
+      props2className({
+        inline,
+        row,
+        column,
+        reverse,
+        wrap,
+        alignContent,
+        alignItems,
+        alignSelf,
+        justifyContent,
+        center,
+        basis,
+        grow,
+        shrink,
+        hfill,
+        vfill,
+        fill,
+        className,
+      }),
+    [
+      alignContent,
+      alignItems,
+      alignSelf,
+      basis,
+      center,
+      className,
+      column,
+      fill,
+      grow,
+      hfill,
+      inline,
+      justifyContent,
+      reverse,
+      row,
+      shrink,
+      vfill,
+      wrap,
+    ]
+  );
 
-export default function Flex(props: FlexAllProps): JSX.Element {
-  // render div with flex props
-  if (!props.component) {
+  const stl = useMemo(() => props2style({ order, hfill, vfill }), [hfill, order, vfill]);
+
+  // render custom element with flex props
+  if (React.isValidElement<React.PropsWithChildren<Styleable>>(component)) {
+    const cmp = React.Children.only(component);
     const nextProps: Styleable = {
-      className: props2className(props),
-      style: props2style(props),
+      className: classNames(cls, cmp.props.className),
+      style: style || cmp.props.style ? { ...style, ...stl, ...cmp.props.style } : stl,
     };
-    return React.createElement('div', nextProps, props.children);
+    // for elements such as input which not supports children
+    if (!cmp.props.children && !children) {
+      return React.cloneElement(cmp, nextProps);
+    }
+    return React.cloneElement(cmp, nextProps, children, cmp.props.children);
   }
 
-  // render custom component with flex props
-  const component = React.Children.only(props.component);
-  const nextProps: Styleable = {
-    className: props2className(props, component.props.className),
-    style: props2style(props, component.props.style),
-  };
-  // for elements such as input which not supports children
-  if (!component.props.children && !props.children) {
-    return React.cloneElement(component, nextProps);
-  }
-  return React.cloneElement(component, nextProps, props.children, component.props.children);
+  // render component with flex props
+  return React.createElement(
+    component as React.ElementType<React.PropsWithChildren<Styleable>>,
+    { ...rest, className: cls, style: style ? { ...style, ...stl } : stl },
+    children
+  );
 }
 
-export function props2className(props: FlexProps, extClassName?: string): string {
+export function props2className(
+  props: Pick<
+    FlexProps,
+    | 'column'
+    | 'row'
+    | 'reverse'
+    | 'grow'
+    | 'shrink'
+    | 'wrap'
+    | 'alignItems'
+    | 'center'
+    | 'justifyContent'
+    | 'fill'
+    | 'hfill'
+    | 'vfill'
+    | 'alignContent'
+    | 'alignSelf'
+    | 'inline'
+    | 'basis'
+    | 'className'
+  >
+): string {
   const column = !!props.column;
   const row = !column && !!props.row;
   const reverse = props.reverse ? '-reverse' : '';
@@ -137,25 +246,25 @@ export function props2className(props: FlexProps, extClassName?: string): string
     shrink && css[`flex-shrink--${shrink}`],
     hfill && css['fill-h'],
     vfill && css['fill-v'],
-    props.className,
-    extClassName
+    props.className
   );
 
   return className;
 }
 
-export function props2style(
-  { style, order, hfill, vfill }: FlexProps,
-  extStyle?: React.CSSProperties
-): React.CSSProperties | undefined {
+export function props2style({
+  order,
+  hfill,
+  vfill,
+}: Pick<FlexProps, 'order' | 'hfill' | 'vfill'>): React.CSSProperties | undefined {
   const width =
     hfill != null && typeof hfill === 'number' ? `${Math.min(hfill, 1) * 100}%` : undefined;
   const height =
     vfill != null && typeof vfill === 'number' ? `${Math.min(vfill, 1) * 100}%` : undefined;
 
-  if (order == null && width == null && height == null && extStyle == null) {
-    return style;
+  if (order == null && width == null && height == null) {
+    return undefined;
   }
 
-  return { ...style, order, width, height, ...extStyle };
+  return { order, width, height };
 }
