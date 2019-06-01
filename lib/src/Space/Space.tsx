@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-object-literal-type-assertion */
 import React, { useMemo } from 'react';
-import Flex, { ComponentOrElement, FlexAllProps } from '../Flex';
+import Flex, { ComponentOrElement, FlexAllProps, DefaultComponentType } from '../Flex';
 
 export type DefaultSpaceSize = 's' | 'm' | 'l';
 
@@ -41,15 +41,14 @@ export interface SpaceProps {
   py?: boolean | number;
 }
 
-export type SpaceAllProps<
-  C extends ComponentOrElement = React.ElementType<JSX.IntrinsicElements['div']>
-> = SpaceProps & FlexAllProps<C>;
+export type SpaceAllProps<C extends ComponentOrElement = DefaultComponentType> = SpaceProps &
+  FlexAllProps<C>;
 
 function toCssValue(value: boolean | number, size: number, unit: string): string {
   return value === true ? `${size}${unit}` : `${+value * size}${unit}`;
 }
 
-function Space<C extends ComponentOrElement = React.ElementType<JSX.IntrinsicElements['div']>>({
+function Space<C extends ComponentOrElement = DefaultComponentType>({
   mSize = 'm',
   m,
   mx,
@@ -116,19 +115,19 @@ Space.defaultSizes = {
   l: 2,
 } as Record<DefaultSpaceSize, number>;
 
-Space.S = <C extends ComponentOrElement = React.ElementType<JSX.IntrinsicElements['div']>>({
+Space.S = <C extends ComponentOrElement = DefaultComponentType>({
   mSize,
   pSize,
   ...rest
 }: SpaceAllProps<C> & React.Attributes) => <Space mSize="s" pSize="s" {...rest as any} />;
 
-Space.M = <C extends ComponentOrElement = React.ElementType<JSX.IntrinsicElements['div']>>({
+Space.M = <C extends ComponentOrElement = DefaultComponentType>({
   mSize,
   pSize,
   ...rest
 }: SpaceAllProps<C> & React.Attributes) => <Space mSize="m" pSize="m" {...rest as any} />;
 
-Space.L = <C extends ComponentOrElement = React.ElementType<JSX.IntrinsicElements['div']>>({
+Space.L = <C extends ComponentOrElement = DefaultComponentType>({
   mSize,
   pSize,
   ...rest

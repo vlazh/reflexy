@@ -96,6 +96,8 @@ export type FlexAllProps<
   C extends ComponentOrElement = React.ElementType<JSX.IntrinsicElements['div']>
 > = React.PropsWithChildren<FlexProps & Componentable<C>>;
 
+export type DefaultComponentType = React.ElementType<JSX.IntrinsicElements['div']>;
+
 /**
  * Flexbox container.
  * Default style is just `display: flex;`.
@@ -103,9 +105,7 @@ export type FlexAllProps<
  * Example: `<Flex component="button" ... />`
  * Example: `<Flex component={MyComponent} ... />`
  */
-export default function Flex<
-  C extends ComponentOrElement = React.ElementType<JSX.IntrinsicElements['div']>
->({
+export default function Flex<C extends ComponentOrElement = DefaultComponentType>({
   component = 'div',
   inline,
   row,
