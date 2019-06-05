@@ -78,11 +78,11 @@ export type Componentable<C extends ComponentOrElement> = {
    * Sets custom react component as a container.
    * Component must accept className and style through props. */
   component?: C;
-} & (C extends React.ElementType<infer P>
-  ? (C extends (React.ComponentClass<any> & React.ClassAttributes<infer T>)
-      ? (P & { componentRef?: React.Ref<T> })
-      : P)
-  : {});
+} & (C extends React.ElementType<infer P> ? P : {});
+// ? (C extends (React.ComponentClass<any> & React.ClassAttributes<infer T>)
+//     ? (P & { componentRef?: React.Ref<T> })
+//     : P)
+// : {});
 // ? (C extends React.ReactHTMLElement<infer T> ? (P & { componentRef?: React.Ref<T> }) : P)
 // : {});
 // ? (C extends ({
@@ -92,11 +92,12 @@ export type Componentable<C extends ComponentOrElement> = {
 //     : P)
 // : {});
 
-export type FlexAllProps<
-  C extends ComponentOrElement = React.ElementType<JSX.IntrinsicElements['div']>
-> = React.PropsWithChildren<FlexProps & Componentable<C>>;
-
 export type DefaultComponentType = React.ElementType<JSX.IntrinsicElements['div']>;
+const defaultComponent: DefaultComponentType = 'div';
+
+export type FlexAllProps<
+  C extends ComponentOrElement = DefaultComponentType
+> = React.PropsWithChildren<FlexProps & Componentable<C>>;
 
 /**
  * Flexbox container.
@@ -106,7 +107,7 @@ export type DefaultComponentType = React.ElementType<JSX.IntrinsicElements['div'
  * Example: `<Flex component={MyComponent} ... />`
  */
 export default function Flex<C extends ComponentOrElement = DefaultComponentType>({
-  component = 'div',
+  component = defaultComponent,
   inline,
   row,
   column,

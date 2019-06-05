@@ -1,23 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ComponentOrElement, DefaultComponentType } from '../Flex';
 import Space, { SpaceAllProps } from '../Space';
-import ResponsiveFlex from '../ResponsiveFlex';
-import { mergeResponsiveProps, ResponsiveProps } from '../responsive';
+import Responsive, { ResponsiveProps, mergeResponsiveProps } from '../Responsive';
 
 export type ResponsiveSpaceAllProps<
   C extends ComponentOrElement = DefaultComponentType
 > = ResponsiveProps<SpaceAllProps<C>> & SpaceAllProps<C>;
 
-function ResponsiveSpace<C extends ComponentOrElement = DefaultComponentType>(
+export default function ResponsiveSpace<C extends ComponentOrElement = DefaultComponentType>(
   props: ResponsiveSpaceAllProps<C>
 ): JSX.Element {
-  // Lazy init media queries
-  if (!ResponsiveFlex.isInitialized()) {
-    ResponsiveFlex.initialize();
-  }
+  useEffect(() => {
+    // Lazy init media queries
+    if (!Responsive.isInitialized()) {
+      Responsive.initialize();
+    }
+  }, []);
 
   const mergedProps = mergeResponsiveProps(props);
   return <Space {...mergedProps} />;
 }
-
-export default ResponsiveSpace;

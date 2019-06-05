@@ -119,18 +119,18 @@ Space.S = <C extends ComponentOrElement = DefaultComponentType>({
   mSize,
   pSize,
   ...rest
-}: SpaceAllProps<C> & React.Attributes) => <Space mSize="s" pSize="s" {...rest as any} />;
+}: SpaceAllProps<C> & React.Attributes) => <Space mSize="s" pSize="s" {...rest} />;
 
 Space.M = <C extends ComponentOrElement = DefaultComponentType>({
   mSize,
   pSize,
   ...rest
-}: SpaceAllProps<C> & React.Attributes) => <Space mSize="m" pSize="m" {...rest as any} />;
+}: SpaceAllProps<C> & React.Attributes) => <Space mSize="m" pSize="m" {...rest} />;
 
 Space.L = <C extends ComponentOrElement = DefaultComponentType>({
   mSize,
   pSize,
   ...rest
-}: SpaceAllProps<C> & React.Attributes) => <Space mSize="l" pSize="l" {...rest as any} />;
+}: SpaceAllProps<C> & React.Attributes) => <Space mSize="l" pSize="l" {...rest} />;
 
 export default Space;

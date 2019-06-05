@@ -1,30 +1,21 @@
-import React from 'react';
-import {
-  initMediaQueries,
-  isInitialized as isInit,
-  getCurrentViewSize as getCurrent,
-} from '../mediaQueries';
-import { mergeResponsiveProps, ResponsiveProps } from '../responsive';
+import React, { useEffect } from 'react';
 import Flex, { FlexAllProps, ComponentOrElement, DefaultComponentType } from '../Flex';
+import Responsive, { ResponsiveProps, mergeResponsiveProps } from '../Responsive';
 
 export type ResponsiveFlexAllProps<
   C extends ComponentOrElement = DefaultComponentType
 > = ResponsiveProps<FlexAllProps<C>> & FlexAllProps<C>;
 
-function ResponsiveFlex<C extends ComponentOrElement = DefaultComponentType>(
+export default function ResponsiveFlex<C extends ComponentOrElement = DefaultComponentType>(
   props: ResponsiveFlexAllProps<C>
 ): JSX.Element {
-  // Lazy init media queries
-  if (!ResponsiveFlex.isInitialized()) {
-    ResponsiveFlex.initialize();
-  }
+  useEffect(() => {
+    // Lazy init media queries
+    if (!Responsive.isInitialized()) {
+      Responsive.initialize();
+    }
+  }, []);
 
   const mergedProps = mergeResponsiveProps(props);
   return <Flex {...mergedProps} />;
 }
-
-ResponsiveFlex.isInitialized = isInit;
-ResponsiveFlex.initialize = initMediaQueries;
-ResponsiveFlex.getCurrentViewSize = getCurrent;
-
-export default ResponsiveFlex;
