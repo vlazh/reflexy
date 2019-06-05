@@ -29,12 +29,12 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "copy:configs": "copyfiles package.json README.md LICENSE ./dist/",
-    "copy:css": "copyfiles ./lib/**/*.css --up 2 ./dist/",
-    "build-ts": "npm run clean && tsc --project ./lib/tsconfig.json",
+    "copy:css": "copyfiles ./src/**/*.css --up 1 ./dist/",
+    "build-ts": "npm run clean && tsc --project tsconfig.json",
     "build": "npm run build-ts && npm run copy:css && npm run copy:configs",
-    "build-ts-to-tutoron": "npm run clean && tsc --project ./lib/tsconfig.json --outDir '/home/vladimir/dev/sources/tutoron/node_modules/reflexy/'",
-    "build-ts-to-pwa": "npm run clean && tsc --project ./lib/tsconfig.json --outDir '/home/vladimir/dev/sources/pwa/node_modules/reflexy/'",
-    "build-ts-to-react-components": "npm run clean && tsc --project ./lib/tsconfig.json --outDir '../react-components/node_modules/reflexy/'",
+    "build-ts-to-tutoron": "npm run clean && tsc --project tsconfig.json --outDir '/home/vladimir/dev/sources/tutoron/node_modules/reflexy/'",
+    "build-ts-to-pwa": "npm run clean && tsc --project tsconfig.json --outDir '/home/vladimir/dev/sources/pwa/node_modules/reflexy/'",
+    "build-ts-to-react-components": "npm run clean && tsc --project tsconfig.json --outDir '../react-components/node_modules/reflexy/'",
     "patch-publish": "npm version patch && npm run build && npm publish ./dist/ && git push --follow-tags",
     "minor-publish": "npm version minor && npm run build && npm publish ./dist/ && git push --follow-tags",
     "major-publish": "npm version major && npm run build && npm publish ./dist/ && git push --follow-tags"
