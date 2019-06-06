@@ -69,7 +69,7 @@ export interface FlexProps extends Styleable {
   fill?: boolean;
 }
 
-export type ComponentOrElement<CP extends React.PropsWithChildren<Styleable> = {}> =
+export type ComponentOrElement<CP extends React.PropsWithChildren<Styleable> = any> =
   | React.ElementType<CP>
   | React.ReactElement<CP>;
 
