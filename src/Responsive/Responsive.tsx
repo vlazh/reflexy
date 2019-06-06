@@ -75,7 +75,9 @@ function Responsive<C extends ComponentOrElement = DefaultComponentType>(
     }
   }, []);
 
-  const { component = 'div', children, ...rest } = mergeResponsiveProps(props);
+  const { component = 'div', children, ...rest } = mergeResponsiveProps<
+    React.PropsWithChildren<Componentable<C>>
+  >(props);
 
   if (React.isValidElement<React.PropsWithChildren<{}>>(component)) {
     const cmp = React.Children.only(component);
@@ -86,7 +88,7 @@ function Responsive<C extends ComponentOrElement = DefaultComponentType>(
     return React.cloneElement(cmp, rest, children, cmp.props.children);
   }
 
-  return React.createElement(component, rest, children);
+  return React.createElement(component as React.ComponentType, rest, children);
 }
 
 Responsive.isInitialized = isInit;

@@ -69,7 +69,7 @@ export interface FlexProps extends Styleable {
   fill?: boolean;
 }
 
-export type ComponentOrElement<CP extends React.PropsWithChildren<Styleable> = any> =
+export type ComponentOrElement<CP extends React.PropsWithChildren<Styleable> = {}> =
   | React.ElementType<CP>
   | React.ReactElement<CP>;
 
@@ -78,7 +78,7 @@ export type Componentable<C extends ComponentOrElement> = {
    * Sets custom react component as a container.
    * Component must accept className and style through props. */
   component?: C;
-} & (C extends React.ElementType<infer P> ? P : {});
+} & (C extends React.ElementType ? React.ComponentPropsWithoutRef<C> : {});
 // ? (C extends (React.ComponentClass<any> & React.ClassAttributes<infer T>)
 //     ? (P & { componentRef?: React.Ref<T> })
 //     : P)
@@ -107,7 +107,7 @@ export type FlexAllProps<
  * Example: `<Flex component={MyComponent} ... />`
  */
 export default function Flex<C extends ComponentOrElement = DefaultComponentType>({
-  component = defaultComponent,
+  component = defaultComponent as C,
   inline,
   row,
   column,

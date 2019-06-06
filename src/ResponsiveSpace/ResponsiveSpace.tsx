@@ -17,6 +17,6 @@ export default function ResponsiveSpace<C extends ComponentOrElement = DefaultCo
     }
   }, []);
 
-  const mergedProps = mergeResponsiveProps(props);
+  const mergedProps: any = mergeResponsiveProps(props);
   return <Space {...mergedProps} />;
 }
