@@ -1,5 +1,5 @@
 {
-  "extends": "@vzh/configs/ts/dev.tsconfig.json",
+  "extends": "@vzh/configs/ts/common.tsconfig.json",
   "compilerOptions": {
     "isolatedModules": false,
     "baseUrl": "./src",
