@@ -40,8 +40,6 @@
     "major-publish": "npm version major && npm run build && npm publish ./dist/ && git push --follow-tags"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
     "@types/classnames": "^2.2.9",
     "@types/css-modules": "^1.0.0",
     "@types/react": "^16.8.23",
@@ -49,7 +47,6 @@
     "@typescript-eslint/parser": "^1.11.0",
     "@vzh/configs": "../configs/dist/",
     "@vzh/prettier-config": "^1.1.0",
-    "babel-eslint": "^10.0.2",
     "copyfiles": "^2.1.0",
     "csstype": "^2.6.5",
     "eslint": "^6.0.1",
