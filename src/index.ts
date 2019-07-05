@@ -5,7 +5,3 @@ export { default as Responsive } from './Responsive';
 export * from './Responsive';
 export { default as ResponsiveFlex } from './ResponsiveFlex';
 export * from './ResponsiveFlex';
-export { default as Space } from './Space';
-export * from './Space';
-export { default as ResponsiveSpace } from './ResponsiveSpace';
-export * from './ResponsiveSpace';

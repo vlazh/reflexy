@@ -2,10 +2,8 @@
 
 **Reflexy** is React Components for Flexbox Layout:
 
-- [Flex](#Flex) - flexbox layout.
-- [ResponsiveFlex](#ResponsiveFlex) - flexbox layout with breakpoins. **In Beta**
-- [Space](#Space) - flexbox layout with paddings and margins support.
-- [ResponsiveSpace](#ResponsiveSpace) - Like Space but with breakpoins. **In Beta**
+- [Flex](#Flex) - flexbox layout with paddings and margins support.
+- [ResponsiveFlex](#ResponsiveFlex) - Like Flex but with breakpoins.
 
 and [custom media queries](#mq):
 
@@ -80,6 +78,17 @@ import { Flex } from 'reflexy';
 <Flex row justifyContent="center" componentRef={componentRef}>
   ...
 </Flex>
+
+<Flex ml pb>
+  ...
+</Flex>;
+
+// mSize and pSize are 's'
+<Flex.S>...</Flex.S>;
+// mSize and pSize are 'm'
+<Flex.M>...</Flex.M>;
+// mSize and pSize are 'l'
+<Flex.L>...</Flex.L>;
 ```
 
 ### Flex Props
@@ -108,6 +117,33 @@ Default style is just `display: flex`.
 | `className?`      | `string`                                                                                                                                          | CSS class name.                                                                                                           |
 | `style?`          | `React.CSSProperties`                                                                                                                             | Inline styles.                                                                                                            |
 | `component?`      | `React.ReactElement<P & { className?: strin, style?: React.CSSProperties }>`                                                                      | Sets custom react component as a container. Component must accept className and style through props.                      |
+| `unit?`           | `string`                                                                                                                                          | Measure unit of space                                                                                                     |
+| `mSize?`          | `'s' \| 'm' \| 'l' \| number`                                                                                                                     | Size of `margin`                                                                                                          |
+| `m?`              | `boolean \| number`                                                                                                                               | `margin`. Scaling value.                                                                                                  |
+| `mt?`             | `boolean \| number`                                                                                                                               | `margin-top`                                                                                                              |
+| `mr?`             | `boolean \| number`                                                                                                                               | `margin-right`                                                                                                            |
+| `mb?`             | `boolean \| number`                                                                                                                               | `margin-bottom`                                                                                                           |
+| `ml?`             | `boolean \| number`                                                                                                                               | `margin-left`                                                                                                             |
+| `mx?`             | `boolean \| number`                                                                                                                               | `margin` by x axis: `margin-left` & `margin-right`                                                                        |
+| `my?`             | `boolean \| number`                                                                                                                               | `margin` by y axis: `margin-top` & `margin-bottom`                                                                        |
+| `pSize?`          | `'s' \| 'm' \| 'l' \| number`                                                                                                                     | Size of `padding`                                                                                                         |
+| `p?`              | `boolean \| number`                                                                                                                               | `padding`. Scaling value.                                                                                                 |
+| `pt?`             | `boolean \| number`                                                                                                                               | `padding-top`                                                                                                             |
+| `pr?`             | `boolean \| number`                                                                                                                               | `padding-right`                                                                                                           |
+| `pb?`             | `boolean \| number`                                                                                                                               | `padding-bottom`                                                                                                          |
+| `pl?`             | `boolean \| number`                                                                                                                               | `padding-left`                                                                                                            |
+| `px?`             | `boolean \| number`                                                                                                                               | `padding` by x axis: `padding-left` & `padding-right`                                                                     |
+| `py?`             | `boolean \| number`                                                                                                                               | `padding` by y axis: `padding-top` & `padding-bottom`                                                                     |
+
+### Flex Statics
+
+| Prop           | Type                                | Description                                           |
+| :------------- | :---------------------------------- | :---------------------------------------------------- |
+| `S`            | `Flex`                              | Flex component with `mSize` and `pSize` equal to `s`. |
+| `M`            | `Flex`                              | Flex component with `mSize` and `pSize` equal to `m`. |
+| `L`            | `Flex`                              | Flex component with `mSize` and `pSize` equal to `l`. |
+| `defaultSizes` | `Record<'s' \| 'm' \| 'l', number>` | Space sizes. Default: `{ s: 0.5, m: 1, l: 2 }`.       |
+| `defaultUnit`  | `string`                            | Measure unit of space. Default: `rem`.                |
 
 ## [ResponsiveFlex](#ResponsiveFlex)
 
@@ -133,86 +169,14 @@ import { ResponsiveFlex } from 'reflexy';
 
 All props of [Flex](#Flex) and:
 
-| Prop                 | Type                              | Description                                                                                              |
-| :------------------- | :-------------------------------- | :------------------------------------------------------------------------------------------------------- |
-| `strictBreakpoints?` | `boolean`                         | `true` - don't merge breakpoints props up to current size and use breakpoint props of current size only. |
-| `breakpoints`        | `{ [P in ViewSize]?: FlexProps }` | Props per breakpoint.                                                                                    |
+| Prop                 | Type                                 | Description                                                                                              |
+| :------------------- | :----------------------------------- | :------------------------------------------------------------------------------------------------------- |
+| `strictBreakpoints?` | `boolean`                            | `true` - don't merge breakpoints props up to current size and use breakpoint props of current size only. |
+| `breakpoints`        | `{ [P in ViewSize]?: AllFlexProps }` | Props per breakpoint.                                                                                    |
 
 ### ViewSize
 
 Same as [Custom media queries](#mq) but names without prefix `--`.
-
-## [Space](#Space)
-
-### Usage
-
-```jsx
-import { Space } from 'reflexy';
-
-// mSize and pSize are 's'
-<Space.S>...</Space.S>;
-// mSize and pSize are 'm'
-<Space.M>...</Space.M>;
-// mSize and pSize are 'l'
-<Space.L>...</Space.L>;
-
-<Space ml pb>
-  ...
-</Space>;
-```
-
-### Space Props
-
-All props of [Flex](#Flex) and:
-
-| Prop     | Type                          | Description                                           |
-| :------- | :---------------------------- | :---------------------------------------------------- |
-| `unit?`  | `string`                      | Measure unit of space                                 |
-| `mSize?` | `'s' \| 'm' \| 'l' \| number` | Size of `margin`                                      |
-| `m?`     | `boolean \| number`           | `margin`                                              |
-| `mt?`    | `boolean \| number`           | `margin-top`                                          |
-| `mr?`    | `boolean \| number`           | `margin-right`                                        |
-| `mb?`    | `boolean \| number`           | `margin-bottom`                                       |
-| `ml?`    | `boolean \| number`           | `margin-left`                                         |
-| `mx?`    | `boolean \| number`           | `margin` by x axis: `margin-left` & `margin-right`    |
-| `my?`    | `boolean \| number`           | `margin` by y axis: `margin-top` & `margin-bottom`    |
-| `pSize?` | `'s' \| 'm' \| 'l' \| number` | Size of `padding`                                     |
-| `p?`     | `boolean \| number`           | `padding`                                             |
-| `pt?`    | `boolean \| number`           | `padding-top`                                         |
-| `pr?`    | `boolean \| number`           | `padding-right`                                       |
-| `pb?`    | `boolean \| number`           | `padding-bottom`                                      |
-| `pl?`    | `boolean \| number`           | `padding-left`                                        |
-| `px?`    | `boolean \| number`           | `padding` by x axis: `padding-left` & `padding-right` |
-| `py?`    | `boolean \| number`           | `padding` by y axis: `padding-top` & `padding-bottom` |
-
-### Space Statics
-
-| Prop           | Type                                | Description                                            |
-| :------------- | :---------------------------------- | :----------------------------------------------------- |
-| `S`            | `Space`                             | Space component with `mSize` and `pSize` equal to `s`. |
-| `M`            | `Space`                             | Space component with `mSize` and `pSize` equal to `m`. |
-| `L`            | `Space`                             | Space component with `mSize` and `pSize` equal to `l`. |
-| `defaultSizes` | `Record<'s' \| 'm' \| 'l', number>` | Space sizes. Default: `{ s: 0.5, m: 1, l: 2 }`.        |
-| `defaultUnit`  | `string`                            | Measure unit of space. Default: `rem`.                 |
-
-## [ResponsiveSpace](#ResponsiveSpace)
-
-### Usage
-
-Same as [ResponsiveFlex](#ResponsiveFlex)
-
-### ResponsiveSpace Props
-
-All props of [Space](#Space) and:
-
-| Prop                 | Type                                           | Description                                                                                              |
-| :------------------- | :--------------------------------------------- | :------------------------------------------------------------------------------------------------------- |
-| `strictBreakpoints?` | `boolean`                                      | `true` - don't merge breakpoints props up to current size and use breakpoint props of current size only. |
-| `breakpoints`        | `{ [P in ViewSize]?: SpaceProps & FlexProps }` | Props per breakpoint.                                                                                    |
-
-### ViewSize
-
-Same as in [ResponsiveFlex](#ResponsiveFlex)
 
 ## License
 

@@ -16,6 +16,6 @@ export default function ResponsiveFlex<C extends ComponentOrElement = DefaultCom
     }
   }, []);
 
-  const mergedProps: any = mergeResponsiveProps(props);
+  const mergedProps = mergeResponsiveProps(props);
   return <Flex {...mergedProps} />;
 }

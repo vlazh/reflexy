@@ -2,8 +2,6 @@
 import React from 'react';
 import Flex, { FlexAllProps } from '../Flex';
 import ResponsiveFlex from '../ResponsiveFlex';
-import Space from '../Space';
-import ResponsiveSpace from '../ResponsiveSpace';
 import Responsive from '../Responsive';
 
 // function onAbort(event: React.SyntheticEvent<SVGElement>) {
@@ -31,8 +29,8 @@ export function test() {
       <Flex component={MyClass} />
       {/* <Flex componentRef={keepRef} /> */}
 
-      <Space component={MYY} aa="" />
-      <Space component={<MYY />} />
+      <Flex component={MYY} aa="" />
+      <Flex component={<MYY />} />
 
       {/* <Flex component={<a />} onClick={} />; */}
       {/* <Flex<JSX.IntrinsicElements['button']> component="button" autoFocus />; */}
@@ -47,7 +45,7 @@ export function test() {
       <WidthContainer>123</WidthContainer>
       {/* <Flex component={React.DOM.div} about="" alignItems="baseline" alignContent="center" /> */}
       {/* <Flex component={React.DOM.form} onSubmit={() => {}} alignContent="center" /> */}
-      <Space />
+      <Flex p />
 
       <Responsive component={MYY} breakpoints={{ l: { aa: '' } }} />
       <Responsive component="div" breakpoints={{ l: {} }} />
@@ -56,11 +54,11 @@ export function test() {
       <ResponsiveFlex component={<nav />} breakpoints={{ l: { order: 1 } }} />
       <ResponsiveFlex breakpoints={{ l: undefined }} />
 
-      <ResponsiveSpace
+      <ResponsiveFlex
         component={<nav />}
         breakpoints={{ xl: { justifyContent: 'space-around' } }}
       />
-      <ResponsiveSpace breakpoints={{ xl: { justifyContent: 'space-around' } }} />
+      <ResponsiveFlex breakpoints={{ xl: { justifyContent: 'space-around' } }} />
     </>
   );
 }

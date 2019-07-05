@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-object-literal-type-assertion */
 import React, { useMemo } from 'react';
 import { ContentDistribution } from 'csstype';
 import classNames from 'classnames';
@@ -69,6 +70,45 @@ export interface FlexProps extends Styleable {
   fill?: boolean;
 }
 
+export type DefaultSpaceSize = 's' | 'm' | 'l';
+
+export interface SpaceProps {
+  /** Measure unit of space */
+  unit?: string;
+  /** Size of margin */
+  mSize?: DefaultSpaceSize | number;
+  /** margin */
+  m?: boolean | number;
+  /** margin-top */
+  mt?: boolean | number;
+  /** margin-right */
+  mr?: boolean | number;
+  /** margin-bottom */
+  mb?: boolean | number;
+  /** margin-left */
+  ml?: boolean | number;
+  /** margin by x axis: margin-left & margin-right */
+  mx?: boolean | number;
+  /** margin by y axis: margin-top & margin-bottom */
+  my?: boolean | number;
+  /** Size of padding */
+  pSize?: DefaultSpaceSize | number;
+  /** padding */
+  p?: boolean | number;
+  /** padding-top */
+  pt?: boolean | number;
+  /** padding-right */
+  pr?: boolean | number;
+  /** padding-bottom */
+  pb?: boolean | number;
+  /** padding-left */
+  pl?: boolean | number;
+  /** padding by x axis: padding-left & padding-right */
+  px?: boolean | number;
+  /** padding by y axis: padding-top & padding-bottom */
+  py?: boolean | number;
+}
+
 export type ComponentOrElement<CP extends React.PropsWithChildren<Styleable> = any> =
   | React.ElementType<CP>
   | React.ReactElement<CP>;
@@ -97,7 +137,7 @@ const defaultComponent: DefaultComponentType = 'div';
 
 export type FlexAllProps<
   C extends ComponentOrElement = DefaultComponentType
-> = React.PropsWithChildren<FlexProps & Componentable<C>>;
+> = React.PropsWithChildren<FlexProps & SpaceProps & Componentable<C>>;
 
 /**
  * Flexbox container.
@@ -106,7 +146,7 @@ export type FlexAllProps<
  * Example: `<Flex component="button" ... />`
  * Example: `<Flex component={MyComponent} ... />`
  */
-export default function Flex<C extends ComponentOrElement = DefaultComponentType>({
+function Flex<C extends ComponentOrElement = DefaultComponentType>({
   component = defaultComponent as C,
   inline,
   row,
@@ -128,9 +168,20 @@ export default function Flex<C extends ComponentOrElement = DefaultComponentType
   className,
   style,
   children,
-  ...rest
+
+  mSize = 'm',
+  m,
+  mx,
+  my,
+  pSize = 'm',
+  p,
+  px,
+  py,
+  unit = Flex.defaultUnit,
+
+  ...other
 }: FlexAllProps<C>): JSX.Element {
-  const cls = useMemo(
+  const calcClassName = useMemo(
     () =>
       props2className({
         inline,
@@ -172,14 +223,46 @@ export default function Flex<C extends ComponentOrElement = DefaultComponentType
     ]
   );
 
-  const stl = useMemo(() => props2style({ order, hfill, vfill }), [hfill, order, vfill]);
+  const { mt = my, mr = mx, mb = my, ml = mx, pt = py, pr = px, pb = py, pl = px, ...rest } = other;
+
+  const marginSize = useMemo(() => (typeof mSize === 'number' ? mSize : Flex.defaultSizes[mSize]), [
+    mSize,
+  ]);
+  const paddingSize = useMemo(
+    () => (typeof pSize === 'number' ? pSize : Flex.defaultSizes[pSize]),
+    [pSize]
+  );
+
+  const calcStyles = useMemo(
+    () =>
+      props2style({
+        order,
+        hfill,
+        vfill,
+        m,
+        mSize: marginSize,
+        mb,
+        ml,
+        mr,
+        mt,
+        p,
+        pSize: paddingSize,
+        pb,
+        pl,
+        pr,
+        pt,
+        unit,
+      }),
+    [hfill, order, vfill, m, marginSize, mb, ml, mr, mt, p, paddingSize, pb, pl, pr, pt, unit]
+  );
 
   // render custom element with flex props
   if (React.isValidElement<React.PropsWithChildren<Styleable>>(component)) {
     const cmp = React.Children.only(component);
     const nextProps: Styleable = {
-      className: classNames(cls, cmp.props.className),
-      style: style || cmp.props.style ? { ...style, ...stl, ...cmp.props.style } : stl,
+      className: classNames(calcClassName, cmp.props.className),
+      style:
+        style || cmp.props.style ? { ...style, ...calcStyles, ...cmp.props.style } : calcStyles,
     };
     // for elements such as input which not supports children
     if (!cmp.props.children && !children) {
@@ -191,10 +274,43 @@ export default function Flex<C extends ComponentOrElement = DefaultComponentType
   // render component with flex props
   return React.createElement(
     component as React.ElementType<React.PropsWithChildren<Styleable>>,
-    { ...rest, className: cls, style: style ? { ...style, ...stl } : stl },
+    { ...rest, className: calcClassName, style: style ? { ...style, ...calcStyles } : calcStyles },
     children
   );
 }
+
+/** Default measure of space */
+Flex.defaultUnit = 'rem';
+
+/** Predefined default space sizes */
+Flex.defaultSizes = {
+  /* small size */
+  s: 0.5,
+  /** medium size */
+  m: 1,
+  /** large size */
+  l: 2,
+} as Record<DefaultSpaceSize, number>;
+
+Flex.S = <C extends ComponentOrElement = DefaultComponentType>({
+  mSize,
+  pSize,
+  ...rest
+}: FlexAllProps<C> & React.Attributes) => <Flex mSize="s" pSize="s" {...rest} />;
+
+Flex.M = <C extends ComponentOrElement = DefaultComponentType>({
+  mSize,
+  pSize,
+  ...rest
+}: FlexAllProps<C> & React.Attributes) => <Flex mSize="m" pSize="m" {...rest} />;
+
+Flex.L = <C extends ComponentOrElement = DefaultComponentType>({
+  mSize,
+  pSize,
+  ...rest
+}: FlexAllProps<C> & React.Attributes) => <Flex mSize="l" pSize="l" {...rest} />;
+
+export default Flex;
 
 export function props2className(
   props: Pick<
@@ -257,15 +373,50 @@ export function props2style({
   order,
   hfill,
   vfill,
-}: Pick<FlexProps, 'order' | 'hfill' | 'vfill'>): React.CSSProperties | undefined {
-  const width =
-    hfill != null && typeof hfill === 'number' ? `${Math.min(hfill, 1) * 100}%` : undefined;
-  const height =
-    vfill != null && typeof vfill === 'number' ? `${Math.min(vfill, 1) * 100}%` : undefined;
 
-  if (order == null && width == null && height == null) {
-    return undefined;
-  }
+  m,
+  mSize,
+  mb,
+  ml,
+  mr,
+  mt,
+  p,
+  pSize,
+  pb,
+  pl,
+  pr,
+  pt,
+  unit,
+}: FlexProps &
+  Omit<SpaceProps, 'mSize' | 'pSize' | 'unit'> & {
+    mSize: number;
+    pSize: number;
+    unit: string;
+  }): React.CSSProperties {
+  return Object.entries({
+    order: order != null ? order : undefined,
+    width: hfill != null && typeof hfill === 'number' ? `${Math.min(hfill, 1) * 100}%` : undefined,
+    height: vfill != null && typeof vfill === 'number' ? `${Math.min(vfill, 1) * 100}%` : undefined,
 
-  return { order, width, height };
+    margin: m != null ? toCssValue(m, mSize, unit) : undefined,
+    marginTop: mt != null ? toCssValue(mt, mSize, unit) : undefined,
+    marginRight: mr != null ? toCssValue(mr, mSize, unit) : undefined,
+    marginBottom: mb != null ? toCssValue(mb, mSize, unit) : undefined,
+    marginLeft: ml != null ? toCssValue(ml, mSize, unit) : undefined,
+
+    padding: p != null ? toCssValue(p, pSize, unit) : undefined,
+    paddingTop: pt != null ? toCssValue(pt, pSize, unit) : undefined,
+    paddingRight: pr != null ? toCssValue(pr, pSize, unit) : undefined,
+    paddingBottom: pb != null ? toCssValue(pb, pSize, unit) : undefined,
+    paddingLeft: pl != null ? toCssValue(pl, pSize, unit) : undefined,
+  })
+    .filter(([_, v]) => v != null)
+    .reduce((acc, [k, v]) => {
+      acc[k] = v;
+      return acc;
+    }, {});
+}
+
+export function toCssValue(value: boolean | number, size: number, unit: string): string {
+  return value === true ? `${size}${unit}` : `${+value * size}${unit}`;
 }
