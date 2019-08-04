@@ -42,20 +42,19 @@
   "devDependencies": {
     "@types/classnames": "^2.2.9",
     "@types/css-modules": "^1.0.0",
-    "@types/react": "^16.8.23",
-    "@typescript-eslint/eslint-plugin": "^1.11.0",
-    "@typescript-eslint/parser": "^1.11.0",
-    "@vzh/configs": "../configs/dist/",
-    "@vzh/prettier-config": "^1.1.0",
-    "copyfiles": "^2.1.0",
-    "csstype": "^2.6.5",
-    "eslint": "^6.0.1",
+    "@types/react": "^16.8.24",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
+    "@vzh/configs": "^3.37.0",
+    "copyfiles": "^2.1.1",
+    "csstype": "^2.6.6",
+    "eslint": "^6.1.0",
     "eslint-config-airbnb": "^17.1.1",
     "eslint-config-prettier": "^6.0.0",
-    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-react": "^7.14.2",
+    "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.6.1",
     "prettier": "^1.18.2",
     "prettier-stylelint": "^0.4.2",
@@ -65,7 +64,7 @@
     "stylelint-config-css-modules": "^1.4.0",
     "stylelint-config-standard": "^18.3.0",
     "stylelint-prettier": "^1.1.1",
-    "typescript": "^3.5.2"
+    "typescript": "^3.5.3"
   },
   "dependencies": {
     "classnames": ">= 2.2"
