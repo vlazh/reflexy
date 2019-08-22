@@ -75,7 +75,15 @@ import { Flex } from 'reflexy';
   ...
 </Flex>
 
+<Flex row justifyContent="center" component="button" onClick={...}>
+  ...
+</Flex>
+
 <Flex row justifyContent="center" componentRef={componentRef}>
+  ...
+</Flex>
+
+<Flex row justifyContent="center" component={CustomComponent} componentProp1={...} componentProp2={...}>
   ...
 </Flex>
 
@@ -91,7 +99,7 @@ import { Flex } from 'reflexy';
 <Flex.L>...</Flex.L>;
 ```
 
-### Flex Props
+### Props
 
 Default style is just `display: flex`.
 
@@ -116,7 +124,7 @@ Default style is just `display: flex`.
 | `fill?`           | `boolean`                                                                                                                                         | Stretch by vertical and horizontal.                                                                                       |
 | `className?`      | `string`                                                                                                                                          | CSS class name.                                                                                                           |
 | `style?`          | `React.CSSProperties`                                                                                                                             | Inline styles.                                                                                                            |
-| `component?`      | `React.ReactElement<P & { className?: strin, style?: React.CSSProperties }>`                                                                      | Sets custom react component as a container. Component must accept className and style through props.                      |
+| `component?`      | `React.ReactElement<P> | React.ElementType<P>`                                                                                                    | Sets custom react component as a container. Component must accept className and style through props.                      |
 | `unit?`           | `string`                                                                                                                                          | Measure unit of space                                                                                                     |
 | `mSize?`          | `'s' \| 'm' \| 'l' \| number`                                                                                                                     | Size of `margin`                                                                                                          |
 | `m?`              | `boolean \| number`                                                                                                                               | `margin`. Scaling value.                                                                                                  |
@@ -165,7 +173,7 @@ import { ResponsiveFlex } from 'reflexy';
 </ResponsiveFlex>;
 ```
 
-### ResponsiveFlex Props
+### Props
 
 All props of [Flex](#Flex) and:
 
