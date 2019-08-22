@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-object-literal-type-assertion */
 import React, { useMemo } from 'react';
 import { ContentDistribution } from 'csstype';
 import classNames from 'classnames';
@@ -135,9 +134,11 @@ export type Componentable<C extends ComponentOrElement> = {
 export type DefaultComponentType = React.ElementType<JSX.IntrinsicElements['div']>;
 const defaultComponent: DefaultComponentType = 'div';
 
+export type FlexAndSpaceProps = FlexProps & SpaceProps;
+
 export type FlexAllProps<
   C extends ComponentOrElement = DefaultComponentType
-> = React.PropsWithChildren<FlexProps & SpaceProps & Componentable<C>>;
+> = React.PropsWithChildren<FlexAndSpaceProps & Componentable<C>>;
 
 /**
  * Flexbox container.
