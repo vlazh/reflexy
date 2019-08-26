@@ -117,19 +117,12 @@ export type Componentable<C extends ComponentOrElement> = {
    * Sets custom react component as a container.
    * Component must accept className and style through props. */
   component?: C;
-} & (C extends React.ElementType ? React.ComponentPropsWithoutRef<C> : {});
-// ? (C extends (React.ComponentClass<any> & React.ClassAttributes<infer T>)
-//     ? (P & { componentRef?: React.Ref<T> })
-//     : P)
-// : {});
-// ? (C extends React.ReactHTMLElement<infer T> ? (P & { componentRef?: React.Ref<T> }) : P)
-// : {});
-// ? (C extends ({
-//     [K in keyof JSX.IntrinsicElements]: P extends JSX.IntrinsicElements[K] ? K : never
-//   }[keyof JSX.IntrinsicElements])
-//     ? (React.PropsWithoutRef<P> & { componentRef?: React.Ref<C> })
-//     : P)
-// : {});
+} & (C extends React.ElementType
+  ? React.ComponentPropsWithoutRef<C> &
+      ('ref' extends keyof React.ComponentPropsWithRef<C>
+        ? { componentRef?: React.ComponentPropsWithRef<C>['ref'] }
+        : {})
+  : {});
 
 export type DefaultComponentType = React.ElementType<JSX.IntrinsicElements['div']>;
 const defaultComponent: DefaultComponentType = 'div';
@@ -257,7 +250,7 @@ function Flex<C extends ComponentOrElement = DefaultComponentType>({
     [hfill, order, vfill, m, marginSize, mb, ml, mr, mt, p, paddingSize, pb, pl, pr, pt, unit]
   );
 
-  // render custom element with flex props
+  // Render custom element with flex props
   if (React.isValidElement<React.PropsWithChildren<Styleable>>(component)) {
     const cmp = React.Children.only(component);
     const nextProps: Styleable = {
@@ -272,10 +265,18 @@ function Flex<C extends ComponentOrElement = DefaultComponentType>({
     return React.cloneElement(cmp, nextProps, children, cmp.props.children);
   }
 
-  // render component with flex props
+  // Render component with flex props
+
+  const { componentRef, ...propsWithoutRef } = rest as (typeof rest & { componentRef?: any });
+
   return React.createElement(
     component as React.ElementType<React.PropsWithChildren<Styleable>>,
-    { ...rest, className: calcClassName, style: style ? { ...style, ...calcStyles } : calcStyles },
+    {
+      ...propsWithoutRef,
+      className: calcClassName,
+      style: style ? { ...style, ...calcStyles } : calcStyles,
+      ref: componentRef,
+    },
     children
   );
 }

@@ -16,7 +16,8 @@ export interface ResponsiveProps<A extends object> {
 
 export type ResponsiveAllProps<
   C extends ComponentOrElement = DefaultComponentType
-> = ResponsiveProps<Componentable<C>> & React.PropsWithChildren<Componentable<C>>;
+> = ResponsiveProps<React.PropsWithChildren<Componentable<C>>> &
+  React.PropsWithChildren<Componentable<C>>;
 
 const sizesMap: Record<ViewSize, number> = {
   [ViewSize.xxs]: 1,
@@ -88,7 +89,7 @@ function Responsive<C extends ComponentOrElement = DefaultComponentType>(
     return React.cloneElement(cmp, rest, children, cmp.props.children);
   }
 
-  return React.createElement(component as React.ComponentType, rest, children);
+  return React.createElement(component as React.ElementType, rest, children);
 }
 
 Responsive.isInitialized = isInit;

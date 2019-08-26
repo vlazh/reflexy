@@ -16,6 +16,6 @@ export default function ResponsiveFlex<C extends ComponentOrElement = DefaultCom
     }
   }, []);
 
-  const mergedProps = mergeResponsiveProps(props);
-  return <Flex {...mergedProps} />;
+  const { children, ...rest } = mergeResponsiveProps(props);
+  return React.createElement(Flex, rest, children);
 }
