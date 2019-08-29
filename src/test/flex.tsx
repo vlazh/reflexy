@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 import Flex, { FlexAllProps } from '../Flex';
+import FlexWithRef from '../FlexWithRef';
 import ResponsiveFlex from '../ResponsiveFlex';
 import Responsive from '../Responsive';
 
@@ -27,7 +28,10 @@ export function test() {
       <Flex component={<MYY />} />
       <Flex component={MYY} />
       <Flex component={MyClass} />
-      {/* <Flex componentRef={keepRef} /> */}
+      <Flex componentRef={keepRef} />
+
+      <FlexWithRef component={MyClass} aa="" ref={(el: MyClass | null) => el} />
+      <FlexWithRef component="div" ref={keepRef} />
 
       <Flex component={MYY} aa="" />
       <Flex component={<MYY />} />
