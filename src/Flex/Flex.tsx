@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { ContentDistribution } from 'csstype';
-import classNames from 'classnames';
 import css from './Flex.css';
 
 type Globals = 'inherit' | 'initial' | 'unset';
@@ -254,7 +253,7 @@ function Flex<C extends ComponentOrElement = DefaultComponentType>({
   if (React.isValidElement<React.PropsWithChildren<Styleable>>(component)) {
     const cmp = React.Children.only(component);
     const nextProps: Styleable = {
-      className: classNames(calcClassName, cmp.props.className),
+      className: `${calcClassName}${cmp.props.className ? ` ${cmp.props.className}` : ''}`,
       style:
         style || cmp.props.style ? { ...style, ...calcStyles, ...cmp.props.style } : calcStyles,
     };
@@ -351,7 +350,7 @@ export function props2className(
   const hfill = props.hfill == null ? fill : typeof props.hfill === 'boolean' && props.hfill;
   const vfill = props.vfill == null ? fill : typeof props.vfill === 'boolean' && props.vfill;
 
-  const className = classNames(
+  const className = [
     css[`display--${props.inline ? 'inline-flex' : 'flex'}`],
     row && css[`row${reverse}`],
     column && css[`column${reverse}`],
@@ -365,8 +364,10 @@ export function props2className(
     shrink && css[`flex-shrink--${shrink}`],
     hfill && css['fill-h'],
     vfill && css['fill-v'],
-    props.className
-  );
+    props.className,
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return className;
 }
