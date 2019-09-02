@@ -235,21 +235,21 @@ function Flex<C extends ComponentOrElement = DefaultComponentType>({
         order,
         hfill,
         vfill,
-        m,
+        unit,
         mSize: marginSize,
+        m,
         mb,
         ml,
         mr,
         mt,
-        p,
         pSize: paddingSize,
+        p,
         pb,
         pl,
         pr,
         pt,
-        unit,
       }),
-    [hfill, order, vfill, m, marginSize, mb, ml, mr, mt, p, paddingSize, pb, pl, pr, pt, unit]
+    [hfill, m, marginSize, mb, ml, mr, mt, order, p, paddingSize, pb, pl, pr, pt, unit, vfill]
   );
 
   // Render custom element with flex props
@@ -380,19 +380,19 @@ export function props2style({
   hfill,
   vfill,
 
-  m,
+  unit,
   mSize,
+  m,
   mb,
   ml,
   mr,
   mt,
-  p,
   pSize,
+  p,
   pb,
   pl,
   pr,
   pt,
-  unit,
 }: FlexProps &
   Omit<SpaceProps, 'mSize' | 'pSize' | 'unit'> & {
     mSize: number;
