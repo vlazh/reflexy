@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import Flex, { FlexAllProps } from '../Flex';
+import Flex, { FlexAllProps, FlexComponentProps } from '../Flex';
 import FlexWithRef from '../FlexWithRef';
 import ResponsiveFlex from '../ResponsiveFlex';
 import Responsive from '../Responsive';
@@ -80,6 +80,14 @@ class MyClass extends React.Component<MYYProps> {}
 
 function WidthContainer({ className, ...rest }: FlexAllProps) {
   return <Flex className={className} {...rest} />;
+}
+
+export function Component2({ className, ...rest }: FlexComponentProps) {
+  return <Flex className={className} {...rest} />;
+}
+
+export function Component3({ type, ...rest }: FlexComponentProps<'button'>) {
+  return <Flex component="button" type={type} {...rest} />;
 }
 
 export class B extends React.Component {

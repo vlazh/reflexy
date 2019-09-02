@@ -128,6 +128,9 @@ const defaultComponent: DefaultComponentType = 'div';
 
 export type FlexAndSpaceProps = FlexProps & SpaceProps;
 
+export type FlexComponentProps<C extends ComponentOrElement = any> = FlexAndSpaceProps &
+  (undefined extends C ? unknown : Omit<Componentable<C>, 'component'>);
+
 export type FlexAllProps<
   C extends ComponentOrElement = DefaultComponentType
 > = React.PropsWithChildren<FlexAndSpaceProps & Componentable<C>>;
