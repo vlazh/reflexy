@@ -258,7 +258,7 @@ function Flex<C extends ComponentOrElement = DefaultComponentType>({
     const nextProps: Styleable = {
       className: `${calcClassName}${cmp.props.className ? ` ${cmp.props.className}` : ''}`,
       style:
-        style || cmp.props.style ? { ...style, ...calcStyles, ...cmp.props.style } : calcStyles,
+        style || cmp.props.style ? { ...cmp.props.style, ...calcStyles, ...style } : calcStyles,
     };
     // for elements such as input which not supports children
     if (!cmp.props.children && !children) {
@@ -276,7 +276,7 @@ function Flex<C extends ComponentOrElement = DefaultComponentType>({
     {
       ...propsWithoutRef,
       className: calcClassName,
-      style: style ? { ...style, ...calcStyles } : calcStyles,
+      style: style ? { ...calcStyles, ...style } : calcStyles,
       ref: componentRef,
     },
     children
