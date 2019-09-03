@@ -43,8 +43,8 @@
   "devDependencies": {
     "@types/css-modules": "^1.0.0",
     "@types/react": "^16.9.2",
-    "@typescript-eslint/eslint-plugin": "^2.0.0",
-    "@typescript-eslint/parser": "^2.0.0",
+    "@typescript-eslint/eslint-plugin": "^2.1.0",
+    "@typescript-eslint/parser": "^2.1.0",
     "@vzh/configs": "^3.37.7",
     "copyfiles": "^2.1.1",
     "csstype": "^2.6.6",
