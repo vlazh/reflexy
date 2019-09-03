@@ -15,6 +15,10 @@
   width: 100%;
 }
 
+.min-width-0 {
+  min-width: 0;
+}
+
 /* COLUMN */
 .column {
   flex-direction: column;

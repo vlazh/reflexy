@@ -66,6 +66,12 @@ export interface FlexProps extends Styleable {
   vfill?: boolean | number;
   /** Stretch by vertical and horizontal. */
   fill?: boolean;
+  /**
+   * Sets `min-width: 0`.
+   * By default, a flex item cannot be smaller than the size of its content.
+   * The initial setting on flex items is min-width: auto.
+   * One way to enable flex items to shrink past their content is to set a flex item to min-width: 0. */
+  widthByFlex?: boolean;
 }
 
 export type DefaultSpaceSize = 's' | 'm' | 'l';
@@ -161,6 +167,7 @@ function Flex<C extends ComponentOrElement = DefaultComponentType>({
   hfill,
   vfill,
   fill,
+  widthByFlex,
   className,
   style,
   children,
@@ -196,6 +203,7 @@ function Flex<C extends ComponentOrElement = DefaultComponentType>({
         hfill,
         vfill,
         fill,
+        widthByFlex,
         className,
       }),
     [
@@ -215,6 +223,7 @@ function Flex<C extends ComponentOrElement = DefaultComponentType>({
       row,
       shrink,
       vfill,
+      widthByFlex,
       wrap,
     ]
   );
@@ -336,6 +345,7 @@ export function props2className(
     | 'inline'
     | 'basis'
     | 'className'
+    | 'widthByFlex'
   >
 ): string {
   const column = !!props.column;
@@ -367,6 +377,7 @@ export function props2className(
     shrink && css[`flex-shrink--${shrink}`],
     hfill && css['fill-h'],
     vfill && css['fill-v'],
+    props.widthByFlex && css['min-width-0'],
     props.className,
   ]
     .filter(Boolean)
