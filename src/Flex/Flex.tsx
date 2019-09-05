@@ -13,7 +13,7 @@ export type AlignSelf = AlignItems | 'auto';
 
 export type AlignContent = Globals | ContentDistribution | FlexPosition;
 
-export type FlexBasis = Globals | 'auto' | 'content';
+export type FlexBasis = Globals | 'auto' | 'content' | number;
 
 export type FlexWrap = Globals | 'nowrap' | 'wrap' | 'wrap-reverse';
 
@@ -359,6 +359,7 @@ export function props2className(
   const wrap = (props.wrap === false && 'nowrap') || (props.wrap === true && 'wrap') || props.wrap;
   const alignItems = props.alignItems || (props.center && 'center');
   const justifyContent = props.justifyContent || (props.center && 'center');
+  const basis = (props.basis === 0 || typeof props.basis === 'string') && String(props.basis);
   const fill = typeof props.fill === 'boolean' ? props.fill : undefined;
   const hfill = props.hfill == null ? fill : typeof props.hfill === 'boolean' && props.hfill;
   const vfill = props.vfill == null ? fill : typeof props.vfill === 'boolean' && props.vfill;
@@ -372,7 +373,7 @@ export function props2className(
     props.alignContent && css[`align-content--${props.alignContent}`],
     props.alignSelf && css[`align-self--${props.alignSelf}`],
     justifyContent && css[`justify-content--${justifyContent}`],
-    props.basis && css[`flex-basis--${props.basis}`],
+    basis && css[`flex-basis--${basis}`],
     grow && css[`flex-grow--${grow}`],
     shrink && css[`flex-shrink--${shrink}`],
     hfill && css['fill-h'],
@@ -387,6 +388,7 @@ export function props2className(
 }
 
 export function props2style({
+  basis,
   order,
   hfill,
   vfill,
@@ -411,9 +413,10 @@ export function props2style({
     unit: string;
   }): React.CSSProperties {
   return Object.entries({
+    flexBasis: typeof basis === 'number' && basis !== 0 ? basis : undefined,
     order: order != null ? order : undefined,
-    width: hfill != null && typeof hfill === 'number' ? `${Math.min(hfill, 1) * 100}%` : undefined,
-    height: vfill != null && typeof vfill === 'number' ? `${Math.min(vfill, 1) * 100}%` : undefined,
+    width: typeof hfill === 'number' ? `${Math.min(hfill, 1) * 100}%` : undefined,
+    height: typeof vfill === 'number' ? `${Math.min(vfill, 1) * 100}%` : undefined,
 
     margin: m != null ? toCssValue(m, mSize, unit) : undefined,
     marginTop: mt != null ? toCssValue(mt, mSize, unit) : undefined,
@@ -427,7 +430,7 @@ export function props2style({
     paddingBottom: pb != null ? toCssValue(pb, pSize, unit) : undefined,
     paddingLeft: pl != null ? toCssValue(pl, pSize, unit) : undefined,
   })
-    .filter(([_, v]) => v != null)
+    .filter(([, v]) => v != null)
     .reduce((acc, [k, v]) => {
       acc[k] = v;
       return acc;
