@@ -130,7 +130,6 @@ export type Componentable<C extends ComponentOrElement> = {
   : {});
 
 export type DefaultComponentType = React.ElementType<JSX.IntrinsicElements['div']>;
-const defaultComponent: DefaultComponentType = 'div';
 
 export type FlexAndSpaceProps = FlexProps & SpaceProps;
 
@@ -149,7 +148,7 @@ export type FlexAllProps<
  * Example: `<Flex component={MyComponent} ... />`
  */
 function Flex<C extends ComponentOrElement = DefaultComponentType>({
-  component = defaultComponent as C,
+  component = 'div' as C,
   inline,
   row,
   column,
@@ -304,24 +303,6 @@ Flex.defaultSizes = {
   /** large size */
   l: 2,
 } as Record<DefaultSpaceSize, number>;
-
-Flex.S = <C extends ComponentOrElement = DefaultComponentType>({
-  mSize,
-  pSize,
-  ...rest
-}: FlexAllProps<C> & React.Attributes) => <Flex mSize="s" pSize="s" {...rest} />;
-
-Flex.M = <C extends ComponentOrElement = DefaultComponentType>({
-  mSize,
-  pSize,
-  ...rest
-}: FlexAllProps<C> & React.Attributes) => <Flex mSize="m" pSize="m" {...rest} />;
-
-Flex.L = <C extends ComponentOrElement = DefaultComponentType>({
-  mSize,
-  pSize,
-  ...rest
-}: FlexAllProps<C> & React.Attributes) => <Flex mSize="l" pSize="l" {...rest} />;
 
 export default Flex;
 
