@@ -4,12 +4,13 @@ import Flex, { FlexAllProps, ComponentOrElement, DefaultComponentType } from './
 const FlexWithRef = React.forwardRef((props: FlexAllProps<any>, ref: React.Ref<any>) => {
   return <Flex {...props} componentRef={ref} />;
 }) as <C extends ComponentOrElement = DefaultComponentType>(
-  props: Omit<FlexAllProps<C>, 'componentRef'> & {
+  props: Omit<FlexAllProps<C>, 'component' | 'componentRef'> & {
+    component: NonNullable<FlexAllProps<C>['component']>;
     ref?: C extends React.ElementType
       ? ('ref' extends keyof React.ComponentPropsWithRef<C>
           ? React.ComponentPropsWithRef<C>['ref']
-          : React.Ref<unknown>)
-      : React.Ref<unknown>;
+          : never)
+      : never;
   }
 ) => JSX.Element;
 

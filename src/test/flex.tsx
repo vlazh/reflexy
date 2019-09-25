@@ -30,8 +30,9 @@ export function test() {
       <Flex component={MyClass} />
       <Flex componentRef={keepRef} />
 
-      <FlexWithRef component={MyClass} aa="" ref={(el: MyClass | null) => el} />
-      <FlexWithRef component="div" ref={keepRef} />
+      <FlexWithRef component={MyClass} aa="" ref={el => el} />
+      <FlexWithRef component="a" ref={el => el} />
+      <FlexWithRef component="div" ref={el => el} />
 
       <Flex component={MYY} aa="" />
       <Flex component={<MYY />} />
