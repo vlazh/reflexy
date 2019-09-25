@@ -3,6 +3,8 @@
 **Reflexy** is React Components for Flexbox Layout:
 
 - [Flex](#Flex) - flexbox layout with paddings and margins support.
+- [FlexWithRef] - Flex with forwarded ref.
+- [Responsive] - Container with breakpoins.
 - [ResponsiveFlex](#ResponsiveFlex) - Like Flex but with breakpoins.
 
 and [custom media queries](#mq):
