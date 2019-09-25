@@ -304,6 +304,26 @@ Flex.defaultSizes = {
   l: 2,
 } as Record<DefaultSpaceSize, number>;
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+Flex.S = <C extends ComponentOrElement = DefaultComponentType>({
+  mSize,
+  pSize,
+  ...rest
+}: FlexAllProps<C>) => <Flex mSize="s" pSize="s" {...rest} />;
+
+Flex.M = <C extends ComponentOrElement = DefaultComponentType>({
+  mSize,
+  pSize,
+  ...rest
+}: FlexAllProps<C>) => <Flex mSize="m" pSize="m" {...rest} />;
+
+Flex.L = <C extends ComponentOrElement = DefaultComponentType>({
+  mSize,
+  pSize,
+  ...rest
+}: FlexAllProps<C>) => <Flex mSize="l" pSize="l" {...rest} />;
+/* eslint-enable @typescript-eslint/no-unused-vars */
+
 export default Flex;
 
 export function props2className(
