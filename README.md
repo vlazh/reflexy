@@ -6,6 +6,7 @@
 - [FlexWithRef] - Flex with forwarded ref.
 - [Responsive] - Container with breakpoins.
 - [ResponsiveFlex](#ResponsiveFlex) - Like Flex but with breakpoins.
+- [TweakableElementWrapper] - Wrapper for react element in order to use it with Flex component prop.
 
 and [custom media queries](#mq):
 
@@ -67,13 +68,13 @@ npm install --save react reflexy
 ### Usage
 
 ```jsx
-import { Flex } from 'reflexy';
+import { Flex, TweakableElementWrapper } from 'reflexy';
 
 <Flex row justifyContent="center">
   ...
 </Flex>
 
-<Flex row justifyContent="center" component={<button />}>
+<Flex row justifyContent="center" component={TweakableElementWrapper} element={<button />}>
   ...
 </Flex>
 
@@ -127,8 +128,8 @@ Default style is just `display: flex`.
 | `widthByFlex?`    | `boolean`                                                                                                                                         | Sets `min-width: 0`. By default, a flex item cannot be smaller than the size of its content. The initial setting on flex items is min-width: auto. One way to enable flex items to shrink past their content is to set a flex item to min-width: 0. |
 | `className?`      | `string`                                                                                                                                          | CSS class name.                                                                                                                                                                                                                                     |
 | `style?`          | `React.CSSProperties`                                                                                                                             | Inline styles.                                                                                                                                                                                                                                      |
-| `component?`      | `React.ReactElement<P> | React.ElementType<P>`                                                                                                    | Sets custom react component as a container. Component must accept className and style through props.                                                                                                                                                |
-| `componentRef?`   | `React.Ref`                                                                                                                                       | Uses when `component` is `React.ElementType` and `component` provides `ref`.                                                                                                                                                                        |
+| `component?`      | `React.ElementType<P>`                                                                                                                            | Sets custom react component as a container. Component must accept className and style through props.                                                                                                                                                |
+| `componentRef?`   | `React.Ref`                                                                                                                                       | Uses when `component` provides `ref`.                                                                                                                                                                                                               |
 | `unit?`           | `string`                                                                                                                                          | Measure unit of space                                                                                                                                                                                                                               |
 | `mSize?`          | `'s' \| 'm' \| 'l' \| number`                                                                                                                     | Size of `margin`                                                                                                                                                                                                                                    |
 | `m?`              | `boolean \| number`                                                                                                                               | `margin`. Scaling value.                                                                                                                                                                                                                            |
