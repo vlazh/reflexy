@@ -4,6 +4,7 @@ import Flex, { FlexAllProps, FlexComponentProps } from '../Flex';
 import FlexWithRef from '../FlexWithRef';
 import ResponsiveFlex from '../ResponsiveFlex';
 import Responsive from '../Responsive';
+import TweakableElementWrapper from '../TweakableElementWrapper';
 
 // function onAbort(event: React.SyntheticEvent<SVGElement>) {
 function onAbort(event: React.SyntheticEvent<HTMLDivElement>) {
@@ -22,22 +23,23 @@ export function test() {
     <>
       {/* <Flex alignContent={{ phone: 'flex-start', phoneM: "space-around" }} />; */}
       {/* <Flex component={MYY} />; */}
-      {/* <Flex component="div" onAbort={} />; */}
+      <Flex component="div" onAbort={onAbort} />
       {/* <Flex component={<MYY />} componentRef={keepRef} />; */}
-      <Flex component={<div ref={keepRef} />} />
-      <Flex component={<MYY />} />
-      <Flex component={MYY} />
-      <Flex component={MyClass} />
+      {/* <Flex component={<div ref={keepRef} />} /> */}
+      <Flex component={TweakableElementWrapper} element={<MYY />} />
+      <Flex component={MYY} myy />
+      <Flex component={MyClass} myy />
       <Flex componentRef={keepRef} />
 
       <Flex.S key="1" />
 
       <FlexWithRef component={MyClass} aa="" ref={el => el} />
-      <FlexWithRef component="a" ref={el => el} />
+      <FlexWithRef component="a" href="" ref={el => el} />
       <FlexWithRef component="div" ref={el => el} />
+      <FlexWithRef component="button" ref={el => el} />
 
       <Flex component={MYY} aa="" />
-      <Flex component={<MYY />} />
+      {/* <Flex component={<MYY />} /> */}
 
       {/* <Flex component={<a />} onClick={} />; */}
       {/* <Flex<JSX.IntrinsicElements['button']> component="button" autoFocus />; */}
@@ -46,8 +48,8 @@ export function test() {
         <svg />
       </Flex> */}
       {/* <Flex componentRef={keepRef} aaaa="" />; */}
-      <Flex order={1} component={<div onAbort={onAbort} />} />
-      <Flex component={<div />}>123</Flex>
+      {/* <Flex order={1} component={<div onAbort={onAbort} />} /> */}
+      {/* <Flex component={<div />}>123</Flex> */}
       <Flex>123</Flex>
       <WidthContainer>123</WidthContainer>
       {/* <Flex component={React.DOM.div} about="" alignItems="baseline" alignContent="center" /> */}
@@ -58,13 +60,13 @@ export function test() {
       <Responsive component="div" breakpoints={{ l: {} }} />
 
       <ResponsiveFlex component={MYY} breakpoints={{ l: { order: 1 } }} />
-      <ResponsiveFlex component={<nav />} breakpoints={{ l: { order: 1 } }} />
+      {/* <ResponsiveFlex component={<nav />} breakpoints={{ l: { order: 1 } }} /> */}
       <ResponsiveFlex breakpoints={{ l: undefined }} />
 
-      <ResponsiveFlex
+      {/* <ResponsiveFlex
         component={<nav />}
         breakpoints={{ xl: { justifyContent: 'space-around' } }}
-      />
+      /> */}
       <ResponsiveFlex breakpoints={{ xl: { justifyContent: 'space-around' } }} />
     </>
   );

@@ -1,5 +1,7 @@
 export { default as Flex } from './Flex';
 export * from './Flex';
+export { default as TweakableElementWrapper } from './TweakableElementWrapper';
+export * from './TweakableElementWrapper';
 export { default as FlexWithRef } from './FlexWithRef';
 export * from './FlexWithRef';
 export { ViewSize, getCurrentViewSize } from './mediaQueries';
