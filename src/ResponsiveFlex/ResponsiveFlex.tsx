@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import Flex, { FlexAllProps, ComponentOrElement, DefaultComponentType } from '../Flex';
+import Flex, { FlexAllProps, TweakableComponentType, DefaultComponentType } from '../Flex';
 import Responsive, { ResponsiveProps, mergeResponsiveProps } from '../Responsive';
 
 export type ResponsiveFlexAllProps<
-  C extends ComponentOrElement = DefaultComponentType
+  C extends TweakableComponentType = DefaultComponentType
 > = ResponsiveProps<FlexAllProps<C>> & FlexAllProps<C>;
 
-export default function ResponsiveFlex<C extends ComponentOrElement = DefaultComponentType>(
+export default function ResponsiveFlex<C extends TweakableComponentType = DefaultComponentType>(
   props: ResponsiveFlexAllProps<C>
 ): JSX.Element {
   useEffect(() => {

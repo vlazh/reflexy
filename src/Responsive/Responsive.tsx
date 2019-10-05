@@ -5,7 +5,7 @@ import {
   getCurrentViewSize as getCurrent,
   ViewSize,
 } from '../mediaQueries';
-import { ComponentOrElement, DefaultComponentType, Componentable } from '../Flex';
+import { TweakableComponentType, DefaultComponentType, TweakableComponentProps } from '../Flex';
 
 export interface ResponsiveProps<A extends object> {
   /** `true` - don't merge breakpoints props up to current size and use breakpoint props of current size only. */
@@ -15,9 +15,9 @@ export interface ResponsiveProps<A extends object> {
 }
 
 export type ResponsiveAllProps<
-  C extends ComponentOrElement = DefaultComponentType
-> = ResponsiveProps<React.PropsWithChildren<Componentable<C>>> &
-  React.PropsWithChildren<Componentable<C>>;
+  C extends TweakableComponentType = DefaultComponentType
+> = ResponsiveProps<React.PropsWithChildren<TweakableComponentProps<C>>> &
+  React.PropsWithChildren<TweakableComponentProps<C>>;
 
 const sizesMap: Record<ViewSize, number> = {
   [ViewSize.xxs]: 1,
@@ -66,7 +66,7 @@ export function mergeResponsiveProps<A extends object>({
   };
 }
 
-function Responsive<C extends ComponentOrElement = DefaultComponentType>(
+function Responsive<C extends TweakableComponentType = DefaultComponentType>(
   props: ResponsiveAllProps<C>
 ): JSX.Element {
   useEffect(() => {
@@ -77,7 +77,7 @@ function Responsive<C extends ComponentOrElement = DefaultComponentType>(
   }, []);
 
   const { component = 'div', children, ...rest } = mergeResponsiveProps<
-    React.PropsWithChildren<Componentable<C>>
+    React.PropsWithChildren<TweakableComponentProps<C>>
   >(props);
 
   if (React.isValidElement<React.PropsWithChildren<{}>>(component)) {

@@ -113,32 +113,32 @@ export interface SpaceProps {
   py?: boolean | number;
 }
 
-export type ComponentOrElement<CP extends React.PropsWithChildren<Styleable> = any> =
-  | React.ElementType<CP>
-  | React.ReactElement<CP>;
+export type TweakableComponentType<
+  CP extends React.PropsWithChildren<Styleable> = any
+> = React.ElementType<CP>;
 
-export type Componentable<C extends ComponentOrElement> = {
+export type TweakableComponentProps<C extends React.ElementType> = {
   /**
    * Sets custom react component as a container.
    * Component must accept className and style through props. */
   component?: C;
-} & (C extends React.ElementType
-  ? React.ComponentPropsWithoutRef<C> &
+} & (undefined extends C
+  ? unknown
+  : (React.ComponentPropsWithoutRef<C> &
       ('ref' extends keyof React.ComponentPropsWithRef<C>
         ? { componentRef?: React.ComponentPropsWithRef<C>['ref'] }
-        : {})
-  : {});
+        : {})));
 
 export type DefaultComponentType = React.ElementType<JSX.IntrinsicElements['div']>;
 
 export type FlexAndSpaceProps = FlexProps & SpaceProps;
 
-export type FlexComponentProps<C extends ComponentOrElement = any> = FlexAndSpaceProps &
-  (undefined extends C ? unknown : Omit<Componentable<C>, 'component'>);
+export type FlexComponentProps<C extends TweakableComponentType = any> = FlexAndSpaceProps &
+  (undefined extends C ? unknown : Omit<TweakableComponentProps<C>, 'component'>);
 
 export type FlexAllProps<
-  C extends ComponentOrElement = DefaultComponentType
-> = React.PropsWithChildren<FlexAndSpaceProps & Componentable<C>>;
+  C extends TweakableComponentType = DefaultComponentType
+> = React.PropsWithChildren<TweakableComponentProps<C> & FlexAndSpaceProps>;
 
 /**
  * Flexbox container.
@@ -147,7 +147,7 @@ export type FlexAllProps<
  * Example: `<Flex component="button" ... />`
  * Example: `<Flex component={MyComponent} ... />`
  */
-function Flex<C extends ComponentOrElement = DefaultComponentType>({
+function Flex<C extends TweakableComponentType = DefaultComponentType>({
   component = 'div' as C,
   inline,
   row,
@@ -260,23 +260,6 @@ function Flex<C extends ComponentOrElement = DefaultComponentType>({
     [hfill, m, marginSize, mb, ml, mr, mt, order, p, paddingSize, pb, pl, pr, pt, unit, vfill]
   );
 
-  // Render custom element with flex props
-  if (React.isValidElement<React.PropsWithChildren<Styleable>>(component)) {
-    const cmp = React.Children.only(component);
-    const nextProps: Styleable = {
-      className: `${calcClassName}${cmp.props.className ? ` ${cmp.props.className}` : ''}`,
-      style:
-        style || cmp.props.style ? { ...cmp.props.style, ...calcStyles, ...style } : calcStyles,
-    };
-    // for elements such as input which not supports children
-    if (!cmp.props.children && !children) {
-      return React.cloneElement(cmp, nextProps);
-    }
-    return React.cloneElement(cmp, nextProps, children, cmp.props.children);
-  }
-
-  // Render component with flex props
-
   const { componentRef, ...propsWithoutRef } = rest as (typeof rest & { componentRef?: any });
 
   return React.createElement(
@@ -305,19 +288,19 @@ Flex.defaultSizes = {
 } as Record<DefaultSpaceSize, number>;
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
-Flex.S = <C extends ComponentOrElement = DefaultComponentType>({
+Flex.S = <C extends TweakableComponentType = DefaultComponentType>({
   mSize,
   pSize,
   ...rest
 }: FlexAllProps<C>) => <Flex mSize="s" pSize="s" {...rest} />;
 
-Flex.M = <C extends ComponentOrElement = DefaultComponentType>({
+Flex.M = <C extends TweakableComponentType = DefaultComponentType>({
   mSize,
   pSize,
   ...rest
 }: FlexAllProps<C>) => <Flex mSize="m" pSize="m" {...rest} />;
 
-Flex.L = <C extends ComponentOrElement = DefaultComponentType>({
+Flex.L = <C extends TweakableComponentType = DefaultComponentType>({
   mSize,
   pSize,
   ...rest
@@ -356,7 +339,6 @@ export function props2className(
     props.grow != null && (+props.grow >= 0 && +props.grow <= 24 && +props.grow).toString();
   const shrink =
     props.shrink != null && (+props.shrink >= 0 && +props.shrink <= 24 && +props.shrink).toString();
-  // const wrap = props.wrap != null && (props.wrap === false || props.wrap === '' && 'nowrap' ) && `wrap${typeof props.wrap === 'string' ? `-${props.wrap}` : ''}`;
   const wrap = (props.wrap === false && 'nowrap') || (props.wrap === true && 'wrap') || props.wrap;
   const alignItems = props.alignItems || (props.center && 'center');
   const justifyContent = props.justifyContent || (props.center && 'center');
