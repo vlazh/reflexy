@@ -74,7 +74,7 @@ export interface FlexProps extends Styleable {
   widthByFlex?: boolean;
 }
 
-export type DefaultSpaceSize = 's' | 'm' | 'l';
+export type DefaultSpaceSize = 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
 
 export interface SpaceProps {
   /** Measure unit of space */
@@ -82,35 +82,35 @@ export interface SpaceProps {
   /** Size of margin */
   mSize?: DefaultSpaceSize | number;
   /** margin */
-  m?: boolean | number;
+  m?: boolean | number | DefaultSpaceSize;
   /** margin-top */
-  mt?: boolean | number;
+  mt?: boolean | number | DefaultSpaceSize;
   /** margin-right */
-  mr?: boolean | number;
+  mr?: boolean | number | DefaultSpaceSize;
   /** margin-bottom */
-  mb?: boolean | number;
+  mb?: boolean | number | DefaultSpaceSize;
   /** margin-left */
-  ml?: boolean | number;
+  ml?: boolean | number | DefaultSpaceSize;
   /** margin by x axis: margin-left & margin-right */
-  mx?: boolean | number;
+  mx?: boolean | number | DefaultSpaceSize;
   /** margin by y axis: margin-top & margin-bottom */
-  my?: boolean | number;
+  my?: boolean | number | DefaultSpaceSize;
   /** Size of padding */
   pSize?: DefaultSpaceSize | number;
   /** padding */
-  p?: boolean | number;
+  p?: boolean | number | DefaultSpaceSize;
   /** padding-top */
-  pt?: boolean | number;
+  pt?: boolean | number | DefaultSpaceSize;
   /** padding-right */
-  pr?: boolean | number;
+  pr?: boolean | number | DefaultSpaceSize;
   /** padding-bottom */
-  pb?: boolean | number;
+  pb?: boolean | number | DefaultSpaceSize;
   /** padding-left */
-  pl?: boolean | number;
+  pl?: boolean | number | DefaultSpaceSize;
   /** padding by x axis: padding-left & padding-right */
-  px?: boolean | number;
+  px?: boolean | number | DefaultSpaceSize;
   /** padding by y axis: padding-top & padding-bottom */
-  py?: boolean | number;
+  py?: boolean | number | DefaultSpaceSize;
 }
 
 export type TweakableComponentType<
@@ -279,12 +279,12 @@ Flex.defaultUnit = 'rem';
 
 /** Predefined default space sizes */
 Flex.defaultSizes = {
-  /* small size */
+  xs: 0.25,
   s: 0.5,
-  /** medium size */
   m: 1,
-  /** large size */
-  l: 2,
+  l: 1.5,
+  xl: 2,
+  xxl: 2.5,
 } as Record<DefaultSpaceSize, number>;
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -420,6 +420,12 @@ export function props2style({
     }, {});
 }
 
-export function toCssValue(value: boolean | number, size: number, unit: string): string {
-  return value === true ? `${size}${unit}` : `${+value * size}${unit}`;
+export function toCssValue(
+  value: boolean | number | DefaultSpaceSize,
+  defaultSize: number,
+  unit: string
+): string {
+  if (value === true) return `${defaultSize}${unit}`;
+  if (typeof value === 'string') return `${Flex.defaultSizes[value]}${unit}`;
+  return `${+value * defaultSize}${unit}`;
 }
