@@ -111,28 +111,38 @@ export interface Styleable<C = string, S = React.CSSProperties> {
   style?: S;
 }
 
+export interface Transformable<C = string, S = React.CSSProperties> {
+  classNameTransformer?: ClassNameTransformer<C>;
+  styleTransformer?: StyleTransformer<S>;
+}
+
 export type ClassNameTransformer<T> = (calcClassName: string, userClassName?: T) => NonNullable<T>;
 export type StyleTransformer<T> = (calcStyle: React.CSSProperties, userStyle?: T) => T;
 
-export type StylesProps<P extends { [P: string]: any }> = keyof Styleable extends keyof P
+interface AnyObject {
+  [P: string]: any;
+}
+
+export type StylesProps<P extends AnyObject> = (keyof Styleable) extends (keyof P)
   ? Styleable<P['className'], P['style']>
   : Required<Styleable<never, never>>;
 
-export type StylesTransformersProps<
-  P extends { [P: string]: any }
-> = keyof Styleable extends keyof P
-  ? ((P['className'] extends (string | undefined)
-      ? { classNameTransformer?: ClassNameTransformer<P['className']> }
-      : { classNameTransformer: ClassNameTransformer<P['className']> }) &
-      (P['style'] extends (React.CSSProperties | undefined)
-        ? { styleTransformer?: StyleTransformer<P['style']> }
-        : { styleTransformer: StyleTransformer<P['style']> }))
-  : {
-      classNameTransformer?: ClassNameTransformer<string>;
-      styleTransformer?: StyleTransformer<React.CSSProperties>;
-    };
+export type StylesTransformersProps<P extends AnyObject> = (keyof Styleable) extends (keyof P)
+  ? Transformable<P['className'], P['style']>
+  : Transformable<unknown, unknown>;
+// export type StylesTransformersProps<P extends AnyObject> = keyof Styleable extends keyof P
+//   ? ((P['className'] extends (string | undefined)
+//       ? { classNameTransformer?: ClassNameTransformer<P['className']> }
+//       : { classNameTransformer: ClassNameTransformer<P['className']> }) &
+//       (P['style'] extends (React.CSSProperties | undefined)
+//         ? { styleTransformer?: StyleTransformer<P['style']> }
+//         : { styleTransformer: StyleTransformer<P['style']> }))
+//   : {
+//       classNameTransformer?: ClassNameTransformer<string>;
+//       styleTransformer?: StyleTransformer<React.CSSProperties>;
+//     };
 
-type PropsWithComponentRef<P extends { [P: string]: any }> = React.PropsWithoutRef<P> &
+type PropsWithComponentRef<P extends AnyObject> = React.PropsWithoutRef<P> &
   ('ref' extends keyof P ? { componentRef?: P['ref'] } : {});
 
 export type TweakableComponentProps<C extends React.ElementType> = {
@@ -149,9 +159,9 @@ export type TweakableComponentType = React.ElementType;
 
 export type DefaultComponentType = React.ElementType<JSX.IntrinsicElements['div']>;
 
-type PropsWithStyles<P extends { [P: string]: any }> = P & StylesProps<P>;
+type PropsWithStyles<P extends AnyObject> = P & StylesProps<P>;
 
-type PropsWithStylesTransformers<P extends { [P: string]: any }> = P &
+type PropsWithStylesTransformers<P extends AnyObject> = P &
   StylesProps<P> &
   StylesTransformersProps<P>;
 
