@@ -18,6 +18,16 @@ export function keepRef(el: HTMLDivElement | null): void {
   element;
 }
 
+const classNameTransformer: FlexAllProps<typeof MyClass>['classNameTransformer'] = (
+  calcClassName,
+  userClassName
+) => {
+  if (!userClassName) {
+    return calcClassName as any;
+  }
+  return '' as any;
+};
+
 export function test() {
   return (
     <>
@@ -28,7 +38,7 @@ export function test() {
       {/* <Flex component={<div ref={keepRef} />} /> */}
       <Flex component={TweakableElementWrapper} element={<MYY />} />
       <Flex component={MYY} myy />
-      <Flex component={MyClass} myy />
+      <Flex component={MyClass} myy classNameTransformer={classNameTransformer} />
       <Flex componentRef={keepRef} />
 
       <Flex.S key="1" />
@@ -72,10 +82,22 @@ export function test() {
   );
 }
 
+export interface Classes {
+  base: string;
+  afterOpen: string;
+  beforeClose: string;
+}
+
 interface MYYProps {
   aa?: string;
   myy?: boolean;
   gg?: boolean;
+  // className?: string | Classes;
+  className?: string;
+  // className?: string | number | undefined;
+  // style?: number;
+  // style?: { content: { [P: string]: any }; overlay: { [P: string]: any } };
+  style?: { [P: string]: any };
 }
 function MYY({ aa, myy, gg }: React.PropsWithChildren<MYYProps>) {
   return <div data-myy={aa || myy || gg} />;

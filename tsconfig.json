@@ -6,7 +6,8 @@
     "outDir": "./dist",
     "declaration": true,
     "sourceMap": false,
-    "incremental": false
+    "incremental": false,
+    "diagnostics": true
   },
   "files": ["./src/index.ts", "./src/test/flex.tsx"]
 }

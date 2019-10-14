@@ -24,14 +24,7 @@ type ColumnStringID = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' 
 
 export type Column = ColumnID | ColumnStringID | boolean;
 
-export interface Styleable {
-  /** CSS class name. */
-  className?: string;
-  /** Inline styles. */
-  style?: React.CSSProperties;
-}
-
-export interface FlexProps extends Styleable {
+export interface FlexProps {
   /** Sets `display` to `inline-flex`. */
   inline?: boolean;
   /** Sets `flow-direction` to `row`. */
@@ -113,32 +106,77 @@ export interface SpaceProps {
   py?: boolean | number | DefaultSpaceSize;
 }
 
-export type TweakableComponentType<
-  CP extends React.PropsWithChildren<Styleable> = any
-> = React.ElementType<CP>;
+export interface Styleable<C = string, S = React.CSSProperties> {
+  className?: C;
+  style?: S;
+}
+
+export type ClassNameTransformer<T> = (calcClassName: string, userClassName?: T) => NonNullable<T>;
+export type StyleTransformer<T> = (calcStyle: React.CSSProperties, userStyle?: T) => T;
+
+export type StylesProps<P extends { [P: string]: any }> = keyof Styleable extends keyof P
+  ? Styleable<P['className'], P['style']>
+  : Required<Styleable<never, never>>;
+
+export type StylesTransformersProps<
+  P extends { [P: string]: any }
+> = keyof Styleable extends keyof P
+  ? ((P['className'] extends (string | undefined)
+      ? { classNameTransformer?: ClassNameTransformer<P['className']> }
+      : { classNameTransformer: ClassNameTransformer<P['className']> }) &
+      (P['style'] extends (React.CSSProperties | undefined)
+        ? { styleTransformer?: StyleTransformer<P['style']> }
+        : { styleTransformer: StyleTransformer<P['style']> }))
+  : {
+      classNameTransformer?: ClassNameTransformer<string>;
+      styleTransformer?: StyleTransformer<React.CSSProperties>;
+    };
+
+type PropsWithComponentRef<P extends { [P: string]: any }> = React.PropsWithoutRef<P> &
+  ('ref' extends keyof P ? { componentRef?: P['ref'] } : {});
 
 export type TweakableComponentProps<C extends React.ElementType> = {
   /**
    * Sets custom react component as a container.
    * Component must accept className and style through props. */
   component?: C;
-} & (undefined extends C
-  ? unknown
-  : (React.ComponentPropsWithoutRef<C> &
-      ('ref' extends keyof React.ComponentPropsWithRef<C>
-        ? { componentRef?: React.ComponentPropsWithRef<C>['ref'] }
-        : {})));
+} & (undefined extends C ? unknown : PropsWithComponentRef<React.ComponentPropsWithRef<C>>);
+
+export type TweakableComponentType = React.ElementType;
+// export type TweakableComponentType<
+//   CP extends React.PropsWithChildren<Styleable<any, any>> = any
+// > = React.ElementType<CP>;
 
 export type DefaultComponentType = React.ElementType<JSX.IntrinsicElements['div']>;
 
-export type FlexAndSpaceProps = FlexProps & SpaceProps;
+type PropsWithStyles<P extends { [P: string]: any }> = P & StylesProps<P>;
 
-export type FlexComponentProps<C extends TweakableComponentType = any> = FlexAndSpaceProps &
-  (undefined extends C ? unknown : Omit<TweakableComponentProps<C>, 'component'>);
+type PropsWithStylesTransformers<P extends { [P: string]: any }> = P &
+  StylesProps<P> &
+  StylesTransformersProps<P>;
+
+export type FlexComponentProps<C extends TweakableComponentType = any> = FlexProps &
+  SpaceProps &
+  (undefined extends C
+    ? Styleable
+    : Omit<PropsWithStyles<TweakableComponentProps<C>>, 'component'>);
 
 export type FlexAllProps<
   C extends TweakableComponentType = DefaultComponentType
-> = React.PropsWithChildren<TweakableComponentProps<C> & FlexAndSpaceProps>;
+> = React.PropsWithChildren<
+  PropsWithStylesTransformers<TweakableComponentProps<C>> & FlexProps & SpaceProps
+>;
+
+export function defaultClassNameTransformer(calcClassName: string, userClassName?: string): string {
+  return userClassName ? `${calcClassName} ${userClassName}` : calcClassName;
+}
+
+export function defaultStyleTransformer(
+  calcStyle: React.CSSProperties,
+  userStyle?: React.CSSProperties
+): React.CSSProperties {
+  return userStyle || calcStyle ? { ...calcStyle, ...userStyle } : calcStyle;
+}
 
 /**
  * Flexbox container.
@@ -169,6 +207,8 @@ function Flex<C extends TweakableComponentType = DefaultComponentType>({
   widthByFlex,
   className,
   style,
+  classNameTransformer = defaultClassNameTransformer as any,
+  styleTransformer = defaultStyleTransformer as any,
   children,
 
   mSize = 'm',
@@ -203,7 +243,6 @@ function Flex<C extends TweakableComponentType = DefaultComponentType>({
         vfill,
         fill,
         widthByFlex,
-        className,
       }),
     [
       alignContent,
@@ -211,7 +250,6 @@ function Flex<C extends TweakableComponentType = DefaultComponentType>({
       alignSelf,
       basis,
       center,
-      className,
       column,
       fill,
       grow,
@@ -263,11 +301,14 @@ function Flex<C extends TweakableComponentType = DefaultComponentType>({
   const { componentRef, ...propsWithoutRef } = rest as (typeof rest & { componentRef?: any });
 
   return React.createElement(
-    component as React.ElementType<React.PropsWithChildren<Styleable>>,
+    component as React.ElementType<React.PropsWithChildren<Styleable<any, any>>>,
     {
       ...propsWithoutRef,
-      className: calcClassName,
-      style: style ? { ...calcStyles, ...style } : calcStyles,
+      className: (classNameTransformer as ClassNameTransformer<typeof className>)(
+        calcClassName,
+        className
+      ),
+      style: (styleTransformer as StyleTransformer<typeof style>)(calcStyles, style),
       ref: componentRef,
     },
     children
@@ -328,7 +369,6 @@ export function props2className(
     | 'alignSelf'
     | 'inline'
     | 'basis'
-    | 'className'
     | 'widthByFlex'
   >
 ): string {
@@ -362,7 +402,6 @@ export function props2className(
     hfill && css['fill-h'],
     vfill && css['fill-v'],
     props.widthByFlex && css['min-width-0'],
-    props.className,
   ]
     .filter(Boolean)
     .join(' ');
