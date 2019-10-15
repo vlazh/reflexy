@@ -111,12 +111,15 @@ export interface Styleable<C = string, S = React.CSSProperties> {
   style?: S;
 }
 
-export type ClassNameTransformer<T> = (calcClassName: string, userClassName?: T) => NonNullable<T>;
-export type StyleTransformer<T> = (calcStyle: React.CSSProperties, userStyle?: T) => T;
+export type ClassNameTransformer<T, R = T> = (
+  calcClassName: string,
+  userClassName?: T
+) => NonNullable<R>;
+export type StyleTransformer<T, R = T> = (calcStyle: React.CSSProperties, userStyle?: T) => R;
 
-export interface Transformable<C = string, S = React.CSSProperties> {
-  classNameTransformer?: ClassNameTransformer<C>;
-  styleTransformer?: StyleTransformer<S>;
+export interface Transformable<C = string, S = React.CSSProperties, CR = C, SR = S> {
+  classNameTransformer?: ClassNameTransformer<C, CR>;
+  styleTransformer?: StyleTransformer<S, SR>;
 }
 
 interface AnyObject {
@@ -132,17 +135,29 @@ interface AnyObject {
 //   ? Styleable<C, S>
 //   : Required<Styleable<never, never>>;
 //
+// export type StylesProps<
+//   P extends AnyObject,
+//   _DefaultStyles extends boolean = false
+// > = P extends Styleable<infer C, infer S> ? Styleable<C, S> : Styleable<unknown, unknown>;
+//
 export type StylesProps<
   P extends AnyObject,
   DefaultStyles extends boolean = false
-> = P extends Styleable<infer C, infer S>
-  ? Styleable<C, S>
-  : (true extends DefaultStyles ? Styleable : Styleable<unknown, unknown>);
+> = DefaultStyles extends true
+  ? Styleable
+  : (P extends Styleable<infer C, infer S> ? Styleable<C, S> : Styleable<unknown, unknown>);
 
-export type StylesTransformersProps<P extends AnyObject> = Transformable<
-  P['className'],
-  P['style']
->;
+// export type StylesTransformersProps<
+//   P extends AnyObject,
+//   _DefaultStyles extends boolean = false
+// > = Transformable<any, any, P['className'], P['style']>;
+//
+export type StylesTransformersProps<
+  P extends AnyObject,
+  DefaultStyles extends boolean = false
+> = DefaultStyles extends true
+  ? Transformable<string, React.CSSProperties, P['className'], P['style']>
+  : Transformable<P['className'], P['style']>;
 
 type PropsWithComponentRef<P extends AnyObject> = React.PropsWithoutRef<P> &
   (P extends { ref?: any } ? { componentRef?: P['ref'] } : unknown);
@@ -158,23 +173,31 @@ export type TweakableComponentType = React.ElementType;
 
 export type DefaultComponentType = React.ElementType<JSX.IntrinsicElements['div']>;
 
-type PropsWithStyles<P extends AnyObject> = P & StylesProps<P>;
+type PropsWithStyles<P extends AnyObject, DefaultStyles extends boolean> = P &
+  StylesProps<P, DefaultStyles>;
 
 type PropsWithStylesTransformers<P extends AnyObject, DefaultStyles extends boolean> = P &
   StylesProps<P, DefaultStyles> &
-  StylesTransformersProps<P>;
+  StylesTransformersProps<P, DefaultStyles>;
 
-export type FlexComponentProps<C extends TweakableComponentType = any> = FlexProps &
+// const a: FlexAllProps<{ className?: number }, true>;
+// const a: FlexAllProps;
+// a.className;
+
+export type FlexComponentProps<
+  C extends TweakableComponentType = any,
+  DefaultStyles extends boolean = undefined extends C ? true : false
+> = FlexProps &
   SpaceProps &
   (undefined extends C
-    ? Styleable
-    : PropsWithStyles<Omit<TweakableComponentProps<C>, 'component'>>);
+    ? PropsWithStyles<{}, DefaultStyles>
+    : PropsWithStyles<Omit<TweakableComponentProps<C>, 'component'>, DefaultStyles>);
 
 export type FlexAllProps<
   C extends TweakableComponentType = DefaultComponentType,
   DefaultStyles extends boolean = undefined extends C ? true : false
 > = React.PropsWithChildren<
-  PropsWithStylesTransformers<TweakableComponentProps<C> & FlexProps & SpaceProps, DefaultStyles>
+  PropsWithStylesTransformers<TweakableComponentProps<C>, DefaultStyles> & FlexProps & SpaceProps
 >;
 
 export function defaultClassNameTransformer(calcClassName: string, userClassName?: string): string {
