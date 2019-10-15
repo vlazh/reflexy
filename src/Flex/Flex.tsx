@@ -111,26 +111,36 @@ export interface Styleable<C = string, S = React.CSSProperties> {
   style?: S;
 }
 
+export type ClassNameTransformer<T> = (calcClassName: string, userClassName?: T) => NonNullable<T>;
+export type StyleTransformer<T> = (calcStyle: React.CSSProperties, userStyle?: T) => T;
+
 export interface Transformable<C = string, S = React.CSSProperties> {
   classNameTransformer?: ClassNameTransformer<C>;
   styleTransformer?: StyleTransformer<S>;
 }
 
-export type ClassNameTransformer<T> = (calcClassName: string, userClassName?: T) => NonNullable<T>;
-export type StyleTransformer<T> = (calcStyle: React.CSSProperties, userStyle?: T) => T;
-
 interface AnyObject {
   [P: string]: any;
 }
 
-export type StylesProps<P extends AnyObject> = (keyof Styleable) extends (keyof P)
-  ? Styleable<P['className'], P['style']>
-  : Required<Styleable<never, never>>;
+// export type StylesProps<P extends AnyObject> = (P extends { className?: infer C }
+//   ? { className?: C }
+//   : { className: never }) &
+//   (P extends { style?: infer S } ? { style?: S } : { style: never });
+//
+// export type StylesProps<P extends AnyObject> = P extends { className?: infer C; style?: infer S }
+//   ? Styleable<C, S>
+//   : Required<Styleable<never, never>>;
+//
+export type StylesProps<P extends AnyObject> = P extends { className?: infer C; style?: infer S }
+  ? Styleable<C, S>
+  : Required<Styleable<unknown, unknown>>;
 
-export type StylesTransformersProps<P extends AnyObject> = (keyof Styleable) extends (keyof P)
-  ? Transformable<P['className'], P['style']>
-  : Transformable<unknown, unknown>;
-// export type StylesTransformersProps<P extends AnyObject> = keyof Styleable extends keyof P
+export type StylesTransformersProps<P extends AnyObject> = Transformable<
+  P['className'],
+  P['style']
+>;
+// export type StylesTransformersProps<P extends AnyObject> = (keyof Styleable) extends (keyof P)
 //   ? ((P['className'] extends (string | undefined)
 //       ? { classNameTransformer?: ClassNameTransformer<P['className']> }
 //       : { classNameTransformer: ClassNameTransformer<P['className']> }) &
@@ -138,12 +148,12 @@ export type StylesTransformersProps<P extends AnyObject> = (keyof Styleable) ext
 //         ? { styleTransformer?: StyleTransformer<P['style']> }
 //         : { styleTransformer: StyleTransformer<P['style']> }))
 //   : {
-//       classNameTransformer?: ClassNameTransformer<string>;
-//       styleTransformer?: StyleTransformer<React.CSSProperties>;
+//       classNameTransformer?: ClassNameTransformer<unknown>;
+//       styleTransformer?: StyleTransformer<unknown>;
 //     };
 
 type PropsWithComponentRef<P extends AnyObject> = React.PropsWithoutRef<P> &
-  ('ref' extends keyof P ? { componentRef?: P['ref'] } : {});
+  (P extends { ref?: any } ? { componentRef?: P['ref'] } : unknown);
 
 export type TweakableComponentProps<C extends React.ElementType> = {
   /**
@@ -153,9 +163,6 @@ export type TweakableComponentProps<C extends React.ElementType> = {
 } & (undefined extends C ? unknown : PropsWithComponentRef<React.ComponentPropsWithRef<C>>);
 
 export type TweakableComponentType = React.ElementType;
-// export type TweakableComponentType<
-//   CP extends React.PropsWithChildren<Styleable<any, any>> = any
-// > = React.ElementType<CP>;
 
 export type DefaultComponentType = React.ElementType<JSX.IntrinsicElements['div']>;
 
@@ -169,12 +176,12 @@ export type FlexComponentProps<C extends TweakableComponentType = any> = FlexPro
   SpaceProps &
   (undefined extends C
     ? Styleable
-    : Omit<PropsWithStyles<TweakableComponentProps<C>>, 'component'>);
+    : PropsWithStyles<Omit<TweakableComponentProps<C>, 'component'>>);
 
 export type FlexAllProps<
   C extends TweakableComponentType = DefaultComponentType
 > = React.PropsWithChildren<
-  PropsWithStylesTransformers<TweakableComponentProps<C>> & FlexProps & SpaceProps
+  PropsWithStylesTransformers<TweakableComponentProps<C> & FlexProps & SpaceProps>
 >;
 
 export function defaultClassNameTransformer(calcClassName: string, userClassName?: string): string {
@@ -319,6 +326,8 @@ function Flex<C extends TweakableComponentType = DefaultComponentType>({
         className
       ),
       style: (styleTransformer as StyleTransformer<typeof style>)(calcStyles, style),
+      // className: classNameTransformer(calcClassName, className as any),
+      // style: styleTransformer(calcStyles, style as any),
       ref: componentRef,
     },
     children
