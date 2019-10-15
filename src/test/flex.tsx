@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import Flex, { FlexAllProps, FlexComponentProps } from '../Flex';
+import Flex, { FlexAllProps, FlexComponentProps, DefaultComponentType, TweakableComponentType } from '../Flex';
 import FlexWithRef from '../FlexWithRef';
 import ResponsiveFlex from '../ResponsiveFlex';
 import Responsive from '../Responsive';
@@ -41,12 +41,12 @@ export function test() {
       <Flex component={MyClass} myy classNameTransformer={classNameTransformer} />
       <Flex componentRef={keepRef} />
 
-      <Flex.S key="1" />
+      <Flex key="1" />
 
       <FlexWithRef component={MyClass} aa="" ref={el => el} />
       <FlexWithRef component="a" href="" ref={el => el} />
       <FlexWithRef component="div" ref={el => el} />
-      <FlexWithRef component="button" ref={el => el} />
+      <FlexWithRef component="button" hidden ref={el => el} />
 
       <Flex component={MYY} aa="" />
       {/* <Flex component={<MYY />} /> */}
@@ -78,6 +78,8 @@ export function test() {
         breakpoints={{ xl: { justifyContent: 'space-around' } }}
       /> */}
       <ResponsiveFlex breakpoints={{ xl: { justifyContent: 'space-around' } }} />
+
+      <Component2 component={MYY} />
     </>
   );
 }
@@ -93,7 +95,8 @@ interface MYYProps {
   myy?: boolean;
   gg?: boolean;
   // className?: string | Classes;
-  className?: string;
+  className?: Classes;
+  // className?: string;
   // className?: string | number | undefined;
   // style?: number;
   // style?: { content: { [P: string]: any }; overlay: { [P: string]: any } };
@@ -109,7 +112,10 @@ function WidthContainer({ className, ...rest }: FlexAllProps) {
   return <Flex className={className} {...rest} />;
 }
 
-export function Component2({ className, ...rest }: FlexComponentProps) {
+export function Component2<C extends TweakableComponentType = DefaultComponentType>({
+  className,
+  ...rest
+}: FlexAllProps<C, true>) {
   return <Flex className={className} {...rest} />;
 }
 

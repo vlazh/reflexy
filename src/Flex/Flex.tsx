@@ -132,25 +132,17 @@ interface AnyObject {
 //   ? Styleable<C, S>
 //   : Required<Styleable<never, never>>;
 //
-export type StylesProps<P extends AnyObject> = P extends { className?: infer C; style?: infer S }
+export type StylesProps<
+  P extends AnyObject,
+  DefaultStyles extends boolean = false
+> = P extends Styleable<infer C, infer S>
   ? Styleable<C, S>
-  : Required<Styleable<unknown, unknown>>;
+  : (true extends DefaultStyles ? Styleable : Styleable<unknown, unknown>);
 
 export type StylesTransformersProps<P extends AnyObject> = Transformable<
   P['className'],
   P['style']
 >;
-// export type StylesTransformersProps<P extends AnyObject> = (keyof Styleable) extends (keyof P)
-//   ? ((P['className'] extends (string | undefined)
-//       ? { classNameTransformer?: ClassNameTransformer<P['className']> }
-//       : { classNameTransformer: ClassNameTransformer<P['className']> }) &
-//       (P['style'] extends (React.CSSProperties | undefined)
-//         ? { styleTransformer?: StyleTransformer<P['style']> }
-//         : { styleTransformer: StyleTransformer<P['style']> }))
-//   : {
-//       classNameTransformer?: ClassNameTransformer<unknown>;
-//       styleTransformer?: StyleTransformer<unknown>;
-//     };
 
 type PropsWithComponentRef<P extends AnyObject> = React.PropsWithoutRef<P> &
   (P extends { ref?: any } ? { componentRef?: P['ref'] } : unknown);
@@ -168,8 +160,8 @@ export type DefaultComponentType = React.ElementType<JSX.IntrinsicElements['div'
 
 type PropsWithStyles<P extends AnyObject> = P & StylesProps<P>;
 
-type PropsWithStylesTransformers<P extends AnyObject> = P &
-  StylesProps<P> &
+type PropsWithStylesTransformers<P extends AnyObject, DefaultStyles extends boolean> = P &
+  StylesProps<P, DefaultStyles> &
   StylesTransformersProps<P>;
 
 export type FlexComponentProps<C extends TweakableComponentType = any> = FlexProps &
@@ -179,9 +171,10 @@ export type FlexComponentProps<C extends TweakableComponentType = any> = FlexPro
     : PropsWithStyles<Omit<TweakableComponentProps<C>, 'component'>>);
 
 export type FlexAllProps<
-  C extends TweakableComponentType = DefaultComponentType
+  C extends TweakableComponentType = DefaultComponentType,
+  DefaultStyles extends boolean = undefined extends C ? true : false
 > = React.PropsWithChildren<
-  PropsWithStylesTransformers<TweakableComponentProps<C> & FlexProps & SpaceProps>
+  PropsWithStylesTransformers<TweakableComponentProps<C> & FlexProps & SpaceProps, DefaultStyles>
 >;
 
 export function defaultClassNameTransformer(calcClassName: string, userClassName?: string): string {
