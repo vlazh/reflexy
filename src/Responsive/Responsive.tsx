@@ -89,7 +89,7 @@ function Responsive<C extends TweakableComponentType = DefaultComponentType>(
     return React.cloneElement(cmp, rest, children, cmp.props.children);
   }
 
-  return React.createElement(component as React.ElementType, rest, children);
+  return React.createElement(component, rest, children);
 }
 
 Responsive.isInitialized = isInit;

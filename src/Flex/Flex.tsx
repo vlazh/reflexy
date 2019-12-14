@@ -145,7 +145,9 @@ export type StylesProps<
   DefaultStyles extends boolean = false
 > = DefaultStyles extends true
   ? Styleable
-  : (P extends Styleable<infer C, infer S> ? Styleable<C, S> : Styleable<unknown, unknown>);
+  : P extends Styleable<infer C, infer S>
+  ? Styleable<C, S>
+  : Styleable<unknown, unknown>;
 
 // export type StylesTransformersProps<
 //   P extends AnyObject,
@@ -176,13 +178,10 @@ export type DefaultComponentType = React.ElementType<JSX.IntrinsicElements['div'
 type PropsWithStyles<P extends AnyObject, DefaultStyles extends boolean> = P &
   StylesProps<P, DefaultStyles>;
 
-type PropsWithStylesTransformers<P extends AnyObject, DefaultStyles extends boolean> = P &
-  StylesProps<P, DefaultStyles> &
-  StylesTransformersProps<P, DefaultStyles>;
-
-// const a: FlexAllProps<{ className?: number }, true>;
-// const a: FlexAllProps;
-// a.className;
+type PropsWithStylesTransformers<
+  P extends AnyObject,
+  DefaultStyles extends boolean
+> = PropsWithStyles<P, DefaultStyles> & StylesTransformersProps<P, DefaultStyles>;
 
 export type FlexComponentProps<
   C extends TweakableComponentType = any,
@@ -197,7 +196,7 @@ export type FlexAllProps<
   C extends TweakableComponentType = DefaultComponentType,
   DefaultStyles extends boolean = undefined extends C ? true : false
 > = React.PropsWithChildren<
-  PropsWithStylesTransformers<TweakableComponentProps<C>, DefaultStyles> & FlexProps & SpaceProps
+  FlexProps & SpaceProps & PropsWithStylesTransformers<TweakableComponentProps<C>, DefaultStyles>
 >;
 
 export function defaultClassNameTransformer(calcClassName: string, userClassName?: string): string {
@@ -331,7 +330,7 @@ function Flex<C extends TweakableComponentType = DefaultComponentType>({
     [hfill, m, marginSize, mb, ml, mr, mt, order, p, paddingSize, pb, pl, pr, pt, unit, vfill]
   );
 
-  const { componentRef, ...propsWithoutRef } = rest as (typeof rest & { componentRef?: any });
+  const { componentRef, ...propsWithoutRef } = rest as typeof rest & { componentRef?: any };
 
   return React.createElement(
     component as React.ElementType<React.PropsWithChildren<Styleable<any, any>>>,
