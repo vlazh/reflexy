@@ -17,5 +17,6 @@ export default function ResponsiveFlex<C extends TweakableComponentType = Defaul
   }, []);
 
   const { children, ...rest } = mergeResponsiveProps(props);
-  return React.createElement(Flex, rest, children);
+  // `as any` - fix for TS 3.7.3
+  return React.createElement(Flex as any, rest, children);
 }

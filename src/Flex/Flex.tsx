@@ -164,16 +164,22 @@ export type StylesTransformersProps<
 type PropsWithComponentRef<P extends AnyObject> = React.PropsWithoutRef<P> &
   (P extends { ref?: any } ? { componentRef?: P['ref'] } : unknown);
 
-export type TweakableComponentProps<C extends React.ElementType> = {
-  /**
-   * Sets custom react component as a container.
-   * Component must accept className and style through props. */
-  component?: C;
-} & (undefined extends C ? unknown : PropsWithComponentRef<React.ComponentPropsWithRef<C>>);
+// `Omit` - fix for TS 3.7.3
+export type TweakableComponentProps<C extends React.ElementType> = Omit<
+  {
+    /**
+     * Sets custom react component as a container.
+     * Component must accept className and style through props. */
+    component?: C;
+  } & (undefined extends C ? unknown : PropsWithComponentRef<React.ComponentPropsWithRef<C>>),
+  never
+>;
 
 export type TweakableComponentType = React.ElementType;
 
-export type DefaultComponentType = React.ElementType<JSX.IntrinsicElements['div']>;
+// export type DefaultComponentType = React.ElementType<JSX.IntrinsicElements['div']>;
+// `div` - fix for TS 3.7.3
+export type DefaultComponentType = 'div';
 
 type PropsWithStyles<P extends AnyObject, DefaultStyles extends boolean> = P &
   StylesProps<P, DefaultStyles>;
@@ -188,12 +194,13 @@ export type FlexComponentProps<
   DefaultStyles extends boolean = undefined extends C ? true : false
 > = FlexProps &
   SpaceProps &
-  (undefined extends C
-    ? PropsWithStyles<{}, DefaultStyles>
-    : PropsWithStyles<Omit<TweakableComponentProps<C>, 'component'>, DefaultStyles>);
+  PropsWithStyles<Omit<TweakableComponentProps<C>, 'component'>, DefaultStyles>;
+// (undefined extends C
+//   ? PropsWithStyles<{}, DefaultStyles>
+//   : PropsWithStyles<Omit<TweakableComponentProps<C>, 'component'>, DefaultStyles>);
 
 export type FlexAllProps<
-  C extends TweakableComponentType = DefaultComponentType,
+  C extends TweakableComponentType = any,
   DefaultStyles extends boolean = undefined extends C ? true : false
 > = React.PropsWithChildren<
   FlexProps & SpaceProps & PropsWithStylesTransformers<TweakableComponentProps<C>, DefaultStyles>
