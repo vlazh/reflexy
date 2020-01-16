@@ -442,7 +442,8 @@ export function props2className(
     shrink && css[`flex-shrink--${shrink}`],
     hfill && css['fill-h'],
     vfill && css['fill-v'],
-    props.shrinkByContent && css['min-width-0'],
+    props.shrinkByContent && css['shrink-by-content'],
+    // props.shrinkByContent ? (column && css['min-height-0']) || css['min-width-0'] : undefined,
   ]
     .filter(Boolean)
     .join(' ');
