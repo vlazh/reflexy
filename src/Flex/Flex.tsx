@@ -64,7 +64,7 @@ export interface FlexProps {
    * By default, a flex item cannot be smaller than the size of its content.
    * The initial setting on flex items is min-width: auto.
    * One way to enable flex items to shrink past their content is to set a flex item to min-width: 0. */
-  widthByFlex?: boolean;
+  shrinkByContent?: boolean;
 }
 
 export type DefaultSpaceSize = 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
@@ -243,7 +243,7 @@ function Flex<C extends TweakableComponentType = DefaultComponentType>({
   hfill,
   vfill,
   fill,
-  widthByFlex,
+  shrinkByContent = true,
   className,
   style,
   classNameTransformer = defaultClassNameTransformer as any,
@@ -281,7 +281,7 @@ function Flex<C extends TweakableComponentType = DefaultComponentType>({
         hfill,
         vfill,
         fill,
-        widthByFlex,
+        shrinkByContent,
       }),
     [
       alignContent,
@@ -299,7 +299,7 @@ function Flex<C extends TweakableComponentType = DefaultComponentType>({
       row,
       shrink,
       vfill,
-      widthByFlex,
+      shrinkByContent,
       wrap,
     ]
   );
@@ -410,7 +410,7 @@ export function props2className(
     | 'alignSelf'
     | 'inline'
     | 'basis'
-    | 'widthByFlex'
+    | 'shrinkByContent'
   >
 ): string {
   const column = !!props.column;
@@ -442,7 +442,7 @@ export function props2className(
     shrink && css[`flex-shrink--${shrink}`],
     hfill && css['fill-h'],
     vfill && css['fill-v'],
-    props.widthByFlex && css['min-width-0'],
+    props.shrinkByContent && css['min-width-0'],
   ]
     .filter(Boolean)
     .join(' ');
