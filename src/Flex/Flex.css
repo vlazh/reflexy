@@ -15,8 +15,11 @@
   width: 100%;
 }
 
-.shrink-by-content {
+.shrink-by-row {
   min-width: 0;
+}
+
+.shrink-by-column {
   min-height: 0;
 }
 

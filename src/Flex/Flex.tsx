@@ -60,10 +60,10 @@ export interface FlexProps {
   /** Stretch by vertical and horizontal. */
   fill?: boolean;
   /**
-   * Sets `min-width: 0`.
+   * Sets `min-width: 0` for `row` or `min-height: 0` for `column`.
    * By default, a flex item cannot be smaller than the size of its content.
-   * The initial setting on flex items is min-width: auto.
-   * One way to enable flex items to shrink past their content is to set a flex item to min-width: 0. */
+   * The initial setting on flex items is `min-width: auto` and `min-height: auto`.
+   * One way to enable flex items to shrink past their content is to set a flex item to `min-width: 0` or `min-height: 0`. */
   shrinkByContent?: boolean;
 }
 
@@ -442,8 +442,8 @@ export function props2className(
     shrink && css[`flex-shrink--${shrink}`],
     hfill && css['fill-h'],
     vfill && css['fill-v'],
-    props.shrinkByContent && css['shrink-by-content'],
-    // props.shrinkByContent ? (column && css['min-height-0']) || css['min-width-0'] : undefined,
+    // props.shrinkByContent && css['shrink-by-content'],
+    props.shrinkByContent ? (column && css['shrink-by-column']) || css['shrink-by-row'] : undefined,
   ]
     .filter(Boolean)
     .join(' ');
