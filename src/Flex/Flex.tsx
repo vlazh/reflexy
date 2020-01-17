@@ -60,11 +60,15 @@ export interface FlexProps {
   /** Stretch by vertical and horizontal. */
   fill?: boolean;
   /**
-   * Sets `min-width: 0` for `row` or `min-height: 0` for `column`.
+   * Sets `min-width: 0` and `min-height: 0`.
    * By default, a flex item cannot be smaller than the size of its content.
    * The initial setting on flex items is `min-width: auto` and `min-height: auto`.
    * One way to enable flex items to shrink past their content is to set a flex item to `min-width: 0` or `min-height: 0`. */
   shrinkByContent?: boolean;
+  /** Sets `min-width` to `0`. Takes a precedence over `shrinkByContent`. */
+  shrinkWidth?: boolean;
+  /** Sets `min-height` to `0`. Takes a precedence over `shrinkByContent`. */
+  shrinkHeight?: boolean;
 }
 
 export type DefaultSpaceSize = 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
@@ -244,6 +248,8 @@ function Flex<C extends TweakableComponentType = DefaultComponentType>({
   vfill,
   fill,
   shrinkByContent = true,
+  shrinkWidth,
+  shrinkHeight,
   className,
   style,
   classNameTransformer = defaultClassNameTransformer as any,
@@ -282,25 +288,29 @@ function Flex<C extends TweakableComponentType = DefaultComponentType>({
         vfill,
         fill,
         shrinkByContent,
+        shrinkWidth,
+        shrinkHeight,
       }),
     [
+      inline,
+      row,
+      column,
+      reverse,
+      wrap,
       alignContent,
       alignItems,
       alignSelf,
-      basis,
-      center,
-      column,
-      fill,
-      grow,
-      hfill,
-      inline,
       justifyContent,
-      reverse,
-      row,
+      center,
+      basis,
+      grow,
       shrink,
+      hfill,
       vfill,
+      fill,
       shrinkByContent,
-      wrap,
+      shrinkWidth,
+      shrinkHeight,
     ]
   );
 
@@ -411,6 +421,8 @@ export function props2className(
     | 'inline'
     | 'basis'
     | 'shrinkByContent'
+    | 'shrinkWidth'
+    | 'shrinkHeight'
   >
 ): string {
   const column = !!props.column;
@@ -427,6 +439,9 @@ export function props2className(
   const fill = typeof props.fill === 'boolean' ? props.fill : undefined;
   const hfill = props.hfill == null ? fill : typeof props.hfill === 'boolean' && props.hfill;
   const vfill = props.vfill == null ? fill : typeof props.vfill === 'boolean' && props.vfill;
+  const shrinkByContent = !!props.shrinkByContent;
+  const shrinkWidth = props.shrinkWidth == null ? shrinkByContent : props.shrinkWidth;
+  const shrinkHeight = props.shrinkHeight == null ? shrinkByContent : props.shrinkHeight;
 
   const className = [
     css[`display--${props.inline ? 'inline-flex' : 'flex'}`],
@@ -437,13 +452,15 @@ export function props2className(
     props.alignContent && css[`align-content--${props.alignContent}`],
     props.alignSelf && css[`align-self--${props.alignSelf}`],
     justifyContent && css[`justify-content--${justifyContent}`],
-    basis && css[`flex-basis--${basis}`],
-    grow && css[`flex-grow--${grow}`],
-    shrink && css[`flex-shrink--${shrink}`],
+    basis && css[`basis--${basis}`],
+    grow && css[`grow--${grow}`],
+    shrink && css[`shrink--${shrink}`],
     hfill && css['fill-h'],
     vfill && css['fill-v'],
     // props.shrinkByContent && css['shrink-by-content'],
-    props.shrinkByContent ? (column && css['shrink-by-column']) || css['shrink-by-row'] : undefined,
+    // props.shrinkByContent ? (column && css['shrink-by-column']) || css['shrink-by-row'] : undefined,
+    shrinkWidth && css['shrink-width'],
+    shrinkHeight && css['shrink-height'],
   ]
     .filter(Boolean)
     .join(' ');
