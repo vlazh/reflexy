@@ -6,7 +6,7 @@ import { sizesMap, sizes } from './viewSizes';
 
 export type BreakpointsMergeType = 'up' | 'down';
 
-export interface ResponsiveProps<A extends object> {
+export interface ResponsiveProps<Props extends object> {
   /**
    * `down` - merge from top to down until current view size.
    * `top` - merge from down to top until current view size.
@@ -15,7 +15,7 @@ export interface ResponsiveProps<A extends object> {
    */
   merge?: boolean | BreakpointsMergeType;
   /** Props per breakpoint */
-  breakpoints: { [P in ViewSize]?: A };
+  breakpoints: { [P in ViewSize]?: Partial<Props> };
 }
 
 export type ResponsiveAllProps<
@@ -23,11 +23,11 @@ export type ResponsiveAllProps<
 > = ResponsiveProps<React.PropsWithChildren<TweakableComponentProps<C>>> &
   React.PropsWithChildren<TweakableComponentProps<C>>;
 
-function mergeProps<A extends object>(
+function mergeProps<Props extends object>(
   viewSize: ViewSize,
-  breakpoints: ResponsiveProps<A>['breakpoints'],
+  breakpoints: ResponsiveProps<Props>['breakpoints'],
   mergeType: BreakpointsMergeType
-): A {
+): Partial<Props> {
   const size = sizesMap[viewSize];
   const result = {};
 
@@ -43,13 +43,13 @@ function mergeProps<A extends object>(
     }
   }
 
-  return result as A;
+  return result as Props;
 }
 
-export function mergeResponsiveProps<A extends object>(
+export function mergeBreakpointProps<Props extends object>(
   viewSize: ViewSize,
-  { breakpoints, merge = true, ...rest }: ResponsiveProps<A> & A
-): A {
+  { breakpoints, merge = true, ...rest }: ResponsiveProps<Props> & Props
+): Partial<Props> {
   const mergeType: BreakpointsMergeType | false = merge === true ? 'down' : merge;
   const merged = !mergeType ? breakpoints[viewSize] : mergeProps(viewSize, breakpoints, mergeType);
   return { ...rest, ...merged };
@@ -59,6 +59,6 @@ export default function Responsive<C extends TweakableComponentType = DefaultCom
   props: ResponsiveAllProps<C>
 ): JSX.Element {
   const viewSize = useMedia();
-  const { component = 'div', children, ...rest } = mergeResponsiveProps(viewSize, props);
+  const { component = 'div', children, ...rest } = mergeBreakpointProps(viewSize, props);
   return React.createElement(component, rest, children);
 }

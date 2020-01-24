@@ -1,6 +1,6 @@
 import React from 'react';
 import useMedia from '../useMediaQuery';
-import { ResponsiveProps, mergeResponsiveProps } from '../Responsive';
+import { ResponsiveProps, mergeBreakpointProps } from '../Responsive';
 import Flex, { FlexAllProps, TweakableComponentType, DefaultComponentType } from '../../Flex';
 
 export type ResponsiveFlexAllProps<
@@ -11,6 +11,6 @@ export default function ResponsiveFlex<C extends TweakableComponentType = Defaul
   props: ResponsiveFlexAllProps<C>
 ): JSX.Element {
   const viewSize = useMedia();
-  const { children, ...rest } = mergeResponsiveProps(viewSize, props);
+  const { children, ...rest } = mergeBreakpointProps(viewSize, props);
   return <Flex {...rest}>{children}</Flex>;
 }
