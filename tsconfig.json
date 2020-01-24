@@ -11,5 +11,5 @@
     "diagnostics": true,
     "types": ["css-modules"]
   },
-  "files": ["./src/index.ts", "./src/test/flex.tsx"]
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"]
 }

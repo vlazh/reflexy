@@ -4,8 +4,3 @@ export { default as TweakableElementWrapper } from './TweakableElementWrapper';
 export * from './TweakableElementWrapper';
 export { default as FlexWithRef } from './FlexWithRef';
 export * from './FlexWithRef';
-export { ViewSize, getCurrentViewSize } from './mediaQueries';
-export { default as Responsive } from './Responsive';
-export * from './Responsive';
-export { default as ResponsiveFlex } from './ResponsiveFlex';
-export * from './ResponsiveFlex';

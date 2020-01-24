@@ -1,9 +1,14 @@
 /* eslint-disable */
 import React from 'react';
-import Flex, { FlexAllProps, FlexComponentProps, DefaultComponentType, TweakableComponentType } from '../Flex';
+import Flex, {
+  FlexAllProps,
+  FlexComponentProps,
+  DefaultComponentType,
+  TweakableComponentType,
+} from '../Flex';
 import FlexWithRef from '../FlexWithRef';
-import ResponsiveFlex from '../ResponsiveFlex';
-import Responsive from '../Responsive';
+import ResponsiveFlex from '../responsive/ResponsiveFlex';
+import Responsive from '../responsive/Responsive';
 import TweakableElementWrapper from '../TweakableElementWrapper';
 
 // function onAbort(event: React.SyntheticEvent<SVGElement>) {
@@ -65,9 +70,17 @@ export function test() {
       {/* <Flex component={React.DOM.div} about="" alignItems="baseline" alignContent="center" /> */}
       {/* <Flex component={React.DOM.form} onSubmit={() => {}} alignContent="center" /> */}
       <Flex p />
-
-      <Responsive component={MYY} breakpoints={{ l: { aa: '' } }} />
+{/* xl */}
+      <Responsive
+        component={MYY}
+        breakpoints={{
+          s: { aa: 's' },
+          l: { aa: 'l' },
+          xxl: { aa: 'xxl' },
+        }}
+      />
       <Responsive component="div" breakpoints={{ l: {} }} />
+      <Responsive breakpoints={{ l: {} }} />
 
       <ResponsiveFlex component={MYY} breakpoints={{ l: { order: 1 } }} />
       {/* <ResponsiveFlex component={<nav />} breakpoints={{ l: { order: 1 } }} /> */}
