@@ -76,7 +76,7 @@ export default abstract class MediaQueries {
       mq.onchange = ({ matches }) => {
         if (matches) {
           this._currentViewSize = viewSize;
-          console.log(viewSize);
+          // console.log(viewSize);
         }
         this.listeners.forEach(handle => handle({ viewSize, matches }));
       };

@@ -2,6 +2,7 @@ import React from 'react';
 import { ViewSize } from '../MediaQueries';
 import useMedia from '../useMediaQuery';
 import { TweakableComponentType, DefaultComponentType, TweakableComponentProps } from '../../Flex';
+import { sizesMap, sizes } from './viewSizes';
 
 export type BreakpointsMergeType = 'up' | 'down';
 
@@ -21,18 +22,6 @@ export type ResponsiveAllProps<
   C extends TweakableComponentType = DefaultComponentType
 > = ResponsiveProps<React.PropsWithChildren<TweakableComponentProps<C>>> &
   React.PropsWithChildren<TweakableComponentProps<C>>;
-
-const sizesMap: Record<ViewSize, number> = {
-  [ViewSize.xxs]: 1,
-  [ViewSize.xs]: 2,
-  [ViewSize.s]: 3,
-  [ViewSize.m]: 4,
-  [ViewSize.l]: 5,
-  [ViewSize.xl]: 6,
-  [ViewSize.xxl]: 7,
-};
-
-const sizes = Object.entries(sizesMap) as [ViewSize, number][];
 
 function mergeProps<A extends object>(
   viewSize: ViewSize,
