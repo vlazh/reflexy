@@ -1,8 +1,7 @@
 import React from 'react';
-import { ViewSize } from '../MediaQueries';
+import MediaQueries, { ViewSize } from '../MediaQueries';
 import useMedia from '../useMediaQuery';
 import { TweakableComponentType, DefaultComponentType, TweakableComponentProps } from '../../Flex';
-import { sizesMap, sizes } from './viewSizes';
 
 export type BreakpointsMergeType = 'up' | 'down';
 
@@ -28,18 +27,27 @@ function mergeProps<Props extends object>(
   breakpoints: ResponsiveProps<Props>['breakpoints'],
   mergeType: BreakpointsMergeType
 ): Partial<Props> {
-  const size = sizesMap[viewSize];
+  const currentSizeValue = MediaQueries.viewSizeValues[viewSize];
   const result = {};
 
   if (mergeType === 'up') {
     // Снизу вверх до текущего размера.
-    for (let i = 0; i < size; i += 1) {
-      Object.assign(result, breakpoints[sizes[i][0]]);
+    for (
+      let i = 0, [sizeKey, { maxWidth }] = MediaQueries.viewSizeValueList[i];
+      i < MediaQueries.viewSizeValueList.length && maxWidth <= currentSizeValue.maxWidth;
+      i += 1, [sizeKey, { maxWidth }] = MediaQueries.viewSizeValueList[i] || ['', { maxWidth: 0 }]
+    ) {
+      Object.assign(result, breakpoints[sizeKey]);
     }
   } else {
     // Сверху вниз до текущего размера.
-    for (let i = sizes.length - 1; i >= size - 1; i -= 1) {
-      Object.assign(result, breakpoints[sizes[i][0]]);
+    for (
+      let i = MediaQueries.viewSizeValueList.length - 1,
+        [sizeKey, { maxWidth }] = MediaQueries.viewSizeValueList[i];
+      i >= 0 && maxWidth >= currentSizeValue.maxWidth;
+      i -= 1, [sizeKey, { maxWidth }] = MediaQueries.viewSizeValueList[i] || ['', { maxWidth: 0 }]
+    ) {
+      Object.assign(result, breakpoints[sizeKey]);
     }
   }
 

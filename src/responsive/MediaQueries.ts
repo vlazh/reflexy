@@ -13,6 +13,11 @@ export enum ViewSize {
   xxl = 'xxl',
 }
 
+export interface ViewSizeValue {
+  minWidth: number;
+  maxWidth: number;
+}
+
 export interface MediaQueryEvent extends Pick<MediaQueryListEvent, 'matches'> {
   readonly viewSize: ViewSize;
 }
@@ -20,15 +25,28 @@ export interface MediaQueryEvent extends Pick<MediaQueryListEvent, 'matches'> {
 export type MediaQueryEventHandler = (event: MediaQueryEvent) => void;
 
 export default abstract class MediaQueries {
-  static queries: Readonly<Record<ViewSize, string>> = Object.freeze({
-    [ViewSize.xxs]: 'only screen and (max-width: 479px)',
-    [ViewSize.xs]: 'only screen and (min-width: 480px) and (max-width: 767px)',
-    [ViewSize.s]: 'only screen and (min-width: 768px) and (max-width: 991px)',
-    [ViewSize.m]: 'only screen and (min-width: 992px) and (max-width: 1279px)',
-    [ViewSize.l]: 'only screen and (min-width: 1280px) and (max-width: 1919px)',
-    [ViewSize.xl]: 'only screen and (min-width: 1920px) and (max-width: 2559px)',
-    [ViewSize.xxl]: 'only screen and (min-width: 2560px)',
-  });
+  /** All values are unique. */
+  static readonly viewSizeValues: Record<ViewSize, ViewSizeValue> = {
+    [ViewSize.xxs]: { minWidth: 0, maxWidth: 479 },
+    [ViewSize.xs]: { minWidth: 480, maxWidth: 767 },
+    [ViewSize.s]: { minWidth: 768, maxWidth: 991 },
+    [ViewSize.m]: { minWidth: 992, maxWidth: 1279 },
+    [ViewSize.l]: { minWidth: 1280, maxWidth: 1919 },
+    [ViewSize.xl]: { minWidth: 1920, maxWidth: 2559 },
+    [ViewSize.xxl]: { minWidth: 2560, maxWidth: Number.MAX_SAFE_INTEGER },
+  };
+
+  /** Sorted values. See `viewSizeValues`. */
+  static readonly viewSizeValueList = Object.entries(MediaQueries.viewSizeValues).sort(
+    ([, a], [, b]) => a.minWidth - b.minWidth
+  ) as readonly [ViewSize, ViewSizeValue][];
+
+  static readonly queries: Readonly<
+    Record<ViewSize, string>
+  > = MediaQueries.viewSizeValueList.reduce((acc, [viewSize, { minWidth, maxWidth }]) => {
+    acc[viewSize] = `only screen and (min-width: ${minWidth}px) and (max-width: ${maxWidth}px)`;
+    return acc;
+  }, {} as Record<ViewSize, string>);
 
   private static _currentViewSize: ViewSize | undefined;
 
@@ -50,6 +68,10 @@ export default abstract class MediaQueries {
       );
     }
     return this._currentViewSize;
+  }
+
+  static get currentViewSizeValue(): ViewSizeValue {
+    return this.viewSizeValues[this.currentViewSize];
   }
 
   static addListener(listener: MediaQueryEventHandler): void {

@@ -1,8 +1,7 @@
 import React from 'react';
-import { ViewSize } from '../MediaQueries';
+import MediaQueries, { ViewSize } from '../MediaQueries';
 import useMedia from '../useMediaQuery';
 import { BreakpointsMergeType, ResponsiveProps } from '../Responsive';
-import { sizesMap, sizes } from '../Responsive/viewSizes';
 
 type Breakpoints = { [P in ViewSize]?: boolean };
 
@@ -21,21 +20,30 @@ function mergeBreakpoints(
     return breakpoints[viewSize] ?? fallback;
   }
 
-  const size = sizesMap[viewSize];
+  const currentSizeValue = MediaQueries.viewSizeValues[viewSize];
   let lastValue = fallback;
 
   if (mergeType === 'up') {
     // Снизу вверх до текущего размера.
-    for (let i = 0; i < size; i += 1) {
-      const value = breakpoints[sizes[i][0]];
+    for (
+      let i = 0, [sizeKey, { maxWidth }] = MediaQueries.viewSizeValueList[i];
+      i < MediaQueries.viewSizeValueList.length && maxWidth <= currentSizeValue.maxWidth;
+      i += 1, [sizeKey, { maxWidth }] = MediaQueries.viewSizeValueList[i] || ['', { maxWidth: 0 }]
+    ) {
+      const value = breakpoints[sizeKey];
       if (value != null) {
         lastValue = value;
       }
     }
   } else {
     // Сверху вниз до текущего размера.
-    for (let i = sizes.length - 1; i >= size - 1; i -= 1) {
-      const value = breakpoints[sizes[i][0]];
+    for (
+      let i = MediaQueries.viewSizeValueList.length - 1,
+        [sizeKey, { maxWidth }] = MediaQueries.viewSizeValueList[i];
+      i >= 0 && maxWidth >= currentSizeValue.maxWidth;
+      i -= 1, [sizeKey, { maxWidth }] = MediaQueries.viewSizeValueList[i] || ['', { maxWidth: 0 }]
+    ) {
+      const value = breakpoints[sizeKey];
       if (value != null) {
         lastValue = value;
       }
