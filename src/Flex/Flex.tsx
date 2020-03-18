@@ -461,9 +461,10 @@ export function props2className(
     // props.shrinkByContent ? (column && css['shrink-by-column']) || css['shrink-by-row'] : undefined,
     shrinkWidth && css['shrink-width'],
     shrinkHeight && css['shrink-height'],
-  ]
-    .filter(Boolean)
-    .join(' ');
+  ].reduce<string>((acc, cls) => {
+    if (!cls) return acc;
+    return acc ? `${acc} ${cls}` : cls;
+  }, '');
 
   return className;
 }
@@ -510,12 +511,11 @@ export function props2style({
     paddingRight: pr != null ? toCssValue(pr, pSize, unit) : undefined,
     paddingBottom: pb != null ? toCssValue(pb, pSize, unit) : undefined,
     paddingLeft: pl != null ? toCssValue(pl, pSize, unit) : undefined,
-  })
-    .filter(([, v]) => v != null)
-    .reduce((acc, [k, v]) => {
-      acc[k] = v;
-      return acc;
-    }, {});
+  }).reduce((acc, [k, v]) => {
+    if (v == null) return acc;
+    acc[k] = v;
+    return acc;
+  }, {});
 }
 
 export function toCssValue(
