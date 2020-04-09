@@ -46,6 +46,8 @@ export function test() {
       <Flex component={MyClass} myy classNameTransformer={classNameTransformer} />
       <Flex componentRef={keepRef} />
 
+      <Flex component="svg" overflow="auto" scrollable="scroll" />
+
       <Flex key="1" />
 
       <FlexWithRef component={MyClass} aa="" ref={el => el} />

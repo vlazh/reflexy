@@ -110,6 +110,18 @@ export interface SpaceProps {
   py?: boolean | number | DefaultSpaceSize;
 }
 
+export type Overflow = Globals | 'auto' | 'hidden' | 'scroll' | 'visible';
+
+export interface OverflowProps {
+  overflow?: Overflow;
+  overflowX?: this['overflow'];
+  overflowY?: this['overflow'];
+  /** Shortcut for overflow */
+  scrollable?: Extract<Overflow, 'auto' | 'scroll'> | boolean;
+  scrollableX?: this['scrollable'];
+  scrollableY?: this['scrollable'];
+}
+
 export interface Styleable<C = string, S = React.CSSProperties> {
   className?: C;
   style?: S;
@@ -198,6 +210,7 @@ export type FlexComponentProps<
   DefaultStyles extends boolean = undefined extends C ? true : false
 > = FlexProps &
   SpaceProps &
+  OverflowProps &
   PropsWithStyles<Omit<TweakableComponentProps<C>, 'component'>, DefaultStyles>;
 // (undefined extends C
 //   ? PropsWithStyles<{}, DefaultStyles>
@@ -207,7 +220,10 @@ export type FlexAllProps<
   C extends TweakableComponentType = any,
   DefaultStyles extends boolean = undefined extends C ? true : false
 > = React.PropsWithChildren<
-  FlexProps & SpaceProps & PropsWithStylesTransformers<TweakableComponentProps<C>, DefaultStyles>
+  FlexProps &
+    SpaceProps &
+    OverflowProps &
+    PropsWithStylesTransformers<TweakableComponentProps<C>, DefaultStyles>
 >;
 
 export function defaultClassNameTransformer(calcClassName: string, userClassName?: string): string {
@@ -266,6 +282,13 @@ function Flex<C extends TweakableComponentType = DefaultComponentType>({
   py,
   unit = Flex.defaultUnit,
 
+  overflow,
+  overflowX,
+  overflowY,
+  scrollable,
+  scrollableX,
+  scrollableY,
+
   ...other
 }: FlexAllProps<C>): JSX.Element {
   const calcClassName = useMemo(
@@ -290,6 +313,12 @@ function Flex<C extends TweakableComponentType = DefaultComponentType>({
         shrinkByContent,
         shrinkWidth,
         shrinkHeight,
+        overflow,
+        overflowX,
+        overflowY,
+        scrollable,
+        scrollableX,
+        scrollableY,
       }),
     [
       inline,
@@ -311,6 +340,12 @@ function Flex<C extends TweakableComponentType = DefaultComponentType>({
       shrinkByContent,
       shrinkWidth,
       shrinkHeight,
+      overflow,
+      overflowX,
+      overflowY,
+      scrollable,
+      scrollableX,
+      scrollableY,
     ]
   );
 
@@ -423,7 +458,8 @@ export function props2className(
     | 'shrinkByContent'
     | 'shrinkWidth'
     | 'shrinkHeight'
-  >
+  > &
+    OverflowProps
 ): string {
   const column = !!props.column;
   const row = !column && !!props.row;
@@ -443,6 +479,23 @@ export function props2className(
   const shrinkWidth = props.shrinkWidth == null ? shrinkByContent : props.shrinkWidth;
   const shrinkHeight = props.shrinkHeight == null ? shrinkByContent : props.shrinkHeight;
 
+  const scrollable =
+    (props.scrollable === true && 'auto') ||
+    (props.scrollable === false && 'hidden') ||
+    props.scrollable;
+  const scrollableX =
+    (props.scrollableX === true && 'auto') ||
+    (props.scrollableX === false && 'hidden') ||
+    (props.scrollableX == null ? scrollable : props.scrollableX);
+  const scrollableY =
+    (props.scrollableY === true && 'auto') ||
+    (props.scrollableY === false && 'hidden') ||
+    (props.scrollableY == null ? scrollable : props.scrollableY);
+
+  const overflow = props.overflow ?? scrollable;
+  const overflowX = props.overflowX == null ? scrollableX ?? overflow : props.overflowX;
+  const overflowY = props.overflowY == null ? scrollableY ?? overflow : props.overflowY;
+
   const className = [
     css[`display--${props.inline ? 'inline-flex' : 'flex'}`],
     row && css[`row${reverse}`],
@@ -461,6 +514,8 @@ export function props2className(
     // props.shrinkByContent ? (column && css['shrink-by-column']) || css['shrink-by-row'] : undefined,
     shrinkWidth && css['shrink-width'],
     shrinkHeight && css['shrink-height'],
+    overflowX && css[`overflow-x--${overflowX}`],
+    overflowY && css[`overflow-y--${overflowY}`],
   ].reduce<string>((acc, cls) => {
     if (!cls) return acc;
     return acc ? `${acc} ${cls}` : cls;

@@ -436,3 +436,60 @@
 .shrink--24 {
   flex-shrink: 24;
 }
+
+/* OVERFLOW */
+.overflow-x--inherit {
+  overflow-x: inherit;
+}
+
+.overflow-x--initial {
+  overflow-x: initial;
+}
+
+.overflow-x--unset {
+  overflow-x: unset;
+}
+
+.overflow-x--auto {
+  overflow-x: auto;
+}
+
+.overflow-x--hidden {
+  overflow-x: hidden;
+}
+
+.overflow-x--scroll {
+  overflow-x: scroll;
+}
+
+.overflow-x--visible {
+  overflow-x: visible;
+}
+
+.overflow-y--inherit {
+  overflow-y: inherit;
+}
+
+.overflow-y--initial {
+  overflow-y: initial;
+}
+
+.overflow-y--unset {
+  overflow-y: unset;
+}
+
+.overflow-y--auto {
+  overflow-y: auto;
+}
+
+.overflow-y--hidden {
+  overflow-y: hidden;
+}
+
+.overflow-y--scroll {
+  overflow-y: scroll;
+}
+
+.overflow-y--visible {
+  overflow-y: visible;
+}
