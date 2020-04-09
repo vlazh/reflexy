@@ -6,12 +6,6 @@
   "types": "dist/index.d.ts",
   "author": "Vladimir Zhukov",
   "license": "MIT",
-  "maintainers": [
-    {
-      "name": "Vladimir Zhukov",
-      "url": "http://github.com/vlazh"
-    }
-  ],
   "homepage": "https://github.com/vlazh/reflexy",
   "repository": {
     "type": "git",
@@ -27,17 +21,16 @@
     "layout"
   ],
   "scripts": {
-    "update-deps": "yarn upgrade-interactive --latest",
     "clean": "rimraf dist/*",
     "copy:configs": "copyfiles package.json README.md LICENSE ./dist/",
     "copy:css": "copyfiles ./src/**/*.css --up 1 ./dist/",
-    "build-ts": "npm run clean && tsc --project tsconfig.json",
-    "build": "npm run build-ts && npm run copy:css && npm run copy:configs",
+    "build-ts": "tsc --project tsconfig.json",
+    "build": "npm run clean && npm run build-ts && npm run copy:css",
     "build-to-tutoron": "tsc --project tsconfig.json --outDir '/home/vladimir/dev/sources/tutoron/node_modules/reflexy/' && copyfiles ./src/**/*.css --up 1 '/home/vladimir/dev/sources/tutoron/node_modules/reflexy/'",
     "build-to-react-components": "tsc --project tsconfig.json --outDir '../react-components/node_modules/reflexy/'",
-    "patch-publish": "npm version patch && npm run build && npm publish ./dist/ && git push --follow-tags",
-    "minor-publish": "npm version minor && npm run build && npm publish ./dist/ && git push --follow-tags",
-    "major-publish": "npm version major && npm run build && npm publish ./dist/ && git push --follow-tags"
+    "patch-publish": "npm run build && npm version patch && npm run copy:configs && npm publish ./dist/ && git push --follow-tags",
+    "minor-publish": "npm run build && npm version minor && npm run copy:configs && npm publish ./dist/ && git push --follow-tags",
+    "major-publish": "npm run build && npm version major && npm run copy:configs && npm publish ./dist/ && git push --follow-tags"
   },
   "devDependencies": {
     "@types/css-modules": "^1.0.0",
