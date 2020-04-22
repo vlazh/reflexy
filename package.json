@@ -37,6 +37,7 @@
     "@material-ui/styles": "^4.9.10",
     "@types/css-modules": "^1.0.0",
     "@types/react": "^16.9.34",
+    "@types/webpack": "^4.41.12",
     "@typescript-eslint/eslint-plugin": "^2.29.0",
     "@typescript-eslint/parser": "^2.29.0",
     "@vzh/configs": "^3.49.0",
