@@ -1,13 +1,15 @@
 # Reflexy [![npm package](https://img.shields.io/npm/v/reflexy.svg?style=flat-square)](https://www.npmjs.org/package/reflexy)
 
-**Reflexy** is React Components for Flexbox Layout:
+**Reflexy** is react components library for flexbox and responsive layouts:
 
 - [Flex](#Flex) - flexbox layout with paddings and margins support.
-- FlexWithRef - Flex with forwarded ref.
-- TweakableElementWrapper - Wrapper for react element in order to use it with Flex component prop.
-- Responsive - Container with breakpoins.
-- [ResponsiveFlex](#ResponsiveFlex) - Like Flex but with breakpoins.
-- MediaQueries - utils for work with media queries and breakpoins.
+- [styled/Flex](#Flex) - styled version of `Flex` powered by [@material-ui/styles](https://material-ui.com/styles/basics/).
+- `styled/StyledReflexyWebpackPlugin` - webpack plugin for replace regular imports of `Flex` with `styled/Flex`. Just import `Flex` like `import { Flex, FlexWithRef } from 'reflexy';` or `import { ResponsiveFlex } from 'reflexy/responsive';` and `styled/Flex` will be used instead.
+- `FlexWithRef` - `Flex` with forwarded ref.
+- `TweakableElementWrapper` - Wrapper for react element in order to use it with `component` prop of `Flex`.
+- `responsive/Responsive` - Container with breakpoins.
+- [responsive/ResponsiveFlex](#ResponsiveFlex) - Like `Flex` but with breakpoins.
+- `responsive/MediaQueries` - utils for work with media queries and breakpoins.
 
 and [custom media queries](#mq):
 
