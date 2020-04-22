@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { ContentDistribution } from 'csstype';
+import type { ContentDistribution } from 'csstype';
+import { defaultClassNameTransformer, defaultStyleTransformer, toCssValue } from './utils';
 import css from './Flex.css';
 
 type Globals = 'inherit' | 'initial' | 'unset';
@@ -131,7 +132,7 @@ export type ClassNameTransformer<T, R = T> = (
   calcClassName: string,
   userClassName?: T
 ) => NonNullable<R>;
-export type StyleTransformer<T, R = T> = (calcStyle: React.CSSProperties, userStyle?: T) => R;
+export type StyleTransformer<T, R = T> = (calcStyle?: React.CSSProperties, userStyle?: T) => R;
 
 export interface Transformable<C = string, S = React.CSSProperties, CR = C, SR = S> {
   classNameTransformer?: ClassNameTransformer<C, CR>;
@@ -225,17 +226,6 @@ export type FlexAllProps<
     OverflowProps &
     PropsWithStylesTransformers<TweakableComponentProps<C>, DefaultStyles>
 >;
-
-export function defaultClassNameTransformer(calcClassName: string, userClassName?: string): string {
-  return userClassName ? `${calcClassName} ${userClassName}` : calcClassName;
-}
-
-export function defaultStyleTransformer(
-  calcStyle: React.CSSProperties,
-  userStyle?: React.CSSProperties
-): React.CSSProperties {
-  return userStyle || calcStyle ? { ...calcStyle, ...userStyle } : calcStyle;
-}
 
 /**
  * Flexbox container.
@@ -555,30 +545,20 @@ export function props2style({
     width: typeof hfill === 'number' ? `${Math.min(hfill, 1) * 100}%` : undefined,
     height: typeof vfill === 'number' ? `${Math.min(vfill, 1) * 100}%` : undefined,
 
-    margin: m != null ? toCssValue(m, mSize, unit) : undefined,
-    marginTop: mt != null ? toCssValue(mt, mSize, unit) : undefined,
-    marginRight: mr != null ? toCssValue(mr, mSize, unit) : undefined,
-    marginBottom: mb != null ? toCssValue(mb, mSize, unit) : undefined,
-    marginLeft: ml != null ? toCssValue(ml, mSize, unit) : undefined,
+    margin: m != null ? toCssValue(m, Flex.defaultSizes, mSize, unit) : undefined,
+    marginTop: mt != null ? toCssValue(mt, Flex.defaultSizes, mSize, unit) : undefined,
+    marginRight: mr != null ? toCssValue(mr, Flex.defaultSizes, mSize, unit) : undefined,
+    marginBottom: mb != null ? toCssValue(mb, Flex.defaultSizes, mSize, unit) : undefined,
+    marginLeft: ml != null ? toCssValue(ml, Flex.defaultSizes, mSize, unit) : undefined,
 
-    padding: p != null ? toCssValue(p, pSize, unit) : undefined,
-    paddingTop: pt != null ? toCssValue(pt, pSize, unit) : undefined,
-    paddingRight: pr != null ? toCssValue(pr, pSize, unit) : undefined,
-    paddingBottom: pb != null ? toCssValue(pb, pSize, unit) : undefined,
-    paddingLeft: pl != null ? toCssValue(pl, pSize, unit) : undefined,
+    padding: p != null ? toCssValue(p, Flex.defaultSizes, pSize, unit) : undefined,
+    paddingTop: pt != null ? toCssValue(pt, Flex.defaultSizes, pSize, unit) : undefined,
+    paddingRight: pr != null ? toCssValue(pr, Flex.defaultSizes, pSize, unit) : undefined,
+    paddingBottom: pb != null ? toCssValue(pb, Flex.defaultSizes, pSize, unit) : undefined,
+    paddingLeft: pl != null ? toCssValue(pl, Flex.defaultSizes, pSize, unit) : undefined,
   }).reduce((acc, [k, v]) => {
     if (v == null) return acc;
     acc[k] = v;
     return acc;
   }, {});
-}
-
-export function toCssValue(
-  value: boolean | number | DefaultSpaceSize,
-  defaultSize: number,
-  unit: string
-): string {
-  if (value === true) return `${defaultSize}${unit}`;
-  if (typeof value === 'string') return `${Flex.defaultSizes[value]}${unit}`;
-  return `${+value * defaultSize}${unit}`;
 }
