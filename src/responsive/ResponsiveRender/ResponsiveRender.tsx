@@ -1,7 +1,7 @@
 import React from 'react';
 import MediaQueries, { ViewSize } from '../MediaQueries';
 import useMedia from '../useMediaQuery';
-import { BreakpointsMergeType, ResponsiveProps } from '../Responsive';
+import type { BreakpointsMergeType, ResponsiveProps } from '../Responsive';
 
 type Breakpoints = { [P in ViewSize]?: boolean };
 

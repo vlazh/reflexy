@@ -1,5 +1,5 @@
 import React from 'react';
-import { Styleable } from './Flex';
+import type { Styleable } from './Flex';
 
 export interface TweakableElementWrapperProps extends Styleable {
   element: React.ReactElement<React.PropsWithChildren<Styleable>>;

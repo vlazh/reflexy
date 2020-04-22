@@ -1,7 +1,7 @@
 import React from 'react';
+import Flex, { FlexAllProps, TweakableComponentType, DefaultComponentType } from '../../Flex';
 import useMedia from '../useMediaQuery';
 import { ResponsiveProps, mergeBreakpointProps } from '../Responsive';
-import Flex, { FlexAllProps, TweakableComponentType, DefaultComponentType } from '../../Flex';
 
 export type ResponsiveFlexAllProps<
   C extends TweakableComponentType = DefaultComponentType
