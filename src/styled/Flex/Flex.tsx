@@ -69,16 +69,16 @@ const getSpaceSize = (
   return typeof size === 'number' ? size : defaultSizes[size];
 };
 
-export interface FlexTheme {
-  flex?: {
+export interface Theme {
+  reflexy?: {
     defaultUnit?: string;
     defaultSizes?: Record<DefaultSpaceSize, number>;
   };
 }
 
-const useStyles = makeStyles((theme: FlexTheme) => {
-  const defaultSizes = theme.flex?.defaultSizes ?? Flex.defaultSizes;
-  const defaultUnit = theme.flex?.defaultUnit ?? Flex.defaultUnit;
+const useStyles = makeStyles((theme: Theme) => {
+  const defaultSizes = theme.reflexy?.defaultSizes ?? Flex.defaultSizes;
+  const defaultUnit = theme.reflexy?.defaultUnit ?? Flex.defaultUnit;
 
   return {
     root: {
