@@ -11,6 +11,24 @@ import ResponsiveFlex from '../responsive/ResponsiveFlex';
 import Responsive from '../responsive/Responsive';
 import TweakableElementWrapper from '../TweakableElementWrapper';
 
+export const S = <C extends TweakableComponentType = DefaultComponentType>({
+  mSize,
+  pSize,
+  ...rest
+}: FlexAllProps<C>) => <Flex mSize="s" pSize="s" {...rest} />;
+
+export const M = <C extends TweakableComponentType = DefaultComponentType>({
+  mSize,
+  pSize,
+  ...rest
+}: FlexAllProps<C>) => <Flex mSize="m" pSize="m" {...rest} />;
+
+export const L = <C extends TweakableComponentType = DefaultComponentType>({
+  mSize,
+  pSize,
+  ...rest
+}: FlexAllProps<C>) => <Flex mSize="l" pSize="l" {...rest} />;
+
 // function onAbort(event: React.SyntheticEvent<SVGElement>) {
 function onAbort(event: React.SyntheticEvent<HTMLDivElement>) {
   event;
