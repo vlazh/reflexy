@@ -19,14 +19,6 @@ const getFillValue = (
   propValue: number | boolean | undefined,
   fallback: boolean | undefined
 ): string | undefined => {
-  // const fill =
-  //   propValue == null
-  //     ? fallback
-  //       ? '100%'
-  //       : undefined
-  //     : typeof propValue === 'number' || propValue === true
-  //     ? `${Math.min(+propValue, 1) * 100}%`
-  //     : undefined;
   const fill =
     typeof propValue === 'number'
       ? `${Math.min(+propValue, 1) * 100}%`
@@ -160,7 +152,6 @@ const useStyles = makeStyles((theme: Theme) => {
 /**
  * Flexbox container.
  * Default style is just `display: flex;`.
- * Example: `<Flex component={<button />} ... />`
  * Example: `<Flex component="button" ... />`
  * Example: `<Flex component={MyComponent} ... />`
  */

@@ -143,20 +143,6 @@ interface AnyObject {
   [P: string]: any;
 }
 
-// export type StylesProps<P extends AnyObject> = (P extends { className?: infer C }
-//   ? { className?: C }
-//   : { className: never }) &
-//   (P extends { style?: infer S } ? { style?: S } : { style: never });
-//
-// export type StylesProps<P extends AnyObject> = P extends { className?: infer C; style?: infer S }
-//   ? Styleable<C, S>
-//   : Required<Styleable<never, never>>;
-//
-// export type StylesProps<
-//   P extends AnyObject,
-//   _DefaultStyles extends boolean = false
-// > = P extends Styleable<infer C, infer S> ? Styleable<C, S> : Styleable<unknown, unknown>;
-//
 export type StylesProps<
   P extends AnyObject,
   DefaultStyles extends boolean = false
@@ -166,11 +152,6 @@ export type StylesProps<
   ? Styleable<C, S>
   : Styleable<unknown, unknown>;
 
-// export type StylesTransformersProps<
-//   P extends AnyObject,
-//   _DefaultStyles extends boolean = false
-// > = Transformable<any, any, P['className'], P['style']>;
-//
 export type StylesTransformersProps<
   P extends AnyObject,
   DefaultStyles extends boolean = false
@@ -181,7 +162,9 @@ export type StylesTransformersProps<
 type PropsWithComponentRef<P extends AnyObject> = React.PropsWithoutRef<P> &
   (P extends { ref?: any } ? { componentRef?: P['ref'] } : unknown);
 
-// `Omit` - fix for TS 3.7.3
+// Since TS 3.7.3
+// Use `Omit` (as copy of object type) to make TweakableComponentProps as object
+// and to avoid `Rest types may only be created from object types.ts(2700)` error in Flex.S and others
 export type TweakableComponentProps<C extends React.ElementType> = Omit<
   {
     /**
@@ -194,8 +177,9 @@ export type TweakableComponentProps<C extends React.ElementType> = Omit<
 
 export type TweakableComponentType = React.ElementType;
 
-// export type DefaultComponentType = React.ElementType<JSX.IntrinsicElements['div']>;
-// `div` - fix for TS 3.7.3
+// Since TS 3.7.3
+// Use `div` instead of `React.ElementType<JSX.IntrinsicElements['div']>` to avoid
+// `Type instantiation is excessively deep and possibly infinite.` error.
 export type DefaultComponentType = 'div';
 
 type PropsWithStyles<P extends AnyObject, DefaultStyles extends boolean> = P &
@@ -213,9 +197,6 @@ export type FlexComponentProps<
   SpaceProps &
   OverflowProps &
   PropsWithStyles<Omit<TweakableComponentProps<C>, 'component'>, DefaultStyles>;
-// (undefined extends C
-//   ? PropsWithStyles<{}, DefaultStyles>
-//   : PropsWithStyles<Omit<TweakableComponentProps<C>, 'component'>, DefaultStyles>);
 
 export type FlexAllProps<
   C extends TweakableComponentType = any,
@@ -230,7 +211,6 @@ export type FlexAllProps<
 /**
  * Flexbox container.
  * Default style is just `display: flex;`.
- * Example: `<Flex component={<button />} ... />`
  * Example: `<Flex component="button" ... />`
  * Example: `<Flex component={MyComponent} ... />`
  */
@@ -383,8 +363,6 @@ function Flex<C extends TweakableComponentType = DefaultComponentType>({
         className
       ),
       style: (styleTransformer as StyleTransformer<typeof style>)(calcStyles, style),
-      // className: classNameTransformer(calcClassName, className as any),
-      // style: styleTransformer(calcStyles, style as any),
       ref: componentRef,
     },
     children
@@ -422,7 +400,7 @@ Flex.L = <C extends TweakableComponentType = DefaultComponentType>({
   pSize,
   ...rest
 }: FlexAllProps<C>) => <Flex mSize="l" pSize="l" {...rest} />;
-/* eslint-enable @typescript-eslint/no-unused-vars */
+/* eslint-enable */
 
 export default Flex;
 

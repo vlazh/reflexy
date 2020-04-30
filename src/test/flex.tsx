@@ -50,10 +50,10 @@ export function test() {
 
       <Flex key="1" />
 
-      <FlexWithRef component={MyClass} aa="" ref={el => el} />
-      <FlexWithRef component="a" href="" ref={el => el} />
-      <FlexWithRef component="div" ref={el => el} />
-      <FlexWithRef component="button" hidden ref={el => el} />
+      <FlexWithRef component={MyClass} aa="" ref={(el) => el} />
+      <FlexWithRef component="a" href="" ref={(el) => el} />
+      <FlexWithRef component="div" ref={(el) => el} />
+      <FlexWithRef component="button" hidden ref={(el) => el} />
 
       <Flex component={MYY} aa="" />
       {/* <Flex component={<MYY />} /> */}
@@ -72,7 +72,7 @@ export function test() {
       {/* <Flex component={React.DOM.div} about="" alignItems="baseline" alignContent="center" /> */}
       {/* <Flex component={React.DOM.form} onSubmit={() => {}} alignContent="center" /> */}
       <Flex p />
-{/* xl */}
+
       <Responsive
         component={MYY}
         breakpoints={{
