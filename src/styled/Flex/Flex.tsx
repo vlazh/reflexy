@@ -2,7 +2,6 @@
 import React from 'react';
 import makeStyles from '@material-ui/styles/makeStyles';
 import type {
-  TweakableComponentType,
   DefaultComponentType,
   FlexAllProps,
   Styleable,
@@ -155,7 +154,7 @@ const useStyles = makeStyles((theme: Theme) => {
  * Example: `<Flex component="button" ... />`
  * Example: `<Flex component={MyComponent} ... />`
  */
-function Flex<C extends TweakableComponentType = DefaultComponentType>({
+function Flex<C extends React.ElementType = DefaultComponentType>({
   component = 'div' as C,
   className,
   style,

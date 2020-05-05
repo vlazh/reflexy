@@ -1,29 +1,24 @@
 /* eslint-disable */
 import React from 'react';
-import Flex, {
-  FlexAllProps,
-  FlexComponentProps,
-  DefaultComponentType,
-  TweakableComponentType,
-} from '../Flex';
+import Flex, { FlexAllProps, FlexComponentProps, DefaultComponentType } from '../Flex';
 import FlexWithRef from '../FlexWithRef';
 import ResponsiveFlex from '../responsive/ResponsiveFlex';
 import Responsive from '../responsive/Responsive';
 import TweakableElementWrapper from '../TweakableElementWrapper';
 
-export const S = <C extends TweakableComponentType = DefaultComponentType>({
+export const S = <C extends React.ElementType = DefaultComponentType>({
   mSize,
   pSize,
   ...rest
 }: FlexAllProps<C>) => <Flex mSize="s" pSize="s" {...rest} />;
 
-export const M = <C extends TweakableComponentType = DefaultComponentType>({
+export const M = <C extends React.ElementType = DefaultComponentType>({
   mSize,
   pSize,
   ...rest
 }: FlexAllProps<C>) => <Flex mSize="m" pSize="m" {...rest} />;
 
-export const L = <C extends TweakableComponentType = DefaultComponentType>({
+export const L = <C extends React.ElementType = DefaultComponentType>({
   mSize,
   pSize,
   ...rest

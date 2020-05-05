@@ -176,8 +176,6 @@ export type TweakableComponentProps<C extends React.ElementType> = Omit<
   never
 >;
 
-export type TweakableComponentType = React.ElementType;
-
 // Since TS 3.7.3
 // Use `div` instead of `React.ElementType<JSX.IntrinsicElements['div']>` to avoid
 // `Type instantiation is excessively deep and possibly infinite.` error.

@@ -1,9 +1,5 @@
 import React from 'react';
-import type {
-  TweakableComponentType,
-  DefaultComponentType,
-  TweakableComponentProps,
-} from '../../Flex';
+import type { DefaultComponentType, TweakableComponentProps } from '../../Flex';
 import MediaQueries, { ViewSize } from '../MediaQueries';
 import useMedia from '../useMediaQuery';
 
@@ -22,7 +18,7 @@ export interface ResponsiveProps<Props extends object> {
 }
 
 export type ResponsiveAllProps<
-  C extends TweakableComponentType = DefaultComponentType
+  C extends React.ElementType = DefaultComponentType
 > = ResponsiveProps<React.PropsWithChildren<TweakableComponentProps<C>>> &
   React.PropsWithChildren<TweakableComponentProps<C>>;
 
@@ -67,7 +63,7 @@ export function mergeBreakpointProps<Props extends object>(
   return { ...rest, ...merged };
 }
 
-export default function Responsive<C extends TweakableComponentType = DefaultComponentType>(
+export default function Responsive<C extends React.ElementType = DefaultComponentType>(
   props: ResponsiveAllProps<C>
 ): JSX.Element {
   const viewSize = useMedia();

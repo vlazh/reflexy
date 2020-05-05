@@ -1,13 +1,13 @@
 import React from 'react';
-import Flex, { FlexAllProps, TweakableComponentType, DefaultComponentType } from '../../Flex';
+import Flex, { FlexAllProps, DefaultComponentType } from '../../Flex';
 import useMedia from '../useMediaQuery';
 import { ResponsiveProps, mergeBreakpointProps } from '../Responsive';
 
 export type ResponsiveFlexAllProps<
-  C extends TweakableComponentType = DefaultComponentType
+  C extends React.ElementType = DefaultComponentType
 > = ResponsiveProps<FlexAllProps<C>> & FlexAllProps<C>;
 
-export default function ResponsiveFlex<C extends TweakableComponentType = DefaultComponentType>(
+export default function ResponsiveFlex<C extends React.ElementType = DefaultComponentType>(
   props: ResponsiveFlexAllProps<C>
 ): JSX.Element {
   const viewSize = useMedia();
