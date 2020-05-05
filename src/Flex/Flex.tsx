@@ -156,20 +156,21 @@ export type StylesTransformersProps<
   ? Transformable<string, React.CSSProperties, P['className'], P['style']>
   : Transformable<P['className'], P['style']>;
 
+type PropsWithComponentRef<P extends {}> = React.PropsWithoutRef<P> &
+  (P extends { ref?: any } ? { componentRef?: P['ref'] } : {});
+
 // Since TS 3.7.3
 // Use `Omit` (as copy of object type) to make TweakableComponentProps as object
 // and to avoid `Rest types may only be created from object types.ts(2700)` error in Flex.S and others
-type PropsWithComponentRef<P extends {}> = Omit<
-  React.PropsWithoutRef<P> & (P extends { ref?: any } ? { componentRef?: P['ref'] } : {}),
+export type TweakableComponentProps<C extends React.ElementType> = Omit<
+  {
+    /**
+     * Sets custom react component as a container.
+     * Component must accept className and style through props. */
+    component?: C;
+  } & (undefined extends C ? unknown : PropsWithComponentRef<React.ComponentPropsWithRef<C>>),
   never
 >;
-
-export type TweakableComponentProps<C extends React.ElementType> = {
-  /**
-   * Sets custom react component as a container.
-   * Component must accept className and style through props. */
-  component?: C;
-} & PropsWithComponentRef<React.ComponentPropsWithRef<C>>;
 
 // Since TS 3.7.3
 // Use `div` instead of `React.ElementType<JSX.IntrinsicElements['div']>` to avoid
