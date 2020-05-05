@@ -49,12 +49,10 @@ const classNameTransformer: FlexAllProps<typeof MyClass>['classNameTransformer']
 export function test() {
   return (
     <>
-      {/* <Flex alignContent={{ phone: 'flex-start', phoneM: "space-around" }} />; */}
-      {/* <Flex component={MYY} />; */}
       <Flex component="div" onAbort={onAbort} />
-      {/* <Flex component={<MYY />} componentRef={keepRef} />; */}
-      {/* <Flex component={<div ref={keepRef} />} /> */}
       <Flex component={TweakableElementWrapper} element={<MYY />} />
+      {/* $ExpectedError */}
+      {/* <Flex component={MYY} componentRef={keepRef} />; */}
       <Flex component={MYY} myy />
       <Flex component={MyClass} myy classNameTransformer={classNameTransformer} />
       <Flex componentRef={keepRef} />
@@ -69,19 +67,7 @@ export function test() {
       <FlexWithRef component="button" hidden ref={(el) => el} />
       {/* $ExpectedError */}
       {/* <FlexWithRef /> */}
-
-      <Flex component={MYY} aa="" />
-      {/* <Flex component={<MYY />} /> */}
-
-      {/* <Flex component={<a />} onClick={} />; */}
-      {/* <Flex<JSX.IntrinsicElements['button']> component="button" autoFocus />; */}
-      {/* <Flex ref={(el: Element) => (element = el)} alignContent="center" about="" onAbort={onAbort}>
-        <div ref={el => (element = el)} />
-        <svg />
-      </Flex> */}
-      {/* <Flex componentRef={keepRef} aaaa="" />; */}
-      {/* <Flex order={1} component={<div onAbort={onAbort} />} /> */}
-      {/* <Flex component={<div />}>123</Flex> */}
+      <Flex component={MYY} aa="" p />
       <Flex>123</Flex>
       <WidthContainer>123</WidthContainer>
       {/* $ExpectedError */}
@@ -105,13 +91,9 @@ export function test() {
       <Responsive breakpoints={{ l: {} }} />
 
       <ResponsiveFlex component={MYY} breakpoints={{ l: { order: 1 } }} />
-      {/* <ResponsiveFlex component={<nav />} breakpoints={{ l: { order: 1 } }} /> */}
+      <ResponsiveFlex component="nav" breakpoints={{ l: { order: 1 } }} />
       <ResponsiveFlex breakpoints={{ l: undefined }} />
 
-      {/* <ResponsiveFlex
-        component={<nav />}
-        breakpoints={{ xl: { justifyContent: 'space-around' } }}
-      /> */}
       <ResponsiveFlex breakpoints={{ xl: { justifyContent: 'space-around' } }} />
 
       <Component2 component={MYY} />
@@ -148,7 +130,7 @@ function WithoutChildren({ aa, myy, gg }: MYYProps) {
 
 class MyClass extends React.Component<MYYProps> {}
 
-function WidthContainer({ className, ...rest }: FlexAllProps) {
+function WidthContainer({ className, ...rest }: React.PropsWithChildren<FlexAllProps>) {
   return <Flex className={className} {...rest} />;
 }
 
