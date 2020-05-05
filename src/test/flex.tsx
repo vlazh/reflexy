@@ -61,12 +61,14 @@ export function test() {
 
       <Flex component="svg" overflow="auto" scrollable="scroll" />
 
-      <Flex key="1" />
+      <Flex key="1" p />
 
       <FlexWithRef component={MyClass} aa="" ref={(el) => el} />
       <FlexWithRef component="a" href="" ref={(el) => el} />
       <FlexWithRef component="div" ref={(el) => el} />
       <FlexWithRef component="button" hidden ref={(el) => el} />
+      {/* $ExpectedError */}
+      {/* <FlexWithRef /> */}
 
       <Flex component={MYY} aa="" />
       {/* <Flex component={<MYY />} /> */}
@@ -82,9 +84,14 @@ export function test() {
       {/* <Flex component={<div />}>123</Flex> */}
       <Flex>123</Flex>
       <WidthContainer>123</WidthContainer>
+      {/* $ExpectedError */}
+      {/* <Flex component={WithoutChildren}>
+        <div />
+      </Flex> */}
+      <Flex component={WithoutChildren}></Flex>
+
       {/* <Flex component={React.DOM.div} about="" alignItems="baseline" alignContent="center" /> */}
       {/* <Flex component={React.DOM.form} onSubmit={() => {}} alignContent="center" /> */}
-      <Flex p />
 
       <Responsive
         component={MYY}
@@ -130,7 +137,12 @@ interface MYYProps {
   // style?: { content: { [P: string]: any }; overlay: { [P: string]: any } };
   style?: { [P: string]: any };
 }
+
 function MYY({ aa, myy, gg }: React.PropsWithChildren<MYYProps>) {
+  return <div data-myy={aa || myy || gg} />;
+}
+
+function WithoutChildren({ aa, myy, gg }: MYYProps) {
   return <div data-myy={aa || myy || gg} />;
 }
 
@@ -140,7 +152,7 @@ function WidthContainer({ className, ...rest }: FlexAllProps) {
   return <Flex className={className} {...rest} />;
 }
 
-export function Component2<C extends TweakableComponentType = DefaultComponentType>({
+export function Component2<C extends React.ElementType = DefaultComponentType>({
   className,
   ...rest
 }: FlexAllProps<C, true>) {

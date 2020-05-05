@@ -140,12 +140,8 @@ export interface Transformable<C = string, S = React.CSSProperties, CR = C, SR =
   styleTransformer?: StyleTransformer<S, SR>;
 }
 
-interface AnyObject {
-  [P: string]: any;
-}
-
 export type StylesProps<
-  P extends AnyObject,
+  P extends {},
   DefaultStyles extends boolean = false
 > = DefaultStyles extends true
   ? Styleable
@@ -154,43 +150,43 @@ export type StylesProps<
   : Styleable<unknown, unknown>;
 
 export type StylesTransformersProps<
-  P extends AnyObject,
+  P extends { [P: string]: any },
   DefaultStyles extends boolean = false
 > = DefaultStyles extends true
   ? Transformable<string, React.CSSProperties, P['className'], P['style']>
   : Transformable<P['className'], P['style']>;
 
-type PropsWithComponentRef<P extends AnyObject> = React.PropsWithoutRef<P> &
-  (P extends { ref?: any } ? { componentRef?: P['ref'] } : unknown);
-
 // Since TS 3.7.3
 // Use `Omit` (as copy of object type) to make TweakableComponentProps as object
 // and to avoid `Rest types may only be created from object types.ts(2700)` error in Flex.S and others
-export type TweakableComponentProps<C extends React.ElementType> = Omit<
-  {
-    /**
-     * Sets custom react component as a container.
-     * Component must accept className and style through props. */
-    component?: C;
-  } & (undefined extends C ? unknown : PropsWithComponentRef<React.ComponentPropsWithRef<C>>),
+type PropsWithComponentRef<P extends {}> = Omit<
+  React.PropsWithoutRef<P> & (P extends { ref?: any } ? { componentRef?: P['ref'] } : {}),
   never
 >;
+
+export type TweakableComponentProps<C extends React.ElementType> = {
+  /**
+   * Sets custom react component as a container.
+   * Component must accept className and style through props. */
+  component?: C;
+} & PropsWithComponentRef<React.ComponentPropsWithRef<C>>;
 
 // Since TS 3.7.3
 // Use `div` instead of `React.ElementType<JSX.IntrinsicElements['div']>` to avoid
 // `Type instantiation is excessively deep and possibly infinite.` error.
 export type DefaultComponentType = 'div';
 
-type PropsWithStyles<P extends AnyObject, DefaultStyles extends boolean> = P &
+type PropsWithStyles<P extends {}, DefaultStyles extends boolean> = P &
   StylesProps<P, DefaultStyles>;
 
-type PropsWithStylesTransformers<
-  P extends AnyObject,
-  DefaultStyles extends boolean
-> = PropsWithStyles<P, DefaultStyles> & StylesTransformersProps<P, DefaultStyles>;
+type PropsWithStylesTransformers<P extends {}, DefaultStyles extends boolean> = PropsWithStyles<
+  P,
+  DefaultStyles
+> &
+  StylesTransformersProps<P, DefaultStyles>;
 
 export type FlexComponentProps<
-  C extends TweakableComponentType = any,
+  C extends React.ElementType = any,
   DefaultStyles extends boolean = undefined extends C ? true : false
 > = FlexProps &
   SpaceProps &
@@ -198,14 +194,12 @@ export type FlexComponentProps<
   PropsWithStyles<Omit<TweakableComponentProps<C>, 'component'>, DefaultStyles>;
 
 export type FlexAllProps<
-  C extends TweakableComponentType = any,
+  C extends React.ElementType = any,
   DefaultStyles extends boolean = undefined extends C ? true : false
-> = React.PropsWithChildren<
-  FlexProps &
-    SpaceProps &
-    OverflowProps &
-    PropsWithStylesTransformers<TweakableComponentProps<C>, DefaultStyles>
->;
+> = FlexProps &
+  SpaceProps &
+  OverflowProps &
+  PropsWithStylesTransformers<TweakableComponentProps<C>, DefaultStyles>;
 
 /**
  * Flexbox container.
@@ -213,7 +207,7 @@ export type FlexAllProps<
  * Example: `<Flex component="button" ... />`
  * Example: `<Flex component={MyComponent} ... />`
  */
-function Flex<C extends TweakableComponentType = DefaultComponentType>({
+function Flex<C extends React.ElementType = DefaultComponentType>({
   component = 'div' as C,
   inline,
   row,
@@ -239,7 +233,6 @@ function Flex<C extends TweakableComponentType = DefaultComponentType>({
   style,
   classNameTransformer = defaultClassNameTransformer as any,
   styleTransformer = defaultStyleTransformer as any,
-  children,
 
   mSize = 'm',
   m,
@@ -354,7 +347,9 @@ function Flex<C extends TweakableComponentType = DefaultComponentType>({
     [hfill, m, marginSize, mb, ml, mr, mt, order, p, paddingSize, pb, pl, pr, pt, unit, vfill]
   );
 
-  const { componentRef, ...propsWithoutRef } = rest as typeof rest & { componentRef?: any };
+  const { componentRef, children, ...propsWithoutRef } = rest as React.PropsWithChildren<
+    typeof rest & { componentRef?: any }
+  >;
 
   return React.createElement(
     component as React.ElementType<React.PropsWithChildren<Styleable<any, any>>>,
