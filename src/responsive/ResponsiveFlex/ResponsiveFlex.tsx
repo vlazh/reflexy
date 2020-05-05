@@ -11,6 +11,7 @@ export default function ResponsiveFlex<C extends React.ElementType = DefaultComp
   props: ResponsiveFlexAllProps<C>
 ): JSX.Element {
   const viewSize = useMedia();
-  const { children, ...rest } = mergeBreakpointProps(viewSize, props);
-  return <Flex {...rest}>{children}</Flex>;
+  // Trick for correct type inference
+  const { p, ...mergedProps } = mergeBreakpointProps(viewSize, props);
+  return <Flex p={p} {...mergedProps} />;
 }

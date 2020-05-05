@@ -160,10 +160,9 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
   style,
   classNameTransformer = defaultClassNameTransformer as any,
   styleTransformer = defaultStyleTransformer as any,
-  children,
-  ...flexProps
+  ...rest
 }: FlexAllProps<C>): JSX.Element {
-  const css = useStyles(flexProps);
+  const css = useStyles(rest);
 
   // Exclude flex props
   const {
@@ -213,8 +212,9 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
     scrollableY,
     /* eslint-enable */
     componentRef,
+    children,
     ...customComponentProps
-  } = flexProps as typeof flexProps & { componentRef?: any };
+  } = rest as React.PropsWithChildren<typeof rest & { componentRef?: any }>;
 
   return React.createElement(
     component as React.ElementType<React.PropsWithChildren<Styleable<any, any>>>,

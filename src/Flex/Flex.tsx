@@ -251,7 +251,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
   scrollableX,
   scrollableY,
 
-  ...other
+  ...rest
 }: FlexAllProps<C>): JSX.Element {
   const calcClassName = useMemo(
     () =>
@@ -311,7 +311,19 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
     ]
   );
 
-  const { mt = my, mr = mx, mb = my, ml = mx, pt = py, pr = px, pb = py, pl = px, ...rest } = other;
+  const {
+    mt = my,
+    mr = mx,
+    mb = my,
+    ml = mx,
+    pt = py,
+    pr = px,
+    pb = py,
+    pl = px,
+    componentRef,
+    children,
+    ...customComponentProps
+  } = rest as React.PropsWithChildren<typeof rest & { componentRef?: any }>;
 
   const marginSize = useMemo(() => (typeof mSize === 'number' ? mSize : Flex.defaultSizes[mSize]), [
     mSize,
@@ -347,14 +359,10 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
     [hfill, m, marginSize, mb, ml, mr, mt, order, p, paddingSize, pb, pl, pr, pt, unit, vfill]
   );
 
-  const { componentRef, children, ...propsWithoutRef } = rest as React.PropsWithChildren<
-    typeof rest & { componentRef?: any }
-  >;
-
   return React.createElement(
     component as React.ElementType<React.PropsWithChildren<Styleable<any, any>>>,
     {
-      ...propsWithoutRef,
+      ...customComponentProps,
       className: (classNameTransformer as ClassNameTransformer<typeof className>)(
         calcClassName,
         className
