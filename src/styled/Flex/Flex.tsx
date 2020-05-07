@@ -11,46 +11,29 @@ import type {
   OverflowProps,
   FlexProps,
   SpaceProps,
+  SpaceUnit,
 } from '../../Flex/Flex';
 import { toCssValue, defaultClassNameTransformer, defaultStyleTransformer } from '../../Flex/utils';
 
-const getFillValue = (
-  propValue: number | boolean | undefined,
-  fallback: boolean | undefined
-): string | undefined => {
-  const fill =
-    typeof propValue === 'number'
-      ? `${Math.min(+propValue, 1) * 100}%`
-      : propValue ?? fallback
-      ? '100%'
-      : undefined;
-  return fill;
+const getFillValue = (propValue: FlexProps['vfill']): string | undefined => {
+  return typeof propValue === 'number'
+    ? `${Math.min(+propValue, 1) * 100}%`
+    : (propValue && '100%') || undefined;
 };
 
 const getScrollableValue = (
-  scrollableValue: OverflowProps['scrollable'],
-  scrollableFallback: OverflowProps['scrollable']
+  scrollableValue: OverflowProps['scrollable']
 ): OverflowProps['overflow'] => {
-  return ((scrollableValue === true && 'auto') ||
-    (scrollableValue === false && 'hidden') ||
-    (scrollableValue == null
-      ? (scrollableFallback === true && 'auto') ||
-        (scrollableFallback === false && 'hidden') ||
-        scrollableFallback
-      : scrollableValue)) as OverflowProps['overflow'];
+  return typeof scrollableValue === 'string'
+    ? scrollableValue
+    : (scrollableValue === true && 'auto') || (scrollableValue === false && 'hidden') || undefined;
 };
 
 const getOverflowValue = (
   overflowValue: OverflowProps['overflow'],
-  overflowFallback: OverflowProps['overflow'],
-  scrollableValue: OverflowProps['scrollable'],
-  scrollableFallback: OverflowProps['scrollable']
+  scrollableValue: OverflowProps['scrollable']
 ): OverflowProps['overflow'] => {
-  return overflowValue == null
-    ? getScrollableValue(scrollableValue, scrollableFallback) ??
-        overflowFallback ??
-        getScrollableValue(scrollableFallback, undefined)
-    : overflowValue;
+  return overflowValue ?? getScrollableValue(scrollableValue);
 };
 
 const getSpaceSize = (
@@ -62,7 +45,7 @@ const getSpaceSize = (
 
 export interface Theme {
   reflexy?: {
-    defaultUnit?: string;
+    defaultUnit?: SpaceUnit;
     defaultSizes?: Record<DefaultSpaceSize, number>;
   };
 }
@@ -72,79 +55,121 @@ const useStyles = makeStyles((theme: Theme) => {
   const defaultUnit = theme.reflexy?.defaultUnit ?? Flex.defaultUnit;
 
   return {
-    root: {
-      display: ({ inline }: FlexProps) => (inline ? 'inline-flex' : 'flex'),
-      flexDirection: ({ column, row, reverse }: FlexProps) => {
-        if (reverse) return (column && 'column-reverse') || 'row-reverse';
-        return (column && 'column') || (row && 'row') || undefined;
-      },
-      flexWrap: ({ wrap }: FlexProps) =>
-        wrap === true ? 'wrap' : wrap === false ? 'nowrap' : wrap,
-      flexBasis: ({ basis }: FlexProps) => basis,
-      flexGrow: ({ grow }: FlexProps) => (grow != null ? +grow : undefined),
-      flexShrink: ({ shrink }: FlexProps) => (shrink != null ? +shrink : undefined),
-      order: ({ order }: FlexProps) => order,
-      alignItems: ({ alignItems, center }: FlexProps) =>
-        alignItems || (center ? 'center' : undefined),
-      justifyContent: ({ justifyContent, center }: FlexProps) =>
-        justifyContent || (center ? 'center' : undefined),
-      alignSelf: ({ alignSelf }: FlexProps) => alignSelf,
-      alignContent: ({ alignContent }: FlexProps) => alignContent,
+    root: ({
+      inline,
+      column,
+      row,
+      reverse,
+      wrap,
+      basis,
+      grow,
+      shrink,
+      order,
+      center,
+      alignItems,
+      justifyContent,
+      alignSelf,
+      alignContent,
 
-      minHeight: ({ shrinkByContent = true, shrinkHeight }: FlexProps) =>
-        shrinkHeight ?? shrinkByContent ? 0 : undefined,
-      minWidth: ({ shrinkByContent = true, shrinkWidth }: FlexProps) =>
-        shrinkWidth ?? shrinkByContent ? 0 : undefined,
-      height: ({ vfill, fill }: FlexProps) => getFillValue(vfill, fill),
-      width: ({ hfill, fill }: FlexProps) => getFillValue(hfill, fill),
+      shrinkByContent = true,
+      shrinkHeight = shrinkByContent,
+      shrinkWidth = shrinkByContent,
 
-      overflowX: ({ overflowX, overflow, scrollableX, scrollable }: OverflowProps) =>
-        getOverflowValue(overflowX, overflow, scrollableX, scrollable),
-      overflowY: ({ overflowY, overflow, scrollableY, scrollable }: OverflowProps) =>
-        getOverflowValue(overflowY, overflow, scrollableY, scrollable),
+      fill,
+      vfill = fill,
+      hfill = fill,
 
-      margin: ({ m, mSize = 'm', unit = defaultUnit }: SpaceProps) =>
+      scrollable,
+      scrollableX = scrollable,
+      scrollableY = scrollable,
+      overflow,
+      overflowX = overflow,
+      overflowY = overflow,
+
+      unit = defaultUnit,
+      mSize = 'm',
+      mUnit = unit,
+      m,
+      mx,
+      my,
+      mt = my,
+      mr = mx,
+      mb = my,
+      ml = mx,
+      pSize = 'm',
+      pUnit = unit,
+      p,
+      px,
+      py,
+      pt = py,
+      pr = px,
+      pb = py,
+      pl = px,
+    }: FlexProps & SpaceProps & OverflowProps) => ({
+      display: inline ? 'inline-flex' : 'flex',
+      flexDirection: reverse
+        ? (column && 'column-reverse') || 'row-reverse'
+        : (column && 'column') || (row && 'row') || undefined,
+      flexWrap: wrap === true ? 'wrap' : wrap === false ? 'nowrap' : wrap,
+      flexBasis: basis,
+      flexGrow: grow != null ? +grow : undefined,
+      flexShrink: shrink != null ? +shrink : undefined,
+      order,
+      alignItems: alignItems || (center ? 'center' : undefined),
+      justifyContent: justifyContent || (center ? 'center' : undefined),
+      alignSelf,
+      alignContent,
+
+      minHeight: shrinkHeight ? 0 : undefined,
+      minWidth: shrinkWidth ? 0 : undefined,
+      height: getFillValue(vfill),
+      width: getFillValue(hfill),
+
+      overflowX: getOverflowValue(overflowX, scrollableX),
+      overflowY: getOverflowValue(overflowY, scrollableY),
+
+      margin:
         m != null
-          ? toCssValue(m, defaultSizes, getSpaceSize(mSize, defaultSizes), unit)
+          ? toCssValue(m, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
           : undefined,
-      marginTop: ({ my, mt = my, mSize = 'm', unit = defaultUnit }: SpaceProps) =>
+      marginTop:
         mt != null
-          ? toCssValue(mt, defaultSizes, getSpaceSize(mSize, defaultSizes), unit)
+          ? toCssValue(mt, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
           : undefined,
-      marginRight: ({ mx, mr = mx, mSize = 'm', unit = defaultUnit }: SpaceProps) =>
+      marginRight:
         mr != null
-          ? toCssValue(mr, defaultSizes, getSpaceSize(mSize, defaultSizes), unit)
+          ? toCssValue(mr, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
           : undefined,
-      marginBottom: ({ my, mb = my, mSize = 'm', unit = defaultUnit }: SpaceProps) =>
+      marginBottom:
         mb != null
-          ? toCssValue(mb, defaultSizes, getSpaceSize(mSize, defaultSizes), unit)
+          ? toCssValue(mb, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
           : undefined,
-      marginLeft: ({ mx, ml = mx, mSize = 'm', unit = defaultUnit }: SpaceProps) =>
+      marginLeft:
         ml != null
-          ? toCssValue(ml, defaultSizes, getSpaceSize(mSize, defaultSizes), unit)
+          ? toCssValue(ml, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
           : undefined,
 
-      padding: ({ p, pSize = 'm', unit = defaultUnit }: SpaceProps) =>
+      padding:
         p != null
-          ? toCssValue(p, defaultSizes, getSpaceSize(pSize, defaultSizes), unit)
+          ? toCssValue(p, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
           : undefined,
-      paddingTop: ({ py, pt = py, pSize = 'm', unit = defaultUnit }: SpaceProps) =>
+      paddingTop:
         pt != null
-          ? toCssValue(pt, defaultSizes, getSpaceSize(pSize, defaultSizes), unit)
+          ? toCssValue(pt, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
           : undefined,
-      paddingRight: ({ px, pr = px, pSize = 'm', unit = defaultUnit }: SpaceProps) =>
+      paddingRight:
         pr != null
-          ? toCssValue(pr, defaultSizes, getSpaceSize(pSize, defaultSizes), unit)
+          ? toCssValue(pr, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
           : undefined,
-      paddingBottom: ({ py, pb = py, pSize = 'm', unit = defaultUnit }: SpaceProps) =>
+      paddingBottom:
         pb != null
-          ? toCssValue(pb, defaultSizes, getSpaceSize(pSize, defaultSizes), unit)
+          ? toCssValue(pb, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
           : undefined,
-      paddingLeft: ({ px, pl = px, pSize = 'm', unit = defaultUnit }: SpaceProps) =>
+      paddingLeft:
         pl != null
-          ? toCssValue(pl, defaultSizes, getSpaceSize(pSize, defaultSizes), unit)
+          ? toCssValue(pl, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
           : undefined,
-    },
+    }),
   };
 });
 
@@ -187,7 +212,9 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
     shrinkByContent,
     shrinkWidth,
     shrinkHeight,
+    unit,
     mSize,
+    mUnit,
     m,
     mx,
     my,
@@ -196,6 +223,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
     mb,
     ml,
     pSize,
+    pUnit,
     p,
     px,
     py,
@@ -203,7 +231,6 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
     pr,
     pb,
     pl,
-    unit,
     overflow,
     overflowX,
     overflowY,
@@ -232,7 +259,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
 }
 
 /** Default measure of space */
-Flex.defaultUnit = 'rem';
+Flex.defaultUnit = 'rem' as SpaceUnit;
 
 /** Predefined default space sizes */
 Flex.defaultSizes = {

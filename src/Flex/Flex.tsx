@@ -75,11 +75,28 @@ export interface FlexProps {
 
 export type DefaultSpaceSize = 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
 
+export type SpaceUnit =
+  | 'px'
+  | 'em'
+  | 'rem'
+  | 'ex'
+  | 'ch'
+  | '%'
+  | 'vw'
+  | 'vh'
+  | 'cm'
+  | 'mm'
+  | 'in'
+  | 'pt'
+  | 'pc';
+
 export interface SpaceProps {
   /** Measure unit of space */
-  unit?: string;
+  unit?: SpaceUnit;
   /** Size of margin */
   mSize?: DefaultSpaceSize | number;
+  /** Measure unit of margin */
+  mUnit?: SpaceUnit;
   /** margin */
   m?: boolean | number | DefaultSpaceSize;
   /** margin-top */
@@ -96,6 +113,8 @@ export interface SpaceProps {
   my?: boolean | number | DefaultSpaceSize;
   /** Size of padding */
   pSize?: DefaultSpaceSize | number;
+  /** Measure unit of padding */
+  pUnit?: SpaceUnit;
   /** padding */
   p?: boolean | number | DefaultSpaceSize;
   /** padding-top */
@@ -215,42 +234,55 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
   column,
   reverse,
   wrap,
-  alignContent,
-  alignItems,
+  center,
+  alignContent = center ? 'center' : undefined,
+  alignItems = center ? 'center' : undefined,
   alignSelf,
   justifyContent,
-  center,
   basis,
   grow,
   shrink,
   order,
-  hfill,
-  vfill,
+
   fill,
+  vfill = fill,
+  hfill = fill,
+
   shrinkByContent = true,
-  shrinkWidth,
-  shrinkHeight,
+  shrinkHeight = shrinkByContent,
+  shrinkWidth = shrinkByContent,
+
   className,
   style,
   classNameTransformer = defaultClassNameTransformer as any,
   styleTransformer = defaultStyleTransformer as any,
 
+  unit = Flex.defaultUnit,
   mSize = 'm',
+  mUnit = unit,
   m,
   mx,
   my,
+  mt = my,
+  mr = mx,
+  mb = my,
+  ml = mx,
   pSize = 'm',
+  pUnit = unit,
   p,
   px,
   py,
-  unit = Flex.defaultUnit,
+  pt = py,
+  pr = px,
+  pb = py,
+  pl = px,
 
-  overflow,
-  overflowX,
-  overflowY,
   scrollable,
-  scrollableX,
-  scrollableY,
+  scrollableX = scrollable,
+  scrollableY = scrollable,
+  overflow,
+  overflowX = overflow,
+  overflowY = overflow,
 
   ...rest
 }: FlexAllProps<C>): JSX.Element {
@@ -266,20 +298,15 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
         alignItems,
         alignSelf,
         justifyContent,
-        center,
         basis,
         grow,
         shrink,
         hfill,
         vfill,
-        fill,
-        shrinkByContent,
         shrinkWidth,
         shrinkHeight,
-        overflow,
         overflowX,
         overflowY,
-        scrollable,
         scrollableX,
         scrollableY,
       }),
@@ -293,38 +320,23 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
       alignItems,
       alignSelf,
       justifyContent,
-      center,
       basis,
       grow,
       shrink,
       hfill,
       vfill,
-      fill,
-      shrinkByContent,
       shrinkWidth,
       shrinkHeight,
-      overflow,
       overflowX,
       overflowY,
-      scrollable,
       scrollableX,
       scrollableY,
     ]
   );
 
-  const {
-    mt = my,
-    mr = mx,
-    mb = my,
-    ml = mx,
-    pt = py,
-    pr = px,
-    pb = py,
-    pl = px,
-    componentRef,
-    children,
-    ...customComponentProps
-  } = rest as React.PropsWithChildren<typeof rest & { componentRef?: any }>;
+  const { componentRef, children, ...customComponentProps } = rest as React.PropsWithChildren<
+    typeof rest & { componentRef?: any }
+  >;
 
   const marginSize = useMemo(() => (typeof mSize === 'number' ? mSize : Flex.defaultSizes[mSize]), [
     mSize,
@@ -341,14 +353,15 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
           order,
           hfill,
           vfill,
-          unit,
           mSize: marginSize,
+          mUnit,
           m,
           mb,
           ml,
           mr,
           mt,
           pSize: paddingSize,
+          pUnit,
           p,
           pb,
           pl,
@@ -357,7 +370,25 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
         },
         Flex.defaultSizes
       ),
-    [hfill, m, marginSize, mb, ml, mr, mt, order, p, paddingSize, pb, pl, pr, pt, unit, vfill]
+    [
+      order,
+      hfill,
+      vfill,
+      marginSize,
+      mUnit,
+      m,
+      mb,
+      ml,
+      mr,
+      mt,
+      paddingSize,
+      pUnit,
+      p,
+      pb,
+      pl,
+      pr,
+      pt,
+    ]
   );
 
   return React.createElement(
@@ -376,7 +407,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
 }
 
 /** Default measure of space */
-Flex.defaultUnit = 'rem';
+Flex.defaultUnit = 'rem' as SpaceUnit;
 
 /** Predefined default space sizes */
 Flex.defaultSizes = {
