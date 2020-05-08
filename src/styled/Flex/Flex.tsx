@@ -66,8 +66,8 @@ const useStyles = makeStyles((theme: Theme) => {
       shrink,
       order,
       center,
-      alignItems,
-      justifyContent,
+      alignItems = center ? 'center' : undefined,
+      justifyContent = center ? 'center' : undefined,
       alignSelf,
       alignContent,
 
@@ -115,8 +115,8 @@ const useStyles = makeStyles((theme: Theme) => {
       flexGrow: grow != null ? +grow : undefined,
       flexShrink: shrink != null ? +shrink : undefined,
       order,
-      alignItems: alignItems || (center ? 'center' : undefined),
-      justifyContent: justifyContent || (center ? 'center' : undefined),
+      alignItems,
+      justifyContent,
       alignSelf,
       alignContent,
 
