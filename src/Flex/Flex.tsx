@@ -205,13 +205,23 @@ type PropsWithStylesTransformers<P extends {}, DefaultStyles extends boolean> = 
 > &
   StylesTransformersProps<P, DefaultStyles>;
 
+type GetComponentRefProp<P extends {}> = P extends { componentRef?: any }
+  ? Pick<P, 'componentRef'>
+  : P;
+
 export type FlexComponentProps<
   C extends React.ElementType = any,
-  DefaultStyles extends boolean = undefined extends C ? true : false
+  DefaultStyles extends boolean = undefined extends C ? true : false,
+  OmitComponentProps extends boolean = false
 > = FlexProps &
   SpaceProps &
   OverflowProps &
-  PropsWithStyles<Omit<TweakableComponentProps<C>, 'component'>, DefaultStyles>;
+  PropsWithStyles<
+    OmitComponentProps extends true
+      ? GetComponentRefProp<TweakableComponentProps<C>>
+      : Omit<TweakableComponentProps<C>, 'component'>,
+    DefaultStyles
+  >;
 
 export type FlexAllProps<
   C extends React.ElementType = any,
