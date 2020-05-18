@@ -106,69 +106,72 @@ const useStyles = makeStyles((theme: Theme) => {
       pb = py,
       pl = px,
     }: FlexProps & SpaceProps & OverflowProps) => ({
-      display: inline ? 'inline-flex' : 'flex',
-      flexDirection: reverse
-        ? (column && 'column-reverse') || 'row-reverse'
-        : (column && 'column') || (row && 'row') || undefined,
-      flexWrap: wrap === true ? 'wrap' : wrap === false ? 'nowrap' : wrap,
-      flexBasis: basis,
-      flexGrow: grow != null ? +grow : undefined,
-      flexShrink: shrink != null ? +shrink : undefined,
-      order,
-      alignItems,
-      justifyContent,
-      alignSelf,
-      alignContent,
+      // for strengthen
+      '&&': {
+        display: inline ? 'inline-flex' : 'flex',
+        flexDirection: reverse
+          ? (column && 'column-reverse') || 'row-reverse'
+          : (column && 'column') || (row && 'row') || undefined,
+        flexWrap: wrap === true ? 'wrap' : wrap === false ? 'nowrap' : wrap,
+        flexBasis: basis,
+        flexGrow: grow != null ? +grow : undefined,
+        flexShrink: shrink != null ? +shrink : undefined,
+        order,
+        alignItems,
+        justifyContent,
+        alignSelf,
+        alignContent,
 
-      minHeight: shrinkHeight ? 0 : undefined,
-      minWidth: shrinkWidth ? 0 : undefined,
-      height: getFillValue(vfill),
-      width: getFillValue(hfill),
+        minHeight: shrinkHeight ? 0 : undefined,
+        minWidth: shrinkWidth ? 0 : undefined,
+        height: getFillValue(vfill),
+        width: getFillValue(hfill),
 
-      overflowX: getOverflowValue(overflowX, scrollableX),
-      overflowY: getOverflowValue(overflowY, scrollableY),
+        overflowX: getOverflowValue(overflowX, scrollableX),
+        overflowY: getOverflowValue(overflowY, scrollableY),
 
-      margin:
-        m != null
-          ? toCssValue(m, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
-          : undefined,
-      marginTop:
-        mt != null
-          ? toCssValue(mt, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
-          : undefined,
-      marginRight:
-        mr != null
-          ? toCssValue(mr, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
-          : undefined,
-      marginBottom:
-        mb != null
-          ? toCssValue(mb, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
-          : undefined,
-      marginLeft:
-        ml != null
-          ? toCssValue(ml, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
-          : undefined,
+        margin:
+          m != null
+            ? toCssValue(m, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
+            : undefined,
+        marginTop:
+          mt != null
+            ? toCssValue(mt, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
+            : undefined,
+        marginRight:
+          mr != null
+            ? toCssValue(mr, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
+            : undefined,
+        marginBottom:
+          mb != null
+            ? toCssValue(mb, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
+            : undefined,
+        marginLeft:
+          ml != null
+            ? toCssValue(ml, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
+            : undefined,
 
-      padding:
-        p != null
-          ? toCssValue(p, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
-          : undefined,
-      paddingTop:
-        pt != null
-          ? toCssValue(pt, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
-          : undefined,
-      paddingRight:
-        pr != null
-          ? toCssValue(pr, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
-          : undefined,
-      paddingBottom:
-        pb != null
-          ? toCssValue(pb, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
-          : undefined,
-      paddingLeft:
-        pl != null
-          ? toCssValue(pl, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
-          : undefined,
+        padding:
+          p != null
+            ? toCssValue(p, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
+            : undefined,
+        paddingTop:
+          pt != null
+            ? toCssValue(pt, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
+            : undefined,
+        paddingRight:
+          pr != null
+            ? toCssValue(pr, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
+            : undefined,
+        paddingBottom:
+          pb != null
+            ? toCssValue(pb, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
+            : undefined,
+        paddingLeft:
+          pl != null
+            ? toCssValue(pl, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
+            : undefined,
+      },
     }),
   };
 });
