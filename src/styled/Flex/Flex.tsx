@@ -106,30 +106,30 @@ const useStyles = makeStyles((theme: Theme) => {
       pb = py,
       pl = px,
     }: FlexProps & SpaceProps & OverflowProps) => ({
+      display: inline ? 'inline-flex' : 'flex',
+      flexDirection: reverse
+        ? (column && 'column-reverse') || 'row-reverse'
+        : (column && 'column') || (row && 'row') || undefined,
+      flexWrap: wrap === true ? 'wrap' : wrap === false ? 'nowrap' : wrap,
+      flexBasis: basis,
+      flexGrow: grow != null ? +grow : undefined,
+      flexShrink: shrink != null ? +shrink : undefined,
+      order,
+      alignItems,
+      justifyContent,
+      alignSelf,
+      alignContent,
+
+      minHeight: shrinkHeight ? 0 : undefined,
+      minWidth: shrinkWidth ? 0 : undefined,
+      height: getFillValue(vfill),
+      width: getFillValue(hfill),
+
+      overflowX: getOverflowValue(overflowX, scrollableX),
+      overflowY: getOverflowValue(overflowY, scrollableY),
+
       // for strengthen
       '&&': {
-        display: inline ? 'inline-flex' : 'flex',
-        flexDirection: reverse
-          ? (column && 'column-reverse') || 'row-reverse'
-          : (column && 'column') || (row && 'row') || undefined,
-        flexWrap: wrap === true ? 'wrap' : wrap === false ? 'nowrap' : wrap,
-        flexBasis: basis,
-        flexGrow: grow != null ? +grow : undefined,
-        flexShrink: shrink != null ? +shrink : undefined,
-        order,
-        alignItems,
-        justifyContent,
-        alignSelf,
-        alignContent,
-
-        minHeight: shrinkHeight ? 0 : undefined,
-        minWidth: shrinkWidth ? 0 : undefined,
-        height: getFillValue(vfill),
-        width: getFillValue(hfill),
-
-        overflowX: getOverflowValue(overflowX, scrollableX),
-        overflowY: getOverflowValue(overflowY, scrollableY),
-
         margin:
           m != null
             ? toCssValue(m, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
