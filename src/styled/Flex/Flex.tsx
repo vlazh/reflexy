@@ -12,6 +12,7 @@ import type {
   FlexProps,
   SpaceProps,
   SpaceUnit,
+  FlexComponentProps,
 } from '../../Flex/Flex';
 import { toCssValue, defaultClassNameTransformer, defaultStyleTransformer } from '../../Flex/utils';
 
@@ -55,137 +56,141 @@ const useStyles = makeStyles((theme: Theme) => {
   const defaultUnit = theme.reflexy?.defaultUnit ?? Flex.defaultUnit;
 
   return {
-    root: ({
-      inline,
-      column,
-      row,
-      reverse,
-      wrap,
-      basis,
-      grow,
-      shrink,
-      order,
-      center,
-      alignItems = center ? 'center' : undefined,
-      justifyContent = center ? 'center' : undefined,
-      alignSelf,
-      alignContent,
+    // Use `Function values` instead of `Function rules` because of dublication classes if present nested rules.
+    root: {
+      display: ({ inline }: FlexComponentProps) => (inline ? 'inline-flex' : 'flex'),
+      flexDirection: ({ reverse, row, column }: FlexComponentProps) =>
+        reverse
+          ? (column && 'column-reverse') || 'row-reverse'
+          : (column && 'column') || (row && 'row') || undefined,
+      flexWrap: ({ wrap }: FlexComponentProps) =>
+        wrap === true ? 'wrap' : wrap === false ? 'nowrap' : wrap,
+      flexBasis: ({ basis }: FlexComponentProps) => basis,
+      flexGrow: ({ grow }: FlexComponentProps) => (grow != null ? +grow : undefined),
+      flexShrink: ({ shrink }: FlexComponentProps) => (shrink != null ? +shrink : undefined),
+      order: ({ order }: FlexComponentProps) => order,
+      alignItems: ({ center, alignItems = center ? 'center' : undefined }: FlexComponentProps) =>
+        alignItems,
+      justifyContent: ({
+        center,
+        justifyContent = center ? 'center' : undefined,
+      }: FlexComponentProps) => justifyContent,
+      alignSelf: ({ alignSelf }: FlexComponentProps) => alignSelf,
+      alignContent: ({ alignContent }: FlexComponentProps) => alignContent,
 
-      shrinkByContent = true,
-      shrinkHeight = shrinkByContent,
-      shrinkWidth = shrinkByContent,
+      minHeight: ({ shrinkByContent = true, shrinkHeight = shrinkByContent }: FlexComponentProps) =>
+        shrinkHeight ? 0 : undefined,
+      minWidth: ({ shrinkByContent = true, shrinkWidth = shrinkByContent }: FlexComponentProps) =>
+        shrinkWidth ? 0 : undefined,
+      height: ({ fill, vfill = fill }: FlexComponentProps) => getFillValue(vfill),
+      width: ({ fill, hfill = fill }: FlexComponentProps) => getFillValue(hfill),
 
-      fill,
-      vfill = fill,
-      hfill = fill,
+      overflowX: ({
+        overflow,
+        scrollable,
+        overflowX = overflow,
+        scrollableX = scrollable,
+      }: FlexComponentProps) => getOverflowValue(overflowX, scrollableX),
+      overflowY: ({
+        overflow,
+        scrollable,
+        overflowY = overflow,
+        scrollableY = scrollable,
+      }: FlexComponentProps) => getOverflowValue(overflowY, scrollableY),
 
-      scrollable,
-      scrollableX = scrollable,
-      scrollableY = scrollable,
-      overflow,
-      overflowX = overflow,
-      overflowY = overflow,
+      // for strengthen
+      '&&': {
+        margin: ({ unit = defaultUnit, mSize = 'm', mUnit = unit, m }: FlexComponentProps) =>
+          m != null
+            ? toCssValue(m, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
+            : undefined,
+        marginTop: ({
+          unit = defaultUnit,
+          mSize = 'm',
+          mUnit = unit,
+          my,
+          mt = my,
+        }: FlexComponentProps) =>
+          mt != null
+            ? toCssValue(mt, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
+            : undefined,
+        marginRight: ({
+          unit = defaultUnit,
+          mSize = 'm',
+          mUnit = unit,
+          mx,
+          mr = mx,
+        }: FlexComponentProps) =>
+          mr != null
+            ? toCssValue(mr, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
+            : undefined,
+        marginBottom: ({
+          unit = defaultUnit,
+          mSize = 'm',
+          mUnit = unit,
+          my,
+          mb = my,
+        }: FlexComponentProps) =>
+          mb != null
+            ? toCssValue(mb, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
+            : undefined,
+        marginLeft: ({
+          unit = defaultUnit,
+          mSize = 'm',
+          mUnit = unit,
+          mx,
+          ml = mx,
+        }: FlexComponentProps) =>
+          ml != null
+            ? toCssValue(ml, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
+            : undefined,
 
-      unit = defaultUnit,
-      mSize = 'm',
-      mUnit = unit,
-      m,
-      mx,
-      my,
-      mt = my,
-      mr = mx,
-      mb = my,
-      ml = mx,
-      pSize = 'm',
-      pUnit = unit,
-      p,
-      px,
-      py,
-      pt = py,
-      pr = px,
-      pb = py,
-      pl = px,
-    }: FlexProps & SpaceProps & OverflowProps) => ({
-      display: inline ? 'inline-flex' : 'flex',
-      flexDirection: reverse
-        ? (column && 'column-reverse') || 'row-reverse'
-        : (column && 'column') || (row && 'row') || undefined,
-      flexWrap: wrap === true ? 'wrap' : wrap === false ? 'nowrap' : wrap,
-      flexBasis: basis,
-      flexGrow: grow != null ? +grow : undefined,
-      flexShrink: shrink != null ? +shrink : undefined,
-      order,
-      alignItems,
-      justifyContent,
-      alignSelf,
-      alignContent,
-
-      minHeight: shrinkHeight ? 0 : undefined,
-      minWidth: shrinkWidth ? 0 : undefined,
-      height: getFillValue(vfill),
-      width: getFillValue(hfill),
-
-      overflowX: getOverflowValue(overflowX, scrollableX),
-      overflowY: getOverflowValue(overflowY, scrollableY),
-
-      ...(m != null ||
-      mt != null ||
-      mr != null ||
-      mb != null ||
-      ml != null ||
-      p != null ||
-      pt != null ||
-      pr != null ||
-      pb != null ||
-      pl != null
-        ? {
-            // for strengthen
-            '&&': {
-              margin:
-                m != null
-                  ? toCssValue(m, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
-                  : undefined,
-              marginTop:
-                mt != null
-                  ? toCssValue(mt, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
-                  : undefined,
-              marginRight:
-                mr != null
-                  ? toCssValue(mr, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
-                  : undefined,
-              marginBottom:
-                mb != null
-                  ? toCssValue(mb, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
-                  : undefined,
-              marginLeft:
-                ml != null
-                  ? toCssValue(ml, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
-                  : undefined,
-
-              padding:
-                p != null
-                  ? toCssValue(p, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
-                  : undefined,
-              paddingTop:
-                pt != null
-                  ? toCssValue(pt, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
-                  : undefined,
-              paddingRight:
-                pr != null
-                  ? toCssValue(pr, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
-                  : undefined,
-              paddingBottom:
-                pb != null
-                  ? toCssValue(pb, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
-                  : undefined,
-              paddingLeft:
-                pl != null
-                  ? toCssValue(pl, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
-                  : undefined,
-            },
-          }
-        : undefined),
-    }),
+        padding: ({ unit = defaultUnit, pSize = 'm', pUnit = unit, p }: FlexComponentProps) =>
+          p != null
+            ? toCssValue(p, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
+            : undefined,
+        paddingTop: ({
+          unit = defaultUnit,
+          pSize = 'm',
+          pUnit = unit,
+          py,
+          pt = py,
+        }: FlexComponentProps) =>
+          pt != null
+            ? toCssValue(pt, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
+            : undefined,
+        paddingRight: ({
+          unit = defaultUnit,
+          pSize = 'm',
+          pUnit = unit,
+          px,
+          pr = px,
+        }: FlexComponentProps) =>
+          pr != null
+            ? toCssValue(pr, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
+            : undefined,
+        paddingBottom: ({
+          unit = defaultUnit,
+          pSize = 'm',
+          pUnit = unit,
+          py,
+          pb = py,
+        }: FlexComponentProps) =>
+          pb != null
+            ? toCssValue(pb, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
+            : undefined,
+        paddingLeft: ({
+          unit = defaultUnit,
+          pSize = 'm',
+          pUnit = unit,
+          px,
+          pl = px,
+        }: FlexComponentProps) =>
+          pl != null
+            ? toCssValue(pl, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
+            : undefined,
+      },
+    },
   };
 });
 
