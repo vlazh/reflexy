@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
-import type { ContentDistribution } from 'csstype';
 import { defaultClassNameTransformer, defaultStyleTransformer } from './utils';
 import props2className from './props2className';
 import props2style from './props2style';
 
 type Globals = 'inherit' | 'initial' | 'unset';
 type FlexPosition = 'center' | 'flex-end' | 'flex-start';
+
+type ContentDistribution = 'space-around' | 'space-between' | 'space-evenly' | 'stretch';
 
 export type JustifyContent = Globals | ContentDistribution | FlexPosition;
 
