@@ -9,7 +9,8 @@
     "sourceMap": false,
     "incremental": false,
     "diagnostics": true,
-    "types": ["css-modules"]
+    "typeRoots": ["node_modules/@types", "node_modules/@vlazh/styled-components/@types"],
+    "types": ["css-modules", "styled-components"]
   },
   "include": ["./src/**/*.ts", "./src/**/*.tsx"]
 }

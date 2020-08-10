@@ -442,6 +442,11 @@
   dependencies:
     eslint-visitor-keys "^1.1.0"
 
+"@vlazh/styled-components@^0.3.2":
+  version "0.3.2"
+  resolved "https://npm.pkg.github.com/download/@vlazh/styled-components/0.3.2/9db194103d731a85bd04f5fb8a77919f2a623c47acff8172b17b1ffc95efd844#5d4b70607e371f5a67bc9a4d1e80fc1a67fce197"
+  integrity sha512-UKweO9SOj4aENOOgjlD/tWb7gPGHgom2ZNS+61HWg89Oyf7G/HET64Vu93s8tYA75UoYDc5tc+9LlTuQ85958A==
+
 "@vzh/configs@^3.67.0":
   version "3.67.0"
   resolved "https://registry.yarnpkg.com/@vzh/configs/-/configs-3.67.0.tgz#f290352a7ba2a10d5b06d156208da40f4b29a508"
