@@ -57,6 +57,7 @@ const useStyles = makeStyles((theme: Theme) => {
 
   return {
     // Use `Function values` instead of `Function rules` because of dublication classes if present nested rules.
+    // https://codesandbox.io/s/material-demo-forked-btfjn?file=/demo.js
     root: {
       display: ({ inline }: FlexComponentProps) => (inline ? 'inline-flex' : 'flex'),
       flexDirection: ({ reverse, row, column }: FlexComponentProps) =>
