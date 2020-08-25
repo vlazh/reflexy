@@ -7,8 +7,8 @@ export type BreakpointsMergeType = 'up' | 'down';
 
 export interface ResponsiveProps<Props extends {}> {
   /**
-   * `down` - merge from top to down until current view size.
-   * `top` - merge from down to top until current view size.
+   * `down` - merge from top to down until current view size. Default.
+   * `up` - merge from down to top until current view size.
    * `true` treats as `down`.
    * `false` - no merge, use only exact breakpoint.
    */
