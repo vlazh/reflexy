@@ -100,7 +100,7 @@ export default abstract class MediaQueries {
           this._currentViewSize = viewSize;
           // console.log(viewSize);
         }
-        this.listeners.forEach(handle => handle({ viewSize, matches }));
+        this.listeners.forEach((handle) => handle({ viewSize, matches }));
       };
       // For initialize currentViewport with right value
       if (mq.matches) {
@@ -112,7 +112,7 @@ export default abstract class MediaQueries {
   }
 
   static destroy(): void {
-    this.mediaQueries.splice(0, this.mediaQueries.length).forEach(mq => {
+    this.mediaQueries.splice(0, this.mediaQueries.length).forEach((mq) => {
       // eslint-disable-next-line no-param-reassign
       mq.onchange = null;
     });
