@@ -68,8 +68,8 @@ export default function Responsive<C extends React.ElementType = DefaultComponen
 ): JSX.Element {
   const viewSize = useMedia();
   const { component = 'div', ...rest } = mergeBreakpointProps(viewSize, props);
-  const { componentRef, children } = rest as React.PropsWithChildren<
+  const { componentRef, children, ...customComponentProps } = rest as React.PropsWithChildren<
     typeof rest & { componentRef?: any }
   >;
-  return React.createElement(component, { ...rest, ref: componentRef }, children);
+  return React.createElement(component, { ...customComponentProps, ref: componentRef }, children);
 }
