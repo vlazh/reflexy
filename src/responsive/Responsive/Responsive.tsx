@@ -1,6 +1,7 @@
 import React from 'react';
 import type { DefaultComponentType, TweakableComponentProps } from '../../Flex';
 import MediaQueries, { ViewSize } from '../MediaQueries';
+import isHasRef from '../../isHasRef';
 import useMedia from '../useMediaQuery';
 
 export type BreakpointsMergeType = 'up' | 'down';
@@ -67,9 +68,14 @@ export default function Responsive<C extends React.ElementType = DefaultComponen
   props: ResponsiveAllProps<C>
 ): JSX.Element {
   const viewSize = useMedia();
-  const { component = 'div', ...rest } = mergeBreakpointProps(viewSize, props);
-  const { componentRef, children, ...customComponentProps } = rest as React.PropsWithChildren<
-    typeof rest & { componentRef?: any }
-  >;
-  return React.createElement(component, { ...customComponentProps, ref: componentRef }, children);
+  const { component = 'div', children, ...rest } = mergeBreakpointProps(viewSize, props);
+
+  type R = typeof rest & { componentRef?: any };
+
+  if ((rest as R).componentRef && isHasRef(component)) {
+    const { componentRef, ...customComponentProps } = rest as R;
+    return React.createElement(component, { ...customComponentProps, ref: componentRef }, children);
+  }
+
+  return React.createElement(component, rest, children);
 }
