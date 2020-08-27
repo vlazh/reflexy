@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import MediaQueries, { ViewSize, MediaQueryEventHandler } from './MediaQueries';
 
-export default function useMedia(): ViewSize {
+export default function useMediaQuery(): ViewSize {
   const [currentViewSize, setViewSize] = useState(() => MediaQueries.init());
 
   const changeHandler = useCallback<MediaQueryEventHandler>(
@@ -17,5 +17,6 @@ export default function useMedia(): ViewSize {
     };
   }, [changeHandler]);
 
+  MediaQueries.viewSizeValues;
   return currentViewSize;
 }

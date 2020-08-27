@@ -1,6 +1,6 @@
 import React from 'react';
 import MediaQueries, { ViewSize } from '../MediaQueries';
-import useMedia from '../useMediaQuery';
+import useMediaQuery from '../useMediaQuery';
 import type { BreakpointsMergeType, ResponsiveProps } from '../Responsive';
 
 type Breakpoints = { [P in ViewSize]?: boolean };
@@ -57,7 +57,7 @@ export default function ResponsiveRender({
   children,
   ...rest
 }: ResponsiveRenderProps): JSX.Element | null {
-  const viewSize = useMedia();
+  const viewSize = useMediaQuery();
   const render = mergeBreakpoints(viewSize, rest, false);
   if (!render) return null;
   return children as JSX.Element;

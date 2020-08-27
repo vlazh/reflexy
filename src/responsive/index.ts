@@ -1,6 +1,6 @@
 export { default as MediaQueries } from './MediaQueries';
 export * from './MediaQueries';
-export { default as useMedia } from './useMediaQuery';
+export { default as useMediaQuery } from './useMediaQuery';
 export * from './useMediaQuery';
 export { default as Responsive } from './Responsive';
 export * from './Responsive';
