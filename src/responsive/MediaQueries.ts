@@ -24,6 +24,16 @@ export interface MediaQueryEvent extends Pick<MediaQueryListEvent, 'matches'> {
 
 export type MediaQueryEventHandler = (event: MediaQueryEvent) => void;
 
+export const viewSizeNumber: Record<ViewSize, number> = {
+  [ViewSize.xxs]: 1,
+  [ViewSize.xs]: 2,
+  [ViewSize.s]: 3,
+  [ViewSize.m]: 4,
+  [ViewSize.l]: 5,
+  [ViewSize.xl]: 6,
+  [ViewSize.xxl]: 7,
+};
+
 export default abstract class MediaQueries {
   /** All values are unique. */
   static readonly viewSizeValues: Record<ViewSize, ViewSizeValue> = {
@@ -64,7 +74,9 @@ export default abstract class MediaQueries {
     }
     if (!this._currentViewSize) {
       throw new Error(
-        `Media queries is not initialized properly. Current view size is ${this._currentViewSize}.`
+        `Media queries is not initialized properly. Current view size is ${String(
+          this._currentViewSize
+        )}.`
       );
     }
     return this._currentViewSize;
