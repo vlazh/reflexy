@@ -67,7 +67,7 @@ export function mergeBreakpointProps<Props extends {}>(
 export default function Responsive<C extends React.ElementType = DefaultComponentType>(
   props: ResponsiveAllProps<C>
 ): JSX.Element {
-  const viewSize = useMediaQuery();
+  const [viewSize] = useMediaQuery();
   const { component = 'div', children, ...rest } = mergeBreakpointProps(viewSize, props);
 
   type R = typeof rest & { componentRef?: any };

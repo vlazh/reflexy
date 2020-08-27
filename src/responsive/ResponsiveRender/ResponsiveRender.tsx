@@ -57,7 +57,7 @@ export default function ResponsiveRender({
   children,
   ...rest
 }: ResponsiveRenderProps): JSX.Element | null {
-  const viewSize = useMediaQuery();
+  const [viewSize] = useMediaQuery();
   const render = mergeBreakpoints(viewSize, rest, false);
   if (!render) return null;
   return children as JSX.Element;

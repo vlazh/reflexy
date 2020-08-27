@@ -13,6 +13,18 @@ export enum ViewSize {
   xxl = 'xxl',
 }
 
+export const ViewSizeNumber: Record<ViewSize, ViewSizeNumber> = {
+  [ViewSize.xxs]: 1,
+  [ViewSize.xs]: 2,
+  [ViewSize.s]: 3,
+  [ViewSize.m]: 4,
+  [ViewSize.l]: 5,
+  [ViewSize.xl]: 6,
+  [ViewSize.xxl]: 7,
+};
+
+export type ViewSizeNumber = number;
+
 export interface ViewSizeValue {
   minWidth: number;
   maxWidth: number;
@@ -23,16 +35,6 @@ export interface MediaQueryEvent extends Pick<MediaQueryListEvent, 'matches'> {
 }
 
 export type MediaQueryEventHandler = (event: MediaQueryEvent) => void;
-
-export const viewSizeNumber: Record<ViewSize, number> = {
-  [ViewSize.xxs]: 1,
-  [ViewSize.xs]: 2,
-  [ViewSize.s]: 3,
-  [ViewSize.m]: 4,
-  [ViewSize.l]: 5,
-  [ViewSize.xl]: 6,
-  [ViewSize.xxl]: 7,
-};
 
 export default abstract class MediaQueries {
   /** All values are unique. */
