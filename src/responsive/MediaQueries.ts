@@ -48,17 +48,33 @@ export default abstract class MediaQueries {
     [ViewSize.xxl]: { minWidth: 2560, maxWidth: Number.MAX_SAFE_INTEGER },
   };
 
-  /** Sorted values. See `viewSizeValues`. */
-  static readonly viewSizeValueList = Object.entries(MediaQueries.viewSizeValues).sort(
-    ([, a], [, b]) => a.minWidth - b.minWidth
-  ) as readonly [ViewSize, ViewSizeValue][];
+  private static viewSizeValueListLazy: readonly [ViewSize, ViewSizeValue][] | undefined;
+  private static queriesLazy: Readonly<Record<ViewSize, string>> | undefined;
 
-  static readonly queries: Readonly<
-    Record<ViewSize, string>
-  > = MediaQueries.viewSizeValueList.reduce((acc, [viewSize, { minWidth, maxWidth }]) => {
-    acc[viewSize] = `only screen and (min-width: ${minWidth}px) and (max-width: ${maxWidth}px)`;
-    return acc;
-  }, {} as Record<ViewSize, string>);
+  /** Sorted values. See `viewSizeValues`. */
+  static get viewSizeValueList(): readonly [ViewSize, ViewSizeValue][] {
+    if (!this.viewSizeValueListLazy) {
+      this.viewSizeValueListLazy = Object.entries(MediaQueries.viewSizeValues).sort(
+        ([, a], [, b]) => a.minWidth - b.minWidth
+      ) as readonly [ViewSize, ViewSizeValue][];
+    }
+    return this.viewSizeValueListLazy;
+  }
+
+  static get queries(): Readonly<Record<ViewSize, string>> {
+    if (!this.queriesLazy) {
+      this.queriesLazy = this.viewSizeValueList.reduce(
+        (acc, [viewSize, { minWidth, maxWidth }]) => {
+          acc[
+            viewSize
+          ] = `only screen and (min-width: ${minWidth}px) and (max-width: ${maxWidth}px)`;
+          return acc;
+        },
+        {} as Record<ViewSize, string>
+      );
+    }
+    return this.queriesLazy;
+  }
 
   private static _currentViewSize: ViewSize | undefined;
 
