@@ -72,7 +72,7 @@ export default function Responsive<C extends React.ElementType = DefaultComponen
 
   type R = typeof rest & { componentRef?: any };
 
-  if ((rest as R).componentRef && isHasRef(component)) {
+  if ((rest as R).componentRef && (typeof component === 'string' || isHasRef(component))) {
     const { componentRef, ...customComponentProps } = rest as R;
     return React.createElement(component, { ...customComponentProps, ref: componentRef }, children);
   }

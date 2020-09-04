@@ -15,6 +15,7 @@ import type {
   FlexComponentProps,
 } from '../../Flex/Flex';
 import { toCssValue, defaultClassNameTransformer, defaultStyleTransformer } from '../../Flex/utils';
+import isHasRef from '../../isHasRef';
 
 const getFillValue = (propValue: FlexProps['vfill']): string | undefined => {
   return typeof propValue === 'number'
@@ -274,7 +275,10 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
         className
       ),
       style: (styleTransformer as StyleTransformer<typeof style>)(undefined, style),
-      ref: componentRef,
+      ...(componentRef &&
+        (typeof component === 'string' || isHasRef(component)
+          ? { ref: componentRef }
+          : { componentRef })),
     },
     children
   );

@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import isHasRef from '../isHasRef';
 import { defaultClassNameTransformer, defaultStyleTransformer } from './utils';
 import props2className from './props2className';
 import props2style from './props2style';
@@ -411,7 +412,10 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
         className
       ),
       style: (styleTransformer as StyleTransformer<typeof style>)(calcStyles, style),
-      ref: componentRef,
+      ...(componentRef &&
+        (typeof component === 'string' || isHasRef(component)
+          ? { ref: componentRef }
+          : { componentRef })),
     },
     children
   );
