@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import isHasRef from '../isHasRef';
+import sharedDefaults from '../sharedDefaults';
 import { defaultClassNameTransformer, defaultStyleTransformer } from './utils';
 import props2className from './props2className';
 import props2style from './props2style';
@@ -270,7 +271,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
   classNameTransformer = defaultClassNameTransformer as any,
   styleTransformer = defaultStyleTransformer as any,
 
-  unit = Flex.defaultUnit,
+  unit = sharedDefaults.defaultUnit,
   mSize = 'm',
   mUnit = unit,
   m,
@@ -351,11 +352,12 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
     typeof rest & { componentRef?: any }
   >;
 
-  const marginSize = useMemo(() => (typeof mSize === 'number' ? mSize : Flex.defaultSizes[mSize]), [
-    mSize,
-  ]);
+  const marginSize = useMemo(
+    () => (typeof mSize === 'number' ? mSize : sharedDefaults.defaultSizes[mSize]),
+    [mSize]
+  );
   const paddingSize = useMemo(
-    () => (typeof pSize === 'number' ? pSize : Flex.defaultSizes[pSize]),
+    () => (typeof pSize === 'number' ? pSize : sharedDefaults.defaultSizes[pSize]),
     [pSize]
   );
 
@@ -381,7 +383,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
           pr,
           pt,
         },
-        Flex.defaultSizes
+        sharedDefaults.defaultSizes
       ),
     [
       order,
@@ -422,17 +424,27 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
   );
 }
 
-/** Default measure of space */
-Flex.defaultUnit = 'rem' as SpaceUnit;
+Object.defineProperties(Flex, {
+  defaultUnit: {
+    configurable: true,
+    enumerable: true,
+    get() {
+      return sharedDefaults.defaultUnit;
+    },
+    set(v: SpaceUnit) {
+      sharedDefaults.defaultUnit = v;
+    },
+  },
+  defaultSizes: {
+    configurable: true,
+    enumerable: true,
+    get() {
+      return sharedDefaults.defaultSizes;
+    },
+    set(v: typeof sharedDefaults.defaultSizes) {
+      sharedDefaults.defaultSizes = v;
+    },
+  },
+});
 
-/** Predefined default space sizes */
-Flex.defaultSizes = {
-  xs: 0.25,
-  s: 0.5,
-  m: 1,
-  l: 1.5,
-  xl: 2,
-  xxl: 2.5,
-} as Record<DefaultSpaceSize, number>;
-
-export default Flex;
+export default Flex as typeof Flex & typeof sharedDefaults;

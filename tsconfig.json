@@ -12,5 +12,5 @@
     "typeRoots": ["node_modules/@types", "node_modules/@vlazh/styled-components/@types"],
     "types": ["css-modules", "styled-components"]
   },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx"]
+  "include": ["./src"]
 }

@@ -16,6 +16,7 @@ import type {
 } from '../../Flex/Flex';
 import { toCssValue, defaultClassNameTransformer, defaultStyleTransformer } from '../../Flex/utils';
 import isHasRef from '../../isHasRef';
+import sharedDefaults from '../../sharedDefaults';
 
 const getFillValue = (propValue: FlexProps['vfill']): string | undefined => {
   return typeof propValue === 'number'
@@ -53,8 +54,8 @@ export interface Theme {
 }
 
 const useStyles = makeStyles((theme: Theme) => {
-  const defaultSizes = theme.reflexy?.defaultSizes ?? Flex.defaultSizes;
-  const defaultUnit = theme.reflexy?.defaultUnit ?? Flex.defaultUnit;
+  const defaultSizes = theme.reflexy?.defaultSizes ?? sharedDefaults.defaultSizes;
+  const defaultUnit = theme.reflexy?.defaultUnit ?? sharedDefaults.defaultUnit;
 
   return {
     // Use `Function values` instead of `Function rules` because of dublication classes if present nested rules.
@@ -284,17 +285,27 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
   );
 }
 
-/** Default measure of space */
-Flex.defaultUnit = 'rem' as SpaceUnit;
+Object.defineProperties(Flex, {
+  defaultUnit: {
+    configurable: true,
+    enumerable: true,
+    get() {
+      return sharedDefaults.defaultUnit;
+    },
+    set(v: SpaceUnit) {
+      sharedDefaults.defaultUnit = v;
+    },
+  },
+  defaultSizes: {
+    configurable: true,
+    enumerable: true,
+    get() {
+      return sharedDefaults.defaultSizes;
+    },
+    set(v: typeof sharedDefaults.defaultSizes) {
+      sharedDefaults.defaultSizes = v;
+    },
+  },
+});
 
-/** Predefined default space sizes */
-Flex.defaultSizes = {
-  xs: 0.25,
-  s: 0.5,
-  m: 1,
-  l: 1.5,
-  xl: 2,
-  xxl: 2.5,
-} as Record<DefaultSpaceSize, number>;
-
-export default Flex;
+export default Flex as typeof Flex & typeof sharedDefaults;
