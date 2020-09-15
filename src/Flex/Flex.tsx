@@ -90,7 +90,8 @@ export type SpaceUnit =
   | 'mm'
   | 'in'
   | 'pt'
-  | 'pc';
+  | 'pc'
+  | number;
 
 export interface SpaceProps {
   /** Measure unit of space */
