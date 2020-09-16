@@ -36,6 +36,10 @@ export interface MediaQueryEvent extends Pick<MediaQueryListEvent, 'matches'> {
 
 export type MediaQueryEventHandler = (event: MediaQueryEvent) => void;
 
+export interface MediaQueriesInitOptions {
+  deviceDimentions?: boolean;
+}
+
 export default abstract class MediaQueries {
   /** All values are unique. */
   static readonly viewSizeValues: Record<ViewSize, ViewSizeValue> = {
@@ -48,8 +52,12 @@ export default abstract class MediaQueries {
     [ViewSize.xxl]: { minWidth: 2560, maxWidth: Number.MAX_SAFE_INTEGER },
   };
 
+  private static deviceDimentions = false;
   private static viewSizeValueListLazy: readonly [ViewSize, ViewSizeValue][] | undefined;
   private static queriesLazy: Readonly<Record<ViewSize, string>> | undefined;
+  private static _currentViewSize: ViewSize | undefined;
+  private static readonly mediaQueries: MediaQueryList[] = [];
+  private static readonly listeners: Set<MediaQueryEventHandler> = new Set();
 
   /** Sorted values. See `viewSizeValues`. */
   static get viewSizeValueList(): readonly [ViewSize, ViewSizeValue][] {
@@ -65,9 +73,10 @@ export default abstract class MediaQueries {
     if (!this.queriesLazy) {
       this.queriesLazy = this.viewSizeValueList.reduce(
         (acc, [viewSize, { minWidth, maxWidth }]) => {
-          acc[
-            viewSize
-          ] = `only screen and (min-width: ${minWidth}px) and (max-width: ${maxWidth}px)`;
+          const q = this.deviceDimentions
+            ? `only screen and (min-device-width: ${minWidth}px) and (max-device-width: ${maxWidth}px)`
+            : `only screen and (min-width: ${minWidth}px) and (max-width: ${maxWidth}px)`;
+          acc[viewSize] = q;
           return acc;
         },
         {} as Record<ViewSize, string>
@@ -75,12 +84,6 @@ export default abstract class MediaQueries {
     }
     return this.queriesLazy;
   }
-
-  private static _currentViewSize: ViewSize | undefined;
-
-  private static readonly mediaQueries: MediaQueryList[] = [];
-
-  private static readonly listeners: Set<MediaQueryEventHandler> = new Set();
 
   static get isInitialized(): boolean {
     return this.mediaQueries.length > 0;
@@ -116,10 +119,12 @@ export default abstract class MediaQueries {
    * Init all media queries for handle changes.
    * Safe for multiple calls.
    */
-  static init(): ViewSize {
+  static init({ deviceDimentions }: MediaQueriesInitOptions = {}): ViewSize {
     if (this.isInitialized) {
       return this.currentViewSize;
     }
+
+    this.deviceDimentions = !!deviceDimentions;
 
     Object.entries(this.queries).forEach(([key, query]) => {
       const viewSize = key as ViewSize;
