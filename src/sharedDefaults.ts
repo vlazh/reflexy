@@ -1,4 +1,4 @@
-import type { DefaultSpaceSize, SpaceUnit } from './Flex';
+import type { SpaceSize, SpaceUnit } from './Flex';
 
 export default {
   /** Default measure of space */
@@ -12,5 +12,5 @@ export default {
     l: 1.5,
     xl: 2,
     xxl: 2.5,
-  } as Record<DefaultSpaceSize, number>,
+  } as Record<SpaceSize, number>,
 };

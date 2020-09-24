@@ -5,7 +5,7 @@ export type {
   FlexComponentProps,
   FlexAllProps,
   Styleable,
-  DefaultSpaceSize,
+  SpaceSize,
   OverflowProps,
   FlexProps,
   SpaceProps,

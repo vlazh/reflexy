@@ -1,4 +1,4 @@
-import type { SpaceProps, FlexProps, DefaultSpaceSize } from './Flex';
+import type { SpaceProps, FlexProps, SpaceSize } from './Flex';
 import { toCssValue } from './utils';
 
 export default function props2style(
@@ -29,7 +29,7 @@ export default function props2style(
       pSize: number;
       pUnit: NonNullable<SpaceProps['pUnit']>;
     },
-  defaultSizes: Record<DefaultSpaceSize, number>
+  defaultSizes: Record<SpaceSize, number>
 ): React.CSSProperties {
   return Object.entries({
     flexBasis: typeof basis === 'number' && basis !== 0 ? basis : undefined,

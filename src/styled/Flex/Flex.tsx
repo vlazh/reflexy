@@ -7,7 +7,7 @@ import type {
   Styleable,
   ClassNameTransformer,
   StyleTransformer,
-  DefaultSpaceSize,
+  SpaceSize,
   OverflowProps,
   FlexProps,
   SpaceProps,
@@ -39,17 +39,17 @@ const getOverflowValue = (
   return overflowValue ?? getScrollableValue(scrollableValue);
 };
 
-const getSpaceSize = (
+const getSpaceSizeMultiplier = (
   size: NonNullable<SpaceProps['mSize']>,
-  defaultSizes: Record<DefaultSpaceSize, number>
+  sizeMultipliers: Record<SpaceSize, number>
 ): number => {
-  return typeof size === 'number' ? size : defaultSizes[size];
+  return typeof size === 'number' ? size : sizeMultipliers[size];
 };
 
 export interface Theme {
   reflexy?: {
     defaultUnit?: SpaceUnit;
-    defaultSizes?: Record<DefaultSpaceSize, number>;
+    defaultSizes?: Record<SpaceSize, number>;
   };
 }
 
@@ -105,7 +105,7 @@ const useStyles = makeStyles((theme: Theme) => {
       '&&': {
         margin: ({ unit = defaultUnit, mSize = 'm', mUnit = unit, m }: FlexComponentProps) =>
           m != null
-            ? toCssValue(m, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
+            ? toCssValue(m, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
             : undefined,
         marginTop: ({
           unit = defaultUnit,
@@ -115,7 +115,7 @@ const useStyles = makeStyles((theme: Theme) => {
           mt = my,
         }: FlexComponentProps) =>
           mt != null
-            ? toCssValue(mt, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
+            ? toCssValue(mt, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
             : undefined,
         marginRight: ({
           unit = defaultUnit,
@@ -125,7 +125,7 @@ const useStyles = makeStyles((theme: Theme) => {
           mr = mx,
         }: FlexComponentProps) =>
           mr != null
-            ? toCssValue(mr, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
+            ? toCssValue(mr, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
             : undefined,
         marginBottom: ({
           unit = defaultUnit,
@@ -135,7 +135,7 @@ const useStyles = makeStyles((theme: Theme) => {
           mb = my,
         }: FlexComponentProps) =>
           mb != null
-            ? toCssValue(mb, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
+            ? toCssValue(mb, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
             : undefined,
         marginLeft: ({
           unit = defaultUnit,
@@ -145,12 +145,12 @@ const useStyles = makeStyles((theme: Theme) => {
           ml = mx,
         }: FlexComponentProps) =>
           ml != null
-            ? toCssValue(ml, defaultSizes, getSpaceSize(mSize, defaultSizes), mUnit)
+            ? toCssValue(ml, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
             : undefined,
 
         padding: ({ unit = defaultUnit, pSize = 'm', pUnit = unit, p }: FlexComponentProps) =>
           p != null
-            ? toCssValue(p, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
+            ? toCssValue(p, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
             : undefined,
         paddingTop: ({
           unit = defaultUnit,
@@ -160,7 +160,7 @@ const useStyles = makeStyles((theme: Theme) => {
           pt = py,
         }: FlexComponentProps) =>
           pt != null
-            ? toCssValue(pt, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
+            ? toCssValue(pt, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
             : undefined,
         paddingRight: ({
           unit = defaultUnit,
@@ -170,7 +170,7 @@ const useStyles = makeStyles((theme: Theme) => {
           pr = px,
         }: FlexComponentProps) =>
           pr != null
-            ? toCssValue(pr, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
+            ? toCssValue(pr, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
             : undefined,
         paddingBottom: ({
           unit = defaultUnit,
@@ -180,7 +180,7 @@ const useStyles = makeStyles((theme: Theme) => {
           pb = py,
         }: FlexComponentProps) =>
           pb != null
-            ? toCssValue(pb, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
+            ? toCssValue(pb, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
             : undefined,
         paddingLeft: ({
           unit = defaultUnit,
@@ -190,7 +190,7 @@ const useStyles = makeStyles((theme: Theme) => {
           pl = px,
         }: FlexComponentProps) =>
           pl != null
-            ? toCssValue(pl, defaultSizes, getSpaceSize(pSize, defaultSizes), pUnit)
+            ? toCssValue(pl, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
             : undefined,
       },
     },

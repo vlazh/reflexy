@@ -7,7 +7,7 @@ import type {
   Styleable,
   ClassNameTransformer,
   StyleTransformer,
-  DefaultSpaceSize,
+  SpaceSize,
   OverflowProps,
   FlexProps,
   SpaceProps,
@@ -38,7 +38,7 @@ const getOverflowValue = (
 
 const getSpaceSize = (
   size: NonNullable<SpaceProps['mSize']>,
-  defaultSizes: Record<DefaultSpaceSize, number>
+  defaultSizes: Record<SpaceSize, number>
 ): number => {
   return typeof size === 'number' ? size : defaultSizes[size];
 };
@@ -46,7 +46,7 @@ const getSpaceSize = (
 export interface Theme {
   reflexy?: {
     defaultUnit?: SpaceUnit;
-    defaultSizes?: Record<DefaultSpaceSize, number>;
+    defaultSizes?: Record<SpaceSize, number>;
   };
 }
 
@@ -147,7 +147,7 @@ Flex.defaultSizes = {
   l: 1.5,
   xl: 2,
   xxl: 2.5,
-} as Record<DefaultSpaceSize, number>;
+} as Record<SpaceSize, number>;
 
 export default styled(Flex)<Theme>(
   ({
