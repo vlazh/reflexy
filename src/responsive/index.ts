@@ -1,5 +1,7 @@
-export { default as MediaQueries } from './MediaQueries';
-export * from './MediaQueries';
+export { default as MediaQueryListener } from './MediaQueryListener';
+export * from './MediaQueryListener';
+export { default as MediaQuery } from './MediaQuery';
+export * from './MediaQuery';
 export { default as useMediaQuery } from './useMediaQuery';
 export * from './useMediaQuery';
 export { default as Responsive } from './Responsive';

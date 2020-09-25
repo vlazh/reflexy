@@ -1,10 +1,32 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
-import MediaQueries, { ViewSize, MediaQueryEventHandler, ViewSizeNumber } from './MediaQueries';
+import MediaQueryListener from './MediaQueryListener';
+import MediaQuery, {
+  ViewSize,
+  MediaQueryEventHandler,
+  ViewSizeNumber,
+  MediaQueryInitOptions,
+} from './MediaQuery';
+
+export interface UseMediaQueryProps extends MediaQueryInitOptions {
+  localInstance?: boolean;
+}
 
 export type UseMediaQueryResult = [ViewSize, ViewSizeNumber];
 
-export default function useMediaQuery(): UseMediaQueryResult {
-  const [currentViewSize, setViewSize] = useState(() => MediaQueries.init());
+export default function useMediaQuery({
+  localInstance,
+  ...rest
+}: UseMediaQueryProps = {}): UseMediaQueryResult {
+  const listener = useMemo(() => {
+    if (localInstance) {
+      return new MediaQueryListener(rest);
+    }
+    MediaQuery.init(rest);
+    return MediaQuery;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const [currentViewSize, setViewSize] = useState(() => listener.currentViewSize);
 
   const changeHandler = useCallback<MediaQueryEventHandler>(
     ({ matches, viewSize }) => matches && setViewSize(viewSize),
@@ -12,12 +34,12 @@ export default function useMediaQuery(): UseMediaQueryResult {
   );
 
   useEffect(() => {
-    MediaQueries.addListener(changeHandler);
+    listener.addListener(changeHandler);
 
     return () => {
-      MediaQueries.removeListener(changeHandler);
+      listener.removeListener(changeHandler);
     };
-  }, [changeHandler]);
+  }, [changeHandler, listener]);
 
   return useMemo(() => [currentViewSize, ViewSizeNumber[currentViewSize]], [currentViewSize]);
 }
