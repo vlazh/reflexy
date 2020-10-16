@@ -1,7 +1,6 @@
 {
   "extends": "@vzh/configs/ts/common.tsconfig.json",
   "compilerOptions": {
-    "module": "commonjs",
     "isolatedModules": false,
     "baseUrl": "./src",
     "outDir": "./dist",
@@ -9,8 +8,7 @@
     "sourceMap": false,
     "incremental": false,
     "diagnostics": true,
-    "typeRoots": ["node_modules/@types", "node_modules/@vlazh/styled-components/@types"],
-    "types": ["css-modules", "styled-components"]
+    "typeRoots": ["node_modules/@types", "node_modules/@vlazh/styled-components/@types"]
   },
   "include": ["./src"]
 }
