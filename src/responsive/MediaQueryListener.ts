@@ -58,6 +58,7 @@ export interface MediaQueryEvent extends Pick<MediaQueryListEvent, 'matches'> {
 export type MediaQueryEventHandler = (event: MediaQueryEvent) => void;
 
 export interface MediaQueryListenerOptions {
+  /** @deprecated @see https://stackoverflow.com/a/39401858 */
   deviceDimentions?: boolean;
 }
 
