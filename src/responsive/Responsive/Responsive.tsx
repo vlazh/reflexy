@@ -6,7 +6,7 @@ import useMediaQuery from '../useMediaQuery';
 
 export type BreakpointsMergeType = 'up' | 'down';
 
-export interface ResponsiveProps<Props extends {}> {
+export interface ResponsiveProps<Props extends Record<string, unknown>> {
   /**
    * `down` - merge from top to down until current view size. Default.
    * `up` - merge from down to top until current view size.
@@ -23,7 +23,7 @@ export type ResponsiveAllProps<
 > = ResponsiveProps<React.PropsWithChildren<TweakableComponentProps<C>>> &
   React.PropsWithChildren<TweakableComponentProps<C>>;
 
-function mergeProps<Props extends {}>(
+function mergeProps<Props extends Record<string, unknown>>(
   viewSize: ViewSize,
   breakpoints: ResponsiveProps<Props>['breakpoints'],
   mergeType: BreakpointsMergeType
@@ -54,13 +54,14 @@ function mergeProps<Props extends {}>(
   return result as Props;
 }
 
-export function mergeBreakpointProps<Props extends {}>(
+export function mergeBreakpointProps<Props extends Record<string, unknown>>(
   viewSize: ViewSize,
   { breakpoints, merge = true, ...rest }: ResponsiveProps<Props> & Props
 ): Partial<Props> {
   const mergeType: BreakpointsMergeType | false = merge === true ? 'down' : merge;
   const merged = !mergeType ? breakpoints[viewSize] : mergeProps(viewSize, breakpoints, mergeType);
-  return { ...rest, ...merged };
+  if (merged) return { ...rest, ...merged };
+  return (rest as unknown) as Partial<Props>;
 }
 
 export default function Responsive<C extends React.ElementType = DefaultComponentType>(
