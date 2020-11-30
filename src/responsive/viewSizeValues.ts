@@ -22,9 +22,3 @@ export default viewSizeValues;
 export const viewSizeValueList: readonly [ViewSize, ViewSizeValue][] = Object.entries(
   viewSizeValues
 ).sort(([, a], [, b]) => a.minWidth - b.minWidth) as readonly [ViewSize, ViewSizeValue][];
-
-export function getViewSize(width: number): ViewSize {
-  const [viewSize = ViewSize.xxl] =
-    viewSizeValueList.find(([, value]) => width >= value.minWidth && width <= value.maxWidth) ?? [];
-  return viewSize;
-}
