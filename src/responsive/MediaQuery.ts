@@ -2,9 +2,9 @@
 import MediaQueryListener, {
   MediaQueryListenerOptions,
   MediaQueryEventHandler,
-  ViewSize,
   ViewSizeValue,
 } from './MediaQueryListener';
+import type ViewSize from './ViewSize';
 
 export * from './MediaQueryListener';
 

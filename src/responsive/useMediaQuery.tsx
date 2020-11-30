@@ -1,11 +1,7 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import MediaQueryListener from './MediaQueryListener';
-import MediaQuery, {
-  ViewSize,
-  MediaQueryEventHandler,
-  ViewSizeNumber,
-  MediaQueryInitOptions,
-} from './MediaQuery';
+import MediaQuery, { MediaQueryEventHandler, MediaQueryInitOptions } from './MediaQuery';
+import ViewSize, { ViewSizeNumber } from './ViewSize';
 
 export interface UseMediaQueryProps extends MediaQueryInitOptions {
   localInstance?: boolean;

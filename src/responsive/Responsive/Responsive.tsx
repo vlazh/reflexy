@@ -1,8 +1,9 @@
 import React from 'react';
 import type { DefaultComponentType, TweakableComponentProps } from '../../Flex';
-import { ViewSize, viewSizeValueList, viewSizeValues } from '../MediaQueryListener';
 import isHasRef from '../../isHasRef';
+import { viewSizeValueList, viewSizeValues } from '../MediaQueryListener';
 import useMediaQuery from '../useMediaQuery';
+import type ViewSize from '../ViewSize';
 
 export type BreakpointsMergeType = 'up' | 'down';
 
