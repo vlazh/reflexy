@@ -4,7 +4,7 @@
   "description": "Flexbox layout react components",
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
-  "author": "Vladimir Zhukov",
+  "author": "VZH",
   "license": "MIT",
   "homepage": "https://github.com/vlazh/reflexy",
   "repository": {
