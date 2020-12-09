@@ -8,7 +8,7 @@
     "sourceMap": false,
     "incremental": false,
     "diagnostics": true,
-    "typeRoots": ["node_modules/@types", "node_modules/@vlazh/styled-components/@types"]
+    "typeRoots": ["node_modules/@types"]
   },
   "include": ["./src"]
 }

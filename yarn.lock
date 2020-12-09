@@ -443,11 +443,6 @@
     "@typescript-eslint/types" "4.8.2"
     eslint-visitor-keys "^2.0.0"
 
-"@vlazh/styled-components@^0.10.1":
-  version "0.10.1"
-  resolved "https://npm.pkg.github.com/download/@vlazh/styled-components/0.10.1/2687c146575e8e3c6e7e2ee189818eaafa8139fd5403d433108811e118f0165a#f092bdc262ad4b00de745d472bc047f325591aa3"
-  integrity sha512-QPX7etk/0c4gg85UejRw6/AEhZ0fpbKbahqtC7lfS7tFrduulk2GwavmoCtEmBgvMRD34bVhNeaxUJaChf9igg==
-
 "@vzh/configs@^3.70.1":
   version "3.70.1"
   resolved "https://registry.yarnpkg.com/@vzh/configs/-/configs-3.70.1.tgz#07518ef9ab4a602151d236cc3f71b9b4f94544de"
