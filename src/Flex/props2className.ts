@@ -26,11 +26,14 @@ export default function props2className(
   const column = !!props.column;
   const row = !column && !!props.row;
   const reverse = props.reverse ? '-reverse' : '';
-  const grow =
-    props.grow != null && (+props.grow >= 0 && +props.grow <= 24 && +props.grow).toString();
-  const shrink =
-    props.shrink != null && (+props.shrink >= 0 && +props.shrink <= 24 && +props.shrink).toString();
-  const wrap = (props.wrap === false && 'nowrap') || (props.wrap === true && 'wrap') || props.wrap;
+  const growNum = props.grow != null && +props.grow;
+  const grow = growNum >= 0 && growNum <= 24 ? String(growNum) : undefined;
+  const shrinkNum = props.shrink != null && +props.shrink;
+  const shrink = shrinkNum >= 0 && shrinkNum <= 24 ? String(shrinkNum) : undefined;
+  const wrap =
+    typeof props.wrap === 'boolean'
+      ? (props.wrap === false && 'nowrap') || (props.wrap === true && 'wrap')
+      : props.wrap;
   const basis = (props.basis === 0 || typeof props.basis === 'string') && String(props.basis);
   const hfill = typeof props.hfill === 'boolean' && props.hfill;
   const vfill = typeof props.vfill === 'boolean' && props.vfill;

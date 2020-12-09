@@ -5,6 +5,8 @@ export default function props2style(
   {
     basis,
     order,
+    grow,
+    shrink,
     hfill,
     vfill,
 
@@ -34,6 +36,8 @@ export default function props2style(
   return Object.entries({
     flexBasis: typeof basis === 'number' && basis !== 0 ? basis : undefined,
     order: order != null ? order : undefined,
+    grow: grow != null && +grow > 24 ? grow : undefined,
+    shrink: shrink != null && +shrink > 24 ? shrink : undefined,
     width: typeof hfill === 'number' ? `${Math.min(hfill, 1) * 100}%` : undefined,
     height: typeof vfill === 'number' ? `${Math.min(vfill, 1) * 100}%` : undefined,
 

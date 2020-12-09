@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import React, { useMemo } from 'react';
 import isHasRef from '../isHasRef';
 import sharedDefaults from '../sharedDefaults';
@@ -22,12 +23,7 @@ export type FlexBasis = Globals | 'auto' | 'content' | number;
 
 export type FlexWrap = Globals | 'nowrap' | 'wrap' | 'wrap-reverse';
 
-// prettier-ignore
-type ColumnID = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17  | 18 | 19 | 20 | 21 | 22 | 23 | 24;
-// prettier-ignore
-type ColumnStringID = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | '13' | '14' | '15' | '16' | '17 ' | '18' | '19' | '20' | '21' | '22' | '23' | '24';
-
-export type Column = ColumnID | ColumnStringID | boolean;
+export type Column = number | string | boolean;
 
 export interface FlexProps {
   /** Sets `display` to `inline-flex`. */
@@ -366,6 +362,8 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
       props2style(
         {
           order,
+          grow,
+          shrink,
           hfill,
           vfill,
           mSize: marginSize,
@@ -387,6 +385,8 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
       ),
     [
       order,
+      grow,
+      shrink,
       hfill,
       vfill,
       marginSize,
