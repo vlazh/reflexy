@@ -1,5 +1,6 @@
 import React from 'react';
 import type { SpaceSize, SpaceUnit } from './Flex';
+import sharedDefaults from '../sharedDefaults';
 
 export function defaultClassNameTransformer(calcClassName: string, userClassName?: string): string {
   return userClassName ? `${calcClassName} ${userClassName}` : calcClassName;
@@ -19,9 +20,9 @@ function getSize(multiplier: number, unit: SpaceUnit): number {
 
 export function toCssValue(
   value: boolean | number | SpaceSize,
-  sizeMultipliers: Record<SpaceSize, number>,
-  defaultMultiplier: number,
-  unit: SpaceUnit
+  sizeMultipliers: Record<SpaceSize, number> = sharedDefaults.defaultSizes,
+  defaultMultiplier: number = sizeMultipliers[sharedDefaults.defaultSize],
+  unit: SpaceUnit = sharedDefaults.defaultUnit
 ): string {
   const unitStr = typeof unit === 'number' ? 'px' : unit;
   if (value === true) return `${getSize(defaultMultiplier, unit)}${unitStr}`;
