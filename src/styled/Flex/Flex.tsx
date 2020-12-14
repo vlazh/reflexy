@@ -50,12 +50,14 @@ export interface Theme {
   reflexy?: {
     defaultUnit?: SpaceUnit;
     defaultSizes?: Record<SpaceSize, number>;
+    defaultSize?: SpaceSize;
   };
 }
 
 const useStyles = makeStyles((theme: Theme) => {
-  const defaultSizes = theme.reflexy?.defaultSizes ?? sharedDefaults.defaultSizes;
   const defaultUnit = theme.reflexy?.defaultUnit ?? sharedDefaults.defaultUnit;
+  const defaultSizes = theme.reflexy?.defaultSizes ?? sharedDefaults.defaultSizes;
+  const defaultSize = theme.reflexy?.defaultSize ?? sharedDefaults.defaultSize;
 
   return {
     // Use `Function values` instead of `Function rules` because of dublication classes if present nested rules.
@@ -103,13 +105,18 @@ const useStyles = makeStyles((theme: Theme) => {
 
       // for strengthen
       '&&': {
-        margin: ({ unit = defaultUnit, mSize = 'm', mUnit = unit, m }: FlexComponentProps) =>
+        margin: ({
+          unit = defaultUnit,
+          mSize = defaultSize,
+          mUnit = unit,
+          m,
+        }: FlexComponentProps) =>
           m != null
             ? toCssValue(m, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
             : undefined,
         marginTop: ({
           unit = defaultUnit,
-          mSize = 'm',
+          mSize = defaultSize,
           mUnit = unit,
           my,
           mt = my,
@@ -119,7 +126,7 @@ const useStyles = makeStyles((theme: Theme) => {
             : undefined,
         marginRight: ({
           unit = defaultUnit,
-          mSize = 'm',
+          mSize = defaultSize,
           mUnit = unit,
           mx,
           mr = mx,
@@ -129,7 +136,7 @@ const useStyles = makeStyles((theme: Theme) => {
             : undefined,
         marginBottom: ({
           unit = defaultUnit,
-          mSize = 'm',
+          mSize = defaultSize,
           mUnit = unit,
           my,
           mb = my,
@@ -139,7 +146,7 @@ const useStyles = makeStyles((theme: Theme) => {
             : undefined,
         marginLeft: ({
           unit = defaultUnit,
-          mSize = 'm',
+          mSize = defaultSize,
           mUnit = unit,
           mx,
           ml = mx,
@@ -148,13 +155,18 @@ const useStyles = makeStyles((theme: Theme) => {
             ? toCssValue(ml, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
             : undefined,
 
-        padding: ({ unit = defaultUnit, pSize = 'm', pUnit = unit, p }: FlexComponentProps) =>
+        padding: ({
+          unit = defaultUnit,
+          pSize = defaultSize,
+          pUnit = unit,
+          p,
+        }: FlexComponentProps) =>
           p != null
             ? toCssValue(p, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
             : undefined,
         paddingTop: ({
           unit = defaultUnit,
-          pSize = 'm',
+          pSize = defaultSize,
           pUnit = unit,
           py,
           pt = py,
@@ -164,7 +176,7 @@ const useStyles = makeStyles((theme: Theme) => {
             : undefined,
         paddingRight: ({
           unit = defaultUnit,
-          pSize = 'm',
+          pSize = defaultSize,
           pUnit = unit,
           px,
           pr = px,
@@ -174,7 +186,7 @@ const useStyles = makeStyles((theme: Theme) => {
             : undefined,
         paddingBottom: ({
           unit = defaultUnit,
-          pSize = 'm',
+          pSize = defaultSize,
           pUnit = unit,
           py,
           pb = py,
@@ -184,7 +196,7 @@ const useStyles = makeStyles((theme: Theme) => {
             : undefined,
         paddingLeft: ({
           unit = defaultUnit,
-          pSize = 'm',
+          pSize = defaultSize,
           pUnit = unit,
           px,
           pl = px,
@@ -306,6 +318,16 @@ Object.defineProperties(Flex, {
       sharedDefaults.defaultSizes = v;
     },
   },
-});
+  defaultSize: {
+    configurable: true,
+    enumerable: true,
+    get() {
+      return sharedDefaults.defaultSize;
+    },
+    set(v: typeof sharedDefaults.defaultSize) {
+      sharedDefaults.defaultSize = v;
+    },
+  },
+} as Record<keyof typeof sharedDefaults, PropertyDescriptor>);
 
 export default Flex as typeof Flex & typeof sharedDefaults;

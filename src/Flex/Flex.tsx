@@ -268,7 +268,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
   styleTransformer = defaultStyleTransformer as any,
 
   unit = sharedDefaults.defaultUnit,
-  mSize = 'm',
+  mSize = sharedDefaults.defaultSize,
   mUnit = unit,
   m,
   mx,
@@ -277,7 +277,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
   mr = mx,
   mb = my,
   ml = mx,
-  pSize = 'm',
+  pSize = sharedDefaults.defaultSize,
   pUnit = unit,
   p,
   px,
@@ -445,6 +445,16 @@ Object.defineProperties(Flex, {
       sharedDefaults.defaultSizes = v;
     },
   },
-});
+  defaultSize: {
+    configurable: true,
+    enumerable: true,
+    get() {
+      return sharedDefaults.defaultSize;
+    },
+    set(v: typeof sharedDefaults.defaultSize) {
+      sharedDefaults.defaultSize = v;
+    },
+  },
+} as Record<keyof typeof sharedDefaults, PropertyDescriptor>);
 
 export default Flex as typeof Flex & typeof sharedDefaults;

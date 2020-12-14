@@ -13,4 +13,6 @@ export default {
     xl: 2,
     xxl: 2.5,
   } as Record<SpaceSize, number>,
+
+  defaultSize: 'm' as SpaceSize,
 };
