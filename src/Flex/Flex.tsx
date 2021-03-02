@@ -26,6 +26,8 @@ export type FlexWrap = Globals | 'nowrap' | 'wrap' | 'wrap-reverse';
 export type Column = number | string | boolean;
 
 export interface FlexProps {
+  /** Whether sets `display` to `flex` or not. Default `true`. */
+  flex?: boolean;
   /** Sets `display` to `inline-flex`. */
   inline?: boolean;
   /** Sets `flow-direction` to `row`. */
@@ -239,6 +241,7 @@ export type FlexAllProps<
  */
 function Flex<C extends React.ElementType = DefaultComponentType>({
   component = 'div' as C,
+  flex = true,
   inline,
   row,
   column,
@@ -299,6 +302,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
   const calcClassName = useMemo(
     () =>
       props2className({
+        flex,
         inline,
         row,
         column,
@@ -321,6 +325,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
         scrollableY,
       }),
     [
+      flex,
       inline,
       row,
       column,

@@ -16,6 +16,7 @@ export default function props2className(
     | 'vfill'
     | 'alignContent'
     | 'alignSelf'
+    | 'flex'
     | 'inline'
     | 'basis'
     | 'shrinkWidth'
@@ -55,7 +56,7 @@ export default function props2className(
   const overflowY = props.overflowY ?? scrollableY;
 
   const className = [
-    css[`display--${props.inline ? 'inline-flex' : 'flex'}`],
+    props.flex && css[`display--${props.inline ? 'inline-flex' : 'flex'}`],
     row && css[`row${reverse}`],
     column && css[`column${reverse}`],
     wrap && css[`wrap--${wrap}`],
