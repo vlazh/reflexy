@@ -229,6 +229,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
   // Exclude flex props
   const {
     /* eslint-disable @typescript-eslint/no-unused-vars */
+    flex,
     inline,
     row,
     column,
