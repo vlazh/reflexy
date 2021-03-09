@@ -1,5 +1,5 @@
 {
-  "extends": "@vlazh/configs/ts/common.tsconfig.json",
+  "extends": "@js-toolkit/configs/ts/common.tsconfig.json",
   "compilerOptions": {
     "isolatedModules": false,
     "baseUrl": "./src",
