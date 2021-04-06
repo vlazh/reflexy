@@ -225,6 +225,29 @@ export type FlexComponentProps<
     DefaultStyles
   >;
 
+type AnyObject = Record<string, any>;
+
+type ExcludeObjectType<T extends AnyObject> = Pick<
+  T,
+  Exclude<
+    keyof T,
+    {
+      [P in keyof T]: Extract<T[P], AnyObject> extends never | React.EventHandler<any>
+        ? never
+        : Extract<T[P], AnyObject> extends AnyObject
+        ? P
+        : never;
+    }[keyof T]
+  >
+>;
+
+/** Props without object types. Useful for memo. @experimental */
+export type FlexSimpleProps<
+  C extends React.ElementType = any,
+  DefaultStyles extends boolean = undefined extends C ? true : false,
+  OmitComponentProps extends boolean = false
+> = ExcludeObjectType<FlexComponentProps<C, DefaultStyles, OmitComponentProps>>;
+
 export type FlexAllProps<
   C extends React.ElementType = any,
   DefaultStyles extends boolean = undefined extends C ? true : false

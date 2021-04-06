@@ -1,6 +1,11 @@
 /* eslint-disable */
 import React from 'react';
-import Flex, { FlexAllProps, FlexComponentProps, DefaultComponentType } from '../Flex';
+import Flex, {
+  FlexAllProps,
+  FlexComponentProps,
+  FlexSimpleProps,
+  DefaultComponentType,
+} from '../Flex';
 import FlexWithRef from '../FlexWithRef';
 import ResponsiveFlex from '../responsive/ResponsiveFlex';
 import Responsive from '../responsive/Responsive';
@@ -142,6 +147,10 @@ export function Component2<C extends React.ElementType = DefaultComponentType>({
 }
 
 export function Component3({ type, ...rest }: FlexComponentProps<'button'>) {
+  return <Flex component="button" type={type} {...rest} />;
+}
+
+export function Component4({ type, ...rest }: FlexSimpleProps<'button'>) {
   return <Flex component="button" type={type} {...rest} />;
 }
 
