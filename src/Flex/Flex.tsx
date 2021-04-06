@@ -232,7 +232,10 @@ type ExcludeObjectType<T extends AnyObject> = Pick<
   Exclude<
     keyof T,
     {
-      [P in keyof T]: Extract<T[P], AnyObject> extends never | React.EventHandler<any>
+      [P in keyof T]: Extract<T[P], AnyObject> extends
+        | never
+        | React.EventHandler<any>
+        | React.Ref<any>
         ? never
         : Extract<T[P], AnyObject> extends AnyObject
         ? P
