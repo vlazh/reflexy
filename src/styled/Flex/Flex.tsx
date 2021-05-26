@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import makeStyles from '@material-ui/styles/makeStyles';
 import useTheme from '@material-ui/styles/useTheme';
 import type {
@@ -14,6 +14,7 @@ import type {
   SpaceUnit,
   FlexSimpleProps,
 } from '../../Flex/Flex';
+import { FlexContext } from '../../FlexProvider';
 import { toCssValue, defaultClassNameTransformer, defaultStyleTransformer } from '../../Flex/utils';
 import isHasRef from '../../isHasRef';
 import sharedDefaults from '../../sharedDefaults';
@@ -174,11 +175,15 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
   styleTransformer = defaultStyleTransformer as any,
   ...rest
 }: FlexAllProps<C>): JSX.Element {
-  const theme = useTheme<Theme>();
+  const context = useContext(FlexContext);
+  const theme = useTheme<Theme | undefined>();
 
-  const defaultUnit = theme?.reflexy?.defaultUnit ?? sharedDefaults.defaultUnit;
-  const defaultSize = theme?.reflexy?.defaultSize ?? sharedDefaults.defaultSize;
-  const defaultSizes = theme?.reflexy?.defaultSizes ?? sharedDefaults.defaultSizes;
+  const defaultUnit =
+    context.defaultUnit ?? theme?.reflexy?.defaultUnit ?? sharedDefaults.defaultUnit;
+  const defaultSize =
+    context.defaultSize ?? theme?.reflexy?.defaultSize ?? sharedDefaults.defaultSize;
+  const defaultSizes =
+    context.defaultSizes ?? theme?.reflexy?.defaultSizes ?? sharedDefaults.defaultSizes;
 
   const {
     flex = true,
