@@ -1,6 +1,6 @@
 import React from 'react';
-import type { SpaceSize, SpaceUnit } from './Flex';
 import sharedDefaults from '../sharedDefaults';
+import type { SpaceSize, SpaceUnit } from './Flex';
 
 export function defaultClassNameTransformer(calcClassName: string, userClassName?: string): string {
   return userClassName ? `${calcClassName} ${userClassName}` : calcClassName;
