@@ -196,7 +196,7 @@ export type TweakableComponentProps<C extends React.ElementType> = {
   undefined extends C
     ? Record<never, never>
     : PropsWithComponentRef<React.ComponentPropsWithRef<C>>,
-  'ref'
+  'ref' | 'component' /* if `C` is Flexed component and already contains `component` prop */
 >;
 
 // Since TS 3.7.3
