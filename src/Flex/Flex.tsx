@@ -161,14 +161,12 @@ export interface Transformable<C = string, S = React.CSSProperties, CR = C, SR =
   styleTransformer?: StyleTransformer<S, SR>;
 }
 
-export type StylesProps<
-  P extends {},
-  DefaultStyles extends boolean = false
-> = DefaultStyles extends true
-  ? Styleable
-  : P extends Styleable<infer C, infer S>
-  ? Styleable<C, S>
-  : Styleable<unknown, unknown>;
+export type StylesProps<P extends {}, DefaultStyles extends boolean = false> =
+  DefaultStyles extends true
+    ? Styleable
+    : P extends Styleable<infer C, infer S>
+    ? Styleable<C, S>
+    : Styleable<unknown, unknown>;
 
 export type StylesTransformersProps<
   P extends { [P: string]: any },
