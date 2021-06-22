@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import React, { useMemo } from 'react';
 import isHasRef from '../isHasRef';
 import sharedDefaults from '../sharedDefaults';
@@ -7,6 +6,7 @@ import props2className from './props2className';
 import props2style from './props2style';
 
 type Globals = 'inherit' | 'initial' | 'unset';
+
 type FlexPosition = 'center' | 'flex-end' | 'flex-start';
 
 type ContentDistribution = 'space-around' | 'space-between' | 'space-evenly' | 'stretch';
@@ -154,6 +154,7 @@ export type ClassNameTransformer<T, R = T> = (
   calcClassName: string,
   userClassName?: T
 ) => NonNullable<R>;
+
 export type StyleTransformer<T, R = T> = (calcStyle?: React.CSSProperties, userStyle?: T) => R;
 
 export interface Transformable<C = string, S = React.CSSProperties, CR = C, SR = S> {
@@ -161,12 +162,16 @@ export interface Transformable<C = string, S = React.CSSProperties, CR = C, SR =
   styleTransformer?: StyleTransformer<S, SR>;
 }
 
-export type StylesProps<P extends {}, DefaultStyles extends boolean = false> =
-  DefaultStyles extends true
-    ? Styleable
-    : P extends Styleable<infer C, infer S>
-    ? Styleable<C, S>
-    : Styleable<unknown, unknown>;
+type AnyObject = Record<string, any>;
+
+export type StylesProps<
+  P extends AnyObject,
+  DefaultStyles extends boolean = false
+> = DefaultStyles extends true
+  ? Styleable
+  : P extends Styleable<infer C, infer S>
+  ? Styleable<C, S>
+  : Styleable<unknown, unknown>;
 
 export type StylesTransformersProps<
   P extends { [P: string]: any },
@@ -175,20 +180,23 @@ export type StylesTransformersProps<
   ? Transformable<string, React.CSSProperties, P['className'], P['style']>
   : Transformable<P['className'], P['style']>;
 
-type PropsWithComponentRef<P extends {}> = React.PropsWithoutRef<P> &
-  (P extends { ref?: any } ? { componentRef?: P['ref'] } : {});
+type PropsWithComponentRef<P extends AnyObject> = P extends { ref?: any }
+  ? P & { componentRef?: P['ref'] }
+  : P;
 
 // Since TS 3.7.3
 // Use `Omit` (as copy of object type) to make TweakableComponentProps as object
-// and to avoid `Rest types may only be created from object types.ts(2700)` error in Flex.S and others
-export type TweakableComponentProps<C extends React.ElementType> = Omit<
-  {
-    /**
-     * Sets custom react component as a container.
-     * Component must accept className and style through props. */
-    component?: C;
-  } & (undefined extends C ? unknown : PropsWithComponentRef<React.ComponentPropsWithRef<C>>),
-  never
+// and to avoid `Rest types may only be created from object types.ts(2700)` error in Flex props.
+export type TweakableComponentProps<C extends React.ElementType> = {
+  /**
+   * Sets custom react component as a container.
+   * Component must accept className and style through props. */
+  component?: C;
+} & Omit<
+  undefined extends C
+    ? Record<never, never>
+    : PropsWithComponentRef<React.ComponentPropsWithRef<C>>,
+  'ref'
 >;
 
 // Since TS 3.7.3
@@ -196,16 +204,15 @@ export type TweakableComponentProps<C extends React.ElementType> = Omit<
 // `Type instantiation is excessively deep and possibly infinite.` error.
 export type DefaultComponentType = 'div';
 
-type PropsWithStyles<P extends {}, DefaultStyles extends boolean> = P &
+type PropsWithStyles<P extends AnyObject, DefaultStyles extends boolean> = P &
   StylesProps<P, DefaultStyles>;
 
-type PropsWithStylesTransformers<P extends {}, DefaultStyles extends boolean> = PropsWithStyles<
-  P,
-  DefaultStyles
-> &
-  StylesTransformersProps<P, DefaultStyles>;
+type PropsWithStylesTransformers<
+  P extends AnyObject,
+  DefaultStyles extends boolean
+> = PropsWithStyles<P, DefaultStyles> & StylesTransformersProps<P, DefaultStyles>;
 
-type GetComponentRefProp<P extends {}> = P extends { componentRef?: any }
+type GetComponentRefProp<P extends AnyObject> = P extends { componentRef?: any }
   ? Pick<P, 'componentRef'>
   : P;
 
@@ -223,26 +230,18 @@ export type FlexComponentProps<
     DefaultStyles
   >;
 
-type AnyObject = Record<string, any>;
+type IfObject<T, P> = T extends never | React.EventHandler<any> | React.Ref<any>
+  ? never
+  : T extends AnyObject
+  ? P
+  : never;
 
-type ExcludeObjectType<T extends AnyObject> = Pick<
+type ExcludeObjectType<T extends AnyObject> = Omit<
   T,
-  Exclude<
-    keyof T,
-    {
-      [P in keyof T]: Extract<T[P], AnyObject> extends
-        | never
-        | React.EventHandler<any>
-        | React.Ref<any>
-        ? never
-        : Extract<T[P], AnyObject> extends AnyObject
-        ? P
-        : never;
-    }[keyof T]
-  >
+  { [P in keyof T]: IfObject<Extract<T[P], AnyObject>, P> }[keyof T]
 >;
 
-/** Props without object types. Useful for memo. @experimental */
+/** Props without object types only simple types and functions. Useful for memo. @experimental */
 export type FlexSimpleProps<
   C extends React.ElementType = any,
   DefaultStyles extends boolean = undefined extends C ? true : false,
