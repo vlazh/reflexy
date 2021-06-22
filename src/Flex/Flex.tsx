@@ -137,12 +137,12 @@ export type Overflow = Globals | 'auto' | 'hidden' | 'scroll' | 'visible';
 
 export interface OverflowProps {
   overflow?: Overflow;
-  overflowX?: this['overflow'];
-  overflowY?: this['overflow'];
+  overflowX?: OverflowProps['overflow'];
+  overflowY?: OverflowProps['overflow'];
   /** Shortcut for overflow */
   scrollable?: Extract<Overflow, 'auto' | 'scroll'> | boolean;
-  scrollableX?: this['scrollable'];
-  scrollableY?: this['scrollable'];
+  scrollableX?: OverflowProps['scrollable'];
+  scrollableY?: OverflowProps['scrollable'];
 }
 
 export interface Styleable<C = string, S = React.CSSProperties> {

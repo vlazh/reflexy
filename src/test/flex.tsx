@@ -155,7 +155,7 @@ export function Component4({ type, ...rest }: FlexSimpleProps<'button'>) {
 }
 
 export class B extends React.Component {
-  render() {
+  override render() {
     return <div />;
   }
 }
