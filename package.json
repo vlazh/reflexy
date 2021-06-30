@@ -30,8 +30,7 @@
     "build-to-react-components": "tsc --project tsconfig.json --outDir '../react-components/node_modules/reflexy/'",
     "build-to-player": "tsc --project ./tsconfig.json --outDir '/home/vladimir/dev/sources/player/node_modules/reflexy' && copyfiles ./src/**/*.css --up 1 '/home/vladimir/dev/sources/player/node_modules/reflexy'",
     "patch-publish": "npm run build && npm version patch && npm run copy:configs && npm publish ./dist/ && git push --follow-tags",
-    "minor-publish": "npm run build && npm version minor && npm run copy:configs && npm publish ./dist/ && git push --follow-tags",
-    "major-publish": "npm run build && npm version major && npm run copy:configs && npm publish ./dist/ && git push --follow-tags"
+    "minor-publish": "npm run build && npm version minor && npm run copy:configs && npm publish ./dist/ && git push --follow-tags"
   },
   "devDependencies": {
     "@js-toolkit/configs": "^3.77.5",
