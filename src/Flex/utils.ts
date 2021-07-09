@@ -10,7 +10,8 @@ export function defaultStyleTransformer(
   calcStyle?: React.CSSProperties,
   userStyle?: React.CSSProperties
 ): React.CSSProperties | undefined {
-  return userStyle || calcStyle ? { ...calcStyle, ...userStyle } : calcStyle;
+  if (userStyle && calcStyle) return { ...calcStyle, ...userStyle };
+  return userStyle || calcStyle;
 }
 
 function getSize(multiplier: number, unit: SpaceUnit): number {
