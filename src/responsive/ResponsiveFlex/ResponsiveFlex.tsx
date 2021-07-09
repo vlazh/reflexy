@@ -3,9 +3,8 @@ import Flex, { FlexAllProps, DefaultComponentType } from '../../Flex';
 import useMediaQuery from '../useMediaQuery';
 import { ResponsiveProps, mergeBreakpointProps } from '../Responsive';
 
-export type ResponsiveFlexAllProps<
-  C extends React.ElementType = DefaultComponentType
-> = ResponsiveProps<FlexAllProps<C>> & FlexAllProps<C>;
+export type ResponsiveFlexAllProps<C extends React.ElementType = DefaultComponentType> =
+  ResponsiveProps<FlexAllProps<C>> & FlexAllProps<C>;
 
 export default function ResponsiveFlex<C extends React.ElementType = DefaultComponentType>(
   props: ResponsiveFlexAllProps<C>

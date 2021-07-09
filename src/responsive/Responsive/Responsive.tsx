@@ -21,10 +21,9 @@ export interface ResponsiveProps<Props extends AnyObject> {
   breakpoints: { [P in ViewSize]?: Partial<Props> };
 }
 
-export type ResponsiveAllProps<
-  C extends React.ElementType = DefaultComponentType
-> = ResponsiveProps<React.PropsWithChildren<TweakableComponentProps<C>>> &
-  React.PropsWithChildren<TweakableComponentProps<C>>;
+export type ResponsiveAllProps<C extends React.ElementType = DefaultComponentType> =
+  ResponsiveProps<React.PropsWithChildren<TweakableComponentProps<C>>> &
+    React.PropsWithChildren<TweakableComponentProps<C>>;
 
 function mergeProps<Props extends AnyObject>(
   viewSize: ViewSize,
@@ -64,7 +63,7 @@ export function mergeBreakpointProps<Props extends AnyObject>(
   const mergeType: BreakpointsMergeType | false = merge === true ? 'down' : merge;
   const merged = !mergeType ? breakpoints[viewSize] : mergeProps(viewSize, breakpoints, mergeType);
   if (merged) return { ...rest, ...merged };
-  return (rest as unknown) as Partial<Props>;
+  return rest as unknown as Partial<Props>;
 }
 
 export default function Responsive<C extends React.ElementType = DefaultComponentType>(
