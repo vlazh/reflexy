@@ -15,7 +15,9 @@ export default abstract class MediaQuery {
 
   static get listener(): MediaQueryListener {
     if (!this._listener) {
-      throw new Error('Media queries is not initialized. You should initialize it before.');
+      throw new Error(
+        'Media queries is not initialized. You should initialize it before by call `init` method.'
+      );
     }
     return this._listener;
   }
@@ -45,10 +47,9 @@ export default abstract class MediaQuery {
    * Safe for multiple calls.
    */
   static init(options: MediaQueryInitOptions = {}): ViewSize {
-    if (this.isInitialized) {
-      return this.currentViewSize;
+    if (!this.isInitialized) {
+      this._listener = new MediaQueryListener(options);
     }
-    this._listener = new MediaQueryListener(options);
     return this.currentViewSize;
   }
 
@@ -56,12 +57,4 @@ export default abstract class MediaQuery {
     if (!this._listener) return;
     this._listener.destroy();
   }
-}
-
-/** Returns custom media queries like object `{ ['--xxs']: '(max-width: 479px)', ... }` */
-export function exportMediaQueries(): Record<string, string> {
-  return Object.entries(MediaQuery.listener.queries).reduce(
-    (acc, [key, value]) => ({ ...acc, [`--${key}`]: value }),
-    {}
-  );
 }
