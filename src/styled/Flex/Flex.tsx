@@ -167,14 +167,9 @@ const useStyles = makeStyles(() => {
  * Example: `<Flex component="button" ... />`
  * Example: `<Flex component={MyComponent} ... />`
  */
-function Flex<C extends React.ElementType = DefaultComponentType>({
-  component = 'div' as C,
-  className,
-  style,
-  classNameTransformer = defaultClassNameTransformer as any,
-  styleTransformer = defaultStyleTransformer as any,
-  ...rest
-}: FlexAllProps<C>): JSX.Element {
+function Flex<C extends React.ElementType = DefaultComponentType>(
+  props: FlexAllProps<C>
+): JSX.Element {
   const context = useContext(FlexContext);
   const theme = useTheme<Theme | undefined>();
 
@@ -233,10 +228,17 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
     scrollableX = scrollable,
     scrollableY = scrollable,
 
+    className,
+    style,
+    classNameTransformer = defaultClassNameTransformer as ClassNameTransformer<unknown>,
+    styleTransformer = defaultStyleTransformer as StyleTransformer<unknown>,
+
+    component = 'div',
     componentRef,
     children,
+
     ...customComponentProps
-  } = rest as React.PropsWithChildren<typeof rest & { componentRef?: any }>;
+  } = props as React.PropsWithChildren<typeof props & { componentRef?: any }>;
 
   const css = useStyles({
     flex,
@@ -281,15 +283,9 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
     component as React.ElementType<React.PropsWithChildren<Styleable<any, any>>>,
     {
       ...customComponentProps,
-      className: (classNameTransformer as ClassNameTransformer<typeof className>)(
-        css.root,
-        className
-      ),
-      style: (styleTransformer as StyleTransformer<typeof style>)(undefined, style),
-      ...(componentRef &&
-        (typeof component === 'string' || isHasRef(component)
-          ? { ref: componentRef }
-          : { componentRef })),
+      className: classNameTransformer(css.root, className as string),
+      style: styleTransformer(undefined, style as React.CSSProperties),
+      ...(componentRef && (isHasRef(component) ? { ref: componentRef } : { componentRef })),
     },
     children
   );

@@ -168,13 +168,14 @@ export type StylesProps<
   P extends AnyObject,
   DefaultStyles extends boolean = false
 > = DefaultStyles extends true
-  ? Styleable
+  ? Styleable<string, React.CSSProperties>
   : P extends Styleable<infer C, infer S>
   ? Styleable<C, S>
-  : Styleable<unknown, unknown>;
+  : Styleable<string, React.CSSProperties>;
+// : Styleable<unknown, unknown>;
 
-export type StylesTransformersProps<
-  P extends { [P: string]: any },
+export type TransformedStylesProps<
+  P extends AnyObject,
   DefaultStyles extends boolean = false
 > = DefaultStyles extends true
   ? Transformable<string, React.CSSProperties, P['className'], P['style']>
@@ -210,7 +211,7 @@ type PropsWithStyles<P extends AnyObject, DefaultStyles extends boolean> = P &
 type PropsWithStylesTransformers<
   P extends AnyObject,
   DefaultStyles extends boolean
-> = PropsWithStyles<P, DefaultStyles> & StylesTransformersProps<P, DefaultStyles>;
+> = PropsWithStyles<P, DefaultStyles> & TransformedStylesProps<P, DefaultStyles>;
 
 type GetComponentRefProp<P extends AnyObject> = P extends { componentRef?: any }
   ? Pick<P, 'componentRef'>
@@ -290,8 +291,8 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
 
   className,
   style,
-  classNameTransformer = defaultClassNameTransformer as any,
-  styleTransformer = defaultStyleTransformer as any,
+  classNameTransformer = defaultClassNameTransformer as ClassNameTransformer<unknown>,
+  styleTransformer = defaultStyleTransformer as StyleTransformer<unknown>,
 
   unit = sharedDefaults.defaultUnit,
   mSize = sharedDefaults.defaultSize,
@@ -376,14 +377,8 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
     typeof rest & { componentRef?: any }
   >;
 
-  const marginSize = useMemo(
-    () => (typeof mSize === 'number' ? mSize : sharedDefaults.defaultSizes[mSize]),
-    [mSize]
-  );
-  const paddingSize = useMemo(
-    () => (typeof pSize === 'number' ? pSize : sharedDefaults.defaultSizes[pSize]),
-    [pSize]
-  );
+  const marginSize = typeof mSize === 'number' ? mSize : sharedDefaults.defaultSizes[mSize];
+  const paddingSize = typeof pSize === 'number' ? pSize : sharedDefaults.defaultSizes[pSize];
 
   const calcStyles = useMemo(
     () =>
@@ -438,15 +433,9 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
     component as React.ElementType<React.PropsWithChildren<Styleable<any, any>>>,
     {
       ...customComponentProps,
-      className: (classNameTransformer as ClassNameTransformer<typeof className>)(
-        calcClassName,
-        className
-      ),
-      style: (styleTransformer as StyleTransformer<typeof style>)(calcStyles, style),
-      ...(componentRef &&
-        (typeof component === 'string' || isHasRef(component)
-          ? { ref: componentRef }
-          : { componentRef })),
+      className: classNameTransformer(calcClassName, className as string),
+      style: styleTransformer(calcStyles, style as React.CSSProperties),
+      ...(componentRef && (isHasRef(component) ? { ref: componentRef } : { componentRef })),
     },
     children
   );
