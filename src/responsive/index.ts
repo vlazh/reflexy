@@ -1,5 +1,4 @@
 export { default as ViewSize } from './ViewSize';
-export * from './ViewSize';
 export { default as MediaQueryListener } from './MediaQueryListener';
 export * from './MediaQueryListener';
 export { default as MediaQuery } from './MediaQuery';
