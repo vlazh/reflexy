@@ -22,10 +22,21 @@ export const ViewSizeNumber: Record<ViewSize, ViewSizeNumber> = {
   [ViewSize.xxl]: 7,
 };
 
-export function lessThan(size: ViewSize, than: ViewSize): boolean {
-  return ViewSizeNumber[size] < ViewSizeNumber[than];
-}
+// eslint-disable-next-line @typescript-eslint/no-namespace
+namespace ViewSize {
+  export function lt(size: ViewSize, than: ViewSize): boolean {
+    return ViewSizeNumber[size] < ViewSizeNumber[than];
+  }
 
-export function greaterThan(size: ViewSize, than: ViewSize): boolean {
-  return ViewSizeNumber[size] > ViewSizeNumber[than];
+  export function lte(size: ViewSize, than: ViewSize): boolean {
+    return ViewSizeNumber[size] <= ViewSizeNumber[than];
+  }
+
+  export function gt(size: ViewSize, than: ViewSize): boolean {
+    return ViewSizeNumber[size] > ViewSizeNumber[than];
+  }
+
+  export function gte(size: ViewSize, than: ViewSize): boolean {
+    return ViewSizeNumber[size] >= ViewSizeNumber[than];
+  }
 }
