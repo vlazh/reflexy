@@ -21,3 +21,11 @@ export const ViewSizeNumber: Record<ViewSize, ViewSizeNumber> = {
   [ViewSize.xl]: 6,
   [ViewSize.xxl]: 7,
 };
+
+export function lessThan(size: ViewSize, than: ViewSize): boolean {
+  return ViewSizeNumber[size] < ViewSizeNumber[than];
+}
+
+export function greaterThan(size: ViewSize, than: ViewSize): boolean {
+  return ViewSizeNumber[size] > ViewSizeNumber[than];
+}
