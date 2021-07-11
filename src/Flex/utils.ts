@@ -3,7 +3,8 @@ import sharedDefaults from '../sharedDefaults';
 import type { SpaceSize, SpaceUnit } from './Flex';
 
 export function defaultClassNameTransformer(calcClassName: string, userClassName?: string): string {
-  return userClassName ? `${calcClassName} ${userClassName}` : calcClassName;
+  if (calcClassName && userClassName) return `${calcClassName} ${userClassName}`;
+  return userClassName || calcClassName;
 }
 
 export function defaultStyleTransformer(
