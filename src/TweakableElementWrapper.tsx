@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Styleable } from './Flex';
+import { defaultClassNameTransformer, defaultStyleTransformer } from './Flex/utils';
 
 export interface TweakableElementWrapperProps extends Styleable {
   element: React.ReactElement<React.PropsWithChildren<Styleable>>;
@@ -14,8 +15,8 @@ export default function TweakableElementWrapper({
 }: React.PropsWithChildren<TweakableElementWrapperProps>): JSX.Element {
   const cmp = React.Children.only(element);
   const nextProps: Styleable = {
-    className: `${className}${cmp.props.className ? ` ${cmp.props.className}` : ''}`,
-    style: style || cmp.props.style ? { ...cmp.props.style, ...style } : undefined,
+    className: defaultClassNameTransformer(className ?? '', cmp.props.className),
+    style: defaultStyleTransformer(style, cmp.props.style),
   };
   // for elements such as input which not supports children
   if (!cmp.props.children && !children) {
