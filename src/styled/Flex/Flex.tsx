@@ -234,7 +234,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
     classNameTransformer = defaultClassNameTransformer as ClassNameTransformer<unknown>,
     styleTransformer = defaultStyleTransformer as StyleTransformer<unknown>,
 
-    component = 'div',
+    component = 'div' as C,
     componentRef,
     children,
 

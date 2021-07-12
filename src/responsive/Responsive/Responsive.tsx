@@ -1,13 +1,12 @@
 import React from 'react';
-import type { DefaultComponentType, TweakableComponentProps } from '../../Flex';
+import type { DefaultComponentType } from '../../Flex';
 import isHasRef from '../../isHasRef';
+import type { AnyObject, TweakableComponentProps } from '../../types';
 import viewSizeValues, { viewSizeValueList } from '../viewSizeValues';
 import useMediaQuery from '../useMediaQuery';
 import type ViewSize from '../ViewSize';
 
 export type BreakpointsMergeType = 'up' | 'down';
-
-type AnyObject = Record<string, any>;
 
 export interface ResponsiveProps<Props extends AnyObject> {
   /**
@@ -21,9 +20,11 @@ export interface ResponsiveProps<Props extends AnyObject> {
   breakpoints: { [P in ViewSize]?: Partial<Props> };
 }
 
-export type ResponsiveAllProps<C extends React.ElementType = DefaultComponentType> =
-  ResponsiveProps<React.PropsWithChildren<TweakableComponentProps<C>>> &
-    React.PropsWithChildren<TweakableComponentProps<C>>;
+type Combine<P extends AnyObject> = P & ResponsiveProps<P>;
+
+export type ResponsiveAllProps<C extends React.ElementType = DefaultComponentType> = Combine<
+  React.PropsWithChildren<TweakableComponentProps<C>>
+>;
 
 function mergeProps<Props extends AnyObject>(
   viewSize: ViewSize,

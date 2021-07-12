@@ -135,6 +135,11 @@ function WithoutChildren({ aa, myy, gg }: MYYProps) {
 
 class MyClass extends React.Component<MYYProps> {}
 
+export type A = FlexAllProps<
+  typeof MyClass,
+  { omitProps: false; defaultStyles: { className: true } }
+>['classNameTransformer'];
+
 function WidthContainer({ className, ...rest }: React.PropsWithChildren<FlexAllProps>) {
   return <Flex className={className} {...rest} />;
 }
@@ -142,7 +147,7 @@ function WidthContainer({ className, ...rest }: React.PropsWithChildren<FlexAllP
 export function Component2<C extends React.ElementType = DefaultComponentType>({
   className,
   ...rest
-}: FlexAllProps<C, true>) {
+}: FlexAllProps<C>) {
   return <Flex className={className} {...rest} />;
 }
 

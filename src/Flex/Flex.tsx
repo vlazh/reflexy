@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import isHasRef from '../isHasRef';
 import sharedDefaults from '../sharedDefaults';
+import type { AnyObject, GetComponentProps } from '../types';
 import { defaultClassNameTransformer, defaultStyleTransformer } from './utils';
 import props2className from './props2className';
 import props2style from './props2style';
@@ -162,78 +163,70 @@ export interface Transformable<C = string, S = React.CSSProperties, CR = C, SR =
   styleTransformer?: StyleTransformer<S, SR>;
 }
 
-type AnyObject = Record<string, any>;
-
 interface StylesOptions {
-  DefaultStyles?: boolean;
+  defaultStyles?: boolean | { className?: boolean; style?: boolean };
 }
 
 export type StylesProps<
   P extends AnyObject,
-  O extends StylesOptions = { DefaultStyles: false }
-> = O['DefaultStyles'] extends true
-  ? Styleable<string, React.CSSProperties>
-  : P extends Styleable<infer C, infer S>
-  ? Styleable<C, S>
-  : Styleable<string, React.CSSProperties>;
-// : Styleable<unknown, unknown>;
+  O extends StylesOptions = { defaultStyles: false },
+  DefaultClassName extends boolean = NonNullable<
+    O['defaultStyles'] extends boolean
+      ? O['defaultStyles']
+      : Exclude<O['defaultStyles'], boolean | undefined>['className']
+  >,
+  DefaultStyle extends boolean = NonNullable<
+    O['defaultStyles'] extends boolean
+      ? O['defaultStyles']
+      : Exclude<O['defaultStyles'], boolean | undefined>['style']
+  >
+> = P extends Styleable<infer C, infer S>
+  ? Styleable<
+      DefaultClassName extends true ? string : C,
+      DefaultStyle extends true ? React.CSSProperties : S
+    >
+  : Styleable<unknown, unknown>;
 
-type PropsWithStyles<P extends AnyObject, O extends StylesOptions> = P & StylesProps<P, O>;
+type PropsWithStyles<P extends AnyObject, O extends StylesOptions> = StylesProps<
+  Pick<P, keyof Styleable>,
+  O
+> &
+  Omit<P, keyof Styleable>;
 
-export type GetStylesTransformers<P extends Styleable<unknown, unknown>> = Transformable<
-  P['className'],
-  P['style']
+export type GetStylesTransformers<
+  StyledProps extends Styleable<unknown, unknown>,
+  OriginProps extends AnyObject = StyledProps
+> = Transformable<
+  StyledProps['className'],
+  StyledProps['style'],
+  OriginProps['className'],
+  OriginProps['style']
 >;
-
-type WithStylesTransformers<P extends Styleable<unknown, unknown>> = P & GetStylesTransformers<P>;
 
 type PropsWithStylesTransformers<
   P extends AnyObject,
-  O extends StylesOptions
-> = WithStylesTransformers<PropsWithStyles<P, O>>;
-
-type PropsWithComponentRef<P extends AnyObject> = P extends { ref?: any }
-  ? P & { componentRef?: P['ref'] }
-  : P;
-
-// Since TS 3.7.3
-// Use `Omit` (as copy of object type) to make TweakableComponentProps as object
-// and to avoid `Rest types may only be created from object types.ts(2700)` error in Flex props.
-export type TweakableComponentProps<C extends React.ElementType> = {
-  /**
-   * Sets custom react component as a container.
-   * Component must accept className and style through props. */
-  component?: C;
-} & Omit<
-  undefined extends C
-    ? Record<never, never>
-    : PropsWithComponentRef<React.ComponentPropsWithRef<C>>,
-  'ref' | 'component' /* if `C` is Flexed component and already contains `component` prop */
->;
-
-type GetComponentRefProp<P extends AnyObject> = P extends { componentRef?: any }
-  ? Pick<P, 'componentRef'>
-  : P;
+  O extends StylesOptions,
+  Styled = PropsWithStyles<P, O>
+> = Styled & GetStylesTransformers<Styled, P>;
 
 interface PropsOptions extends StylesOptions {
-  OmitProps?: boolean;
+  omitProps?: boolean;
 }
+
+type FilterComponentProps<P extends AnyObject, O extends PropsOptions> = O['omitProps'] extends true
+  ? Pick<P, 'componentRef' | keyof Styleable>
+  : P;
 
 export type FlexComponentProps<
   C extends React.ElementType = any,
   O extends PropsOptions = {
-    OmitComponentProps: false;
-    DefaultStyles: undefined extends C ? true : false;
+    omitProps: false;
+    defaultStyles: undefined extends C ? true : false;
   }
 > = FlexProps &
   SpaceProps &
   OverflowProps &
-  PropsWithStyles<
-    O['OmitProps'] extends true
-      ? GetComponentRefProp<TweakableComponentProps<C>>
-      : Omit<TweakableComponentProps<C>, 'component'>,
-    O
-  >;
+  PropsWithStyles<FilterComponentProps<GetComponentProps<C>, O>, O>;
 
 type IfObject<T, P> = T extends never | React.EventHandler<any> | React.Ref<any>
   ? never
@@ -250,20 +243,25 @@ type ExcludeObjectType<T extends AnyObject> = Omit<
 export type FlexSimpleProps<
   C extends React.ElementType = any,
   O extends PropsOptions = {
-    OmitComponentProps: false;
-    DefaultStyles: undefined extends C ? true : false;
+    omitProps: false;
+    defaultStyles: undefined extends C ? true : false;
   }
 > = ExcludeObjectType<FlexComponentProps<C, O>>;
 
 export type FlexAllProps<
   C extends React.ElementType = any,
   O extends StylesOptions = {
-    DefaultStyles: undefined extends C ? true : false;
+    defaultStyles: undefined extends C ? true : false;
   }
 > = FlexProps &
   SpaceProps &
   OverflowProps &
-  PropsWithStylesTransformers<TweakableComponentProps<C>, O>;
+  PropsWithStylesTransformers<GetComponentProps<C>, O> & {
+    /**
+     * Sets custom react component as a container.
+     * Component must accept className and style through props. */
+    component?: C;
+  };
 
 // Since TS 3.7.3
 // Use `div` instead of `React.ElementType<JSX.IntrinsicElements['div']>` to avoid
@@ -304,8 +302,8 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
 
   className,
   style,
-  classNameTransformer = defaultClassNameTransformer as ClassNameTransformer<unknown>,
-  styleTransformer = defaultStyleTransformer as StyleTransformer<unknown>,
+  classNameTransformer = defaultClassNameTransformer as ClassNameTransformer<typeof className>,
+  styleTransformer = defaultStyleTransformer as StyleTransformer<typeof style>,
 
   unit = sharedDefaults.defaultUnit,
   mSize = sharedDefaults.defaultSize,
