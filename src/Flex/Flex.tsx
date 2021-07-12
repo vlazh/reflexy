@@ -164,18 +164,21 @@ export interface Transformable<C = string, S = React.CSSProperties, CR = C, SR =
 
 type AnyObject = Record<string, any>;
 
+interface StylesOptions {
+  DefaultStyles?: boolean;
+}
+
 export type StylesProps<
   P extends AnyObject,
-  DefaultStyles extends boolean = false
-> = DefaultStyles extends true
+  O extends StylesOptions = { DefaultStyles: false }
+> = O['DefaultStyles'] extends true
   ? Styleable<string, React.CSSProperties>
   : P extends Styleable<infer C, infer S>
   ? Styleable<C, S>
   : Styleable<string, React.CSSProperties>;
 // : Styleable<unknown, unknown>;
 
-type PropsWithStyles<P extends AnyObject, DefaultStyles extends boolean> = P &
-  StylesProps<P, DefaultStyles>;
+type PropsWithStyles<P extends AnyObject, O extends StylesOptions> = P & StylesProps<P, O>;
 
 export type GetStylesTransformers<P extends Styleable<unknown, unknown>> = Transformable<
   P['className'],
@@ -186,8 +189,8 @@ type WithStylesTransformers<P extends Styleable<unknown, unknown>> = P & GetStyl
 
 type PropsWithStylesTransformers<
   P extends AnyObject,
-  DefaultStyles extends boolean
-> = WithStylesTransformers<PropsWithStyles<P, DefaultStyles>>;
+  O extends StylesOptions
+> = WithStylesTransformers<PropsWithStyles<P, O>>;
 
 type PropsWithComponentRef<P extends AnyObject> = P extends { ref?: any }
   ? P & { componentRef?: P['ref'] }
@@ -212,18 +215,24 @@ type GetComponentRefProp<P extends AnyObject> = P extends { componentRef?: any }
   ? Pick<P, 'componentRef'>
   : P;
 
+interface PropsOptions extends StylesOptions {
+  OmitProps?: boolean;
+}
+
 export type FlexComponentProps<
   C extends React.ElementType = any,
-  DefaultStyles extends boolean = undefined extends C ? true : false,
-  OmitComponentProps extends boolean = false
+  O extends PropsOptions = {
+    OmitComponentProps: false;
+    DefaultStyles: undefined extends C ? true : false;
+  }
 > = FlexProps &
   SpaceProps &
   OverflowProps &
   PropsWithStyles<
-    OmitComponentProps extends true
+    O['OmitProps'] extends true
       ? GetComponentRefProp<TweakableComponentProps<C>>
       : Omit<TweakableComponentProps<C>, 'component'>,
-    DefaultStyles
+    O
   >;
 
 type IfObject<T, P> = T extends never | React.EventHandler<any> | React.Ref<any>
@@ -240,17 +249,21 @@ type ExcludeObjectType<T extends AnyObject> = Omit<
 /** Props without object types only simple types and functions. Useful for memo. @experimental */
 export type FlexSimpleProps<
   C extends React.ElementType = any,
-  DefaultStyles extends boolean = undefined extends C ? true : false,
-  OmitComponentProps extends boolean = false
-> = ExcludeObjectType<FlexComponentProps<C, DefaultStyles, OmitComponentProps>>;
+  O extends PropsOptions = {
+    OmitComponentProps: false;
+    DefaultStyles: undefined extends C ? true : false;
+  }
+> = ExcludeObjectType<FlexComponentProps<C, O>>;
 
 export type FlexAllProps<
   C extends React.ElementType = any,
-  DefaultStyles extends boolean = undefined extends C ? true : false
+  O extends StylesOptions = {
+    DefaultStyles: undefined extends C ? true : false;
+  }
 > = FlexProps &
   SpaceProps &
   OverflowProps &
-  PropsWithStylesTransformers<TweakableComponentProps<C>, DefaultStyles>;
+  PropsWithStylesTransformers<TweakableComponentProps<C>, O>;
 
 // Since TS 3.7.3
 // Use `div` instead of `React.ElementType<JSX.IntrinsicElements['div']>` to avoid
