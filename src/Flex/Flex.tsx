@@ -177,8 +177,12 @@ export type StylesProps<
 type PropsWithStyles<P extends AnyObject, DefaultStyles extends boolean> = P &
   StylesProps<P, DefaultStyles>;
 
-type WithStylesTransformers<P extends Styleable<unknown, unknown>> = P &
-  Transformable<P['className'], P['style']>;
+export type GetStylesTransformers<P extends Styleable<unknown, unknown>> = Transformable<
+  P['className'],
+  P['style']
+>;
+
+type WithStylesTransformers<P extends Styleable<unknown, unknown>> = P & GetStylesTransformers<P>;
 
 type PropsWithStylesTransformers<
   P extends AnyObject,
