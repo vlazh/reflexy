@@ -174,12 +174,16 @@ export type StylesProps<
   : Styleable<string, React.CSSProperties>;
 // : Styleable<unknown, unknown>;
 
-export type TransformedStylesProps<
+type PropsWithStyles<P extends AnyObject, DefaultStyles extends boolean> = P &
+  StylesProps<P, DefaultStyles>;
+
+type WithStylesTransformers<P extends Styleable<unknown, unknown>> = P &
+  Transformable<P['className'], P['style']>;
+
+type PropsWithStylesTransformers<
   P extends AnyObject,
-  DefaultStyles extends boolean = false
-> = DefaultStyles extends true
-  ? Transformable<string, React.CSSProperties, P['className'], P['style']>
-  : Transformable<P['className'], P['style']>;
+  DefaultStyles extends boolean
+> = WithStylesTransformers<PropsWithStyles<P, DefaultStyles>>;
 
 type PropsWithComponentRef<P extends AnyObject> = P extends { ref?: any }
   ? P & { componentRef?: P['ref'] }
@@ -199,19 +203,6 @@ export type TweakableComponentProps<C extends React.ElementType> = {
     : PropsWithComponentRef<React.ComponentPropsWithRef<C>>,
   'ref' | 'component' /* if `C` is Flexed component and already contains `component` prop */
 >;
-
-// Since TS 3.7.3
-// Use `div` instead of `React.ElementType<JSX.IntrinsicElements['div']>` to avoid
-// `Type instantiation is excessively deep and possibly infinite.` error.
-export type DefaultComponentType = 'div';
-
-type PropsWithStyles<P extends AnyObject, DefaultStyles extends boolean> = P &
-  StylesProps<P, DefaultStyles>;
-
-type PropsWithStylesTransformers<
-  P extends AnyObject,
-  DefaultStyles extends boolean
-> = PropsWithStyles<P, DefaultStyles> & TransformedStylesProps<P, DefaultStyles>;
 
 type GetComponentRefProp<P extends AnyObject> = P extends { componentRef?: any }
   ? Pick<P, 'componentRef'>
@@ -256,6 +247,11 @@ export type FlexAllProps<
   SpaceProps &
   OverflowProps &
   PropsWithStylesTransformers<TweakableComponentProps<C>, DefaultStyles>;
+
+// Since TS 3.7.3
+// Use `div` instead of `React.ElementType<JSX.IntrinsicElements['div']>` to avoid
+// `Type instantiation is excessively deep and possibly infinite.` error.
+export type DefaultComponentType = 'div';
 
 /**
  * Flexbox container.
