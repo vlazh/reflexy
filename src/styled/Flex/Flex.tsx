@@ -80,6 +80,7 @@ type MakeStylesProps = RequiredKeepUndefined<
       | 'overflow'
       | 'scrollable'
       | 'className'
+      | 'style'
     >,
     'mUnit' | 'pUnit' | 'mSize' | 'pSize'
   > & {
