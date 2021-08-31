@@ -6,8 +6,8 @@ type PropsWithRef<P extends AnyObject> = P &
   (P extends { componentRef?: any } ? { ref?: P['componentRef'] } : {});
 
 const FlexWithRef = React.forwardRef(
-  (props: FlexAllProps<DefaultComponentType>, ref: React.Ref<any>) => {
-    return <Flex {...props} componentRef={ref} />;
+  ({ componentRef, ...rest }: FlexAllProps<DefaultComponentType>, ref: React.Ref<any>) => {
+    return <Flex componentRef={ref ?? componentRef} {...rest} />;
   }
 ) as <C extends React.ElementType>(
   props: PropsWithRef<FlexAllProps<C> & { component: C }>
