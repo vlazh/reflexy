@@ -1,7 +1,8 @@
 import React from 'react';
 import Flex, { FlexAllProps, DefaultComponentType } from './Flex';
+import type { AnyObject } from './types';
 
-type PropsWithRef<P extends {}> = P &
+type PropsWithRef<P extends AnyObject> = P &
   (P extends { componentRef?: any } ? { ref?: P['componentRef'] } : {});
 
 const FlexWithRef = React.forwardRef(
