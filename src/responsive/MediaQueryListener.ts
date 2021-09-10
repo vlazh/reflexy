@@ -3,7 +3,8 @@
 /* http://viewportsizes.com */
 
 import ViewSize from './ViewSize';
-import viewSizeValues, { ViewSizeValue, viewSizeValueList } from './viewSizeValues';
+import viewSizeValues, { ViewSizeValue } from './viewSizeValues';
+import getViewSizeQueryMap, { GetViewSizeQueryMapOptions } from './getViewSizeQueryMap';
 
 export interface MediaQueryEvent extends Pick<MediaQueryListEvent, 'matches'> {
   readonly viewSize: ViewSize;
@@ -11,10 +12,7 @@ export interface MediaQueryEvent extends Pick<MediaQueryListEvent, 'matches'> {
 
 export type MediaQueryEventHandler = (event: MediaQueryEvent) => void;
 
-export interface MediaQueryListenerOptions {
-  /** @deprecated @see https://stackoverflow.com/a/39401858 */
-  deviceDimentions?: boolean;
-}
+export type MediaQueryListenerOptions = GetViewSizeQueryMapOptions;
 
 export default class MediaQueryListener {
   private _currentViewSize: ViewSize | undefined;
@@ -38,14 +36,8 @@ export default class MediaQueryListener {
   }
 
   /** Init all media queries for handle changes. */
-  constructor({ deviceDimentions }: MediaQueryListenerOptions = {}) {
-    this.queries = viewSizeValueList.reduce((acc, [viewSize, { minWidth, maxWidth }]) => {
-      const q = deviceDimentions
-        ? `only screen and (min-device-width: ${minWidth}px) and (max-device-width: ${maxWidth}px)`
-        : `only screen and (min-width: ${minWidth}px) and (max-width: ${maxWidth}px)`;
-      acc[viewSize] = q;
-      return acc;
-    }, {} as Record<ViewSize, string>);
+  constructor(options: MediaQueryListenerOptions = {}) {
+    this.queries = getViewSizeQueryMap(options);
 
     Object.entries(this.queries).forEach(([key, query]) => {
       const viewSize = key as ViewSize;
