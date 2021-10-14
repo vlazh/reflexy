@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import useTheme from '@material-ui/styles/useTheme';
+import useTheme from '@mui/system/useTheme';
 import { FlexContext } from '../FlexProvider';
 import sharedDefaults from '../sharedDefaults';
 import type { Theme } from './Flex';

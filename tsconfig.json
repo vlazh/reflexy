@@ -11,5 +11,5 @@
     "typeRoots": ["node_modules/@types"]
   },
   "include": ["./src"],
-  "exclude": ["./src/styled/Flex/Flex.styled.tsx"]
+  "exclude": ["src/styled/Flex/Flex.v4.tsx"]
 }

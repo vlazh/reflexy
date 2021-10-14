@@ -1,19 +1,16 @@
 import React from 'react';
-import makeStyles from '@material-ui/styles/makeStyles';
+import styled from '@mui/system/styled';
 import type {
   DefaultComponentType,
   FlexAllProps,
   Styleable,
-  ClassNameTransformer,
-  StyleTransformer,
   SpaceSize,
   OverflowProps,
   FlexProps,
   SpaceProps,
   SpaceUnit,
-  FlexSimpleProps,
 } from '../../Flex/Flex';
-import { toCssValue, defaultClassNameTransformer, defaultStyleTransformer } from '../../Flex/utils';
+import { toCssValue } from '../../Flex/utils';
 import isHasRef from '../../isHasRef';
 import sharedDefaults from '../../sharedDefaults';
 import useFlexDefaults from '../useFlexDefaults';
@@ -54,114 +51,11 @@ export interface Theme {
   };
 }
 
-type RequiredSome<T, K extends keyof T> = T & { [P in K]-?: T[P] };
+type FlexComponent = <C extends React.ElementType = DefaultComponentType>(
+  props: FlexAllProps<C, { defaultStyles: true }>
+) => JSX.Element;
 
-type RequiredKeepUndefined<T> = { [K in keyof T]-?: [T[K]] } extends infer U
-  ? U extends Record<keyof U, [any]>
-    ? { [K in keyof U]: U[K][0] }
-    : never
-  : never;
-
-type MakeStylesProps = RequiredKeepUndefined<
-  RequiredSome<
-    Omit<
-      FlexSimpleProps,
-      | 'center'
-      | 'shrinkByContent'
-      | 'fill'
-      | 'unit'
-      | 'm'
-      | 'mx'
-      | 'my'
-      | 'p'
-      | 'px'
-      | 'py'
-      | 'overflow'
-      | 'scrollable'
-      | 'className'
-      | 'style'
-    >,
-    'mUnit' | 'pUnit' | 'mSize' | 'pSize'
-  > & {
-    readonly defaultSizes: typeof sharedDefaults['defaultSizes'];
-  }
->;
-
-const useStyles = makeStyles(() => {
-  const resetValue = null as unknown as undefined;
-
-  return {
-    // Use `Function values` instead of `Function rules` because of dublication classes if present nested rules.
-    // https://codesandbox.io/s/material-demo-forked-btfjn?file=/demo.js
-    root: {
-      display: ({ flex, inline }: MakeStylesProps) =>
-        // eslint-disable-next-line no-nested-ternary
-        flex ? (inline ? 'inline-flex' : 'flex') : resetValue,
-      flexDirection: ({ reverse, row, column }: MakeStylesProps) =>
-        reverse
-          ? (column && 'column-reverse') || 'row-reverse'
-          : (column && 'column') || (row && 'row') || resetValue,
-      flexWrap: ({ wrap }: MakeStylesProps) =>
-        // eslint-disable-next-line no-nested-ternary
-        wrap === true ? 'wrap' : wrap === false ? 'nowrap' : wrap || resetValue,
-      flexBasis: ({ basis }: MakeStylesProps) => basis ?? resetValue,
-      flexGrow: ({ grow }: MakeStylesProps) => (grow != null ? +grow : resetValue),
-      flexShrink: ({ shrink }: MakeStylesProps) => (shrink != null ? +shrink : resetValue),
-      order: ({ order }: MakeStylesProps) => order ?? resetValue,
-      alignItems: ({ alignItems }: MakeStylesProps) => alignItems ?? resetValue,
-      justifyContent: ({ justifyContent }: MakeStylesProps) => justifyContent ?? resetValue,
-      alignSelf: ({ alignSelf }: MakeStylesProps) => alignSelf ?? resetValue,
-      alignContent: ({ alignContent }: MakeStylesProps) => alignContent ?? resetValue,
-
-      minHeight: ({ shrinkHeight }: MakeStylesProps) => (shrinkHeight ? 0 : resetValue),
-      minWidth: ({ shrinkWidth }: MakeStylesProps) => (shrinkWidth ? 0 : resetValue),
-      height: ({ vfill }: MakeStylesProps) => getFillValue(vfill) ?? resetValue,
-      width: ({ hfill }: MakeStylesProps) => getFillValue(hfill) ?? resetValue,
-
-      overflowX: ({ overflowX, scrollableX }: MakeStylesProps) =>
-        getOverflowValue(overflowX, scrollableX) ?? resetValue,
-      overflowY: ({ overflowY, scrollableY }: MakeStylesProps) =>
-        getOverflowValue(overflowY, scrollableY) ?? resetValue,
-
-      // for strengthen
-      '&&': {
-        marginTop: ({ mSize, mUnit, mt, defaultSizes }: MakeStylesProps) =>
-          mt != null
-            ? toCssValue(mt, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
-            : resetValue,
-        marginRight: ({ mSize, mUnit, mr, defaultSizes }: MakeStylesProps) =>
-          mr != null
-            ? toCssValue(mr, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
-            : resetValue,
-        marginBottom: ({ mSize, mUnit, mb, defaultSizes }: MakeStylesProps) =>
-          mb != null
-            ? toCssValue(mb, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
-            : resetValue,
-        marginLeft: ({ mSize, mUnit, ml, defaultSizes }: MakeStylesProps) =>
-          ml != null
-            ? toCssValue(ml, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
-            : resetValue,
-
-        paddingTop: ({ pSize, pUnit, pt, defaultSizes }: MakeStylesProps) =>
-          pt != null
-            ? toCssValue(pt, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
-            : resetValue,
-        paddingRight: ({ pSize, pUnit, pr, defaultSizes }: MakeStylesProps) =>
-          pr != null
-            ? toCssValue(pr, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
-            : resetValue,
-        paddingBottom: ({ pSize, pUnit, pb, defaultSizes }: MakeStylesProps) =>
-          pb != null
-            ? toCssValue(pb, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
-            : resetValue,
-        paddingLeft: ({ pSize, pUnit, pl, defaultSizes }: MakeStylesProps) =>
-          pl != null
-            ? toCssValue(pl, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
-            : resetValue,
-      },
-    },
-  };
-});
+// {<Flex component={(p: { a: number }) => null} a={1} />;}
 
 /**
  * Flexbox container.
@@ -169,9 +63,82 @@ const useStyles = makeStyles(() => {
  * Example: `<Flex component="button" ... />`
  * Example: `<Flex component={MyComponent} ... />`
  */
-function Flex<C extends React.ElementType = DefaultComponentType>(
-  props: FlexAllProps<C>
-): JSX.Element {
+const Flex = styled<FlexComponent>(
+  (props): JSX.Element => {
+    const {
+      flex,
+      inline,
+      row,
+      column,
+      reverse,
+      wrap,
+      center,
+      alignItems,
+      justifyContent,
+      alignSelf,
+      alignContent,
+      basis,
+      grow,
+      shrink,
+      order,
+      fill,
+      hfill,
+      vfill,
+      shrinkByContent,
+      shrinkWidth,
+      shrinkHeight,
+      unit,
+      mSize,
+      mUnit,
+      m,
+      mx,
+      my,
+      mt,
+      mb,
+      mr,
+      ml,
+      pSize,
+      pUnit,
+      p,
+      px,
+      py,
+      pt,
+      pb,
+      pr,
+      pl,
+      overflow,
+      overflowX,
+      overflowY,
+      scrollable,
+      scrollableX,
+      scrollableY,
+
+      // className,
+      // style,
+      classNameTransformer,
+      styleTransformer,
+
+      component = 'div',
+      componentRef,
+      children,
+
+      ...componentProps
+    } = props as React.PropsWithChildren<typeof props & { componentRef?: any }>;
+
+    return React.createElement(
+      component as React.ElementType<React.PropsWithChildren<Styleable<any, any>>>,
+      Object.assign(
+        componentProps,
+        componentRef && (isHasRef(component) ? { ref: componentRef } : { componentRef })
+      ),
+      children
+    );
+  },
+  {
+    skipSx: true,
+    skipVariantsResolver: true,
+  }
+)((props) => {
   const { defaultUnit, defaultSize, defaultSizes } = useFlexDefaults();
 
   const {
@@ -221,69 +188,73 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
     scrollable,
     scrollableX = scrollable,
     scrollableY = scrollable,
+  } = props;
 
-    className,
-    style,
-    classNameTransformer = defaultClassNameTransformer as ClassNameTransformer<unknown>,
-    styleTransformer = defaultStyleTransformer as StyleTransformer<unknown>,
+  const resetValue = null as unknown as undefined;
 
-    component = 'div' as C,
-    componentRef,
-    children,
+  return {
+    // eslint-disable-next-line no-nested-ternary
+    display: flex ? (inline ? 'inline-flex' : 'flex') : resetValue,
+    flexDirection: reverse
+      ? (column && 'column-reverse') || 'row-reverse'
+      : (column && 'column') || (row && 'row') || resetValue,
+    // eslint-disable-next-line no-nested-ternary
+    flexWrap: wrap === true ? 'wrap' : wrap === false ? 'nowrap' : wrap || resetValue,
+    flexBasis: basis ?? resetValue,
+    flexGrow: grow != null ? +grow : resetValue,
+    flexShrink: shrink != null ? +shrink : resetValue,
+    order: order ?? resetValue,
+    alignItems: alignItems ?? resetValue,
+    justifyContent: justifyContent ?? resetValue,
+    alignSelf: alignSelf ?? resetValue,
+    alignContent: alignContent ?? resetValue,
 
-    ...customComponentProps
-  } = props as React.PropsWithChildren<typeof props & { componentRef?: any }>;
+    minHeight: shrinkHeight ? 0 : resetValue,
+    minWidth: shrinkWidth ? 0 : resetValue,
+    height: getFillValue(vfill) ?? resetValue,
+    width: getFillValue(hfill) ?? resetValue,
 
-  const css = useStyles({
-    flex,
-    inline,
-    row,
-    column,
-    reverse,
-    wrap,
-    alignItems,
-    justifyContent,
-    alignSelf,
-    alignContent,
-    basis,
-    grow,
-    shrink,
-    order,
-    hfill,
-    vfill,
-    shrinkWidth,
-    shrinkHeight,
-    mSize,
-    mUnit,
-    mt,
-    mb,
-    mr,
-    ml,
-    pSize,
-    pUnit,
-    pt,
-    pb,
-    pr,
-    pl,
-    overflowX,
-    overflowY,
-    scrollableX,
-    scrollableY,
+    overflowX: getOverflowValue(overflowX, scrollableX) ?? resetValue,
+    overflowY: getOverflowValue(overflowY, scrollableY) ?? resetValue,
 
-    defaultSizes,
-  });
+    // for strengthen
+    '&&': {
+      marginTop:
+        mt != null
+          ? toCssValue(mt, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
+          : resetValue,
+      marginRight:
+        mr != null
+          ? toCssValue(mr, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
+          : resetValue,
+      marginBottom:
+        mb != null
+          ? toCssValue(mb, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
+          : resetValue,
+      marginLeft:
+        ml != null
+          ? toCssValue(ml, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
+          : resetValue,
 
-  return React.createElement(
-    component as React.ElementType<React.PropsWithChildren<Styleable<any, any>>>,
-    {
-      ...customComponentProps,
-      className: classNameTransformer(css.root, className as string),
-      style: styleTransformer(undefined, style as React.CSSProperties),
-      ...(componentRef && (isHasRef(component) ? { ref: componentRef } : { componentRef })),
+      paddingTop:
+        pt != null
+          ? toCssValue(pt, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
+          : resetValue,
+      paddingRight:
+        pr != null
+          ? toCssValue(pr, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
+          : resetValue,
+      paddingBottom:
+        pb != null
+          ? toCssValue(pb, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
+          : resetValue,
+      paddingLeft:
+        pl != null
+          ? toCssValue(pl, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
+          : resetValue,
     },
-    children
-  );
-}
+  };
+}) as FlexComponent;
 
 Object.defineProperties(Flex, {
   defaultUnit: {
