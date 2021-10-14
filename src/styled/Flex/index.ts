@@ -3,6 +3,7 @@ export * from './Flex';
 export type {
   DefaultComponentType,
   FlexComponentProps,
+  FlexSimpleProps,
   FlexAllProps,
   Styleable,
   SpaceSize,

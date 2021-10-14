@@ -145,10 +145,10 @@ function WidthContainer({ className, ...rest }: React.PropsWithChildren<FlexAllP
 }
 
 export function Component2<C extends React.ElementType = DefaultComponentType>({
-  className,
+  // className,
   ...rest
 }: FlexAllProps<C>) {
-  return <Flex className={className} {...rest} />;
+  return <Flex /* className={className} */ {...rest} />;
 }
 
 export function Component3({ type, ...rest }: FlexComponentProps<'button'>) {

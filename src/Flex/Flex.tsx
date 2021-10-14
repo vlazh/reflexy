@@ -158,13 +158,22 @@ export type ClassNameTransformer<T, R = T> = (
 
 export type StyleTransformer<T, R = T> = (calcStyle?: React.CSSProperties, userStyle?: T) => R;
 
-export interface Transformable<C = string, S = React.CSSProperties, CR = C, SR = S> {
-  classNameTransformer?: ClassNameTransformer<C, CR>;
-  styleTransformer?: StyleTransformer<S, SR>;
-}
+// export interface Transformable<C = string, S = React.CSSProperties, CR = C, SR = S> {
+//   classNameTransformer?: ClassNameTransformer<C, CR>;
+//   styleTransformer?: StyleTransformer<S, SR>;
+// }
+type Transformable<C = string, S = React.CSSProperties, CR = C, SR = S> = ([
+  string,
+  string
+] extends [C, CR]
+  ? {}
+  : { classNameTransformer?: ClassNameTransformer<C, CR> }) &
+  ([React.CSSProperties, React.CSSProperties] extends [S, SR]
+    ? {}
+    : { styleTransformer?: StyleTransformer<S, SR> });
 
 interface StylesOptions {
-  defaultStyles?: boolean | { className?: boolean; style?: boolean };
+  defaultStyles: boolean | { className?: boolean; style?: boolean };
 }
 
 export type StylesProps<
@@ -173,12 +182,12 @@ export type StylesProps<
   DefaultClassName extends boolean = NonNullable<
     O['defaultStyles'] extends boolean
       ? O['defaultStyles']
-      : Exclude<O['defaultStyles'], boolean | undefined>['className']
+      : Exclude<O['defaultStyles'], boolean>['className']
   >,
   DefaultStyle extends boolean = NonNullable<
     O['defaultStyles'] extends boolean
       ? O['defaultStyles']
-      : Exclude<O['defaultStyles'], boolean | undefined>['style']
+      : Exclude<O['defaultStyles'], boolean>['style']
   >
 > = P extends Styleable<infer C, infer S>
   ? Styleable<
@@ -188,7 +197,9 @@ export type StylesProps<
   : Styleable<unknown, unknown>;
 
 type PropsWithStyles<P extends AnyObject, O extends StylesOptions> = StylesProps<
-  Pick<P, keyof Styleable>,
+  // Pick keys in order for avoid `className: unknown` with `FlexAllProps<C>` in components.
+  // Pick<P, keyof Styleable>,
+  P,
   O
 > &
   Omit<P, keyof Styleable>;
@@ -300,11 +311,6 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
   shrinkHeight = shrinkByContent,
   shrinkWidth = shrinkByContent,
 
-  className,
-  style,
-  classNameTransformer = defaultClassNameTransformer as ClassNameTransformer<typeof className>,
-  styleTransformer = defaultStyleTransformer as StyleTransformer<typeof style>,
-
   unit = sharedDefaults.defaultUnit,
   mSize = sharedDefaults.defaultSize,
   mUnit = unit,
@@ -331,6 +337,11 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
   overflow,
   overflowX = overflow,
   overflowY = overflow,
+
+  className,
+  style,
+  classNameTransformer = defaultClassNameTransformer as ClassNameTransformer<typeof className>,
+  styleTransformer = defaultStyleTransformer as StyleTransformer<typeof style>,
 
   ...rest
 }: FlexAllProps<C>): JSX.Element {
@@ -384,10 +395,6 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
     ]
   );
 
-  const { componentRef, children, ...customComponentProps } = rest as React.PropsWithChildren<
-    typeof rest & { componentRef?: any }
-  >;
-
   const marginSize = typeof mSize === 'number' ? mSize : sharedDefaults.defaultSizes[mSize];
   const paddingSize = typeof pSize === 'number' ? pSize : sharedDefaults.defaultSizes[pSize];
 
@@ -440,14 +447,26 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
     ]
   );
 
+  const { componentRef, children, ...customComponentProps } = rest as React.PropsWithChildren<
+    typeof rest & { componentRef?: any }
+  >;
+
   return React.createElement(
     component as React.ElementType<React.PropsWithChildren<Styleable<any, any>>>,
-    {
-      ...customComponentProps,
-      className: classNameTransformer(calcClassName, className as string),
-      style: styleTransformer(calcStyles, style as React.CSSProperties),
-      ...(componentRef && (isHasRef(component) ? { ref: componentRef } : { componentRef })),
-    },
+    Object.assign(
+      customComponentProps,
+      {
+        className: (classNameTransformer as ClassNameTransformer<string>)(
+          calcClassName,
+          className as string
+        ),
+        style: (styleTransformer as StyleTransformer<React.CSSProperties>)(
+          calcStyles,
+          style as React.CSSProperties
+        ),
+      },
+      componentRef && (isHasRef(component) ? { ref: componentRef } : { componentRef })
+    ),
     children
   );
 }
