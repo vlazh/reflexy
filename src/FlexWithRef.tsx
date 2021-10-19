@@ -7,13 +7,13 @@ type PropsWithRef<P extends AnyObject> = P &
 
 const FlexWithRef = React.forwardRef(
   ({ componentRef, ...rest }: FlexAllProps<DefaultComponentType>, ref: React.Ref<any>) => {
-    const refCallback = useMemo<React.Ref<any> | undefined>(
+    const refCallback = useMemo<React.Ref<HTMLDivElement> | undefined>(
       () =>
         ref && componentRef
           ? (instance) => {
               [ref, componentRef].forEach((r) => {
                 if (typeof r === 'function') {
-                  (r as React.RefCallback<any>)(instance);
+                  r(instance);
                 } else if (r) {
                   // eslint-disable-next-line no-param-reassign
                   (r as React.MutableRefObject<any>).current = instance;

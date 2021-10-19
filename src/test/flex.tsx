@@ -10,6 +10,8 @@ import FlexWithRef from '../FlexWithRef';
 import ResponsiveFlex from '../responsive/ResponsiveFlex';
 import Responsive from '../responsive/Responsive';
 import TweakableElementWrapper from '../TweakableElementWrapper';
+import ForwardRef from '../ForwardRef';
+import { GetComponentRef } from '..';
 
 export const S = <C extends React.ElementType = DefaultComponentType>({
   mSize,
@@ -56,34 +58,45 @@ export function test() {
     <>
       <Flex component="div" onAbort={onAbort} />
       <Flex component={TweakableElementWrapper} element={<MYY />} />
-      {/* $ExpectedError */}
-      {/* <Flex component={MYY} componentRef={keepRef} />; */}
+      {/* @ts-expect-error */}
+      <Flex component={MYY} componentRef={keepRef} />;
       <Flex component={MYY} myy />
       <Flex component={MyClass} myy classNameTransformer={classNameTransformer} />
       <Flex componentRef={keepRef} />
-
       <Flex component="svg" overflow="auto" scrollable="scroll" />
-
       <Flex key="1" p />
-
+      {/*  */}
+      {/* @ts-expect-error */}
+      <ForwardRef component={Flex} />
+      <ForwardRef component={Flex as React.FunctionComponent<FlexComponentProps<'div'>>} />
+      <ForwardRef component={Component3} />
+      <ForwardRef component={Component5} a={1} />
+      <ForwardRef component={MyClass2} />
+      {/* @ts-expect-error */}
+      <ForwardRef component={MYY} />
+      {/* @ts-expect-error */}
+      <ForwardRef component={MyClass} />
+      {/* @ts-expect-error */}
+      <ForwardRef component={WithoutChildren} />
+      {/*  */}
       <FlexWithRef component={MyClass} aa="" ref={(el) => el} />
       <FlexWithRef component="a" href="" ref={(el) => el} />
       <FlexWithRef component="div" ref={(el) => el} />
       <FlexWithRef component="button" hidden ref={(el) => el} />
-      {/* $ExpectedError */}
-      {/* <FlexWithRef /> */}
+      {/* @ts-expect-error */}
+      <FlexWithRef />
+      {/*  */}
       <Flex component={MYY} aa="" p />
       <Flex>123</Flex>
+      {/*  */}
       <WidthContainer>123</WidthContainer>
-      {/* $ExpectedError */}
-      {/* <Flex component={WithoutChildren}>
+      {/*  */}
+      {/* @ts-expect-error */}
+      <Flex component={WithoutChildren}>
         <div />
-      </Flex> */}
+      </Flex>
       <Flex component={WithoutChildren}></Flex>
-
-      {/* <Flex component={React.DOM.div} about="" alignItems="baseline" alignContent="center" /> */}
-      {/* <Flex component={React.DOM.form} onSubmit={() => {}} alignContent="center" /> */}
-
+      {/*  */}
       <Responsive
         component={MYY}
         breakpoints={{
@@ -94,13 +107,12 @@ export function test() {
       />
       <Responsive component="div" breakpoints={{ l: {} }} />
       <Responsive breakpoints={{ l: {} }} />
-
+      {/*  */}
       <ResponsiveFlex component={MYY} breakpoints={{ l: { order: 1 } }} />
       <ResponsiveFlex component="nav" breakpoints={{ l: { order: 1 } }} />
       <ResponsiveFlex breakpoints={{ l: undefined }} />
-
       <ResponsiveFlex breakpoints={{ xl: { justifyContent: 'space-around' } }} />
-
+      {/*  */}
       <Component2 component={MYY} />
     </>
   );
@@ -134,6 +146,7 @@ function WithoutChildren({ aa, myy, gg }: MYYProps) {
 }
 
 class MyClass extends React.Component<MYYProps> {}
+class MyClass2 extends React.Component<FlexComponentProps<typeof MyClass>> {}
 
 export type A = FlexAllProps<
   typeof MyClass,
@@ -157,6 +170,10 @@ export function Component3({ type, ...rest }: FlexComponentProps<'button'>) {
 
 export function Component4({ type, ...rest }: FlexSimpleProps<'button'>) {
   return <Flex component="button" type={type} {...rest} />;
+}
+
+export function Component5(props: GetComponentRef<'button'> & { a: number }) {
+  return <Flex component="button" {...props} />;
 }
 
 export class B extends React.Component {

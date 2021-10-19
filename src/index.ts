@@ -4,5 +4,8 @@ export { default as TweakableElementWrapper } from './TweakableElementWrapper';
 export * from './TweakableElementWrapper';
 export { default as FlexWithRef } from './FlexWithRef';
 export * from './FlexWithRef';
+export { default as ForwardRef } from './ForwardRef';
+export * from './ForwardRef';
 export { default as FlexProvider } from './FlexProvider';
 export * from './FlexProvider';
+export type { GetComponentRef } from './types';

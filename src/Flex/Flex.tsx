@@ -173,7 +173,7 @@ type Transformable<C = string, S = React.CSSProperties, CR = C, SR = S> = ([
     : { styleTransformer?: StyleTransformer<S, SR> });
 
 interface StylesOptions {
-  defaultStyles: boolean | { className?: boolean; style?: boolean };
+  defaultStyles?: boolean | { className?: boolean; style?: boolean };
 }
 
 export type StylesProps<
@@ -182,12 +182,12 @@ export type StylesProps<
   DefaultClassName extends boolean = NonNullable<
     O['defaultStyles'] extends boolean
       ? O['defaultStyles']
-      : Exclude<O['defaultStyles'], boolean>['className']
+      : Exclude<O['defaultStyles'], boolean | undefined>['className']
   >,
   DefaultStyle extends boolean = NonNullable<
     O['defaultStyles'] extends boolean
       ? O['defaultStyles']
-      : Exclude<O['defaultStyles'], boolean>['style']
+      : Exclude<O['defaultStyles'], boolean | undefined>['style']
   >
 > = P extends Styleable<infer C, infer S>
   ? Styleable<
@@ -448,11 +448,11 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
   );
 
   const { componentRef, children, ...customComponentProps } = rest as React.PropsWithChildren<
-    typeof rest & { componentRef?: any }
+    typeof rest & { componentRef?: React.Ref<any> }
   >;
 
   return React.createElement(
-    component as React.ElementType<React.PropsWithChildren<Styleable<any, any>>>,
+    component as React.ElementType<React.PropsWithChildren<Styleable>>,
     Object.assign(
       customComponentProps,
       {

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable dot-notation */
 import React from 'react';
 
@@ -15,7 +13,7 @@ export default function isHasRef(component: React.ComponentType | React.ElementT
   }
 
   if (component['$$typeof'] && component['type']) {
-    return isHasRef(component['type']);
+    return isHasRef(component['type'] as typeof component);
   }
 
   return false;

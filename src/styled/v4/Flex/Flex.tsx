@@ -197,8 +197,8 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
     componentRef,
     children,
 
-    ...customComponentProps
-  } = props as React.PropsWithChildren<typeof props & { componentRef?: any }>;
+    ...componentProps
+  } = props as React.PropsWithChildren<typeof props & { componentRef?: React.Ref<any> }>;
 
   const css = useStyles({
     flex,
@@ -242,7 +242,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
   return React.createElement(
     component as React.ElementType<React.PropsWithChildren<Styleable<any, any>>>,
     {
-      ...customComponentProps,
+      ...componentProps,
       className: (classNameTransformer as ClassNameTransformer<string>)(
         css.root,
         className as string

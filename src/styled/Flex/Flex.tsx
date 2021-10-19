@@ -1,13 +1,7 @@
 import React from 'react';
 import styled from '@mui/system/styled';
 import useTheme from '@mui/system/useTheme';
-import type {
-  DefaultComponentType,
-  FlexAllProps,
-  Styleable,
-  SpaceSize,
-  SpaceUnit,
-} from '../../Flex/Flex';
+import type { DefaultComponentType, FlexAllProps, SpaceSize, SpaceUnit } from '../../Flex/Flex';
 import { toCssValue } from '../../Flex/utils';
 import isHasRef from '../../isHasRef';
 import sharedDefaults from '../../sharedDefaults';
@@ -92,10 +86,10 @@ const Flex = styled<FlexComponent>(
       children,
 
       ...componentProps
-    } = props as React.PropsWithChildren<typeof props & { componentRef?: any }>;
+    } = props as React.PropsWithChildren<typeof props & { componentRef?: React.Ref<any> }>;
 
     return React.createElement(
-      component as React.ElementType<React.PropsWithChildren<Styleable<any, any>>>,
+      component,
       Object.assign(
         componentProps,
         componentRef && (isHasRef(component) ? { ref: componentRef } : { componentRef })
