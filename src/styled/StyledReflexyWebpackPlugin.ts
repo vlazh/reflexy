@@ -1,5 +1,4 @@
 /* eslint-disable no-param-reassign */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import path from 'path';
 import { NormalModuleReplacementPlugin } from 'webpack';
 
@@ -10,12 +9,13 @@ export default class StyledReflexyWebpackPlugin extends NormalModuleReplacementP
     // super(/reflexy\/Flex\/Flex\.js/, '../styled/Flex/Flex.js');
 
     // Workaround for webpack v5.49.0+: https://github.com/webpack/webpack/issues/13957
-    super(/reflexy\/Flex\/Flex\.js/, (resource) => {
+    const resourceRegex = /reflexy\/Flex\/Flex\.js|reflexy\/styled\/Flex\/Flex\.js/;
+    super(resourceRegex, (resource) => {
       if (resource.createData) {
         const resolvedRequest = resource.createData.userRequest as string;
         resource.createData.resource = resolvedRequest.replace(
-          /reflexy\/Flex\/Flex\.js/,
-          'reflexy/styled/Flex/Flex.js'
+          resourceRegex,
+          'reflexy/styled/v4/Flex/Flex.js'
         );
         resource.createData.context = path.dirname(resource.createData.resource);
       }

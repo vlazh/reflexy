@@ -1,47 +1,18 @@
 import React from 'react';
 import styled from '@mui/system/styled';
+import useTheme from '@mui/system/useTheme';
 import type {
   DefaultComponentType,
   FlexAllProps,
   Styleable,
   SpaceSize,
-  OverflowProps,
-  FlexProps,
-  SpaceProps,
   SpaceUnit,
 } from '../../Flex/Flex';
 import { toCssValue } from '../../Flex/utils';
 import isHasRef from '../../isHasRef';
 import sharedDefaults from '../../sharedDefaults';
 import useFlexDefaults from '../useFlexDefaults';
-
-const getFillValue = (propValue: FlexProps['vfill']): string | undefined => {
-  return typeof propValue === 'number'
-    ? `${Math.min(+propValue, 1) * 100}%`
-    : (propValue && '100%') || undefined;
-};
-
-const getScrollableValue = (
-  scrollableValue: OverflowProps['scrollable']
-): OverflowProps['overflow'] => {
-  return typeof scrollableValue === 'string'
-    ? scrollableValue
-    : (scrollableValue === true && 'auto') || (scrollableValue === false && 'hidden') || undefined;
-};
-
-const getOverflowValue = (
-  overflowValue: OverflowProps['overflow'],
-  scrollableValue: OverflowProps['scrollable']
-): OverflowProps['overflow'] => {
-  return overflowValue ?? getScrollableValue(scrollableValue);
-};
-
-const getSpaceSizeMultiplier = (
-  size: NonNullable<SpaceProps['mSize']>,
-  sizeMultipliers: Record<SpaceSize, number>
-): number => {
-  return typeof size === 'number' ? size : sizeMultipliers[size];
-};
+import { getFillValue, getOverflowValue, getSpaceSizeMultiplier } from './utils';
 
 export interface Theme {
   reflexy?: {
@@ -54,8 +25,6 @@ export interface Theme {
 type FlexComponent = <C extends React.ElementType = DefaultComponentType>(
   props: FlexAllProps<C, { defaultStyles: true }>
 ) => JSX.Element;
-
-// {<Flex component={(p: { a: number }) => null} a={1} />;}
 
 /**
  * Flexbox container.
@@ -139,7 +108,7 @@ const Flex = styled<FlexComponent>(
     skipVariantsResolver: true,
   }
 )((props) => {
-  const { defaultUnit, defaultSize, defaultSizes } = useFlexDefaults();
+  const { defaultUnit, defaultSize, defaultSizes } = useFlexDefaults(useTheme);
 
   const {
     flex = true,

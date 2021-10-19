@@ -7,9 +7,7 @@
     "declaration": true,
     "sourceMap": false,
     "incremental": false,
-    "diagnostics": true,
-    "typeRoots": ["node_modules/@types"]
+    "diagnostics": true
   },
-  "include": ["./src"],
-  "exclude": ["src/styled/Flex/Flex.v4.tsx"]
+  "include": ["./src"]
 }
