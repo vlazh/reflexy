@@ -158,70 +158,76 @@ export type ClassNameTransformer<T, R = T> = (
 
 export type StyleTransformer<T, R = T> = (calcStyle?: React.CSSProperties, userStyle?: T) => R;
 
-// export interface Transformable<C = string, S = React.CSSProperties, CR = C, SR = S> {
-//   classNameTransformer?: ClassNameTransformer<C, CR>;
-//   styleTransformer?: StyleTransformer<S, SR>;
-// }
-type Transformable<C = string, S = React.CSSProperties, CR = C, SR = S> = ([
-  string,
-  string
-] extends [C, CR]
-  ? {} // eslint-disable-line @typescript-eslint/ban-types
-  : { classNameTransformer?: ClassNameTransformer<C, CR> }) &
-  ([React.CSSProperties, React.CSSProperties] extends [S, SR]
-    ? {} // eslint-disable-line @typescript-eslint/ban-types
-    : { styleTransformer?: StyleTransformer<S, SR> });
-
 interface StylesOptions {
-  defaultStyles?: boolean | { className?: boolean; style?: boolean };
+  inferStyleProps?: boolean | { className?: boolean; style?: boolean };
 }
 
 export type StylesProps<
   P extends AnyObject,
-  O extends StylesOptions = { defaultStyles: false },
-  DefaultClassName extends boolean = NonNullable<
-    O['defaultStyles'] extends boolean
-      ? O['defaultStyles']
-      : Exclude<O['defaultStyles'], boolean | undefined>['className']
+  O extends StylesOptions = { inferStyleProps: true },
+  InferClassName extends boolean = NonNullable<
+    O['inferStyleProps'] extends boolean
+      ? O['inferStyleProps']
+      : Exclude<O['inferStyleProps'], boolean | undefined>['className']
   >,
-  DefaultStyle extends boolean = NonNullable<
-    O['defaultStyles'] extends boolean
-      ? O['defaultStyles']
-      : Exclude<O['defaultStyles'], boolean | undefined>['style']
+  InferStyle extends boolean = NonNullable<
+    O['inferStyleProps'] extends boolean
+      ? O['inferStyleProps']
+      : Exclude<O['inferStyleProps'], boolean | undefined>['style']
   >
 > = P extends Styleable<infer C, infer S>
   ? Styleable<
-      DefaultClassName extends true ? string : C,
-      DefaultStyle extends true ? React.CSSProperties : S
+      InferClassName extends true ? C : string,
+      InferStyle extends true ? S : React.CSSProperties
     >
   : Styleable<
-      DefaultClassName extends true ? string : unknown,
-      DefaultStyle extends true ? React.CSSProperties : unknown
+      InferClassName extends true ? unknown : string,
+      InferStyle extends true ? unknown : React.CSSProperties
     >;
 
 type PropsWithStyles<P extends AnyObject, O extends StylesOptions> = StylesProps<
   // Pick keys in order to avoid `className: unknown` with `FlexAllProps<C>` in components.
-  Pick<P, Extract<keyof P, keyof Styleable>>,
-  // P,
+  // Pick<P, Extract<keyof P, keyof Styleable>>,
+  P,
   O
 > &
   Omit<P, keyof Styleable>;
 
 export type GetStylesTransformers<
   StyledProps extends Styleable<unknown, unknown>,
-  OriginProps extends AnyObject = StyledProps
-> = Transformable<
-  StyledProps['className'],
-  StyledProps['style'],
-  OriginProps['className'],
-  OriginProps['style']
->;
+  OriginProps extends AnyObject = StyledProps,
+  Strict extends boolean = false
+> = Strict extends true
+  ? ([StyledProps['className'], OriginProps['className']] extends [
+      string | undefined,
+      string | undefined
+    ]
+      ? {} // eslint-disable-line @typescript-eslint/ban-types
+      : {
+          classNameTransformer?: ClassNameTransformer<
+            StyledProps['className'],
+            OriginProps['className']
+          >;
+        }) &
+      ([React.CSSProperties, React.CSSProperties] extends [
+        StyledProps['style'],
+        OriginProps['style']
+      ]
+        ? {} // eslint-disable-line @typescript-eslint/ban-types
+        : { styleTransformer?: StyleTransformer<StyledProps['style'], OriginProps['style']> })
+  : {
+      classNameTransformer?: ClassNameTransformer<
+        StyledProps['className'],
+        OriginProps['className']
+      >;
+      styleTransformer?: StyleTransformer<StyledProps['style'], OriginProps['style']>;
+    };
 
 type PropsWithStylesTransformers<
   P extends AnyObject,
   O extends StylesOptions,
   Styled = PropsWithStyles<P, O>
-> = Styled & GetStylesTransformers<Styled, P>;
+> = Styled & GetStylesTransformers<Styled, P, true>;
 
 interface PropsOptions extends StylesOptions {
   omitProps?: boolean;
@@ -233,10 +239,7 @@ type FilterComponentProps<P extends AnyObject, O extends PropsOptions> = O['omit
 
 export type FlexComponentProps<
   C extends React.ElementType = any,
-  O extends PropsOptions = {
-    omitProps: false;
-    defaultStyles: undefined extends C ? true : false;
-  }
+  O extends PropsOptions = { omitProps: false; inferStyleProps: false }
 > = FlexProps &
   SpaceProps &
   OverflowProps &
@@ -256,16 +259,14 @@ type ExcludeObjectType<T extends AnyObject> = Omit<
 /** Props without object types only simple types and functions. Useful for memo. @experimental */
 export type FlexSimpleProps<
   C extends React.ElementType = any,
-  O extends PropsOptions = {
-    omitProps: false;
-    defaultStyles: undefined extends C ? true : false;
-  }
+  O extends PropsOptions = { omitProps: false; inferStyleProps: false }
 > = ExcludeObjectType<FlexComponentProps<C, O>>;
 
 export type FlexAllProps<
   C extends React.ElementType = any,
   O extends StylesOptions = {
-    defaultStyles: undefined extends C ? true : false;
+    // inferStyleProps: undefined extends C ? false : React.ComponentType extends C ? false : true;
+    inferStyleProps: false;
   }
 > = FlexProps &
   SpaceProps &
@@ -347,7 +348,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
   styleTransformer = defaultStyleTransformer as StyleTransformer<typeof style>,
 
   ...rest
-}: FlexAllProps<C>): JSX.Element {
+}: FlexAllProps<C, { inferStyleProps: true }>): JSX.Element {
   const calcClassName = useMemo(
     () =>
       props2className({

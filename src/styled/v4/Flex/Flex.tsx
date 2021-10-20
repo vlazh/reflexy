@@ -136,7 +136,7 @@ const useStyles = makeStyles(() => {
  * Example: `<Flex component={MyComponent} ... />`
  */
 function Flex<C extends React.ElementType = DefaultComponentType>(
-  props: FlexAllProps<C>
+  props: FlexAllProps<C, { inferStyleProps: true }>
 ): JSX.Element {
   const { defaultUnit, defaultSize, defaultSizes } = useFlexDefaults(useTheme);
 

@@ -17,7 +17,7 @@ export interface Theme {
 }
 
 type FlexComponent = <C extends React.ElementType = DefaultComponentType>(
-  props: FlexAllProps<C, { defaultStyles: true }>
+  props: FlexAllProps<C, { inferStyleProps: true }>
 ) => JSX.Element;
 
 /**
@@ -101,7 +101,7 @@ const Flex = styled<FlexComponent>(
     skipSx: true,
     skipVariantsResolver: true,
   }
-)((props) => {
+)((props: FlexAllProps) => {
   const { defaultUnit, defaultSize, defaultSizes } = useFlexDefaults(useTheme);
 
   const {
@@ -217,7 +217,7 @@ const Flex = styled<FlexComponent>(
           : resetValue,
     },
   };
-}) as FlexComponent;
+});
 
 Object.defineProperties(Flex, {
   defaultUnit: {

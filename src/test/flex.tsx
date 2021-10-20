@@ -5,6 +5,7 @@ import Flex, {
   FlexComponentProps,
   FlexSimpleProps,
   DefaultComponentType,
+  GetStylesTransformers,
 } from '../Flex';
 import FlexWithRef from '../FlexWithRef';
 import ResponsiveFlex from '../responsive/ResponsiveFlex';
@@ -43,7 +44,7 @@ export function keepRef(el: HTMLDivElement | null): void {
   element;
 }
 
-const classNameTransformer: FlexAllProps<typeof MyClass>['classNameTransformer'] = (
+const classNameTransformer: GetStylesTransformers<MYYProps>['classNameTransformer'] = (
   calcClassName,
   userClassName
 ) => {
@@ -128,13 +129,13 @@ interface MYYProps {
   aa?: string;
   myy?: boolean;
   gg?: boolean;
-  // className?: string | Classes;
-  className?: Classes;
+  className?: string | Classes;
+  // className?: Classes;
   // className?: string;
   // className?: string | number | undefined;
   // style?: number;
-  // style?: { content: { [P: string]: any }; overlay: { [P: string]: any } };
-  style?: { [P: string]: any };
+  style?: { content?: { [P: string]: any }; overlay?: { [P: string]: any } };
+  // style?: { [P: string]: any };
 }
 
 function MYY({ aa, myy, gg }: React.PropsWithChildren<MYYProps>) {
@@ -150,18 +151,18 @@ class MyClass2 extends React.Component<FlexComponentProps<typeof MyClass>> {}
 
 export type A = FlexAllProps<
   typeof MyClass,
-  { omitProps: false; defaultStyles: { className: true } }
+  { omitProps: false; inferStyleProps: { className: true } }
 >['classNameTransformer'];
 
-function WidthContainer({ className, ...rest }: React.PropsWithChildren<FlexAllProps>) {
+function WidthContainer({ className, ...rest }: React.PropsWithChildren<FlexComponentProps>) {
   return <Flex className={className} {...rest} />;
 }
 
 export function Component2<C extends React.ElementType = DefaultComponentType>({
-  // className,
+  className,
   ...rest
 }: FlexAllProps<C>) {
-  return <Flex /* className={className} */ {...rest} />;
+  return <Flex className={className} {...rest} />;
 }
 
 export function Component3({ type, ...rest }: FlexComponentProps<'button'>) {
