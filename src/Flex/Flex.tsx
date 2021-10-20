@@ -166,10 +166,10 @@ type Transformable<C = string, S = React.CSSProperties, CR = C, SR = S> = ([
   string,
   string
 ] extends [C, CR]
-  ? {}
+  ? {} // eslint-disable-line @typescript-eslint/ban-types
   : { classNameTransformer?: ClassNameTransformer<C, CR> }) &
   ([React.CSSProperties, React.CSSProperties] extends [S, SR]
-    ? {}
+    ? {} // eslint-disable-line @typescript-eslint/ban-types
     : { styleTransformer?: StyleTransformer<S, SR> });
 
 interface StylesOptions {
@@ -194,12 +194,15 @@ export type StylesProps<
       DefaultClassName extends true ? string : C,
       DefaultStyle extends true ? React.CSSProperties : S
     >
-  : Styleable<unknown, unknown>;
+  : Styleable<
+      DefaultClassName extends true ? string : unknown,
+      DefaultStyle extends true ? React.CSSProperties : unknown
+    >;
 
 type PropsWithStyles<P extends AnyObject, O extends StylesOptions> = StylesProps<
-  // Pick keys in order for avoid `className: unknown` with `FlexAllProps<C>` in components.
-  // Pick<P, keyof Styleable>,
-  P,
+  // Pick keys in order to avoid `className: unknown` with `FlexAllProps<C>` in components.
+  Pick<P, Extract<keyof P, keyof Styleable>>,
+  // P,
   O
 > &
   Omit<P, keyof Styleable>;
@@ -225,7 +228,7 @@ interface PropsOptions extends StylesOptions {
 }
 
 type FilterComponentProps<P extends AnyObject, O extends PropsOptions> = O['omitProps'] extends true
-  ? Pick<P, 'componentRef' | keyof Styleable>
+  ? Pick<P, Extract<keyof P, 'componentRef' | keyof Styleable>>
   : P;
 
 export type FlexComponentProps<
