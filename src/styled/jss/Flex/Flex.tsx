@@ -1,6 +1,6 @@
 import React from 'react';
-import makeStyles from '@material-ui/styles/makeStyles';
-import useTheme from '@material-ui/styles/useTheme';
+import makeStyles from '@mui/styles/makeStyles';
+import useTheme from '@mui/styles/useTheme';
 import type {
   DefaultComponentType,
   FlexAllProps,
