@@ -1,7 +1,7 @@
 import React from 'react';
 import type { DefaultComponentType } from '../../Flex';
-import isHasRef from '../../isHasRef';
 import type { AnyObject, TweakableComponentProps } from '../../types';
+import { buildRefProps } from '../../buildRefProps';
 import viewSizeValues, { viewSizeValueList } from '../viewSizeValues';
 import useMediaQuery from '../useMediaQuery';
 import type ViewSize from '../ViewSize';
@@ -71,14 +71,16 @@ export default function Responsive<C extends React.ElementType = DefaultComponen
   props: ResponsiveAllProps<C>
 ): JSX.Element {
   const [viewSize] = useMediaQuery();
-  const { component = 'div', children, ...rest } = mergeBreakpointProps(viewSize, props);
+  const {
+    component = 'div',
+    componentRef,
+    children,
+    ...rest
+  } = mergeBreakpointProps(viewSize, props);
 
-  type R = typeof rest & { componentRef?: any };
-
-  if ((rest as R).componentRef && (typeof component === 'string' || isHasRef(component))) {
-    const { componentRef, ...customComponentProps } = rest as R;
-    return React.createElement(component, { ...customComponentProps, ref: componentRef }, children);
-  }
-
-  return React.createElement(component, rest, children);
+  return React.createElement(
+    component,
+    Object.assign<AnyObject, AnyObject | undefined>(rest, buildRefProps(component, componentRef)),
+    children
+  );
 }

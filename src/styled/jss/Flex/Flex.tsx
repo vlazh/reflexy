@@ -15,8 +15,8 @@ import {
   defaultClassNameTransformer,
   defaultStyleTransformer,
 } from '../../../Flex/utils';
-import isHasRef from '../../../isHasRef';
 import sharedDefaults from '../../../sharedDefaults';
+import { buildRefProps } from '../../../buildRefProps';
 import useFlexDefaults from '../../useFlexDefaults';
 import { getFillValue, getOverflowValue, getSpaceSizeMultiplier } from '../../Flex/utils';
 
@@ -241,8 +241,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
 
   return React.createElement(
     component as React.ElementType<React.PropsWithChildren<Styleable<any, any>>>,
-    {
-      ...componentProps,
+    Object.assign(componentProps, {
       className: (classNameTransformer as ClassNameTransformer<string>)(
         css.root,
         className as string
@@ -251,8 +250,8 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
         undefined,
         style as React.CSSProperties
       ),
-      ...(componentRef && (isHasRef(component) ? { ref: componentRef } : { componentRef })),
-    },
+      ...buildRefProps(component, componentRef),
+    }),
     children
   );
 }

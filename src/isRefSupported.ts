@@ -3,7 +3,7 @@ import React from 'react';
 
 const REACT_FORWARD_REF_TYPE = Symbol.for('react.forward_ref');
 
-export default function isHasRef(component: React.ComponentType | React.ElementType): boolean {
+export function isRefSupported(component: React.ElementType): boolean {
   if (
     typeof component === 'string' ||
     (typeof component === 'function' && component.prototype instanceof React.Component) ||
@@ -13,7 +13,7 @@ export default function isHasRef(component: React.ComponentType | React.ElementT
   }
 
   if (component['$$typeof'] && component['type']) {
-    return isHasRef(component['type'] as typeof component);
+    return isRefSupported(component['type'] as typeof component);
   }
 
   return false;

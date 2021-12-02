@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
-import isHasRef from '../isHasRef';
 import sharedDefaults from '../sharedDefaults';
 import type { AnyObject, GetComponentProps } from '../types';
+import { buildRefProps } from '../buildRefProps';
 import { defaultClassNameTransformer, defaultStyleTransformer } from './utils';
 import props2className from './props2className';
 import props2style from './props2style';
@@ -469,7 +469,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
           style as React.CSSProperties
         ),
       },
-      componentRef && (isHasRef(component) ? { ref: componentRef } : { componentRef })
+      buildRefProps(component, componentRef)
     ),
     children
   );

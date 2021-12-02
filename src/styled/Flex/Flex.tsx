@@ -3,8 +3,8 @@ import styled from '@mui/system/styled';
 import useTheme from '@mui/system/useTheme';
 import type { DefaultComponentType, FlexAllProps, SpaceSize, SpaceUnit } from '../../Flex/Flex';
 import { toCssValue } from '../../Flex/utils';
-import isHasRef from '../../isHasRef';
 import sharedDefaults from '../../sharedDefaults';
+import { buildRefProps } from '../../buildRefProps';
 import useFlexDefaults from '../useFlexDefaults';
 import { getFillValue, getOverflowValue, getSpaceSizeMultiplier } from './utils';
 
@@ -90,10 +90,7 @@ const Flex = styled<FlexComponent>(
 
     return React.createElement(
       component,
-      Object.assign(
-        componentProps,
-        componentRef && (isHasRef(component) ? { ref: componentRef } : { componentRef })
-      ),
+      Object.assign(componentProps, buildRefProps(component, componentRef)),
       children
     );
   },
