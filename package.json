@@ -26,10 +26,10 @@
     "copy:css": "copyfiles ./src/**/*.css --up 1 ./dist/",
     "build-ts": "tsc --project tsconfig.json",
     "build": "npm run clean && npm run build-ts && npm run copy:css",
-    "build-to-tutoron": "tsc --project tsconfig.json --outDir '/home/vladimir/dev/sources/tutoron/node_modules/reflexy/' && copyfiles ./src/**/*.css --up 1 '/home/vladimir/dev/sources/tutoron/node_modules/reflexy/'",
+    "build-to-tutoron": "tsc --project tsconfig.json --outDir '../../../tutoron/node_modules/reflexy/' && copyfiles ./src/**/*.css --up 1 '../../../tutoron/node_modules/reflexy/'",
     "build-to-react-components": "tsc --project tsconfig.json --outDir '../react-components/node_modules/reflexy/'",
     "build-to-styled-components": "tsc --project tsconfig.json --outDir '../styled-components/node_modules/reflexy/'",
-    "build-to-player": "tsc --project ./tsconfig.json --outDir '/home/vladimir/dev/sources/player/node_modules/reflexy' && copyfiles ./src/**/*.css --up 1 '/home/vladimir/dev/sources/player/node_modules/reflexy'",
+    "build-to-player": "tsc --project ./tsconfig.json --outDir '../../../player/node_modules/reflexy' && copyfiles ./src/**/*.css --up 1 '../../../player/node_modules/reflexy'",
     "patch-publish": "npm run build && npm version patch && npm run copy:configs && npm publish ./dist/ && git push --follow-tags",
     "minor-publish": "npm run build && npm version minor && npm run copy:configs && npm publish ./dist/ && git push --follow-tags"
   },
