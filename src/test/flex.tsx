@@ -12,7 +12,7 @@ import ResponsiveFlex from '../responsive/ResponsiveFlex';
 import Responsive from '../responsive/Responsive';
 import TweakableElementWrapper from '../TweakableElementWrapper';
 import ForwardRef from '../ForwardRef';
-import { GetComponentRef } from '..';
+import type { GetComponentRef } from '..';
 
 export const S = <C extends React.ElementType = DefaultComponentType>({
   mSize,

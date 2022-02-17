@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import sharedDefaults from '../sharedDefaults';
 import type { SpaceSize, SpaceUnit } from './Flex';
 

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import sharedDefaults from './sharedDefaults';
+import type sharedDefaults from './sharedDefaults';
 
 type SharedDefaults = typeof sharedDefaults;
 

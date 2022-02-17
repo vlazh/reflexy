@@ -2,7 +2,7 @@
 /* https://mediag.com/news/popular-screen-resolutions-designing-for-all/ */
 /* http://viewportsizes.com */
 
-import ViewSize from './ViewSize';
+import type ViewSize from './ViewSize';
 import viewSizeValues, { ViewSizeValue } from './viewSizeValues';
 import getViewSizeQueryMap, { GetViewSizeQueryMapOptions } from './getViewSizeQueryMap';
 
