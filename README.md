@@ -3,13 +3,22 @@
 **Reflexy** is react components library for flexbox and responsive layouts:
 
 - [Flex](#Flex) - flexbox layout with paddings and margins support.
-- [styled/Flex](#Flex) - styled version of `Flex` powered by [@material-ui/styles](https://material-ui.com/styles/basics/).
+- [styled/Flex](#Flex) - styled version of `Flex` powered by [@mui](https://mui.com/styles/basics/).
+
+  There are two versions of styled Flex:
+
+  - `styled/Flex` - powered by modern styling solution by `@mui` with `emotion` or `styled-components` or whatever.
+  - `styled/jss/Flex` - powered by `JSS`.
+
 - `styled/StyledReflexyWebpackPlugin` - webpack plugin for replace regular imports of `Flex` with `styled/Flex`. Just import `Flex` like `import { Flex, FlexWithRef } from 'reflexy';` or `import { ResponsiveFlex } from 'reflexy/responsive';` and `styled/Flex` will be used instead.
+- `styled/StyledReflexyJssWebpackPlugin` - same as `styled/StyledReflexyWebpackPlugin` but for `styled/jss/Flex`.
 - `FlexWithRef` - `Flex` with forwarded ref.
 - `TweakableElementWrapper` - Wrapper for react element in order to use it with `component` prop of `Flex`.
-- `responsive/Responsive` - Container with breakpoins.
-- [responsive/ResponsiveFlex](#ResponsiveFlex) - Like `Flex` but with breakpoins.
-- `responsive/MediaQueries` - utils for work with media queries and breakpoins.
+- `responsive/Responsive` - container with breakpoints.
+- `responsive/ResponsiveRender` - conditional render by breakpoints.
+- [responsive/ResponsiveFlex](#ResponsiveFlex) - Like `Flex` but with breakpoints.
+- `responsive/useMediaQuery` - React hook for media queries.
+- `responsive/MediaQuery` - utils for work with media queries and breakpoints.
 
 and [custom media queries](#mq):
 
@@ -27,7 +36,7 @@ Custom media queries can be used with [postcss-custom-media](https://github.com/
 Example of configuration with [preset-env](https://preset-env.cssdb.org/):
 
 ```js
-const { exportMediaQueries } = require('reflexy/responsive/MediaQueries');
+const exportMediaQueries = require('reflexy/responsive/exportMediaQueries');
 
 module.exports = {
   plugins: {
@@ -50,7 +59,9 @@ yarn add react reflexy
 npm install --save react reflexy
 ```
 
-**Reflexy** has own css files so you need provide loader for css files placed in node_modules folder. With webpack it's maybe [css-loader](https://github.com/webpack-contrib/css-loader):
+If you use styled version you should also install `@mui` packages and `jss-preset-default` if you use `JSS` version.
+
+**Reflexy** has own css files so you need provide loader for css files placed in node_modules folder (only if you do not use styled version). With webpack it could be [css-loader](https://github.com/webpack-contrib/css-loader):
 
 ```js
 {
@@ -96,13 +107,6 @@ import { Flex, TweakableElementWrapper } from 'reflexy';
 <Flex ml pb>
   ...
 </Flex>;
-
-// mSize and pSize are 's'
-<Flex.S>...</Flex.S>;
-// mSize and pSize are 'm'
-<Flex.M>...</Flex.M>;
-// mSize and pSize are 'l'
-<Flex.L>...</Flex.L>;
 ```
 
 ### Props
@@ -111,6 +115,7 @@ Default style is just `display: flex`.
 
 | Prop               | Type                                                                                                                                              | Description                                                                                                                                                                                                                                                                                                                                |
 | :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `flex?`            | `boolean`                                                                                                                                         | Sets `display` to `flex`.                                                                                                                                                                                                                                                                                                                  |
 | `inline?`          | `boolean`                                                                                                                                         | Sets `display` to `inline-flex`.                                                                                                                                                                                                                                                                                                           |
 | `row?`             | `boolean`                                                                                                                                         | Sets `flow-direction` to `row`.                                                                                                                                                                                                                                                                                                            |
 | `column?`          | `boolean`                                                                                                                                         | Sets `flow-direction` to `column`. Takes a precedence over `row`.                                                                                                                                                                                                                                                                          |
@@ -157,11 +162,9 @@ Default style is just `display: flex`.
 
 | Prop           | Type                                                         | Description                                                                  |
 | :------------- | :----------------------------------------------------------- | :--------------------------------------------------------------------------- |
-| `S`            | `Flex`                                                       | Flex component with `mSize` and `pSize` equal to `s`.                        |
-| `M`            | `Flex`                                                       | Flex component with `mSize` and `pSize` equal to `m`.                        |
-| `L`            | `Flex`                                                       | Flex component with `mSize` and `pSize` equal to `l`.                        |
-| `defaultSizes` | `Record<'xs' \| 's' \| 'm' \| 'l' \| 'xl' \| 'xxl', number>` | Space sizes. Default: `{ xs: 0.25, s: 0.5, m: 1, l: 1.5, xl: 2, xxl: 2.5 }`. |
 | `defaultUnit`  | `string`                                                     | Measure unit of space. Default: `rem`.                                       |
+| `defaultSize`  | `'xs' \| 's' \| 'm' \| 'l' \| 'xl' \| 'xxl'`                 | Default: `'m'`.                                                              |
+| `defaultSizes` | `Record<'xs' \| 's' \| 'm' \| 'l' \| 'xl' \| 'xxl', number>` | Space sizes. Default: `{ xs: 0.25, s: 0.5, m: 1, l: 1.5, xl: 2, xxl: 2.5 }`. |
 
 ## [ResponsiveFlex](#ResponsiveFlex)
 
