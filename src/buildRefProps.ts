@@ -7,7 +7,7 @@ export function buildRefProps(
   if (componentRefProp) {
     if (isRefSupported(Component)) return { ref: componentRefProp };
     return { componentRef: componentRefProp };
-    // Component might use `componentRef` prop for nested components so is no way to granular check
+    // Component may use `componentRef` prop for nested components so it is no way to granular check
     // whether Component is Flex.
     // if (isFlex(Component)) return { componentRef: componentRefProp };
     // const componentString =
