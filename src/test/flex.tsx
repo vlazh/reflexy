@@ -72,6 +72,8 @@ export function test() {
       <ForwardRef component={Flex as React.FunctionComponent<FlexComponentProps<'div'>>} />
       <ForwardRef component={Component3} />
       <ForwardRef component={Component5} a={1} />
+      {/* @ts-expect-error */}
+      <ForwardRef component={MyClass} />
       <ForwardRef component={MyClass2} />
       {/* @ts-expect-error */}
       <ForwardRef component={MYY} />
@@ -84,6 +86,10 @@ export function test() {
       <FlexWithRef component="a" href="" ref={(el) => el} />
       <FlexWithRef component="div" ref={(el) => el} />
       <FlexWithRef component="button" hidden ref={(el) => el} />
+      <FlexWithRef component={MYY} />
+      <FlexWithRef component={Component2} />
+      <FlexWithRef component={Component3} />
+      <FlexWithRef component={Component5} a={0} />
       {/* @ts-expect-error */}
       <FlexWithRef />
       {/*  */}
@@ -159,6 +165,7 @@ function WidthContainer({ className, ...rest }: React.PropsWithChildren<FlexComp
 }
 
 export function Component2<C extends React.ElementType = DefaultComponentType>({
+  component = 'div' as C,
   className,
   ...rest
 }: FlexAllProps<C>) {
