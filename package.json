@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "clean": "rimraf dist/*",
-    "copy:configs": "copyfiles package.json README.md LICENSE ./dist/",
+    "copy:configs": "copyfiles package.json README.md LICENSE CHANGELOG.md ./dist/",
     "copy:css": "copyfiles ./src/**/*.css --up 1 ./dist/",
     "build-ts": "tsc --project tsconfig.json",
     "build": "npm run clean && npm run build-ts && npm run copy:css",
@@ -31,7 +31,9 @@
     "build-to-styled-components": "tsc --project tsconfig.json --outDir '../styled-components/node_modules/reflexy/'",
     "build-to-player": "tsc --project ./tsconfig.json --outDir '../../../player/node_modules/reflexy' && copyfiles ./src/**/*.css --up 1 '../../../player/node_modules/reflexy'",
     "patch-publish": "npm run build && npm version patch && npm run copy:configs && npm publish ./dist/ && git push --follow-tags",
-    "minor-publish": "npm run build && npm version minor && npm run copy:configs && npm publish ./dist/ && git push --follow-tags"
+    "minor-publish": "npm run build && npm version minor && npm run copy:configs && npm publish ./dist/ && git push --follow-tags",
+    "version": "conventional-changelog -i CHANGELOG.md -s && git add CHANGELOG.md",
+    "changelog": "conventional-changelog --config ./changelog.config.js -i CHANGELOG.md -s"
   },
   "devDependencies": {
     "@js-toolkit/configs": "^3.84.2",
@@ -41,6 +43,7 @@
     "@types/react": "^17.0.39",
     "@typescript-eslint/eslint-plugin": "^5.14.0",
     "@typescript-eslint/parser": "^5.14.0",
+    "conventional-changelog-cli": "^2.2.2",
     "copyfiles": "^2.4.1",
     "eslint": "^8.10.0",
     "eslint-config-airbnb": "^19.0.4",
