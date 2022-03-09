@@ -1,3 +1,13 @@
+## <small>3.41.4 (2022-03-09)</small>
+
+* Add changelog ([345dd8c](https://github.com/vlazh/reflexy/commit/345dd8c))
+* Improve FlexWithRef ([cbae152](https://github.com/vlazh/reflexy/commit/cbae152))
+* Update deps ([b1eb16a](https://github.com/vlazh/reflexy/commit/b1eb16a))
+* Update deps ([001f090](https://github.com/vlazh/reflexy/commit/001f090))
+* Update deps ([bb8e03b](https://github.com/vlazh/reflexy/commit/bb8e03b))
+
+
+
 ## <small>3.41.3 (2022-02-17)</small>
 
 * Update deps ([779766a](https://github.com/vlazh/reflexy/commit/779766a))
