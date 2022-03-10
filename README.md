@@ -2,25 +2,27 @@
 
 **Reflexy** is react components library for flexbox and responsive layouts:
 
-- [Flex](#Flex) - flexbox layout with paddings and margins support.
-- [styled/Flex](#Flex) - styled version of `Flex` powered by [@mui](https://mui.com/styles/basics/).
+- **[Flex](#Flex)** - flexbox layout with paddings and margins support.
+- **[styled/Flex](#Flex)** - styled version of `Flex` powered by [@mui](https://mui.com/styles/basics/).
 
   There are two versions of styled Flex:
 
-  - `styled/Flex` - powered by modern styling solution by `@mui` with `emotion` or `styled-components` or whatever.
-  - `styled/jss/Flex` - powered by `JSS`.
+  - **`styled/Flex`** - powered by modern styling solution by `@mui` with `emotion` or `styled-components` or whatever.
+  - **`styled/jss/Flex`** - powered by `JSS`.
 
-- `styled/StyledReflexyWebpackPlugin` - webpack plugin for replace regular imports of `Flex` with `styled/Flex`. Just import `Flex` like `import { Flex, FlexWithRef } from 'reflexy';` or `import { ResponsiveFlex } from 'reflexy/responsive';` and `styled/Flex` will be used instead.
-- `styled/StyledReflexyJssWebpackPlugin` - same as `styled/StyledReflexyWebpackPlugin` but for `styled/jss/Flex`.
-- `FlexWithRef` - `Flex` with forwarded ref.
-- `TweakableElementWrapper` - Wrapper for react element in order to use it with `component` prop of `Flex`.
-- `responsive/Responsive` - container with breakpoints.
-- `responsive/ResponsiveRender` - conditional render by breakpoints.
-- [responsive/ResponsiveFlex](#ResponsiveFlex) - Like `Flex` but with breakpoints.
-- `responsive/useMediaQuery` - React hook for media queries.
-- `responsive/MediaQuery` - utils for work with media queries and breakpoints.
+- **`styled/StyledReflexyWebpackPlugin`** - webpack plugin for replace regular imports of `Flex` with `styled/Flex`. Just import `Flex` like `import { Flex, FlexWithRef } from 'reflexy';` or `import { ResponsiveFlex } from 'reflexy/responsive';` and `styled/Flex` will be used instead.
+- **`styled/StyledReflexyJssWebpackPlugin`** - same as `styled/StyledReflexyWebpackPlugin` but for `styled/jss/Flex`.
+- **`FlexWithRef`** - `Flex` with forwarded ref.
+- **`TweakableElementWrapper`** - Wrapper for react element in order to use it with `component` prop of `Flex`.
+- **`responsive/Responsive`** - container with breakpoints.
+- **`responsive/ResponsiveRender`** - conditional render by breakpoints.
+- **[responsive/ResponsiveFlex](#ResponsiveFlex)** - Like `Flex` but with breakpoints.
+- **`responsive/useMediaQuery`** - React hook for media queries.
+- **`responsive/MediaQuery`** - utils for work with media queries and breakpoints.
 
-and [custom media queries](#mq):
+## <a id="mq" />Custom media queries
+
+Used in CSS.
 
 | Name    | Value                                                         |
 | :------ | :------------------------------------------------------------ |
@@ -77,7 +79,7 @@ If you use styled version you should also install `@mui` packages and `jss-prese
 },
 ```
 
-## [Flex](#Flex)
+## <a id="Flex" />Flex
 
 ### Usage
 
@@ -143,12 +145,12 @@ Default style is just `display: flex`.
 | `unit?`            | `string`                                                                                                                                          | Measure unit of space                                                                                                                                                                                                                                                                                                                      |
 | `mSize?`           | `'xs' \| 's' \| 'm' \| 'l' \| 'xl' \| 'xxl' \| number`                                                                                            | Size of `margin`                                                                                                                                                                                                                                                                                                                           |
 | `m?`               | `typeof mSize \| boolean`                                                                                                                         | `margin`. Scaling value.                                                                                                                                                                                                                                                                                                                   |
-| `mt?`              | `typeof mSize \|boolean`                                                                                                                          | `margin-top`                                                                                                                                                                                                                                                                                                                               |
-| `mr?`              | `typeof mSize \|boolean`                                                                                                                          | `margin-right`                                                                                                                                                                                                                                                                                                                             |
-| `mb?`              | `typeof mSize \|boolean`                                                                                                                          | `margin-bottom`                                                                                                                                                                                                                                                                                                                            |
-| `ml?`              | `typeof mSize \|boolean`                                                                                                                          | `margin-left`                                                                                                                                                                                                                                                                                                                              |
-| `mx?`              | `typeof mSize \|boolean`                                                                                                                          | `margin` by x axis: `margin-left` & `margin-right`                                                                                                                                                                                                                                                                                         |
-| `my?`              | `typeof mSize \|boolean`                                                                                                                          | `margin` by y axis: `margin-top` & `margin-bottom`                                                                                                                                                                                                                                                                                         |
+| `mt?`              | `typeof mSize \| boolean`                                                                                                                         | `margin-top`                                                                                                                                                                                                                                                                                                                               |
+| `mr?`              | `typeof mSize \| boolean`                                                                                                                         | `margin-right`                                                                                                                                                                                                                                                                                                                             |
+| `mb?`              | `typeof mSize \| boolean`                                                                                                                         | `margin-bottom`                                                                                                                                                                                                                                                                                                                            |
+| `ml?`              | `typeof mSize \| boolean`                                                                                                                         | `margin-left`                                                                                                                                                                                                                                                                                                                              |
+| `mx?`              | `typeof mSize \| boolean`                                                                                                                         | `margin` by x axis: `margin-left` & `margin-right`                                                                                                                                                                                                                                                                                         |
+| `my?`              | `typeof mSize \| boolean`                                                                                                                         | `margin` by y axis: `margin-top` & `margin-bottom`                                                                                                                                                                                                                                                                                         |
 | `pSize?`           | `'xs' \| 's' \| 'm' \| 'l' \| 'xl' \| 'xxl' \| number`                                                                                            | Size of `padding`                                                                                                                                                                                                                                                                                                                          |
 | `p?`               | `typeof pSize \| boolean`                                                                                                                         | `padding`. Scaling value.                                                                                                                                                                                                                                                                                                                  |
 | `pt?`              | `typeof pSize \| boolean`                                                                                                                         | `padding-top`                                                                                                                                                                                                                                                                                                                              |
@@ -166,7 +168,7 @@ Default style is just `display: flex`.
 | `defaultSize`  | `'xs' \| 's' \| 'm' \| 'l' \| 'xl' \| 'xxl'`                 | Default: `'m'`.                                                              |
 | `defaultSizes` | `Record<'xs' \| 's' \| 'm' \| 'l' \| 'xl' \| 'xxl', number>` | Space sizes. Default: `{ xs: 0.25, s: 0.5, m: 1, l: 1.5, xl: 2, xxl: 2.5 }`. |
 
-## [ResponsiveFlex](#ResponsiveFlex)
+## <a id="ResponsiveFlex" />ResponsiveFlex
 
 ### Usage
 
