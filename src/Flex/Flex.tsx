@@ -146,6 +146,8 @@ export interface OverflowProps {
   scrollableY?: OverflowProps['scrollable'];
 }
 
+export type FlexOnlyProps = FlexProps & SpaceProps & OverflowProps;
+
 export interface Styleable<C = string, S = React.CSSProperties> {
   className?: C;
   style?: S;
@@ -233,6 +235,7 @@ interface PropsOptions extends StylesOptions {
   omitProps?: boolean;
 }
 
+/** All props or `componentRef`, `style`, `className`. */
 type FilterComponentProps<P extends AnyObject, O extends PropsOptions> = O['omitProps'] extends true
   ? Pick<P, Extract<keyof P, 'componentRef' | keyof Styleable>>
   : P;
@@ -240,10 +243,7 @@ type FilterComponentProps<P extends AnyObject, O extends PropsOptions> = O['omit
 export type FlexComponentProps<
   C extends React.ElementType = any,
   O extends PropsOptions = { omitProps: false; inferStyleProps: false }
-> = FlexProps &
-  SpaceProps &
-  OverflowProps &
-  PropsWithStyles<FilterComponentProps<GetComponentProps<C>, O>, O>;
+> = FlexOnlyProps & PropsWithStyles<FilterComponentProps<GetComponentProps<C>, O>, O>;
 
 type IfObject<T, P> = T extends never | React.EventHandler<any> | React.Ref<any>
   ? never
@@ -268,9 +268,7 @@ export type FlexAllProps<
     // inferStyleProps: undefined extends C ? false : React.ComponentType extends C ? false : true;
     inferStyleProps: false;
   }
-> = FlexProps &
-  SpaceProps &
-  OverflowProps &
+> = FlexOnlyProps &
   PropsWithStylesTransformers<GetComponentProps<C>, O> & {
     /**
      * Sets custom react component as a container.
