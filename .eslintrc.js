@@ -6,5 +6,6 @@ module.exports = {
     // 'import/export': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
+    'react/require-default-props': 'off',
   },
 };
