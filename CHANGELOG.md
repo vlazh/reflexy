@@ -1,3 +1,13 @@
+## <small>3.41.5 (2022-03-14)</small>
+
+* Fix typo ([0acc5a0](https://github.com/vlazh/reflexy/commit/0acc5a0))
+* Improve types ([133ca8a](https://github.com/vlazh/reflexy/commit/133ca8a))
+* Update configs ([5790b63](https://github.com/vlazh/reflexy/commit/5790b63))
+* Update deps ([f18e2c2](https://github.com/vlazh/reflexy/commit/f18e2c2))
+* Update docs ([8988b6c](https://github.com/vlazh/reflexy/commit/8988b6c))
+
+
+
 ## <small>3.41.4 (2022-03-09)</small>
 
 * Add changelog ([345dd8c](https://github.com/vlazh/reflexy/commit/345dd8c))
