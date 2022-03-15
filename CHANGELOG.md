@@ -1,3 +1,11 @@
+## <small>3.41.7 (2022-03-15)</small>
+
+* Add defineSharedDefaults and refactor ([f7c85f4](https://github.com/vlazh/reflexy/commit/f7c85f4))
+* Improve isFlex ([d5da37e](https://github.com/vlazh/reflexy/commit/d5da37e))
+* Improve isRefSupported ([a5f5529](https://github.com/vlazh/reflexy/commit/a5f5529))
+
+
+
 ## <small>3.41.6 (2022-03-15)</small>
 
 * Improve isRefSupported ([6c236a6](https://github.com/vlazh/reflexy/commit/6c236a6))
