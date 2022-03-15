@@ -1,3 +1,10 @@
+## <small>3.41.6 (2022-03-15)</small>
+
+* Improve isRefSupported ([6c236a6](https://github.com/vlazh/reflexy/commit/6c236a6))
+* Update deps ([881748f](https://github.com/vlazh/reflexy/commit/881748f))
+
+
+
 ## <small>3.41.5 (2022-03-14)</small>
 
 * Fix typo ([0acc5a0](https://github.com/vlazh/reflexy/commit/0acc5a0))
