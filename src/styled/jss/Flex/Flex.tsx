@@ -7,7 +7,6 @@ import type {
   Styleable,
   ClassNameTransformer,
   StyleTransformer,
-  SpaceUnit,
   FlexSimpleProps,
 } from '../../../Flex/Flex';
 import {
@@ -15,8 +14,9 @@ import {
   defaultClassNameTransformer,
   defaultStyleTransformer,
 } from '../../../Flex/utils';
-import sharedDefaults from '../../../sharedDefaults';
 import { buildRefProps } from '../../../buildRefProps';
+import { defineSharedDefaults } from '../../../defineSharedDefaults';
+import type sharedDefaults from '../../../sharedDefaults';
 import useFlexDefaults from '../../useFlexDefaults';
 import { getFillValue, getOverflowValue, getSpaceSizeMultiplier } from '../../Flex/utils';
 
@@ -256,37 +256,4 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
   );
 }
 
-Object.defineProperties(Flex, {
-  defaultUnit: {
-    configurable: true,
-    enumerable: true,
-    get() {
-      return sharedDefaults.defaultUnit;
-    },
-    set(v: SpaceUnit) {
-      sharedDefaults.defaultUnit = v;
-    },
-  },
-  defaultSizes: {
-    configurable: true,
-    enumerable: true,
-    get() {
-      return sharedDefaults.defaultSizes;
-    },
-    set(v: typeof sharedDefaults.defaultSizes) {
-      sharedDefaults.defaultSizes = v;
-    },
-  },
-  defaultSize: {
-    configurable: true,
-    enumerable: true,
-    get() {
-      return sharedDefaults.defaultSize;
-    },
-    set(v: typeof sharedDefaults.defaultSize) {
-      sharedDefaults.defaultSize = v;
-    },
-  },
-} as Record<keyof typeof sharedDefaults, PropertyDescriptor>);
-
-export default Flex as typeof Flex & typeof sharedDefaults;
+export default defineSharedDefaults(Flex);

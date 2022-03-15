@@ -3,8 +3,8 @@ import styled from '@mui/system/styled';
 import useTheme from '@mui/system/useTheme';
 import type { DefaultComponentType, FlexAllProps, SpaceSize, SpaceUnit } from '../../Flex/Flex';
 import { toCssValue } from '../../Flex/utils';
-import sharedDefaults from '../../sharedDefaults';
 import { buildRefProps } from '../../buildRefProps';
+import { defineSharedDefaults } from '../../defineSharedDefaults';
 import useFlexDefaults from '../useFlexDefaults';
 import { getFillValue, getOverflowValue, getSpaceSizeMultiplier } from './utils';
 
@@ -216,37 +216,4 @@ const Flex = styled<FlexComponent>(
   };
 });
 
-Object.defineProperties(Flex, {
-  defaultUnit: {
-    configurable: true,
-    enumerable: true,
-    get() {
-      return sharedDefaults.defaultUnit;
-    },
-    set(v: SpaceUnit) {
-      sharedDefaults.defaultUnit = v;
-    },
-  },
-  defaultSizes: {
-    configurable: true,
-    enumerable: true,
-    get() {
-      return sharedDefaults.defaultSizes;
-    },
-    set(v: typeof sharedDefaults.defaultSizes) {
-      sharedDefaults.defaultSizes = v;
-    },
-  },
-  defaultSize: {
-    configurable: true,
-    enumerable: true,
-    get() {
-      return sharedDefaults.defaultSize;
-    },
-    set(v: typeof sharedDefaults.defaultSize) {
-      sharedDefaults.defaultSize = v;
-    },
-  },
-} as Record<keyof typeof sharedDefaults, PropertyDescriptor>);
-
-export default Flex as typeof Flex & typeof sharedDefaults;
+export default defineSharedDefaults(Flex);
