@@ -10,14 +10,14 @@ export function isRefSupported(
   if (
     typeof component === 'string' ||
     (typeof component === 'function' && component.prototype instanceof React.Component) ||
-    REACT_FORWARD_REF_TYPE === component['$$typeof']
+    component['$$typeof'] === REACT_FORWARD_REF_TYPE
   ) {
     return true;
   }
 
   // React element
-  if (component['$$typeof'] && component['type']) {
-    return isRefSupported(component['type'] as typeof component);
+  if (React.isValidElement(component)) {
+    return isRefSupported(component['type'] as React.ElementType<any>);
   }
 
   return false;
