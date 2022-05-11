@@ -1,3 +1,10 @@
+## <small>3.41.8 (2022-05-11)</small>
+
+* Fix public installation ([de1e3a4](https://github.com/vlazh/reflexy/commit/de1e3a4))
+* Update deps and configs ([3216c88](https://github.com/vlazh/reflexy/commit/3216c88))
+
+
+
 ## <small>3.41.7 (2022-03-15)</small>
 
 * Add defineSharedDefaults and refactor ([f7c85f4](https://github.com/vlazh/reflexy/commit/f7c85f4))
