@@ -70,6 +70,8 @@ export function test() {
       {/* @ts-expect-error */}
       <ForwardRef component={Flex} />
       <ForwardRef component={Flex as React.FunctionComponent<FlexComponentProps<'div'>>} />
+      {/* @ts-expect-error */}
+      <ForwardRef component={Component2} />
       <ForwardRef component={Component3} />
       <ForwardRef component={Component5} a={1} />
       {/* @ts-expect-error */}
