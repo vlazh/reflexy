@@ -95,6 +95,7 @@ const Flex = styled<FlexComponent>(
     );
   },
   {
+    name: 'Flex',
     skipSx: true,
     skipVariantsResolver: true,
   }
@@ -177,7 +178,7 @@ const Flex = styled<FlexComponent>(
     overflowX: getOverflowValue(overflowX, scrollableX) ?? resetValue,
     overflowY: getOverflowValue(overflowY, scrollableY) ?? resetValue,
 
-    // for strengthen
+    // higher specificity
     '&&': {
       marginTop:
         mt != null

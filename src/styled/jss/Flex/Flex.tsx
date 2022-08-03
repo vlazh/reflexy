@@ -53,44 +53,45 @@ type MakeStylesProps = RequiredKeepUndefined<
   }
 >;
 
-const useStyles = makeStyles(() => {
-  const resetValue = null as unknown as undefined;
+const useStyles = makeStyles(
+  () => {
+    const resetValue = null as unknown as undefined;
 
-  return {
-    // Use `Function values` instead of `Function rules` because of dublication classes if present nested rules.
-    // https://codesandbox.io/s/material-demo-forked-btfjn?file=/demo.js
-    root: {
-      display: ({ flex, inline }: MakeStylesProps) =>
-        // eslint-disable-next-line no-nested-ternary
-        flex ? (inline ? 'inline-flex' : 'flex') : resetValue,
-      flexDirection: ({ reverse, row, column }: MakeStylesProps) =>
-        reverse
-          ? (column && 'column-reverse') || 'row-reverse'
-          : (column && 'column') || (row && 'row') || resetValue,
-      flexWrap: ({ wrap }: MakeStylesProps) =>
-        // eslint-disable-next-line no-nested-ternary
-        wrap === true ? 'wrap' : wrap === false ? 'nowrap' : wrap || resetValue,
-      flexBasis: ({ basis }: MakeStylesProps) => basis ?? resetValue,
-      flexGrow: ({ grow }: MakeStylesProps) => (grow != null ? +grow : resetValue),
-      flexShrink: ({ shrink }: MakeStylesProps) => (shrink != null ? +shrink : resetValue),
-      order: ({ order }: MakeStylesProps) => order ?? resetValue,
-      alignItems: ({ alignItems }: MakeStylesProps) => alignItems ?? resetValue,
-      justifyContent: ({ justifyContent }: MakeStylesProps) => justifyContent ?? resetValue,
-      alignSelf: ({ alignSelf }: MakeStylesProps) => alignSelf ?? resetValue,
-      alignContent: ({ alignContent }: MakeStylesProps) => alignContent ?? resetValue,
+    return {
+      // Use `Function values` instead of `Function rules` because of dublication classes if present nested rules.
+      // https://codesandbox.io/s/material-demo-forked-btfjn?file=/demo.js
+      root: {
+        display: ({ flex, inline }: MakeStylesProps) =>
+          // eslint-disable-next-line no-nested-ternary
+          flex ? (inline ? 'inline-flex' : 'flex') : resetValue,
+        flexDirection: ({ reverse, row, column }: MakeStylesProps) =>
+          reverse
+            ? (column && 'column-reverse') || 'row-reverse'
+            : (column && 'column') || (row && 'row') || resetValue,
+        flexWrap: ({ wrap }: MakeStylesProps) =>
+          // eslint-disable-next-line no-nested-ternary
+          wrap === true ? 'wrap' : wrap === false ? 'nowrap' : wrap || resetValue,
+        flexBasis: ({ basis }: MakeStylesProps) => basis ?? resetValue,
+        flexGrow: ({ grow }: MakeStylesProps) => (grow != null ? +grow : resetValue),
+        flexShrink: ({ shrink }: MakeStylesProps) => (shrink != null ? +shrink : resetValue),
+        order: ({ order }: MakeStylesProps) => order ?? resetValue,
+        alignItems: ({ alignItems }: MakeStylesProps) => alignItems ?? resetValue,
+        justifyContent: ({ justifyContent }: MakeStylesProps) => justifyContent ?? resetValue,
+        alignSelf: ({ alignSelf }: MakeStylesProps) => alignSelf ?? resetValue,
+        alignContent: ({ alignContent }: MakeStylesProps) => alignContent ?? resetValue,
 
-      minHeight: ({ shrinkHeight }: MakeStylesProps) => (shrinkHeight ? 0 : resetValue),
-      minWidth: ({ shrinkWidth }: MakeStylesProps) => (shrinkWidth ? 0 : resetValue),
-      height: ({ vfill }: MakeStylesProps) => getFillValue(vfill) ?? resetValue,
-      width: ({ hfill }: MakeStylesProps) => getFillValue(hfill) ?? resetValue,
+        minHeight: ({ shrinkHeight }: MakeStylesProps) => (shrinkHeight ? 0 : resetValue),
+        minWidth: ({ shrinkWidth }: MakeStylesProps) => (shrinkWidth ? 0 : resetValue),
+        height: ({ vfill }: MakeStylesProps) => getFillValue(vfill) ?? resetValue,
+        width: ({ hfill }: MakeStylesProps) => getFillValue(hfill) ?? resetValue,
 
-      overflowX: ({ overflowX, scrollableX }: MakeStylesProps) =>
-        getOverflowValue(overflowX, scrollableX) ?? resetValue,
-      overflowY: ({ overflowY, scrollableY }: MakeStylesProps) =>
-        getOverflowValue(overflowY, scrollableY) ?? resetValue,
+        overflowX: ({ overflowX, scrollableX }: MakeStylesProps) =>
+          getOverflowValue(overflowX, scrollableX) ?? resetValue,
+        overflowY: ({ overflowY, scrollableY }: MakeStylesProps) =>
+          getOverflowValue(overflowY, scrollableY) ?? resetValue,
 
-      // for strengthen
-      '&&': {
+        // higher specificity
+        // '&&': {
         marginTop: ({ mSize, mUnit, mt, defaultSizes }: MakeStylesProps) =>
           mt != null
             ? toCssValue(mt, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
@@ -124,10 +125,12 @@ const useStyles = makeStyles(() => {
           pl != null
             ? toCssValue(pl, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
             : resetValue,
+        // },
       },
-    },
-  };
-});
+    };
+  },
+  { index: 1, meta: Flex.name }
+);
 
 /**
  * Flexbox container.
