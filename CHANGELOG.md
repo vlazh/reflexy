@@ -1,3 +1,11 @@
+## 3.42.0 (2022-08-03)
+
+* Cleanup ([e392a5e](https://github.com/vlazh/reflexy/commit/e392a5e))
+* Improve specificity ([24bd1d9](https://github.com/vlazh/reflexy/commit/24bd1d9))
+* Update deps ([039f413](https://github.com/vlazh/reflexy/commit/039f413))
+
+
+
 ## <small>3.41.8 (2022-05-11)</small>
 
 * Fix public installation ([de1e3a4](https://github.com/vlazh/reflexy/commit/de1e3a4))
