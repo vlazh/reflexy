@@ -1,3 +1,9 @@
+## <small>3.42.1 (2022-08-04)</small>
+
+* Improve default styles ([f263b18](https://github.com/vlazh/reflexy/commit/f263b18))
+
+
+
 ## 3.42.0 (2022-08-03)
 
 * Cleanup ([e392a5e](https://github.com/vlazh/reflexy/commit/e392a5e))
