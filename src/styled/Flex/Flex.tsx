@@ -1,23 +1,15 @@
 import React from 'react';
 import styled from '@mui/system/styled';
 import useTheme from '@mui/system/useTheme';
-import type { DefaultComponentType, FlexAllProps, SpaceSize, SpaceUnit } from '../../Flex/Flex';
+import type { DefaultComponentType, FlexAllProps } from '../../Flex/Flex';
 import { toCssValue } from '../../Flex/utils';
 import { buildRefProps } from '../../buildRefProps';
 import { defineSharedDefaults } from '../../defineSharedDefaults';
 import useFlexDefaults from '../useFlexDefaults';
 import { getFillValue, getOverflowValue, getSpaceSizeMultiplier } from './utils';
 
-export interface Theme {
-  reflexy?: {
-    defaultUnit?: SpaceUnit;
-    defaultSizes?: Record<SpaceSize, number>;
-    defaultSize?: SpaceSize;
-  };
-}
-
 type FlexComponent = <C extends React.ElementType = DefaultComponentType>(
-  props: FlexAllProps<C, { inferStyleProps: true }>
+  props: FlexAllProps<C>
 ) => JSX.Element;
 
 /**
