@@ -1,3 +1,9 @@
+## <small>3.42.2 (2022-08-04)</small>
+
+* Refactor ([f57793a](https://github.com/vlazh/reflexy/commit/f57793a))
+
+
+
 ## <small>3.42.1 (2022-08-04)</small>
 
 * Improve default styles ([f263b18](https://github.com/vlazh/reflexy/commit/f263b18))
