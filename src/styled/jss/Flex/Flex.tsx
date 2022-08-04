@@ -19,6 +19,7 @@ import { defineSharedDefaults } from '../../../defineSharedDefaults';
 import type sharedDefaults from '../../../sharedDefaults';
 import useFlexDefaults from '../../useFlexDefaults';
 import { getFillValue, getOverflowValue, getSpaceSizeMultiplier } from '../../Flex/utils';
+import './types';
 
 type RequiredSome<T, K extends keyof T> = T & { [P in K]-?: T[P] };
 
@@ -52,6 +53,22 @@ type MakeStylesProps = RequiredKeepUndefined<
     readonly defaultSizes: typeof sharedDefaults['defaultSizes'];
   }
 >;
+
+type MakeDefaultStylesProps = Pick<MakeStylesProps, 'flex' | 'shrinkHeight' | 'shrinkWidth'>;
+
+const useDefaultStyles = makeStyles(
+  {
+    root: {
+      display: ({ flex }: MakeDefaultStylesProps) =>
+        flex == null ? 'flex' : (null as unknown as undefined),
+      minHeight: ({ shrinkHeight }: MakeDefaultStylesProps) =>
+        shrinkHeight == null ? 0 : (null as unknown as undefined),
+      minWidth: ({ shrinkWidth }: MakeDefaultStylesProps) =>
+        shrinkWidth == null ? 0 : (null as unknown as undefined),
+    },
+  },
+  { name: Flex.name }
+);
 
 const useStyles = makeStyles(
   () => {
@@ -129,7 +146,7 @@ const useStyles = makeStyles(
       },
     };
   },
-  { index: 1, meta: Flex.name }
+  { index: 1, name: Flex.name }
 );
 
 /**
@@ -144,7 +161,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
   const { defaultUnit, defaultSize, defaultSizes } = useFlexDefaults(useTheme);
 
   const {
-    flex = true,
+    flex,
     inline,
     row,
     column,
@@ -162,7 +179,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
     fill,
     hfill = fill,
     vfill = fill,
-    shrinkByContent = true,
+    shrinkByContent,
     shrinkWidth = shrinkByContent,
     shrinkHeight = shrinkByContent,
     unit = defaultUnit,
@@ -203,7 +220,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
     ...componentProps
   } = props as React.PropsWithChildren<typeof props & { componentRef?: React.Ref<any> }>;
 
-  const css = useStyles({
+  const css0 = useStyles({
     flex,
     inline,
     row,
@@ -241,6 +258,8 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
 
     defaultSizes,
   });
+
+  const css = useDefaultStyles({ classes: { root: css0.root }, flex, shrinkHeight, shrinkWidth });
 
   return React.createElement(
     component as React.ElementType<React.PropsWithChildren<Styleable<any, any>>>,
