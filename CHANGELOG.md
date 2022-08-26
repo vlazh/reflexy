@@ -1,3 +1,9 @@
+## <small>3.42.3 (2022-08-26)</small>
+
+* Update deps and fix ([065ecf1](https://github.com/vlazh/reflexy/commit/065ecf1))
+
+
+
 ## <small>3.42.2 (2022-08-04)</small>
 
 * Refactor ([f57793a](https://github.com/vlazh/reflexy/commit/f57793a))
