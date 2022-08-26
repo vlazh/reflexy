@@ -79,8 +79,11 @@ export default function Responsive<C extends React.ElementType = DefaultComponen
   } = mergeBreakpointProps(viewSize, props);
 
   return React.createElement(
-    component,
-    Object.assign<AnyObject, AnyObject | undefined>(rest, buildRefProps(component, componentRef)),
+    component as NonNullable<typeof component>,
+    Object.assign<AnyObject, AnyObject | undefined>(
+      rest,
+      buildRefProps(component as NonNullable<typeof component>, componentRef)
+    ),
     children
   );
 }

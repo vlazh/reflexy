@@ -229,7 +229,7 @@ export type GetStylesTransformers<
 type PropsWithStylesTransformers<
   P extends AnyObject,
   O extends StylesOptions,
-  Styled = PropsWithStyles<P, O>
+  Styled extends Styleable<unknown, unknown> = PropsWithStyles<P, O>
 > = Styled & GetStylesTransformers<Styled, P, true>;
 
 interface PropsOptions extends StylesOptions {
