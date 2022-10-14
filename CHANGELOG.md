@@ -1,3 +1,10 @@
+## <small>3.42.5 (2022-10-14)</small>
+
+* Refactor ([70f9520](https://github.com/vlazh/reflexy/commit/70f9520))
+* Upgrade yarn ([8ba6928](https://github.com/vlazh/reflexy/commit/8ba6928))
+
+
+
 ## <small>3.42.3 (2022-08-26)</small>
 
 * Update deps and fix ([065ecf1](https://github.com/vlazh/reflexy/commit/065ecf1))
