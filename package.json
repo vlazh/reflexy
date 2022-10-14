@@ -30,8 +30,8 @@
     "build-to-react-components": "tsc --project tsconfig.json --outDir '../react-components/node_modules/reflexy/'",
     "build-to-styled-components": "tsc --project tsconfig.json --outDir '../styled-components/node_modules/reflexy/'",
     "build-to-player": "tsc --project ./tsconfig.json --outDir '../../../player/node_modules/reflexy' && copyfiles ./src/**/*.css --up 1 '../../../player/node_modules/reflexy'",
-    "patch-publish": "npm run build && npm version patch --no-workspaces-update -m 'v%s' && npm run copy:configs && npm publish ./dist/ && git push --follow-tags",
-    "minor-publish": "npm run build && npm version minor --no-workspaces-update -m 'v%s' && npm run copy:configs && npm publish ./dist/ && git push --follow-tags",
+    "patch-publish": "npm run build && npm version patch --no-workspaces-update -m 'v%s' && npm run copy:configs && cd ./dist && npm publish && git push --follow-tags",
+    "minor-publish": "npm run build && npm version minor --no-workspaces-update -m 'v%s' && npm run copy:configs && cd ./dist && npm publish && git push --follow-tags",
     "version": "conventional-changelog -i CHANGELOG.md -s && git add CHANGELOG.md",
     "changelog": "conventional-changelog --config ./changelog.config.js -i CHANGELOG.md -s"
   },
