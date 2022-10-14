@@ -1,5 +1,5 @@
 import type React from 'react';
-import viewSizeValues, { viewSizeValueList } from '../viewSizeValues';
+import { viewSizeValues, viewSizeValueList } from '../viewSizeValues';
 import useMediaQuery from '../useMediaQuery';
 import type ViewSize from '../ViewSize';
 import type { BreakpointsMergeType, ResponsiveProps } from '../Responsive';

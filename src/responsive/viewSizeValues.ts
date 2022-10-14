@@ -6,7 +6,7 @@ export interface ViewSizeValue {
 }
 
 /** All values are unique. */
-const viewSizeValues: Record<ViewSize, ViewSizeValue> = {
+export const viewSizeValues: Record<ViewSize, ViewSizeValue> = {
   [ViewSize.xxs]: { minWidth: 0, maxWidth: 479 },
   [ViewSize.xs]: { minWidth: 480, maxWidth: 767 },
   [ViewSize.s]: { minWidth: 768, maxWidth: 991 },
@@ -15,8 +15,6 @@ const viewSizeValues: Record<ViewSize, ViewSizeValue> = {
   [ViewSize.xl]: { minWidth: 1920, maxWidth: 2559 },
   [ViewSize.xxl]: { minWidth: 2560, maxWidth: Number.MAX_SAFE_INTEGER },
 };
-
-export default viewSizeValues;
 
 /** Sorted values. See `viewSizeValues`. */
 export const viewSizeValueList: readonly [ViewSize, ViewSizeValue][] = Object.entries(
