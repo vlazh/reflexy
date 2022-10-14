@@ -1,3 +1,9 @@
+## <small>3.42.6 (2022-10-14)</small>
+
+* Fix publish ([bac76cc](https://github.com/vlazh/reflexy/commit/bac76cc))
+
+
+
 ## <small>3.42.5 (2022-10-14)</small>
 
 * Refactor ([70f9520](https://github.com/vlazh/reflexy/commit/70f9520))
