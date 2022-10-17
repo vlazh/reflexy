@@ -1,3 +1,9 @@
+## 3.43.0 (2022-10-17)
+
+* Add signed space size ([58ef4e6](https://github.com/vlazh/reflexy/commit/58ef4e6))
+
+
+
 ## <small>3.42.6 (2022-10-14)</small>
 
 * Fix publish ([bac76cc](https://github.com/vlazh/reflexy/commit/bac76cc))
