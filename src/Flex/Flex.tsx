@@ -77,6 +77,7 @@ export interface FlexProps {
 }
 
 export type SpaceSize = 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
+export type SSpaceSize = `-${SpaceSize}`;
 
 export type SpaceUnit =
   | 'px'
@@ -98,41 +99,41 @@ export interface SpaceProps {
   /** Measure unit of space */
   unit?: SpaceUnit;
   /** Size of margin */
-  mSize?: SpaceSize | number;
+  mSize?: number | SpaceSize | SSpaceSize;
   /** Measure unit of margin */
   mUnit?: SpaceUnit;
   /** margin */
-  m?: boolean | number | SpaceSize;
+  m?: boolean | number | SpaceSize | SSpaceSize;
   /** margin-top */
-  mt?: boolean | number | SpaceSize;
+  mt?: boolean | number | SpaceSize | SSpaceSize;
   /** margin-right */
-  mr?: boolean | number | SpaceSize;
+  mr?: boolean | number | SpaceSize | SSpaceSize;
   /** margin-bottom */
-  mb?: boolean | number | SpaceSize;
+  mb?: boolean | number | SpaceSize | SSpaceSize;
   /** margin-left */
-  ml?: boolean | number | SpaceSize;
+  ml?: boolean | number | SpaceSize | SSpaceSize;
   /** margin by x axis: margin-left & margin-right */
-  mx?: boolean | number | SpaceSize;
+  mx?: boolean | number | SpaceSize | SSpaceSize;
   /** margin by y axis: margin-top & margin-bottom */
-  my?: boolean | number | SpaceSize;
+  my?: boolean | number | SpaceSize | SSpaceSize;
   /** Size of padding */
-  pSize?: SpaceSize | number;
+  pSize?: number | SpaceSize | SSpaceSize;
   /** Measure unit of padding */
   pUnit?: SpaceUnit;
   /** padding */
-  p?: boolean | number | SpaceSize;
+  p?: boolean | number | SpaceSize | SSpaceSize;
   /** padding-top */
-  pt?: boolean | number | SpaceSize;
+  pt?: boolean | number | SpaceSize | SSpaceSize;
   /** padding-right */
-  pr?: boolean | number | SpaceSize;
+  pr?: boolean | number | SpaceSize | SSpaceSize;
   /** padding-bottom */
-  pb?: boolean | number | SpaceSize;
+  pb?: boolean | number | SpaceSize | SSpaceSize;
   /** padding-left */
-  pl?: boolean | number | SpaceSize;
+  pl?: boolean | number | SpaceSize | SSpaceSize;
   /** padding by x axis: padding-left & padding-right */
-  px?: boolean | number | SpaceSize;
+  px?: boolean | number | SpaceSize | SSpaceSize;
   /** padding by y axis: padding-top & padding-bottom */
-  py?: boolean | number | SpaceSize;
+  py?: boolean | number | SpaceSize | SSpaceSize;
 }
 
 export type Overflow = Globals | 'auto' | 'hidden' | 'scroll' | 'visible';
