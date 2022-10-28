@@ -1,7 +1,7 @@
-import sharedDefaults from './sharedDefaults';
+import sharedDefaults, { SharedDefaults } from './sharedDefaults';
 import type { SpaceUnit } from './Flex';
 
-export function defineSharedDefaults<T>(target: T): T & typeof sharedDefaults {
+export function defineSharedDefaults<T>(target: T): T & SharedDefaults {
   return Object.defineProperties(target, {
     defaultUnit: {
       configurable: true,
@@ -19,7 +19,7 @@ export function defineSharedDefaults<T>(target: T): T & typeof sharedDefaults {
       get() {
         return sharedDefaults.defaultSizes;
       },
-      set(v: typeof sharedDefaults.defaultSizes) {
+      set(v: SharedDefaults['defaultSizes']) {
         sharedDefaults.defaultSizes = v;
       },
     },
@@ -29,9 +29,9 @@ export function defineSharedDefaults<T>(target: T): T & typeof sharedDefaults {
       get() {
         return sharedDefaults.defaultSize;
       },
-      set(v: typeof sharedDefaults.defaultSize) {
+      set(v: SharedDefaults['defaultSize']) {
         sharedDefaults.defaultSize = v;
       },
     },
-  } as Record<keyof typeof sharedDefaults, PropertyDescriptor>) as T & typeof sharedDefaults;
+  } as Record<keyof SharedDefaults, PropertyDescriptor>) as T & SharedDefaults;
 }

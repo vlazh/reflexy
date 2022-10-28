@@ -16,7 +16,7 @@ import {
 } from '../../../Flex/utils';
 import { buildRefProps } from '../../../buildRefProps';
 import { defineSharedDefaults } from '../../../defineSharedDefaults';
-import type sharedDefaults from '../../../sharedDefaults';
+import type { SharedDefaults } from '../../../sharedDefaults';
 import useFlexDefaults from '../../useFlexDefaults';
 import { getFillValue, getOverflowValue, getSpaceSizeMultiplier } from '../../Flex/utils';
 import './types';
@@ -50,7 +50,7 @@ type MakeStylesProps = RequiredKeepUndefined<
     >,
     'mUnit' | 'pUnit' | 'mSize' | 'pSize'
   > & {
-    readonly defaultSizes: typeof sharedDefaults['defaultSizes'];
+    readonly defaultSizes: SharedDefaults['defaultSizes'];
   }
 >;
 

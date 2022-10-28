@@ -12,4 +12,4 @@ export type {
   SpaceProps,
   SpaceUnit,
 } from '../../Flex';
-export type { Theme } from '../useFlexDefaults';
+export type { Theme } from '../theme';

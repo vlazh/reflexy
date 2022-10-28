@@ -1,20 +1,14 @@
 import { useContext } from 'react';
-import type useTheme from '@mui/system/useTheme';
+import useTheme from '@mui/system/useTheme';
 import { FlexContext } from '../FlexProvider';
-import sharedDefaults from '../sharedDefaults';
-import type { SpaceSize, SpaceUnit } from '../Flex';
+import sharedDefaults, { SharedDefaults } from '../sharedDefaults';
+import type { Theme } from './theme';
 
-export type UseFlexDefaultsResult = typeof sharedDefaults;
+export type UseFlexDefaultsResult = SharedDefaults;
 
-export interface Theme {
-  reflexy?: {
-    defaultUnit?: SpaceUnit;
-    defaultSizes?: Record<SpaceSize, number>;
-    defaultSize?: SpaceSize;
-  };
-}
-
-export default function useFlexDefaults(useThemeHook: typeof useTheme): UseFlexDefaultsResult {
+export default function useFlexDefaults(
+  useThemeHook: typeof useTheme = useTheme
+): UseFlexDefaultsResult {
   const context = useContext(FlexContext);
   const theme = useThemeHook<Theme | undefined>();
 

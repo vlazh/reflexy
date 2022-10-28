@@ -1,6 +1,6 @@
 import type { SpaceSize, SpaceUnit } from './Flex';
 
-export default {
+const sharedDefaults = {
   /** Default measure of space */
   defaultUnit: 'rem' as SpaceUnit,
 
@@ -16,3 +16,7 @@ export default {
 
   defaultSize: 'm' as SpaceSize,
 };
+
+export default sharedDefaults;
+
+export type SharedDefaults = typeof sharedDefaults;

@@ -1,13 +1,13 @@
 /* eslint-disable dot-notation */
 import React from 'react';
-import type sharedDefaults from './sharedDefaults';
+import type { SharedDefaults } from './sharedDefaults';
 
 const REACT_MEMO_TYPE = Symbol.for('react.memo');
 
 export function isFlex(component: React.ElementType<any> | React.ReactElement<any, any>): boolean {
   // React component
   if (typeof component === 'function') {
-    const flex = component as typeof component & typeof sharedDefaults;
+    const flex = component as typeof component & SharedDefaults;
     return flex.defaultUnit != null && flex.defaultSize != null && flex.defaultSizes != null;
   }
 
