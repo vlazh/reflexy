@@ -1,3 +1,13 @@
+## 3.44.0 (2022-10-28)
+
+* Add default values ([c4433a7](https://github.com/vlazh/reflexy/commit/c4433a7))
+* Provide theme in FlexProvider ([7953a95](https://github.com/vlazh/reflexy/commit/7953a95))
+* Refactor ([b7015ea](https://github.com/vlazh/reflexy/commit/b7015ea))
+* Refactor ([7210f4f](https://github.com/vlazh/reflexy/commit/7210f4f))
+* Update deps ([08ce33f](https://github.com/vlazh/reflexy/commit/08ce33f))
+
+
+
 ## 3.43.0 (2022-10-17)
 
 * Add signed space size ([58ef4e6](https://github.com/vlazh/reflexy/commit/58ef4e6))
