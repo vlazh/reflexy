@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
-import type sharedDefaults from './sharedDefaults';
-
-type SharedDefaults = typeof sharedDefaults;
+import ThemeProvider from '@mui/styles/ThemeProvider';
+import type { SharedDefaults } from './sharedDefaults';
+import type { Theme } from './styled';
 
 export type FlexProviderProps = Partial<SharedDefaults>;
 
@@ -13,10 +13,15 @@ export default function FlexProvider({
   defaultSizes,
   ...rest
 }: React.PropsWithChildren<FlexProviderProps>): JSX.Element {
-  const defaults = useMemo<FlexProviderProps>(
-    () => ({ defaultUnit, defaultSize, defaultSizes }),
-    [defaultSize, defaultSizes, defaultUnit]
-  );
+  const [defaults, theme] = useMemo<[FlexProviderProps, Theme]>(() => {
+    const values = Object.freeze<FlexProviderProps>({ defaultUnit, defaultSize, defaultSizes });
+    const t = Object.freeze<Theme>({ reflexy: values });
+    return [values, t];
+  }, [defaultSize, defaultSizes, defaultUnit]);
 
-  return <FlexContext.Provider value={defaults} {...rest} />;
+  return (
+    <ThemeProvider theme={theme}>
+      <FlexContext.Provider value={defaults} {...rest} />;
+    </ThemeProvider>
+  );
 }
