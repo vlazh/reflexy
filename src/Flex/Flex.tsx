@@ -3,7 +3,7 @@ import sharedDefaults from '../sharedDefaults';
 import type { AnyObject, GetComponentProps } from '../types';
 import { buildRefProps } from '../buildRefProps';
 import { defineSharedDefaults } from '../defineSharedDefaults';
-import { defaultClassNameTransformer, defaultStyleTransformer } from './utils';
+import { defaultClassNameTransformer, defaultStyleTransformer } from '../utils';
 import props2className from './props2className';
 import props2style from './props2style';
 
@@ -79,6 +79,7 @@ export interface FlexProps {
 export type SpaceSize = 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
 export type SSpaceSize = `-${SpaceSize}`;
 
+/** `number` treat as number of pixels */
 export type SpaceUnit =
   | 'px'
   | 'em'

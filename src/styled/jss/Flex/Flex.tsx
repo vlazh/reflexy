@@ -9,11 +9,8 @@ import type {
   StyleTransformer,
   FlexSimpleProps,
 } from '../../../Flex/Flex';
-import {
-  toCssValue,
-  defaultClassNameTransformer,
-  defaultStyleTransformer,
-} from '../../../Flex/utils';
+import { defaultClassNameTransformer, defaultStyleTransformer } from '../../../utils';
+import { toCssValue } from '../../../Flex/utils';
 import { buildRefProps } from '../../../buildRefProps';
 import { defineSharedDefaults } from '../../../defineSharedDefaults';
 import type { SharedDefaults } from '../../../sharedDefaults';

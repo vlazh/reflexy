@@ -1,5 +1,5 @@
 import type { FlexProps, OverflowProps, SpaceProps, SpaceSize } from '../../Flex';
-import { getSpaceSize } from '../../Flex/utils';
+import { getAbsSpaceSize } from '../../utils';
 
 export const getFillValue = (propValue: FlexProps['vfill']): string | undefined => {
   return typeof propValue === 'number'
@@ -26,5 +26,5 @@ export const getSpaceSizeMultiplier = (
   size: NonNullable<SpaceProps['mSize']>,
   sizeMultipliers: Record<SpaceSize, number>
 ): number => {
-  return typeof size === 'number' ? size : sizeMultipliers[getSpaceSize(size)];
+  return typeof size === 'number' ? size : sizeMultipliers[getAbsSpaceSize(size)];
 };
