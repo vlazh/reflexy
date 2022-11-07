@@ -1,3 +1,10 @@
+## <small>3.44.1 (2022-11-07)</small>
+
+* Fix markup ([6ae1dec](https://github.com/vlazh/reflexy/commit/6ae1dec))
+* Update deps ([555fc1a](https://github.com/vlazh/reflexy/commit/555fc1a))
+
+
+
 ## 3.44.0 (2022-10-28)
 
 * Add default values ([c4433a7](https://github.com/vlazh/reflexy/commit/c4433a7))
