@@ -21,7 +21,7 @@ export default function FlexProvider({
 
   return (
     <ThemeProvider theme={theme}>
-      <FlexContext.Provider value={defaults} {...rest} />;
+      <FlexContext.Provider value={defaults} {...rest} />
     </ThemeProvider>
   );
 }
