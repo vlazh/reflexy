@@ -1,3 +1,12 @@
+## 3.45.0 (2023-01-09)
+
+* Fix flex inline ([f75cb9e](https://github.com/vlazh/reflexy/commit/f75cb9e))
+* Refactor ([d357600](https://github.com/vlazh/reflexy/commit/d357600))
+* Set shrinkByContent default value same as flex ([eabf1c3](https://github.com/vlazh/reflexy/commit/eabf1c3))
+* Update deps ([f32cd18](https://github.com/vlazh/reflexy/commit/f32cd18))
+
+
+
 ## <small>3.44.1 (2022-11-07)</small>
 
 * Fix markup ([6ae1dec](https://github.com/vlazh/reflexy/commit/6ae1dec))
