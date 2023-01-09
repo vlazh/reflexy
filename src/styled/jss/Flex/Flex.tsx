@@ -53,95 +53,91 @@ type MakeStylesProps = RequiredKeepUndefined<
 
 type MakeDefaultStylesProps = Pick<MakeStylesProps, 'flex' | 'shrinkHeight' | 'shrinkWidth'>;
 
+const resetValue = null as unknown as undefined;
+
 const useDefaultStyles = makeStyles(
   {
     root: {
-      display: ({ flex }: MakeDefaultStylesProps) =>
-        flex == null ? 'flex' : (null as unknown as undefined),
+      display: ({ flex }: MakeDefaultStylesProps) => (flex == null ? 'flex' : resetValue),
       minHeight: ({ shrinkHeight }: MakeDefaultStylesProps) =>
-        shrinkHeight == null ? 0 : (null as unknown as undefined),
-      minWidth: ({ shrinkWidth }: MakeDefaultStylesProps) =>
-        shrinkWidth == null ? 0 : (null as unknown as undefined),
+        shrinkHeight == null ? 0 : resetValue,
+      minWidth: ({ shrinkWidth }: MakeDefaultStylesProps) => (shrinkWidth == null ? 0 : resetValue),
     },
   },
   { name: Flex.name }
 );
 
 const useStyles = makeStyles(
-  () => {
-    const resetValue = null as unknown as undefined;
+  {
+    // Use `Function values` instead of `Function rules` because of dublication classes if present nested rules.
+    // https://codesandbox.io/s/material-demo-forked-btfjn?file=/demo.js
+    root: {
+      display: ({ flex, inline }: MakeStylesProps) =>
+        // eslint-disable-next-line no-nested-ternary
+        flex ? (inline ? 'inline-flex' : 'flex') : resetValue,
+      flexDirection: ({ reverse, row, column }: MakeStylesProps) =>
+        reverse
+          ? (column && 'column-reverse') || 'row-reverse'
+          : (column && 'column') || (row && 'row') || resetValue,
+      flexWrap: ({ wrap }: MakeStylesProps) =>
+        // eslint-disable-next-line no-nested-ternary
+        wrap === true ? 'wrap' : wrap === false ? 'nowrap' : wrap || resetValue,
+      flexBasis: ({ basis }: MakeStylesProps) => basis ?? resetValue,
+      flexGrow: ({ grow }: MakeStylesProps) => (grow != null ? +grow : resetValue),
+      flexShrink: ({ shrink }: MakeStylesProps) => (shrink != null ? +shrink : resetValue),
+      order: ({ order }: MakeStylesProps) => order ?? resetValue,
+      alignItems: ({ alignItems }: MakeStylesProps) => alignItems ?? resetValue,
+      justifyContent: ({ justifyContent }: MakeStylesProps) => justifyContent ?? resetValue,
+      alignSelf: ({ alignSelf }: MakeStylesProps) => alignSelf ?? resetValue,
+      alignContent: ({ alignContent }: MakeStylesProps) => alignContent ?? resetValue,
 
-    return {
-      // Use `Function values` instead of `Function rules` because of dublication classes if present nested rules.
-      // https://codesandbox.io/s/material-demo-forked-btfjn?file=/demo.js
-      root: {
-        display: ({ flex, inline }: MakeStylesProps) =>
-          // eslint-disable-next-line no-nested-ternary
-          flex ? (inline ? 'inline-flex' : 'flex') : resetValue,
-        flexDirection: ({ reverse, row, column }: MakeStylesProps) =>
-          reverse
-            ? (column && 'column-reverse') || 'row-reverse'
-            : (column && 'column') || (row && 'row') || resetValue,
-        flexWrap: ({ wrap }: MakeStylesProps) =>
-          // eslint-disable-next-line no-nested-ternary
-          wrap === true ? 'wrap' : wrap === false ? 'nowrap' : wrap || resetValue,
-        flexBasis: ({ basis }: MakeStylesProps) => basis ?? resetValue,
-        flexGrow: ({ grow }: MakeStylesProps) => (grow != null ? +grow : resetValue),
-        flexShrink: ({ shrink }: MakeStylesProps) => (shrink != null ? +shrink : resetValue),
-        order: ({ order }: MakeStylesProps) => order ?? resetValue,
-        alignItems: ({ alignItems }: MakeStylesProps) => alignItems ?? resetValue,
-        justifyContent: ({ justifyContent }: MakeStylesProps) => justifyContent ?? resetValue,
-        alignSelf: ({ alignSelf }: MakeStylesProps) => alignSelf ?? resetValue,
-        alignContent: ({ alignContent }: MakeStylesProps) => alignContent ?? resetValue,
+      minHeight: ({ shrinkHeight }: MakeStylesProps) => (shrinkHeight ? 0 : resetValue),
+      minWidth: ({ shrinkWidth }: MakeStylesProps) => (shrinkWidth ? 0 : resetValue),
+      height: ({ vfill }: MakeStylesProps) => getFillValue(vfill) ?? resetValue,
+      width: ({ hfill }: MakeStylesProps) => getFillValue(hfill) ?? resetValue,
 
-        minHeight: ({ shrinkHeight }: MakeStylesProps) => (shrinkHeight ? 0 : resetValue),
-        minWidth: ({ shrinkWidth }: MakeStylesProps) => (shrinkWidth ? 0 : resetValue),
-        height: ({ vfill }: MakeStylesProps) => getFillValue(vfill) ?? resetValue,
-        width: ({ hfill }: MakeStylesProps) => getFillValue(hfill) ?? resetValue,
+      overflowX: ({ overflowX, scrollableX }: MakeStylesProps) =>
+        getOverflowValue(overflowX, scrollableX) ?? resetValue,
+      overflowY: ({ overflowY, scrollableY }: MakeStylesProps) =>
+        getOverflowValue(overflowY, scrollableY) ?? resetValue,
 
-        overflowX: ({ overflowX, scrollableX }: MakeStylesProps) =>
-          getOverflowValue(overflowX, scrollableX) ?? resetValue,
-        overflowY: ({ overflowY, scrollableY }: MakeStylesProps) =>
-          getOverflowValue(overflowY, scrollableY) ?? resetValue,
+      // higher specificity
+      // '&&': {
+      marginTop: ({ mSize, mUnit, mt, defaultSizes }: MakeStylesProps) =>
+        mt != null
+          ? toCssValue(mt, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
+          : resetValue,
+      marginRight: ({ mSize, mUnit, mr, defaultSizes }: MakeStylesProps) =>
+        mr != null
+          ? toCssValue(mr, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
+          : resetValue,
+      marginBottom: ({ mSize, mUnit, mb, defaultSizes }: MakeStylesProps) =>
+        mb != null
+          ? toCssValue(mb, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
+          : resetValue,
+      marginLeft: ({ mSize, mUnit, ml, defaultSizes }: MakeStylesProps) =>
+        ml != null
+          ? toCssValue(ml, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
+          : resetValue,
 
-        // higher specificity
-        // '&&': {
-        marginTop: ({ mSize, mUnit, mt, defaultSizes }: MakeStylesProps) =>
-          mt != null
-            ? toCssValue(mt, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
-            : resetValue,
-        marginRight: ({ mSize, mUnit, mr, defaultSizes }: MakeStylesProps) =>
-          mr != null
-            ? toCssValue(mr, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
-            : resetValue,
-        marginBottom: ({ mSize, mUnit, mb, defaultSizes }: MakeStylesProps) =>
-          mb != null
-            ? toCssValue(mb, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
-            : resetValue,
-        marginLeft: ({ mSize, mUnit, ml, defaultSizes }: MakeStylesProps) =>
-          ml != null
-            ? toCssValue(ml, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
-            : resetValue,
-
-        paddingTop: ({ pSize, pUnit, pt, defaultSizes }: MakeStylesProps) =>
-          pt != null
-            ? toCssValue(pt, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
-            : resetValue,
-        paddingRight: ({ pSize, pUnit, pr, defaultSizes }: MakeStylesProps) =>
-          pr != null
-            ? toCssValue(pr, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
-            : resetValue,
-        paddingBottom: ({ pSize, pUnit, pb, defaultSizes }: MakeStylesProps) =>
-          pb != null
-            ? toCssValue(pb, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
-            : resetValue,
-        paddingLeft: ({ pSize, pUnit, pl, defaultSizes }: MakeStylesProps) =>
-          pl != null
-            ? toCssValue(pl, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
-            : resetValue,
-        // },
-      },
-    };
+      paddingTop: ({ pSize, pUnit, pt, defaultSizes }: MakeStylesProps) =>
+        pt != null
+          ? toCssValue(pt, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
+          : resetValue,
+      paddingRight: ({ pSize, pUnit, pr, defaultSizes }: MakeStylesProps) =>
+        pr != null
+          ? toCssValue(pr, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
+          : resetValue,
+      paddingBottom: ({ pSize, pUnit, pb, defaultSizes }: MakeStylesProps) =>
+        pb != null
+          ? toCssValue(pb, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
+          : resetValue,
+      paddingLeft: ({ pSize, pUnit, pl, defaultSizes }: MakeStylesProps) =>
+        pl != null
+          ? toCssValue(pl, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
+          : resetValue,
+      // },
+    },
   },
   { index: 1, name: Flex.name }
 );
