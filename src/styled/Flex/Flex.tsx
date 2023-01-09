@@ -113,7 +113,7 @@ const Flex = styled<FlexComponent>(
     fill,
     hfill = fill,
     vfill = fill,
-    shrinkByContent = true,
+    shrinkByContent = flex,
     shrinkWidth = shrinkByContent,
     shrinkHeight = shrinkByContent,
     unit = defaultUnit,

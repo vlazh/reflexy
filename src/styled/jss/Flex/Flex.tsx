@@ -172,7 +172,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
     fill,
     hfill = fill,
     vfill = fill,
-    shrinkByContent,
+    shrinkByContent = flex,
     shrinkWidth = shrinkByContent,
     shrinkHeight = shrinkByContent,
     unit = defaultUnit,
