@@ -51,14 +51,20 @@ type MakeStylesProps = RequiredKeepUndefined<
   }
 >;
 
-type MakeDefaultStylesProps = Pick<MakeStylesProps, 'flex' | 'shrinkHeight' | 'shrinkWidth'>;
+type MakeDefaultStylesProps = Pick<
+  MakeStylesProps,
+  'flex' | 'inline' | 'shrinkHeight' | 'shrinkWidth'
+>;
 
 const resetValue = null as unknown as undefined;
 
+// Separate styles for correct priority in order to use with theming overrides
 const useDefaultStyles = makeStyles(
   {
     root: {
-      display: ({ flex }: MakeDefaultStylesProps) => (flex == null ? 'flex' : resetValue),
+      display: ({ flex, inline }: MakeDefaultStylesProps) =>
+        // eslint-disable-next-line no-nested-ternary
+        flex == null ? (inline ? 'inline-flex' : 'flex') : resetValue,
       minHeight: ({ shrinkHeight }: MakeDefaultStylesProps) =>
         shrinkHeight == null ? 0 : resetValue,
       minWidth: ({ shrinkWidth }: MakeDefaultStylesProps) => (shrinkWidth == null ? 0 : resetValue),
@@ -252,7 +258,13 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
     defaultSizes,
   });
 
-  const css = useDefaultStyles({ classes: { root: css0.root }, flex, shrinkHeight, shrinkWidth });
+  const css = useDefaultStyles({
+    classes: { root: css0.root },
+    flex,
+    inline,
+    shrinkHeight,
+    shrinkWidth,
+  });
 
   return React.createElement(
     component as React.ElementType<React.PropsWithChildren<Styleable<any, any>>>,
