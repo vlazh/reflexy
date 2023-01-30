@@ -1,3 +1,10 @@
+## <small>3.45.1 (2023-01-30)</small>
+
+* Improve optional types ([900d403](https://github.com/vlazh/reflexy/commit/900d403))
+* Update deps ([62ca1c0](https://github.com/vlazh/reflexy/commit/62ca1c0))
+
+
+
 ## 3.45.0 (2023-01-09)
 
 * Fix flex inline ([f75cb9e](https://github.com/vlazh/reflexy/commit/f75cb9e))
