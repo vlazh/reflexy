@@ -3,7 +3,7 @@ import { viewSizeValueList } from './viewSizeValues';
 
 export interface GetViewSizeQueryMapOptions {
   /** @deprecated @see https://stackoverflow.com/a/39401858 */
-  deviceDimentions?: boolean;
+  deviceDimentions?: boolean | undefined;
 }
 
 export default function getViewSizeQueryMap({

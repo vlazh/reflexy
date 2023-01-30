@@ -29,51 +29,51 @@ export type Column = number | string | boolean;
 
 export interface FlexProps {
   /** Whether sets `display` to `flex` or not. Default `true`. */
-  flex?: boolean;
+  flex?: boolean | undefined;
   /** Sets `display` to `inline-flex`. */
-  inline?: boolean;
+  inline?: boolean | undefined;
   /** Sets `flow-direction` to `row`. */
-  row?: boolean;
+  row?: boolean | undefined;
   /** Sets `flow-direction` to `column`. Takes a precedence over `row`. */
-  column?: boolean;
+  column?: boolean | undefined;
   /** Used with `row` or `col`. Sets `flow-direction` to `column-reverse` or `row-reverse`. */
-  reverse?: boolean;
+  reverse?: boolean | undefined;
   /** Sets `flex-wrap` to corresponding value. Also accepts boolean value: `true` equals to `wrap`, `false` equals to `nowrap`. */
-  wrap?: FlexWrap | boolean;
+  wrap?: FlexWrap | boolean | undefined;
   /** Sets `align-content` to corresponding value. */
-  alignContent?: AlignContent;
+  alignContent?: AlignContent | undefined;
   /** Sets `align-items` to corresponding value. */
-  alignItems?: AlignItems;
+  alignItems?: AlignItems | undefined;
   /** Sets `align-self` to corresponding value. */
-  alignSelf?: AlignSelf;
+  alignSelf?: AlignSelf | undefined;
   /** Sets `justify-content` to corresponding value. */
-  justifyContent?: JustifyContent;
+  justifyContent?: JustifyContent | undefined;
   /** Sets `justifyContent` and `alignItems` to `center`. `justifyContent` and `alignItems` take a precedence over `center`. */
-  center?: boolean;
+  center?: boolean | undefined;
   /** Sets `flex-basis` to corresponding value. */
-  basis?: FlexBasis;
+  basis?: FlexBasis | undefined;
   /** Sets `flex-grow` to corresponding value. Also accepts boolean value: `true` equals to `1`, `false` equals to `0`. */
-  grow?: Column;
+  grow?: Column | undefined;
   /** Sets `flex-shrink` to corresponding value. Also accepts boolean value: `true` equals to `1`, `false` equals to `0`. */
-  shrink?: Column;
+  shrink?: Column | undefined;
   /** Sets `order` to corresponding value. */
-  order?: number;
+  order?: number | undefined;
   /** Stretch by horizontal or sets width in percentage (numbers in range 0.0 to 1.0 inclusive). */
-  hfill?: boolean | number;
+  hfill?: boolean | number | undefined;
   /** Stretch by vertical or sets height in percentage (numbers in range 0.0 to 1.0 inclusive). */
-  vfill?: boolean | number;
+  vfill?: boolean | number | undefined;
   /** Stretch by vertical and horizontal. */
-  fill?: boolean;
+  fill?: boolean | undefined;
   /**
    * Sets `min-width: 0` and `min-height: 0`.
    * By default, a flex item cannot be smaller than the size of its content.
    * The initial setting on flex items is `min-width: auto` and `min-height: auto`.
    * One way to enable flex items to shrink past their content is to set a flex item to `min-width: 0` or `min-height: 0`. */
-  shrinkByContent?: boolean;
+  shrinkByContent?: boolean | undefined;
   /** Sets `min-width` to `0`. Takes a precedence over `shrinkByContent`. */
-  shrinkWidth?: boolean;
+  shrinkWidth?: boolean | undefined;
   /** Sets `min-height` to `0`. Takes a precedence over `shrinkByContent`. */
-  shrinkHeight?: boolean;
+  shrinkHeight?: boolean | undefined;
 }
 
 export type SpaceSize = 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
@@ -98,73 +98,79 @@ export type SpaceUnit =
 
 export interface SpaceProps {
   /** Measure unit of space */
-  unit?: SpaceUnit;
+  unit?: SpaceUnit | undefined;
   /** Size of margin */
-  mSize?: number | SpaceSize | SSpaceSize;
+  mSize?: number | SpaceSize | SSpaceSize | undefined;
   /** Measure unit of margin */
-  mUnit?: SpaceUnit;
+  mUnit?: SpaceUnit | undefined;
   /** margin */
-  m?: boolean | number | SpaceSize | SSpaceSize;
+  m?: boolean | number | SpaceSize | SSpaceSize | undefined;
   /** margin-top */
-  mt?: boolean | number | SpaceSize | SSpaceSize;
+  mt?: boolean | number | SpaceSize | SSpaceSize | undefined;
   /** margin-right */
-  mr?: boolean | number | SpaceSize | SSpaceSize;
+  mr?: boolean | number | SpaceSize | SSpaceSize | undefined;
   /** margin-bottom */
-  mb?: boolean | number | SpaceSize | SSpaceSize;
+  mb?: boolean | number | SpaceSize | SSpaceSize | undefined;
   /** margin-left */
-  ml?: boolean | number | SpaceSize | SSpaceSize;
+  ml?: boolean | number | SpaceSize | SSpaceSize | undefined;
   /** margin by x axis: margin-left & margin-right */
-  mx?: boolean | number | SpaceSize | SSpaceSize;
+  mx?: boolean | number | SpaceSize | SSpaceSize | undefined;
   /** margin by y axis: margin-top & margin-bottom */
-  my?: boolean | number | SpaceSize | SSpaceSize;
+  my?: boolean | number | SpaceSize | SSpaceSize | undefined;
   /** Size of padding */
-  pSize?: number | SpaceSize | SSpaceSize;
+  pSize?: number | SpaceSize | SSpaceSize | undefined;
   /** Measure unit of padding */
-  pUnit?: SpaceUnit;
+  pUnit?: SpaceUnit | undefined;
   /** padding */
-  p?: boolean | number | SpaceSize | SSpaceSize;
+  p?: boolean | number | SpaceSize | SSpaceSize | undefined;
   /** padding-top */
-  pt?: boolean | number | SpaceSize | SSpaceSize;
+  pt?: boolean | number | SpaceSize | SSpaceSize | undefined;
   /** padding-right */
-  pr?: boolean | number | SpaceSize | SSpaceSize;
+  pr?: boolean | number | SpaceSize | SSpaceSize | undefined;
   /** padding-bottom */
-  pb?: boolean | number | SpaceSize | SSpaceSize;
+  pb?: boolean | number | SpaceSize | SSpaceSize | undefined;
   /** padding-left */
-  pl?: boolean | number | SpaceSize | SSpaceSize;
+  pl?: boolean | number | SpaceSize | SSpaceSize | undefined;
   /** padding by x axis: padding-left & padding-right */
-  px?: boolean | number | SpaceSize | SSpaceSize;
+  px?: boolean | number | SpaceSize | SSpaceSize | undefined;
   /** padding by y axis: padding-top & padding-bottom */
-  py?: boolean | number | SpaceSize | SSpaceSize;
+  py?: boolean | number | SpaceSize | SSpaceSize | undefined;
 }
 
 export type Overflow = Globals | 'auto' | 'hidden' | 'scroll' | 'visible';
 
 export interface OverflowProps {
-  overflow?: Overflow;
-  overflowX?: OverflowProps['overflow'];
-  overflowY?: OverflowProps['overflow'];
+  overflow?: Overflow | undefined;
+  overflowX?: OverflowProps['overflow'] | undefined;
+  overflowY?: OverflowProps['overflow'] | undefined;
   /** Shortcut for overflow */
-  scrollable?: Extract<Overflow, 'auto' | 'scroll'> | boolean;
-  scrollableX?: OverflowProps['scrollable'];
-  scrollableY?: OverflowProps['scrollable'];
+  scrollable?: Extract<Overflow, 'auto' | 'scroll'> | boolean | undefined;
+  scrollableX?: OverflowProps['scrollable'] | undefined;
+  scrollableY?: OverflowProps['scrollable'] | undefined;
 }
 
 export type FlexOnlyProps = FlexProps & SpaceProps & OverflowProps;
 
 export interface Styleable<C = string, S = React.CSSProperties> {
-  className?: C;
-  style?: S;
+  className?: C | undefined;
+  style?: S | undefined;
 }
 
 export type ClassNameTransformer<T, R = T> = (
   calcClassName: string,
-  userClassName?: T
+  userClassName?: T | undefined
 ) => NonNullable<R>;
 
-export type StyleTransformer<T, R = T> = (calcStyle?: React.CSSProperties, userStyle?: T) => R;
+export type StyleTransformer<T, R = T> = (
+  calcStyle?: React.CSSProperties | undefined,
+  userStyle?: T | undefined
+) => R;
 
 interface StylesOptions {
-  inferStyleProps?: boolean | { className?: boolean; style?: boolean };
+  inferStyleProps?:
+    | boolean
+    | { className?: boolean | undefined; style?: boolean | undefined }
+    | undefined;
 }
 
 export type StylesProps<
@@ -209,23 +215,25 @@ export type GetStylesTransformers<
     ]
       ? {} // eslint-disable-line @typescript-eslint/ban-types
       : {
-          classNameTransformer?: ClassNameTransformer<
-            StyledProps['className'],
-            OriginProps['className']
-          >;
+          classNameTransformer?:
+            | ClassNameTransformer<StyledProps['className'], OriginProps['className']>
+            | undefined;
         }) &
       ([React.CSSProperties, React.CSSProperties] extends [
         StyledProps['style'],
         OriginProps['style']
       ]
         ? {} // eslint-disable-line @typescript-eslint/ban-types
-        : { styleTransformer?: StyleTransformer<StyledProps['style'], OriginProps['style']> })
+        : {
+            styleTransformer?:
+              | StyleTransformer<StyledProps['style'], OriginProps['style']>
+              | undefined;
+          })
   : {
-      classNameTransformer?: ClassNameTransformer<
-        StyledProps['className'],
-        OriginProps['className']
-      >;
-      styleTransformer?: StyleTransformer<StyledProps['style'], OriginProps['style']>;
+      classNameTransformer?:
+        | ClassNameTransformer<StyledProps['className'], OriginProps['className']>
+        | undefined;
+      styleTransformer?: StyleTransformer<StyledProps['style'], OriginProps['style']> | undefined;
     };
 
 type PropsWithStylesTransformers<
@@ -235,7 +243,7 @@ type PropsWithStylesTransformers<
 > = Styled & GetStylesTransformers<Styled, P, true>;
 
 interface PropsOptions extends StylesOptions {
-  omitProps?: boolean;
+  omitProps?: boolean | undefined;
 }
 
 /** All props or `componentRef`, `style`, `className`. */
@@ -276,7 +284,7 @@ export type FlexAllProps<
     /**
      * Sets custom react component as a container.
      * Component must accept className and style through props. */
-    component?: C;
+    component?: C | undefined;
   };
 
 // Since TS 3.7.3
@@ -453,7 +461,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
   );
 
   const { componentRef, children, ...customComponentProps } = rest as React.PropsWithChildren<
-    typeof rest & { componentRef?: React.Ref<any> }
+    typeof rest & { componentRef?: React.Ref<any> | undefined }
   >;
 
   return React.createElement(

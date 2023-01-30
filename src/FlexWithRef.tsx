@@ -4,13 +4,13 @@ import { defineSharedDefaults } from './defineSharedDefaults';
 import type { AnyObject } from './types';
 
 type PropsWithRef<P extends AnyObject> = P &
-  (P extends { componentRef?: any } ? { ref?: P['componentRef'] } : {});
+  (P extends { componentRef?: any | undefined } ? { ref?: P['componentRef'] | undefined } : {});
 
 type GetProps<P extends AnyObject> = P extends { componentRef?: any }
   ? Omit<P, 'component'>
-  : P extends { ref?: any }
+  : P extends { ref?: any | undefined }
   ? P
-  : P & { ref?: never };
+  : P & { ref?: never | undefined };
 
 type FlexWithRefProps<C extends React.ElementType> = { component: C } & GetProps<FlexAllProps<C>>;
 

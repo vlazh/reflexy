@@ -4,7 +4,7 @@ import useMediaQuery from '../useMediaQuery';
 import type ViewSize from '../ViewSize';
 import type { BreakpointsMergeType, ResponsiveProps } from '../Responsive';
 
-type Breakpoints = { [P in ViewSize]?: boolean };
+type Breakpoints = { [P in ViewSize]?: boolean | undefined };
 
 export type ResponsiveRenderProps = React.PropsWithChildren<
   Breakpoints & Pick<ResponsiveProps<{}>, 'merge'>

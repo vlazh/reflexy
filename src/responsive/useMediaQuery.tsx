@@ -4,7 +4,7 @@ import MediaQuery, { MediaQueryEventHandler, MediaQueryInitOptions } from './Med
 import ViewSize, { ViewSizeNumber } from './ViewSize';
 
 export interface UseMediaQueryProps extends MediaQueryInitOptions {
-  localInstance?: boolean;
+  localInstance?: boolean | undefined;
 }
 
 export type UseMediaQueryResult = [ViewSize, ViewSizeNumber];

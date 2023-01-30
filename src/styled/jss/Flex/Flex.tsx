@@ -18,7 +18,7 @@ import useFlexDefaults from '../../useFlexDefaults';
 import { getFillValue, getOverflowValue, getSpaceSizeMultiplier } from '../../Flex/utils';
 import './types';
 
-type RequiredSome<T, K extends keyof T> = T & { [P in K]-?: T[P] };
+type RequiredSome<T, K extends keyof T> = T & { [P in K]-?: Exclude<T[P], undefined> };
 
 type RequiredKeepUndefined<T> = { [K in keyof T]-?: [T[K]] } extends infer U
   ? U extends Record<keyof U, [any]>
@@ -46,9 +46,8 @@ type MakeStylesProps = RequiredKeepUndefined<
       | 'style'
     >,
     'mUnit' | 'pUnit' | 'mSize' | 'pSize'
-  > & {
-    readonly defaultSizes: SharedDefaults['defaultSizes'];
-  }
+  > &
+    Pick<SharedDefaults, 'defaultSizes'>
 >;
 
 type MakeDefaultStylesProps = Pick<
@@ -217,7 +216,9 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
     children,
 
     ...componentProps
-  } = props as React.PropsWithChildren<typeof props & { componentRef?: React.Ref<any> }>;
+  } = props as React.PropsWithChildren<
+    typeof props & { componentRef?: React.Ref<any> | undefined }
+  >;
 
   const css0 = useStyles({
     flex,

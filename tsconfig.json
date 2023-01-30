@@ -4,6 +4,7 @@
     "isolatedModules": false,
     "baseUrl": "./src",
     "outDir": "./dist",
+    "exactOptionalPropertyTypes": true,
     "declaration": true,
     "sourceMap": false,
     "incremental": false,

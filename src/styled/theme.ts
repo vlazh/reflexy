@@ -1,5 +1,5 @@
 import type { SharedDefaults } from '../sharedDefaults';
 
 export interface Theme {
-  reflexy?: SharedDefaults;
+  reflexy?: SharedDefaults | undefined;
 }

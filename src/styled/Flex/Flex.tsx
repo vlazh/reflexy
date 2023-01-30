@@ -78,7 +78,9 @@ const Flex = styled<FlexComponent>(
       children,
 
       ...componentProps
-    } = props as React.PropsWithChildren<typeof props & { componentRef?: React.Ref<any> }>;
+    } = props as React.PropsWithChildren<
+      typeof props & { componentRef?: React.Ref<any> | undefined }
+    >;
 
     return React.createElement(
       component,

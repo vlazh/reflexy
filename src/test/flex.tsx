@@ -134,15 +134,17 @@ export interface Classes {
 }
 
 interface MYYProps {
-  aa?: string;
-  myy?: boolean;
-  gg?: boolean;
-  className?: string | Classes;
+  aa?: string | undefined;
+  myy?: boolean | undefined;
+  gg?: boolean | undefined;
+  className?: string | Classes | undefined;
   // className?: Classes;
   // className?: string;
   // className?: string | number | undefined;
   // style?: number;
-  style?: { content?: { [P: string]: any }; overlay?: { [P: string]: any } };
+  style?:
+    | { content?: { [P: string]: any } | undefined; overlay?: { [P: string]: any } | undefined }
+    | undefined;
   // style?: { [P: string]: any };
 }
 

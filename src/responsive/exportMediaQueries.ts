@@ -2,7 +2,7 @@ import getViewSizeQueryMap, { GetViewSizeQueryMapOptions } from './getViewSizeQu
 
 /** Returns custom media queries like object `{ ['--xxs']: '(max-width: 479px)', ... }` */
 export default function exportMediaQueries(
-  options?: GetViewSizeQueryMapOptions
+  options?: GetViewSizeQueryMapOptions | undefined
 ): Record<string, string> {
   return Object.entries(getViewSizeQueryMap(options)).reduce(
     (acc, [key, value]) => ({ ...acc, [`--${key}`]: value }),

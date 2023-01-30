@@ -15,9 +15,9 @@ export interface ResponsiveProps<Props extends AnyObject> {
    * `true` treats as `down`.
    * `false` - no merge, use only exact breakpoint.
    */
-  merge?: boolean | BreakpointsMergeType;
+  merge?: boolean | BreakpointsMergeType | undefined;
   /** Props per breakpoint */
-  breakpoints: { [P in ViewSize]?: Partial<Props> };
+  breakpoints: { [P in ViewSize]?: Partial<Props> | undefined };
 }
 
 type Combine<P extends AnyObject> = P & ResponsiveProps<P>;

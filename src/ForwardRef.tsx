@@ -5,14 +5,14 @@ import type { AnyObject } from './types';
 //   ref?: P extends { componentRef?: any } ? P['componentRef'] : unknown;
 // };
 type PropsWithRef<P extends AnyObject> = P &
-  (P extends { componentRef?: any } ? { ref?: P['componentRef'] } : never);
+  (P extends { componentRef?: any | undefined } ? { ref?: P['componentRef'] | undefined } : never);
 
 // type ForwardedComponentType<P extends { componentRef?: React.Ref<any> }> =
 //   | ((props: P, context?: any) => JSX.Element | null)
 //   | (new (props: P, context?: any) => React.Component<P, any>);
 type ForwardedComponentType = React.ComponentType<any>;
 
-type GetProps<P extends AnyObject> = P extends { componentRef?: any }
+type GetProps<P extends AnyObject> = P extends { componentRef?: any | undefined }
   ? Omit<P, 'component'>
   : // : { error: 'Component should provide `componentRef` prop' };
     never;
@@ -24,7 +24,9 @@ export type ForwardRefProps<C extends ForwardedComponentType> = { component: C }
 const ForwardRef = React.forwardRef(
   (props: ForwardRefProps<ForwardedComponentType>, ref: React.Ref<any>) => {
     const { component, componentRef, children, ...componentProps } =
-      props as React.PropsWithChildren<typeof props & { componentRef?: React.Ref<any> }>;
+      props as React.PropsWithChildren<
+        typeof props & { componentRef?: React.Ref<any> | undefined }
+      >;
 
     const refCallback = useMemo<React.Ref<unknown> | undefined>(
       () =>

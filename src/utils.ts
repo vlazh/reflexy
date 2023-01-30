@@ -1,14 +1,17 @@
 import type React from 'react';
 import type { SpaceSize, SpaceUnit, SSpaceSize } from './Flex';
 
-export function defaultClassNameTransformer(calcClassName: string, userClassName?: string): string {
+export function defaultClassNameTransformer(
+  calcClassName: string,
+  userClassName?: string | undefined
+): string {
   if (calcClassName && userClassName) return `${calcClassName} ${userClassName}`;
   return userClassName || calcClassName;
 }
 
 export function defaultStyleTransformer(
-  calcStyle?: React.CSSProperties,
-  userStyle?: React.CSSProperties
+  calcStyle?: React.CSSProperties | undefined,
+  userStyle?: React.CSSProperties | undefined
 ): React.CSSProperties | undefined {
   if (userStyle && calcStyle) return { ...calcStyle, ...userStyle };
   return userStyle || calcStyle;

@@ -2,8 +2,8 @@ import type React from 'react';
 
 export type AnyObject = Record<string, any>;
 
-type WithComponentRef<P extends AnyObject> = P extends { ref?: any }
-  ? { componentRef?: P['ref'] }
+type WithComponentRef<P extends AnyObject> = P extends { ref?: any | undefined }
+  ? { componentRef?: P['ref'] | undefined }
   : Record<never, never>;
 
 type PropsWithComponentRef<P extends AnyObject> = P & WithComponentRef<P>;
@@ -22,7 +22,7 @@ export type TweakableComponentProps<C extends React.ElementType = any> = {
   /**
    * Sets custom react component as a container.
    * Component must accept className and style through props. */
-  component?: C;
+  component?: C | undefined;
 } & GetComponentProps<C>;
 
 export type GetComponentRef<C extends React.ElementType = any> = undefined extends C
