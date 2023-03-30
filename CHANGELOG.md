@@ -1,3 +1,10 @@
+## 3.46.0 (2023-03-30)
+
+* Improve TweakableElementWrapper ([446d198](https://github.com/vlazh/reflexy/commit/446d198))
+* Update, fix and refactor ([84a6f47](https://github.com/vlazh/reflexy/commit/84a6f47))
+
+
+
 ## <small>3.45.1 (2023-01-30)</small>
 
 * Improve optional types ([900d403](https://github.com/vlazh/reflexy/commit/900d403))
