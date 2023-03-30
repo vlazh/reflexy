@@ -1,11 +1,11 @@
 /* eslint-disable */
 import React from 'react';
 import Flex, {
-  FlexAllProps,
-  FlexComponentProps,
-  FlexSimpleProps,
-  DefaultComponentType,
-  GetStylesTransformers,
+  type FlexAllProps,
+  type FlexComponentProps,
+  type FlexSimpleProps,
+  type DefaultComponentType,
+  type GetStylesTransformers,
 } from '../Flex';
 import FlexWithRef from '../FlexWithRef';
 import ResponsiveFlex from '../responsive/ResponsiveFlex';
@@ -18,19 +18,25 @@ export const S = <C extends React.ElementType = DefaultComponentType>({
   mSize,
   pSize,
   ...rest
-}: FlexAllProps<C>) => <Flex mSize="s" pSize="s" {...rest} />;
+}: FlexAllProps<C>) => (
+  <Flex mSize="s" pSize="s" {...(rest as FlexAllProps<DefaultComponentType>)} />
+);
 
 export const M = <C extends React.ElementType = DefaultComponentType>({
   mSize,
   pSize,
   ...rest
-}: FlexAllProps<C>) => <Flex mSize="m" pSize="m" {...rest} />;
+}: FlexAllProps<C>) => (
+  <Flex mSize="m" pSize="m" {...(rest as FlexAllProps<DefaultComponentType>)} />
+);
 
 export const L = <C extends React.ElementType = DefaultComponentType>({
   mSize,
   pSize,
   ...rest
-}: FlexAllProps<C>) => <Flex mSize="l" pSize="l" {...rest} />;
+}: FlexAllProps<C>) => (
+  <Flex mSize="l" pSize="l" {...(rest as FlexAllProps<DefaultComponentType>)} />
+);
 
 // function onAbort(event: React.SyntheticEvent<SVGElement>) {
 function onAbort(event: React.SyntheticEvent<HTMLDivElement>) {

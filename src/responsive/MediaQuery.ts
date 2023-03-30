@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import MediaQueryListener, {
-  MediaQueryListenerOptions,
-  MediaQueryEventHandler,
+  type MediaQueryListenerOptions,
+  type MediaQueryEventHandler,
 } from './MediaQueryListener';
 import type ViewSize from './ViewSize';
 import type { ViewSizeValue } from './viewSizeValues';

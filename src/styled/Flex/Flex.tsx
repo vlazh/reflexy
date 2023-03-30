@@ -5,8 +5,9 @@ import type { DefaultComponentType, FlexAllProps } from '../../Flex/Flex';
 import { toCssValue } from '../../Flex/utils';
 import { buildRefProps } from '../../buildRefProps';
 import { defineSharedDefaults } from '../../defineSharedDefaults';
+import { getSpaceSizeMultiplier } from '../../utils';
 import useFlexDefaults from '../useFlexDefaults';
-import { getFillValue, getOverflowValue, getSpaceSizeMultiplier } from './utils';
+import { getFillValue, getOverflowValue } from './utils';
 
 type FlexComponent = <C extends React.ElementType = DefaultComponentType>(
   props: FlexAllProps<C>

@@ -1,7 +1,6 @@
 {
   "extends": "@jstoolkit/configs/ts/common.tsconfig.json",
   "compilerOptions": {
-    "isolatedModules": false,
     "baseUrl": "./src",
     "outDir": "./dist",
     "exactOptionalPropertyTypes": true,

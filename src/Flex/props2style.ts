@@ -1,3 +1,5 @@
+import type React from 'react';
+import type { AnyObject } from '../types';
 import type { SpaceProps, FlexProps, SpaceSize } from './Flex';
 import { toCssValue } from './utils';
 
@@ -56,5 +58,5 @@ export default function props2style(
     if (v == null) return acc;
     acc[k] = v;
     return acc;
-  }, {});
+  }, {} as AnyObject);
 }

@@ -3,7 +3,11 @@ import sharedDefaults from '../sharedDefaults';
 import type { AnyObject, GetComponentProps } from '../types';
 import { buildRefProps } from '../buildRefProps';
 import { defineSharedDefaults } from '../defineSharedDefaults';
-import { defaultClassNameTransformer, defaultStyleTransformer } from '../utils';
+import {
+  defaultClassNameTransformer,
+  defaultStyleTransformer,
+  getSpaceSizeMultiplier,
+} from '../utils';
 import props2className from './props2className';
 import props2style from './props2style';
 
@@ -408,8 +412,10 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
     ]
   );
 
-  const marginSize = typeof mSize === 'number' ? mSize : sharedDefaults.defaultSizes[mSize];
-  const paddingSize = typeof pSize === 'number' ? pSize : sharedDefaults.defaultSizes[pSize];
+  // const marginSize = typeof mSize === 'number' ? mSize : sharedDefaults.defaultSizes[mSize];
+  // const paddingSize = typeof pSize === 'number' ? pSize : sharedDefaults.defaultSizes[pSize];
+  const marginSize = getSpaceSizeMultiplier(mSize, sharedDefaults.defaultSizes);
+  const paddingSize = getSpaceSizeMultiplier(pSize, sharedDefaults.defaultSizes);
 
   const calcStyles = useMemo(
     () =>

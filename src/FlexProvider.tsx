@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import ThemeProvider from '@mui/styles/ThemeProvider';
-import sharedDefaults, { SharedDefaults } from './sharedDefaults';
+import sharedDefaults, { type SharedDefaults } from './sharedDefaults';
 import type { Theme } from './styled';
 
 export type FlexProviderProps = Partial<SharedDefaults>;

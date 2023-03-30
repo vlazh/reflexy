@@ -9,13 +9,17 @@ import type {
   StyleTransformer,
   FlexSimpleProps,
 } from '../../../Flex/Flex';
-import { defaultClassNameTransformer, defaultStyleTransformer } from '../../../utils';
+import {
+  defaultClassNameTransformer,
+  defaultStyleTransformer,
+  getSpaceSizeMultiplier,
+} from '../../../utils';
 import { toCssValue } from '../../../Flex/utils';
 import { buildRefProps } from '../../../buildRefProps';
 import { defineSharedDefaults } from '../../../defineSharedDefaults';
 import type { SharedDefaults } from '../../../sharedDefaults';
 import useFlexDefaults from '../../useFlexDefaults';
-import { getFillValue, getOverflowValue, getSpaceSizeMultiplier } from '../../Flex/utils';
+import { getFillValue, getOverflowValue } from '../../Flex/utils';
 import './types';
 
 type RequiredSome<T, K extends keyof T> = T & { [P in K]-?: Exclude<T[P], undefined> };

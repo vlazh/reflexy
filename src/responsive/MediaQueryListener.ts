@@ -3,8 +3,8 @@
 /* http://viewportsizes.com */
 
 import type ViewSize from './ViewSize';
-import { viewSizeValues, ViewSizeValue } from './viewSizeValues';
-import getViewSizeQueryMap, { GetViewSizeQueryMapOptions } from './getViewSizeQueryMap';
+import { viewSizeValues, type ViewSizeValue } from './viewSizeValues';
+import getViewSizeQueryMap, { type GetViewSizeQueryMapOptions } from './getViewSizeQueryMap';
 
 export interface MediaQueryEvent extends Pick<MediaQueryListEvent, 'matches'> {
   readonly viewSize: ViewSize;

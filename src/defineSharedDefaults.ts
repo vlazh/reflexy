@@ -1,4 +1,4 @@
-import sharedDefaults, { SharedDefaults } from './sharedDefaults';
+import sharedDefaults, { type SharedDefaults } from './sharedDefaults';
 import type { SpaceUnit } from './Flex';
 
 export function defineSharedDefaults<T>(target: T): T & SharedDefaults {

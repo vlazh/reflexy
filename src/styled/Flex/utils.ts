@@ -1,5 +1,4 @@
-import type { FlexProps, OverflowProps, SpaceProps, SpaceSize } from '../../Flex';
-import { getAbsSpaceSize } from '../../utils';
+import type { FlexProps, OverflowProps } from '../../Flex';
 
 export const getFillValue = (propValue: FlexProps['vfill']): string | undefined => {
   return typeof propValue === 'number'
@@ -20,11 +19,4 @@ export const getOverflowValue = (
   scrollableValue: OverflowProps['scrollable']
 ): OverflowProps['overflow'] => {
   return overflowValue ?? getScrollableValue(scrollableValue);
-};
-
-export const getSpaceSizeMultiplier = (
-  size: NonNullable<SpaceProps['mSize']>,
-  sizeMultipliers: Record<SpaceSize, number>
-): number => {
-  return typeof size === 'number' ? size : sizeMultipliers[getAbsSpaceSize(size)];
 };

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import Flex, { FlexAllProps, DefaultComponentType } from './Flex';
+import Flex, { type FlexAllProps, type DefaultComponentType } from './Flex';
 import { defineSharedDefaults } from './defineSharedDefaults';
 import type { AnyObject } from './types';
 

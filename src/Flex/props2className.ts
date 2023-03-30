@@ -28,9 +28,10 @@ export default function props2className(
   const row = !column && !!props.row;
   const reverse = props.reverse ? '-reverse' : '';
   const growNum = props.grow != null && +props.grow;
-  const grow = growNum >= 0 && growNum <= 24 ? String(growNum) : undefined;
+  const grow = growNum !== false && growNum >= 0 && growNum <= 24 ? String(growNum) : undefined;
   const shrinkNum = props.shrink != null && +props.shrink;
-  const shrink = shrinkNum >= 0 && shrinkNum <= 24 ? String(shrinkNum) : undefined;
+  const shrink =
+    shrinkNum !== false && shrinkNum >= 0 && shrinkNum <= 24 ? String(shrinkNum) : undefined;
   const wrap =
     typeof props.wrap === 'boolean'
       ? (props.wrap === false && 'nowrap') || (props.wrap === true && 'wrap')

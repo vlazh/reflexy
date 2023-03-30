@@ -1,5 +1,6 @@
 /* eslint-disable dot-notation */
 import React from 'react';
+import type { AnyObject } from './types';
 
 const REACT_FORWARD_REF_TYPE = Symbol.for('react.forward_ref');
 
@@ -10,7 +11,7 @@ export function isRefSupported(
   if (
     typeof component === 'string' ||
     (typeof component === 'function' && component.prototype instanceof React.Component) ||
-    component['$$typeof'] === REACT_FORWARD_REF_TYPE
+    (component as AnyObject)['$$typeof'] === REACT_FORWARD_REF_TYPE
   ) {
     return true;
   }
