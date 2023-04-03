@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "verbatimModuleSyntax": false,
+    "rootDir": "src",
+    "composite": true,
+    "tsBuildInfoFile": "dist/plugins.tsbuildinfo"
+  },
+  "include": ["src/**/*WebpackPlugin.ts"],
+  "exclude": []
+}

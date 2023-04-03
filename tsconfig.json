@@ -6,8 +6,10 @@
     "exactOptionalPropertyTypes": true,
     "declaration": true,
     "sourceMap": false,
-    "incremental": false,
+    "incremental": true,
     "diagnostics": true
   },
-  "include": ["./src"]
+  "include": ["./src"],
+  "exclude": ["./src/**/*WebpackPlugin.ts"],
+  "references": [{ "path": "./tsconfig.plugins.json" }]
 }

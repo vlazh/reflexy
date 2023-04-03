@@ -24,7 +24,7 @@
     "clean": "rimraf dist/*",
     "copy:configs": "copyfiles package.json README.md LICENSE CHANGELOG.md ./dist/",
     "copy:css": "copyfiles ./src/**/*.css --up 1 ./dist/",
-    "build-ts": "tsc --project tsconfig.json",
+    "build-ts": "tsc --build tsconfig.json",
     "build": "npm run clean && npm run build-ts && npm run copy:css",
     "patch-publish": "npm run build && npm version patch --no-workspaces-update -m 'v%s' && npm run copy:configs && cd ./dist && npm publish && git push --follow-tags",
     "minor-publish": "npm run build && npm version minor --no-workspaces-update -m 'v%s' && npm run copy:configs && cd ./dist && npm publish && git push --follow-tags",
