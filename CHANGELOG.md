@@ -1,3 +1,9 @@
+## <small>3.46.2 (2023-04-03)</small>
+
+* Update npmignore ([781ed25](https://github.com/vlazh/reflexy/commit/781ed25))
+
+
+
 ## <small>3.46.1 (2023-04-03)</small>
 
 * Fix buid webpack plugins ([31c78f6](https://github.com/vlazh/reflexy/commit/31c78f6))
