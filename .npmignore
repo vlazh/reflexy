@@ -1,5 +1,4 @@
-/js/
-/test/
+test/
 *.tsbuildinfo
 !package.json
 !README.md
