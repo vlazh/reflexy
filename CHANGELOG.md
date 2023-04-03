@@ -1,3 +1,10 @@
+## <small>3.46.1 (2023-04-03)</small>
+
+* Fix buid webpack plugins ([31c78f6](https://github.com/vlazh/reflexy/commit/31c78f6))
+* Update deps ([be44a9d](https://github.com/vlazh/reflexy/commit/be44a9d))
+
+
+
 ## 3.46.0 (2023-03-30)
 
 * Improve TweakableElementWrapper ([446d198](https://github.com/vlazh/reflexy/commit/446d198))
