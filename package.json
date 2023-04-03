@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "clean": "rimraf dist/*",
-    "copy:configs": "copyfiles package.json README.md LICENSE CHANGELOG.md ./dist/",
+    "copy:configs": "copyfiles package.json README.md LICENSE CHANGELOG.md .npmignore ./dist/",
     "copy:css": "copyfiles ./src/**/*.css --up 1 ./dist/",
     "build-ts": "tsc --build tsconfig.json",
     "build": "npm run clean && npm run build-ts && npm run copy:css",

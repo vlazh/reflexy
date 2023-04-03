@@ -1,9 +1,7 @@
-/*
-/*/
-!/dist/
-/dist/js/
-/dist/test/
-/dist/*.tsbuildinfo
+/js/
+/test/
+*.tsbuildinfo
 !package.json
 !README.md
 !LICENSE
+!CHANGELOG.md
