@@ -1,3 +1,9 @@
+## <small>3.46.3 (2023-04-03)</small>
+
+* Update npmignore ([41a7fd2](https://github.com/vlazh/reflexy/commit/41a7fd2))
+
+
+
 ## <small>3.46.2 (2023-04-03)</small>
 
 * Update npmignore ([781ed25](https://github.com/vlazh/reflexy/commit/781ed25))
