@@ -1,3 +1,11 @@
+## <small>3.46.4 (2023-04-05)</small>
+
+* Fix cloned props in TweakableElementWrapper ([1e85f1a](https://github.com/vlazh/reflexy/commit/1e85f1a))
+* Update deps ([ca9b3c3](https://github.com/vlazh/reflexy/commit/ca9b3c3))
+* Update npmignore ([be5185a](https://github.com/vlazh/reflexy/commit/be5185a))
+
+
+
 ## <small>3.46.3 (2023-04-03)</small>
 
 * Update npmignore ([41a7fd2](https://github.com/vlazh/reflexy/commit/41a7fd2))
