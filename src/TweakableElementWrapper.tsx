@@ -19,6 +19,7 @@ export default function TweakableElementWrapper({
   const cmp = React.Children.only(element);
   const nextProps: Styleable = {
     ...(forwardProps && rest),
+    ...cmp.props,
     className: defaultClassNameTransformer(className ?? '', cmp.props.className),
     style: defaultStyleTransformer(style, cmp.props.style),
   };
