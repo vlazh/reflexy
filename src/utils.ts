@@ -17,8 +17,8 @@ export function defaultStyleTransformer(
   return userStyle || calcStyle;
 }
 
-export function getCssValue(size: number, unit: SpaceUnit): string {
-  const value = typeof unit === 'number' ? size * unit : size;
+export function getCssValue(space: number, unit: SpaceUnit): string {
+  const value = typeof unit === 'number' ? space * unit : space;
   const cssUnit = typeof unit === 'number' ? 'px' : unit;
   return `${value}${cssUnit}`;
 }
@@ -35,7 +35,7 @@ export const getSpaceSizeMultiplier = (
   return typeof size === 'number' ? size : sizeMultipliers[getAbsSpaceSize(size)];
 };
 
-export function sizeToCssValue(
+export function spaceToCssValue(
   size: Space,
   sizeMultipliers: Record<SpaceSize, number>,
   unit: SpaceUnit

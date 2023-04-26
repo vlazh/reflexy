@@ -1,4 +1,4 @@
-import { getCssValue, sizeToCssValue } from '../utils';
+import { getCssValue, spaceToCssValue } from '../utils';
 import type { Space, SpaceSize, SpaceUnit } from './Flex';
 
 export function toCssValue(
@@ -9,5 +9,5 @@ export function toCssValue(
 ): string {
   if (size === true) return getCssValue(defaultMultiplier, unit);
   if (size === false) return `0`;
-  return sizeToCssValue(size, sizeMultipliers, unit);
+  return spaceToCssValue(size, sizeMultipliers, unit);
 }
