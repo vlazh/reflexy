@@ -1,5 +1,5 @@
 import type React from 'react';
-import type { SpaceProps, SpaceSize, SpaceUnit, SSpaceSize } from './Flex';
+import type { Space, SpaceProps, SpaceSize, SpaceUnit, SSpaceSize } from './Flex';
 
 export function defaultClassNameTransformer(
   calcClassName: string,
@@ -36,7 +36,7 @@ export const getSpaceSizeMultiplier = (
 };
 
 export function sizeToCssValue(
-  size: number | SpaceSize | SSpaceSize,
+  size: Space,
   sizeMultipliers: Record<SpaceSize, number>,
   unit: SpaceUnit
 ): string {

@@ -82,6 +82,7 @@ export interface FlexProps {
 
 export type SpaceSize = 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
 export type SSpaceSize = `-${SpaceSize}`;
+export type Space = number | SpaceSize | SSpaceSize;
 
 /** `number` treat as number of pixels */
 export type SpaceUnit =
@@ -104,41 +105,41 @@ export interface SpaceProps {
   /** Measure unit of space */
   unit?: SpaceUnit | undefined;
   /** Size of margin */
-  mSize?: number | SpaceSize | SSpaceSize | undefined;
+  mSize?: Space | undefined;
   /** Measure unit of margin */
   mUnit?: SpaceUnit | undefined;
   /** margin */
-  m?: boolean | number | SpaceSize | SSpaceSize | undefined;
+  m?: boolean | Space | undefined;
   /** margin-top */
-  mt?: boolean | number | SpaceSize | SSpaceSize | undefined;
+  mt?: boolean | Space | undefined;
   /** margin-right */
-  mr?: boolean | number | SpaceSize | SSpaceSize | undefined;
+  mr?: boolean | Space | undefined;
   /** margin-bottom */
-  mb?: boolean | number | SpaceSize | SSpaceSize | undefined;
+  mb?: boolean | Space | undefined;
   /** margin-left */
-  ml?: boolean | number | SpaceSize | SSpaceSize | undefined;
+  ml?: boolean | Space | undefined;
   /** margin by x axis: margin-left & margin-right */
-  mx?: boolean | number | SpaceSize | SSpaceSize | undefined;
+  mx?: boolean | Space | undefined;
   /** margin by y axis: margin-top & margin-bottom */
-  my?: boolean | number | SpaceSize | SSpaceSize | undefined;
+  my?: boolean | Space | undefined;
   /** Size of padding */
-  pSize?: number | SpaceSize | SSpaceSize | undefined;
+  pSize?: Space | undefined;
   /** Measure unit of padding */
   pUnit?: SpaceUnit | undefined;
   /** padding */
-  p?: boolean | number | SpaceSize | SSpaceSize | undefined;
+  p?: boolean | Space | undefined;
   /** padding-top */
-  pt?: boolean | number | SpaceSize | SSpaceSize | undefined;
+  pt?: boolean | Space | undefined;
   /** padding-right */
-  pr?: boolean | number | SpaceSize | SSpaceSize | undefined;
+  pr?: boolean | Space | undefined;
   /** padding-bottom */
-  pb?: boolean | number | SpaceSize | SSpaceSize | undefined;
+  pb?: boolean | Space | undefined;
   /** padding-left */
-  pl?: boolean | number | SpaceSize | SSpaceSize | undefined;
+  pl?: boolean | Space | undefined;
   /** padding by x axis: padding-left & padding-right */
-  px?: boolean | number | SpaceSize | SSpaceSize | undefined;
+  px?: boolean | Space | undefined;
   /** padding by y axis: padding-top & padding-bottom */
-  py?: boolean | number | SpaceSize | SSpaceSize | undefined;
+  py?: boolean | Space | undefined;
 }
 
 export type Overflow = Globals | 'auto' | 'hidden' | 'scroll' | 'visible';

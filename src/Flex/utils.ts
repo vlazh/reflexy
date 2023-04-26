@@ -1,8 +1,8 @@
 import { getCssValue, sizeToCssValue } from '../utils';
-import type { SpaceSize, SpaceUnit, SSpaceSize } from './Flex';
+import type { Space, SpaceSize, SpaceUnit } from './Flex';
 
 export function toCssValue(
-  size: boolean | number | SpaceSize | SSpaceSize,
+  size: boolean | Space,
   sizeMultipliers: Record<SpaceSize, number>,
   defaultMultiplier: number,
   unit: SpaceUnit
