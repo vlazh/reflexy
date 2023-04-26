@@ -1,15 +1,15 @@
 {
   "extends": "@jstoolkit/configs/ts/common.tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "./src",
-    "outDir": "./dist",
+    "baseUrl": "src",
+    "outDir": "dist",
     "exactOptionalPropertyTypes": true,
     "declaration": true,
     "sourceMap": false,
     "incremental": true,
     "diagnostics": true
   },
-  "include": ["./src"],
-  "exclude": ["./src/**/*WebpackPlugin.ts"],
+  "include": ["src"],
+  "exclude": ["src/**/*WebpackPlugin.ts"],
   "references": [{ "path": "./tsconfig.plugins.json" }]
 }
