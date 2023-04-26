@@ -1,3 +1,12 @@
+## 3.47.0 (2023-04-26)
+
+* Add useFlexUtils ([559251f](https://github.com/vlazh/reflexy/commit/559251f))
+* Improve types ([e7c4419](https://github.com/vlazh/reflexy/commit/e7c4419))
+* Rename and refactor ([04f7593](https://github.com/vlazh/reflexy/commit/04f7593))
+* Update deps and configs ([f8011e5](https://github.com/vlazh/reflexy/commit/f8011e5))
+
+
+
 ## <small>3.46.4 (2023-04-05)</small>
 
 * Fix cloned props in TweakableElementWrapper ([1e85f1a](https://github.com/vlazh/reflexy/commit/1e85f1a))
