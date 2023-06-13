@@ -1,11 +1,13 @@
 import React, { useMemo } from 'react';
-import type { AnyObject } from './types';
+import type { AnyObject, EmptyObject } from './types';
 
 // type PropsWithRef<P extends AnyObject> = P & {
 //   ref?: P extends { componentRef?: any } ? P['componentRef'] : unknown;
 // };
 type PropsWithRef<P extends AnyObject> = P &
-  (P extends { componentRef?: any | undefined } ? { ref?: P['componentRef'] | undefined } : never);
+  (P extends { componentRef?: any | undefined }
+    ? { ref?: P['componentRef'] | undefined }
+    : EmptyObject);
 
 // type ForwardedComponentType<P extends { componentRef?: React.Ref<any> }> =
 //   | ((props: P, context?: any) => JSX.Element | null)
@@ -15,7 +17,7 @@ type ForwardedComponentType = React.ComponentType<any>;
 type GetProps<P extends AnyObject> = P extends { componentRef?: any | undefined }
   ? Omit<P, 'component'>
   : // : { error: 'Component should provide `componentRef` prop' };
-    never;
+    EmptyObject;
 
 export type ForwardRefProps<C extends ForwardedComponentType> = { component: C } & GetProps<
   React.ComponentPropsWithoutRef<C>

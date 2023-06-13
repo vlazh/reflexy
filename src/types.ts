@@ -2,6 +2,8 @@ import type React from 'react';
 
 export type AnyObject = Record<string, any>;
 
+export type EmptyObject = Record<PropertyKey, never>;
+
 type WithComponentRef<P extends AnyObject> = P extends { ref?: any | undefined }
   ? { componentRef?: P['ref'] | undefined }
   : Record<never, never>;
