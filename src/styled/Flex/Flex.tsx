@@ -174,41 +174,41 @@ const Flex = styled<FlexComponent>(
     overflowY: getOverflowValue(overflowY, scrollableY) ?? resetValue,
 
     // higher specificity
-    '&&': {
-      marginTop:
-        mt != null
-          ? toCssValue(mt, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
-          : resetValue,
-      marginRight:
-        mr != null
-          ? toCssValue(mr, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
-          : resetValue,
-      marginBottom:
-        mb != null
-          ? toCssValue(mb, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
-          : resetValue,
-      marginLeft:
-        ml != null
-          ? toCssValue(ml, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
-          : resetValue,
+    // '&&': {
+    marginTop:
+      mt != null
+        ? toCssValue(mt, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
+        : resetValue,
+    marginRight:
+      mr != null
+        ? toCssValue(mr, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
+        : resetValue,
+    marginBottom:
+      mb != null
+        ? toCssValue(mb, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
+        : resetValue,
+    marginLeft:
+      ml != null
+        ? toCssValue(ml, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
+        : resetValue,
 
-      paddingTop:
-        pt != null
-          ? toCssValue(pt, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
-          : resetValue,
-      paddingRight:
-        pr != null
-          ? toCssValue(pr, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
-          : resetValue,
-      paddingBottom:
-        pb != null
-          ? toCssValue(pb, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
-          : resetValue,
-      paddingLeft:
-        pl != null
-          ? toCssValue(pl, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
-          : resetValue,
-    },
+    paddingTop:
+      pt != null
+        ? toCssValue(pt, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
+        : resetValue,
+    paddingRight:
+      pr != null
+        ? toCssValue(pr, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
+        : resetValue,
+    paddingBottom:
+      pb != null
+        ? toCssValue(pb, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
+        : resetValue,
+    paddingLeft:
+      pl != null
+        ? toCssValue(pl, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
+        : resetValue,
+    // },
   };
 });
 
