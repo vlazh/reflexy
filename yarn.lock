@@ -250,10 +250,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jstoolkit/configs@npm:^3.86.1":
-  version: 3.86.1
-  resolution: "@jstoolkit/configs@npm:3.86.1"
-  checksum: 9c02e72a674915f1ffd3f91cb7bde549a248430eb8aaac9e3cfadb1c8ab516ef82641dd566ca96ab6e3a7452abafed98ff32da37880f371e3528d40d2b205107
+"@jstoolkit/configs@npm:^3.87.0":
+  version: 3.87.0
+  resolution: "@jstoolkit/configs@npm:3.87.0"
+  checksum: 140dd6aa3420cc2d19aab6ef6ef3d870b0e9d41ddb29eeddfa4dd7d71c9f77e91b3bba05d1981f1dde2ac5de05de34e545c3c9e348619b75a07c5dbb6dac1f16
   languageName: node
   linkType: hard
 
@@ -4153,7 +4153,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "reflexy@workspace:."
   dependencies:
-    "@jstoolkit/configs": ^3.86.1
+    "@jstoolkit/configs": ^3.87.0
     "@mui/styles": ^5.13.2
     "@mui/system": ^5.13.6
     "@types/css-modules": ^1.0.2
@@ -4177,8 +4177,8 @@ __metadata:
     stylelint-config-css-modules: ^4.2.0
     stylelint-config-standard: ^33.0.0
     stylelint-prettier: ^3.0.0
-    typescript: ^5.1.3
-    webpack: ^5.88.0
+    typescript: ^5.1.6
+    webpack: ^5.88.1
   peerDependencies:
     react: ">= 16.8.x"
   languageName: unknown
@@ -5019,23 +5019,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.1.3":
-  version: 5.1.3
-  resolution: "typescript@npm:5.1.3"
+"typescript@npm:^5.1.6":
+  version: 5.1.6
+  resolution: "typescript@npm:5.1.6"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: d9d51862d98efa46534f2800a1071a613751b1585dc78884807d0c179bcd93d6e9d4012a508e276742f5f33c480adefc52ffcafaf9e0e00ab641a14cde9a31c7
+  checksum: b2f2c35096035fe1f5facd1e38922ccb8558996331405eb00a5111cc948b2e733163cc22fab5db46992aba7dd520fff637f2c1df4996ff0e134e77d3249a7350
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^5.1.3#~builtin<compat/typescript>":
-  version: 5.1.3
-  resolution: "typescript@patch:typescript@npm%3A5.1.3#~builtin<compat/typescript>::version=5.1.3&hash=5da071"
+"typescript@patch:typescript@^5.1.6#~builtin<compat/typescript>":
+  version: 5.1.6
+  resolution: "typescript@patch:typescript@npm%3A5.1.6#~builtin<compat/typescript>::version=5.1.6&hash=5da071"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 6f0a9dca6bf4ce9dcaf4e282aade55ef4c56ecb5fb98d0a4a5c0113398815aea66d871b5611e83353e5953a19ed9ef103cf5a76ac0f276d550d1e7cd5344f61e
+  checksum: f53bfe97f7c8b2b6d23cf572750d4e7d1e0c5fff1c36d859d0ec84556a827b8785077bc27676bf7e71fae538e517c3ecc0f37e7f593be913d884805d931bc8be
   languageName: node
   linkType: hard
 
@@ -5133,9 +5133,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.88.0":
-  version: 5.88.0
-  resolution: "webpack@npm:5.88.0"
+"webpack@npm:^5.88.1":
+  version: 5.88.1
+  resolution: "webpack@npm:5.88.1"
   dependencies:
     "@types/eslint-scope": ^3.7.3
     "@types/estree": ^1.0.0
@@ -5166,7 +5166,7 @@ __metadata:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 9fd1568b34ec2e99ba97c8509a15ab2576ec80c396e7015551ec814b24cfc11de173acba3e114dafe95f1a6d460781b09d6201e6a1fb15110e1d01a09f61a283
+  checksum: 726e7e05ab2e7c142609a673dd6aa1a711ed97f349418a2a393d650c5ddad172d191257f60e1e37f6b2a77261571c202aabd5ce9240791a686774f0801cf5ec2
   languageName: node
   linkType: hard
 
