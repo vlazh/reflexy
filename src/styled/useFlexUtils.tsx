@@ -11,14 +11,17 @@ export interface UseFlexUtilsResult {
 export default function useFlexUtils(useThemeHook: typeof useTheme = useTheme): UseFlexUtilsResult {
   const defaults = useFlexDefaults(useThemeHook);
 
-  const ref = useRef<UseFlexUtilsResult>(undefined as never);
+  const defaultsRef = useRef(defaults);
+  defaultsRef.current = defaults;
 
-  if (!ref.current) {
-    ref.current = {
+  const resultRef = useRef<UseFlexUtilsResult>(undefined as never);
+
+  if (!resultRef.current) {
+    resultRef.current = {
       spaceToCss: (space: Space) =>
-        spaceToCssValue(space, defaults.defaultSizes, defaults.defaultUnit),
+        spaceToCssValue(space, defaultsRef.current.defaultSizes, defaultsRef.current.defaultUnit),
     };
   }
 
-  return ref.current;
+  return resultRef.current;
 }
