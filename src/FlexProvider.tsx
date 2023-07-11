@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import ThemeProvider from '@mui/styles/ThemeProvider';
+import ThemeProvider from '@mui/system/ThemeProvider';
 import sharedDefaults, { type SharedDefaults } from './sharedDefaults';
 import type { Theme } from './styled';
 
