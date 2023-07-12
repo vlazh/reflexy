@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@mui/system/styled';
-import useTheme from '@mui/system/useTheme';
+// import useTheme from '@mui/system/useTheme';
 import type { DefaultComponentType, FlexAllProps } from '../../Flex/Flex';
 import { toCssValue } from '../../Flex/utils';
 import { buildRefProps } from '../../buildRefProps';
@@ -103,7 +103,7 @@ const FlexRoot = styled<FlexComponent>(
   // },
 
   (props: FlexAllProps) => {
-    const { defaultUnit, defaultSize, defaultSizes } = useFlexDefaults(useTheme);
+    const { defaultUnit, defaultSize, defaultSizes } = useFlexDefaults(/* useTheme */);
 
     const {
       flex /*  = true */,

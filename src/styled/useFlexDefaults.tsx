@@ -1,23 +1,19 @@
 import { useContext } from 'react';
 import useTheme from '@mui/system/useTheme';
 import { FlexContext } from '../FlexProvider';
-import sharedDefaults, { type SharedDefaults } from '../sharedDefaults';
-import type { Theme } from './theme';
+import { type SharedDefaults } from '../sharedDefaults';
+import { type Theme } from './theme';
 
 export type UseFlexDefaultsResult = SharedDefaults;
 
-export default function useFlexDefaults(
-  useThemeHook: typeof useTheme = useTheme
-): UseFlexDefaultsResult {
+export default function useFlexDefaults(): UseFlexDefaultsResult {
+  /* useThemeHook: typeof useTheme = useTheme */
   const context = useContext(FlexContext);
-  const theme = useThemeHook<Theme | undefined>();
+  const theme = useTheme<Theme | undefined>();
 
-  const defaultUnit =
-    context.defaultUnit ?? theme?.reflexy?.defaultUnit ?? sharedDefaults.defaultUnit;
-  const defaultSize =
-    context.defaultSize ?? theme?.reflexy?.defaultSize ?? sharedDefaults.defaultSize;
-  const defaultSizes =
-    context.defaultSizes ?? theme?.reflexy?.defaultSizes ?? sharedDefaults.defaultSizes;
+  const defaultUnit = theme?.reflexy?.defaultUnit ?? context.defaultUnit;
+  const defaultSize = theme?.reflexy?.defaultSize ?? context.defaultSize;
+  const defaultSizes = theme?.reflexy?.defaultSizes ?? context.defaultSizes;
 
   return { defaultUnit, defaultSize, defaultSizes };
 }

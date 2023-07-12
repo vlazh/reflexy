@@ -1,6 +1,6 @@
 import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import useTheme from '@mui/system/useTheme';
+// import useTheme from '@mui/system/useTheme';
 import type {
   DefaultComponentType,
   FlexAllProps,
@@ -160,7 +160,7 @@ const useStyles = makeStyles(
 function Flex<C extends React.ElementType = DefaultComponentType>(
   props: FlexAllProps<C, { inferStyleProps: true }>
 ): JSX.Element {
-  const { defaultUnit, defaultSize, defaultSizes } = useFlexDefaults(useTheme);
+  const { defaultUnit, defaultSize, defaultSizes } = useFlexDefaults(/* useTheme */);
 
   const {
     flex,
