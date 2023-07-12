@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react';
-import ThemeProvider from '@mui/system/ThemeProvider';
 import sharedDefaults, { type SharedDefaults } from './sharedDefaults';
-import type { Theme } from './styled';
+import type { OptionalToUndefined } from './types';
 
-export type FlexProviderProps = Partial<SharedDefaults>;
+export type FlexProviderProps = OptionalToUndefined<Partial<SharedDefaults>>;
 
-export const FlexContext = React.createContext<FlexProviderProps>({});
+export const FlexContext = React.createContext<SharedDefaults>(sharedDefaults);
 
 export default function FlexProvider({
   defaultUnit = sharedDefaults.defaultUnit,
@@ -13,15 +12,9 @@ export default function FlexProvider({
   defaultSizes = sharedDefaults.defaultSizes,
   ...rest
 }: React.PropsWithChildren<FlexProviderProps>): JSX.Element {
-  const [defaults, theme] = useMemo<[FlexProviderProps, Theme]>(() => {
-    const values = Object.freeze<SharedDefaults>({ defaultUnit, defaultSize, defaultSizes });
-    const t = Object.freeze<Theme>({ reflexy: values });
-    return [values, t];
+  const defaults = useMemo(() => {
+    return Object.freeze<SharedDefaults>({ defaultUnit, defaultSize, defaultSizes });
   }, [defaultSize, defaultSizes, defaultUnit]);
 
-  return (
-    <ThemeProvider theme={theme}>
-      <FlexContext.Provider value={defaults} {...rest} />
-    </ThemeProvider>
-  );
+  return <FlexContext.Provider value={defaults} {...rest} />;
 }

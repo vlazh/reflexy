@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import sharedDefaults from '../sharedDefaults';
+import React, { useContext, useMemo } from 'react';
+import { FlexContext } from '../FlexProvider';
 import type { AnyObject, GetComponentProps } from '../types';
 import { buildRefProps } from '../buildRefProps';
 import { defineSharedDefaults } from '../defineSharedDefaults';
@@ -190,7 +190,7 @@ export type StylesProps<
     O['inferStyleProps'] extends boolean
       ? O['inferStyleProps']
       : Exclude<O['inferStyleProps'], boolean | undefined>['style']
-  >
+  >,
 > = P extends Styleable<infer C, infer S>
   ? Styleable<
       InferClassName extends true ? C : string,
@@ -212,11 +212,11 @@ type PropsWithStyles<P extends AnyObject, O extends StylesOptions> = StylesProps
 export type GetStylesTransformers<
   StyledProps extends Styleable<unknown, unknown>,
   OriginProps extends AnyObject = StyledProps,
-  Strict extends boolean = false
+  Strict extends boolean = false,
 > = Strict extends true
   ? ([StyledProps['className'], OriginProps['className']] extends [
       string | undefined,
-      string | undefined
+      string | undefined,
     ]
       ? {} // eslint-disable-line @typescript-eslint/ban-types
       : {
@@ -226,7 +226,7 @@ export type GetStylesTransformers<
         }) &
       ([React.CSSProperties, React.CSSProperties] extends [
         StyledProps['style'],
-        OriginProps['style']
+        OriginProps['style'],
       ]
         ? {} // eslint-disable-line @typescript-eslint/ban-types
         : {
@@ -244,7 +244,7 @@ export type GetStylesTransformers<
 type PropsWithStylesTransformers<
   P extends AnyObject,
   O extends StylesOptions,
-  Styled extends Styleable<unknown, unknown> = PropsWithStyles<P, O>
+  Styled extends Styleable<unknown, unknown> = PropsWithStyles<P, O>,
 > = Styled & GetStylesTransformers<Styled, P, true>;
 
 interface PropsOptions extends StylesOptions {
@@ -258,7 +258,7 @@ type FilterComponentProps<P extends AnyObject, O extends PropsOptions> = O['omit
 
 export type FlexComponentProps<
   C extends React.ElementType = any,
-  O extends PropsOptions = { omitProps: false; inferStyleProps: false }
+  O extends PropsOptions = { omitProps: false; inferStyleProps: false },
 > = FlexOnlyProps & PropsWithStyles<FilterComponentProps<GetComponentProps<C>, O>, O>;
 
 type IfObject<T, P> = T extends never | React.EventHandler<any> | React.Ref<any>
@@ -275,7 +275,7 @@ type ExcludeObjectType<T extends AnyObject> = Omit<
 /** Props without object types only simple types and functions. Useful for memo. @experimental */
 export type FlexSimpleProps<
   C extends React.ElementType = any,
-  O extends PropsOptions = { omitProps: false; inferStyleProps: false }
+  O extends PropsOptions = { omitProps: false; inferStyleProps: false },
 > = ExcludeObjectType<FlexComponentProps<C, O>>;
 
 export type FlexAllProps<
@@ -283,7 +283,7 @@ export type FlexAllProps<
   O extends StylesOptions = {
     // inferStyleProps: undefined extends C ? false : React.ComponentType extends C ? false : true;
     inferStyleProps: false;
-  }
+  },
 > = FlexOnlyProps &
   PropsWithStylesTransformers<GetComponentProps<C>, O> & {
     /**
@@ -303,66 +303,72 @@ export type DefaultComponentType = 'div';
  * Example: `<Flex component="button" ... />`
  * Example: `<Flex component={MyComponent} ... />`
  */
-function Flex<C extends React.ElementType = DefaultComponentType>({
-  component = 'div' as C,
-  flex = true,
-  inline,
-  row,
-  column,
-  reverse,
-  wrap,
-  center,
-  alignItems = center ? 'center' : undefined,
-  justifyContent = center ? 'center' : undefined,
-  alignSelf,
-  alignContent,
-  basis,
-  grow,
-  shrink,
-  order,
+function Flex<C extends React.ElementType = DefaultComponentType>(
+  props: FlexAllProps<C, { inferStyleProps: true }>
+): JSX.Element {
+  const { defaultUnit, defaultSize, defaultSizes } = useContext(FlexContext);
 
-  fill,
-  vfill = fill,
-  hfill = fill,
+  const {
+    component = 'div',
+    flex = true,
+    inline,
+    row,
+    column,
+    reverse,
+    wrap,
+    center,
+    alignItems = center ? 'center' : undefined,
+    justifyContent = center ? 'center' : undefined,
+    alignSelf,
+    alignContent,
+    basis,
+    grow,
+    shrink,
+    order,
 
-  shrinkByContent = flex,
-  shrinkHeight = shrinkByContent,
-  shrinkWidth = shrinkByContent,
+    fill,
+    vfill = fill,
+    hfill = fill,
 
-  unit = sharedDefaults.defaultUnit,
-  mSize = sharedDefaults.defaultSize,
-  mUnit = unit,
-  m,
-  mx,
-  my,
-  mt = my,
-  mr = mx,
-  mb = my,
-  ml = mx,
-  pSize = sharedDefaults.defaultSize,
-  pUnit = unit,
-  p,
-  px,
-  py,
-  pt = py,
-  pr = px,
-  pb = py,
-  pl = px,
+    shrinkByContent = flex,
+    shrinkHeight = shrinkByContent,
+    shrinkWidth = shrinkByContent,
 
-  scrollable,
-  scrollableX = scrollable,
-  scrollableY = scrollable,
-  overflow,
-  overflowX = overflow,
-  overflowY = overflow,
+    unit = defaultUnit,
+    mSize = defaultSize,
+    mUnit = unit,
+    m,
+    mx,
+    my,
+    mt = my,
+    mr = mx,
+    mb = my,
+    ml = mx,
+    pSize = defaultSize,
+    pUnit = unit,
+    p,
+    px,
+    py,
+    pt = py,
+    pr = px,
+    pb = py,
+    pl = px,
 
-  className,
-  style,
-  classNameTransformer = defaultClassNameTransformer as ClassNameTransformer<typeof className>,
-  styleTransformer = defaultStyleTransformer as StyleTransformer<typeof style>,
+    scrollable,
+    scrollableX = scrollable,
+    scrollableY = scrollable,
+    overflow,
+    overflowX = overflow,
+    overflowY = overflow,
 
-  ...rest
-}: FlexAllProps<C, { inferStyleProps: true }>): JSX.Element {
+    className,
+    style,
+    classNameTransformer = defaultClassNameTransformer as ClassNameTransformer<typeof className>,
+    styleTransformer = defaultStyleTransformer as StyleTransformer<typeof style>,
+
+    ...rest
+  } = props as FlexAllProps<C, { inferStyleProps: true }>;
+
   const calcClassName = useMemo(
     () =>
       props2className({
@@ -415,8 +421,8 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
 
   // const marginSize = typeof mSize === 'number' ? mSize : sharedDefaults.defaultSizes[mSize];
   // const paddingSize = typeof pSize === 'number' ? pSize : sharedDefaults.defaultSizes[pSize];
-  const marginSize = getSpaceSizeMultiplier(mSize, sharedDefaults.defaultSizes);
-  const paddingSize = getSpaceSizeMultiplier(pSize, sharedDefaults.defaultSizes);
+  const marginSize = getSpaceSizeMultiplier(mSize, defaultSizes);
+  const paddingSize = getSpaceSizeMultiplier(pSize, defaultSizes);
 
   const calcStyles = useMemo(
     () =>
@@ -442,28 +448,29 @@ function Flex<C extends React.ElementType = DefaultComponentType>({
           pr,
           pt,
         },
-        sharedDefaults.defaultSizes
+        defaultSizes
       ),
     [
-      order,
+      defaultSizes,
       grow,
-      shrink,
       hfill,
-      vfill,
-      marginSize,
-      mUnit,
       m,
+      mUnit,
+      marginSize,
       mb,
       ml,
       mr,
       mt,
-      paddingSize,
-      pUnit,
+      order,
       p,
+      pUnit,
+      paddingSize,
       pb,
       pl,
       pr,
       pt,
+      shrink,
+      vfill,
     ]
   );
 
