@@ -142,14 +142,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint-community/regexpp@npm:^4.4.0":
-  version: 4.4.1
-  resolution: "@eslint-community/regexpp@npm:4.4.1"
-  checksum: db97d8d08e784147b55ab0dda5892503c1a0eebad94d1c4646d89a94f02ca70b25f05d8e021fc05a075e7eb312e03e21f63d84f0b327719f8cf3bb64e66917cb
-  languageName: node
-  linkType: hard
-
-"@eslint-community/regexpp@npm:^4.5.0":
+"@eslint-community/regexpp@npm:^4.4.0, @eslint-community/regexpp@npm:^4.5.0":
   version: 4.5.1
   resolution: "@eslint-community/regexpp@npm:4.5.1"
   checksum: 6d901166d64998d591fab4db1c2f872981ccd5f6fe066a1ad0a93d4e11855ecae6bfb76660869a469563e8882d4307228cebd41142adb409d182f2966771e57e
@@ -309,9 +302,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/styles@npm:^5.13.7":
-  version: 5.13.7
-  resolution: "@mui/styles@npm:5.13.7"
+"@mui/styles@npm:^5.14.0":
+  version: 5.14.0
+  resolution: "@mui/styles@npm:5.14.0"
   dependencies:
     "@babel/runtime": ^7.22.5
     "@emotion/hash": ^0.9.1
@@ -336,13 +329,13 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: f48f7bf809c4276849f7a978ddf5cd65cbfe84ab6d9bc1b7522e2c728f23f09eeae7b7d3735926f700c00552138d5d30c437b75f067b367b8985ac35213040d7
+  checksum: c3d61f8f20945dcb45d2bb4f313c28f7ae6d1e778bdb19c5806acf6e559399fa2d54f9bd5db224754765d38c455bf722845f51e5d3c0379d41f7b6ee8f3abc68
   languageName: node
   linkType: hard
 
-"@mui/system@npm:^5.13.7":
-  version: 5.13.7
-  resolution: "@mui/system@npm:5.13.7"
+"@mui/system@npm:^5.14.0":
+  version: 5.14.0
+  resolution: "@mui/system@npm:5.14.0"
   dependencies:
     "@babel/runtime": ^7.22.5
     "@mui/private-theming": ^5.13.7
@@ -364,7 +357,7 @@ __metadata:
       optional: true
     "@types/react":
       optional: true
-  checksum: 6d316ea3be91bb5a7c7c3068bd45c9d98b2d554483e33a65b14ac7e2a5baaf30e24da8688537a7a7e3cb20fb620723359425f89e430b1c264e5502c7282a1797
+  checksum: 8855bf8d36b2131a8edfe54c7ecbbf299562ca115ee34d51f47bd225b5800244b91a100f03e14e040a559de94603877a59882482e60c2eb2f4d47f8bd0740a6a
   languageName: node
   linkType: hard
 
@@ -477,14 +470,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/json-schema@npm:*, @types/json-schema@npm:^7.0.8":
-  version: 7.0.11
-  resolution: "@types/json-schema@npm:7.0.11"
-  checksum: 527bddfe62db9012fccd7627794bd4c71beb77601861055d87e3ee464f2217c85fca7a4b56ae677478367bbd248dbde13553312b7d4dbc702a2f2bbf60c4018d
-  languageName: node
-  linkType: hard
-
-"@types/json-schema@npm:^7.0.11":
+"@types/json-schema@npm:*, @types/json-schema@npm:^7.0.11, @types/json-schema@npm:^7.0.8":
   version: 7.0.12
   resolution: "@types/json-schema@npm:7.0.12"
   checksum: 00239e97234eeb5ceefb0c1875d98ade6e922bfec39dd365ec6bd360b5c2f825e612ac4f6e5f1d13601b8b30f378f15e6faa805a3a732f4a1bbe61915163d293
@@ -4500,8 +4486,8 @@ __metadata:
   resolution: "reflexy@workspace:."
   dependencies:
     "@jstoolkit/configs": ^3.87.0
-    "@mui/styles": ^5.13.7
-    "@mui/system": ^5.13.7
+    "@mui/styles": ^5.14.0
+    "@mui/system": ^5.14.0
     "@types/css-modules": ^1.0.2
     "@types/react": ^18.2.14
     "@typescript-eslint/eslint-plugin": ^6.0.0
@@ -4729,18 +4715,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.3.4":
-  version: 7.3.8
-  resolution: "semver@npm:7.3.8"
-  dependencies:
-    lru-cache: ^6.0.0
-  bin:
-    semver: bin/semver.js
-  checksum: ba9c7cbbf2b7884696523450a61fee1a09930d888b7a8d7579025ad93d459b2d1949ee5bbfeb188b2be5f4ac163544c5e98491ad6152df34154feebc2cc337c1
-  languageName: node
-  linkType: hard
-
-"semver@npm:^7.5.0":
+"semver@npm:^7.3.4, semver@npm:^7.5.0":
   version: 7.5.4
   resolution: "semver@npm:7.5.4"
   dependencies:

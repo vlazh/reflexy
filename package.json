@@ -33,8 +33,8 @@
   },
   "devDependencies": {
     "@jstoolkit/configs": "^3.87.0",
-    "@mui/styles": "^5.13.7",
-    "@mui/system": "^5.13.7",
+    "@mui/styles": "^5.14.0",
+    "@mui/system": "^5.14.0",
     "@types/css-modules": "^1.0.2",
     "@types/react": "^18.2.14",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
