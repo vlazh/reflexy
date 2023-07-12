@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import Flex, { type FlexAllProps, type DefaultComponentType } from './Flex';
-import { defineSharedDefaults } from './defineSharedDefaults';
 import type { AnyObject } from './types';
 
 type PropsWithRef<P extends AnyObject> = P &
@@ -39,4 +38,4 @@ const FlexWithRef = React.forwardRef(
   props: PropsWithRef<FlexWithRefProps<C>>
 ) => JSX.Element;
 
-export default defineSharedDefaults(FlexWithRef);
+export default FlexWithRef;

@@ -2,7 +2,6 @@ import React, { useContext, useMemo } from 'react';
 import { FlexContext } from '../FlexProvider';
 import type { AnyObject, GetComponentProps } from '../types';
 import { buildRefProps } from '../buildRefProps';
-import { defineSharedDefaults } from '../defineSharedDefaults';
 import {
   defaultClassNameTransformer,
   defaultStyleTransformer,
@@ -303,7 +302,7 @@ export type DefaultComponentType = 'div';
  * Example: `<Flex component="button" ... />`
  * Example: `<Flex component={MyComponent} ... />`
  */
-function Flex<C extends React.ElementType = DefaultComponentType>(
+export default function Flex<C extends React.ElementType = DefaultComponentType>(
   props: FlexAllProps<C, { inferStyleProps: true }>
 ): JSX.Element {
   const { defaultUnit, defaultSize, defaultSizes } = useContext(FlexContext);
@@ -497,5 +496,3 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
     children
   );
 }
-
-export default defineSharedDefaults(Flex);

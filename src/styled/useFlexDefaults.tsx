@@ -7,7 +7,6 @@ import { type Theme } from './theme';
 export type UseFlexDefaultsResult = SharedDefaults;
 
 export default function useFlexDefaults(): UseFlexDefaultsResult {
-  /* useThemeHook: typeof useTheme = useTheme */
   const context = useContext(FlexContext);
   const theme = useTheme<Theme | undefined>();
 

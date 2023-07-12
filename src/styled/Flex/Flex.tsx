@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from '@mui/system/styled';
-// import useTheme from '@mui/system/useTheme';
 import type { DefaultComponentType, FlexAllProps } from '../../Flex/Flex';
 import { toCssValue } from '../../Flex/utils';
 import { buildRefProps } from '../../buildRefProps';
-import { defineSharedDefaults } from '../../defineSharedDefaults';
 import { getSpaceSizeMultiplier } from '../../utils';
 import useFlexDefaults from '../useFlexDefaults';
 import { getFillValue, getOverflowValue } from './utils';
@@ -103,7 +101,7 @@ const FlexRoot = styled<FlexComponent>(
   // },
 
   (props: FlexAllProps) => {
-    const { defaultUnit, defaultSize, defaultSizes } = useFlexDefaults(/* useTheme */);
+    const { defaultUnit, defaultSize, defaultSizes } = useFlexDefaults();
 
     const {
       flex /*  = true */,
@@ -233,10 +231,8 @@ const FlexRoot = styled<FlexComponent>(
  * Example: `<Flex component="button" ... />`
  * Example: `<Flex component={MyComponent} ... />`
  */
-function Flex<C extends React.ElementType = DefaultComponentType>(
+export default function Flex<C extends React.ElementType = DefaultComponentType>(
   props: FlexAllProps<C, { inferStyleProps: true }>
 ): JSX.Element {
   return <FlexRoot {...props} />;
 }
-
-export default defineSharedDefaults(Flex);

@@ -1,6 +1,5 @@
 import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-// import useTheme from '@mui/system/useTheme';
 import type {
   DefaultComponentType,
   FlexAllProps,
@@ -16,7 +15,6 @@ import {
 } from '../../../utils';
 import { toCssValue } from '../../../Flex/utils';
 import { buildRefProps } from '../../../buildRefProps';
-import { defineSharedDefaults } from '../../../defineSharedDefaults';
 import type { SharedDefaults } from '../../../sharedDefaults';
 import useFlexDefaults from '../../useFlexDefaults';
 import { getFillValue, getOverflowValue } from '../../Flex/utils';
@@ -157,10 +155,10 @@ const useStyles = makeStyles(
  * Example: `<Flex component="button" ... />`
  * Example: `<Flex component={MyComponent} ... />`
  */
-function Flex<C extends React.ElementType = DefaultComponentType>(
+export default function Flex<C extends React.ElementType = DefaultComponentType>(
   props: FlexAllProps<C, { inferStyleProps: true }>
 ): JSX.Element {
-  const { defaultUnit, defaultSize, defaultSizes } = useFlexDefaults(/* useTheme */);
+  const { defaultUnit, defaultSize, defaultSizes } = useFlexDefaults();
 
   const {
     flex,
@@ -287,5 +285,3 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
     children
   );
 }
-
-export default defineSharedDefaults(Flex);
