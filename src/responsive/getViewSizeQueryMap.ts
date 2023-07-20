@@ -9,11 +9,14 @@ export interface GetViewSizeQueryMapOptions {
 export default function getViewSizeQueryMap({
   deviceDimentions,
 }: GetViewSizeQueryMapOptions = {}): Record<ViewSize, string> {
-  return viewSizeValueList.reduce((acc, [viewSize, { minWidth, maxWidth }]) => {
-    const q = deviceDimentions
-      ? `only screen and (min-device-width: ${minWidth}px) and (max-device-width: ${maxWidth}px)`
-      : `only screen and (min-width: ${minWidth}px) and (max-width: ${maxWidth}px)`;
-    acc[viewSize] = q;
-    return acc;
-  }, {} as Record<ViewSize, string>);
+  return viewSizeValueList.reduce(
+    (acc, [viewSize, { minWidth, maxWidth }]) => {
+      const q = deviceDimentions
+        ? `only screen and (min-device-width: ${minWidth}px) and (max-device-width: ${maxWidth}px)`
+        : `only screen and (min-width: ${minWidth}px) and (max-width: ${maxWidth}px)`;
+      acc[viewSize] = q;
+      return acc;
+    },
+    {} as Record<ViewSize, string>
+  );
 }
