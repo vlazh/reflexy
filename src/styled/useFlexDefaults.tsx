@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import useTheme from '@mui/system/useTheme';
 import { FlexContext } from '../FlexProvider';
-import { type SharedDefaults } from '../sharedDefaults';
-import { type Theme } from './theme';
+import type { SharedDefaults } from '../sharedDefaults';
+import type { Theme } from './theme';
 
 export type UseFlexDefaultsResult = SharedDefaults;
 
