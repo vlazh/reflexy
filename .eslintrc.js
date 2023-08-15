@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: require.resolve('@jstoolkit/configs/eslint/react'),
+  extends: require.resolve('@js-toolkit/configs/eslint/react'),
   rules: {
     'no-use-before-define': 'off',
     // 'import/export': 'off',
