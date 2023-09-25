@@ -23,7 +23,7 @@ export default function TweakableElementWrapper({
     className: defaultClassNameTransformer(className ?? '', cmp.props.className),
     style: defaultStyleTransformer(style, cmp.props.style),
   };
-  // for elements such as input which not supports children
+  // For elements such as input which does not supports children
   if (!cmp.props.children && !children) {
     return React.cloneElement(cmp, nextProps);
   }
