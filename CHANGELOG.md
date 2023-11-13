@@ -1,3 +1,9 @@
+## <small>3.50.1 (2023-11-13)</small>
+
+* Add WithFlexComponent ([407968e](https://github.com/vlazh/reflexy/commit/407968e))
+
+
+
 ## 3.50.0 (2023-11-13)
 
 * Improve FlexWithRef ([fc87cfd](https://github.com/vlazh/reflexy/commit/fc87cfd))
