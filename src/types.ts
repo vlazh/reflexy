@@ -1,4 +1,5 @@
 import type React from 'react';
+import type Flex from './Flex';
 
 export type AnyObject = Record<string, any>;
 
@@ -34,3 +35,7 @@ export type TweakableComponentProps<C extends React.ElementType = any> = {
 export type GetComponentRef<C extends React.ElementType = any> = undefined extends C
   ? Record<never, never>
   : WithComponentRef<React.ComponentPropsWithRef<C>>;
+
+export interface WithFlexComponent {
+  FlexComponent?: typeof Flex;
+}

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import Flex, { type FlexAllProps, type DefaultComponentType } from './Flex';
-import type { AnyObject } from './types';
+import type { AnyObject, WithFlexComponent } from './types';
 
 type PropsWithRef<P extends AnyObject> = P &
   (P extends { componentRef?: any | undefined } ? { ref?: P['componentRef'] | undefined } : {});
@@ -11,7 +11,10 @@ type GetProps<P extends AnyObject> = P extends { componentRef?: any }
     ? P
     : P & { ref?: never | undefined };
 
-type FlexWithRefProps<C extends React.ElementType> = { component: C } & GetProps<FlexAllProps<C>>;
+export type FlexWithRefProps<C extends React.ElementType> = { component: C } & GetProps<
+  FlexAllProps<C>
+> &
+  WithFlexComponent;
 
 const FlexWithRef = React.forwardRef(
   (
@@ -19,7 +22,7 @@ const FlexWithRef = React.forwardRef(
       FlexComponent = Flex,
       componentRef,
       ...rest
-    }: FlexAllProps<DefaultComponentType> & { FlexComponent: typeof Flex },
+    }: FlexAllProps<DefaultComponentType> & WithFlexComponent,
     ref: React.Ref<any>
   ) => {
     const refCallback = useMemo<React.Ref<HTMLDivElement> | undefined>(
@@ -42,7 +45,7 @@ const FlexWithRef = React.forwardRef(
     return <FlexComponent componentRef={refCallback} {...rest} />;
   }
 ) as <C extends React.ElementType = DefaultComponentType>(
-  props: PropsWithRef<FlexWithRefProps<C>> & { FlexComponent?: typeof Flex }
+  props: PropsWithRef<FlexWithRefProps<C>>
 ) => JSX.Element;
 
 export default FlexWithRef;
