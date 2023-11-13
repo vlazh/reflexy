@@ -1,3 +1,11 @@
+## 3.50.0 (2023-11-13)
+
+* Improve FlexWithRef ([fc87cfd](https://github.com/vlazh/reflexy/commit/fc87cfd))
+* Update comment ([48a175b](https://github.com/vlazh/reflexy/commit/48a175b))
+* Update deps ([54ff7ce](https://github.com/vlazh/reflexy/commit/54ff7ce))
+
+
+
 ## <small>3.49.3 (2023-08-15)</small>
 
 * Fix configs ([c65026a](https://github.com/vlazh/reflexy/commit/c65026a))
