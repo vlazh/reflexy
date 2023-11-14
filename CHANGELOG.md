@@ -1,3 +1,9 @@
+## 3.51.0 (2023-11-14)
+
+* Add reflexy detection ([1d9e8a9](https://github.com/vlazh/reflexy/commit/1d9e8a9))
+
+
+
 ## <small>3.50.1 (2023-11-13)</small>
 
 * Add WithFlexComponent ([407968e](https://github.com/vlazh/reflexy/commit/407968e))
