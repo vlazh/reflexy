@@ -1,15 +1,15 @@
 /* eslint-disable dot-notation */
 import React from 'react';
-import type { SharedDefaults } from './sharedDefaults';
 import type { AnyObject } from './types';
+import type Flex from './Flex';
 
 const REACT_MEMO_TYPE = Symbol.for('react.memo');
 
 export function isFlex(component: React.ElementType<any> | React.ReactElement<any, any>): boolean {
   // React component
   if (typeof component === 'function') {
-    const flex = component as typeof component & SharedDefaults;
-    return flex.defaultUnit != null && flex.defaultSize != null && flex.defaultSizes != null;
+    const flex = component as typeof Flex;
+    return flex.reflexy != null;
   }
 
   if ((component as AnyObject)['$$typeof'] === REACT_MEMO_TYPE) {

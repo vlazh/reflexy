@@ -3,11 +3,12 @@ import Flex, { type FlexAllProps, type DefaultComponentType } from '../../Flex';
 import useMediaQuery from '../useMediaQuery';
 import { type ResponsiveProps, mergeBreakpointProps } from '../Responsive';
 import type { WithFlexComponent } from '../../types';
+import { copyInternalProps } from '../../utils';
 
 export type ResponsiveFlexAllProps<C extends React.ElementType = DefaultComponentType> =
   ResponsiveProps<FlexAllProps<C>> & FlexAllProps<C> & WithFlexComponent;
 
-export default function ResponsiveFlex<C extends React.ElementType = DefaultComponentType>({
+function ResponsiveFlex<C extends React.ElementType = DefaultComponentType>({
   FlexComponent = Flex,
   ...rest
 }: ResponsiveFlexAllProps<C>): JSX.Element {
@@ -19,3 +20,5 @@ export default function ResponsiveFlex<C extends React.ElementType = DefaultComp
   );
   return <FlexComponent p={p} {...mergedProps} />;
 }
+
+export default copyInternalProps(Flex, ResponsiveFlex);

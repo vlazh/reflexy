@@ -1,5 +1,16 @@
 import type React from 'react';
 import type { Space, SpaceProps, SpaceSize, SpaceUnit, SSpaceSize } from './Flex';
+import type Flex from './Flex';
+import type { AnyObject } from './types';
+
+export function copyInternalProps<T extends React.ComponentType<any>>(
+  source: typeof Flex,
+  target: T
+): T {
+  // eslint-disable-next-line no-param-reassign
+  (target as AnyObject).reflexy = source.reflexy;
+  return target;
+}
 
 export function defaultClassNameTransformer(
   calcClassName: string,

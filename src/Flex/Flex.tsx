@@ -263,8 +263,8 @@ export type FlexComponentProps<
 type IfObject<T, P> = T extends never | React.EventHandler<any> | React.Ref<any>
   ? never
   : T extends AnyObject
-  ? P
-  : never;
+    ? P
+    : never;
 
 type ExcludeObjectType<T extends AnyObject> = Omit<
   T,
@@ -302,7 +302,7 @@ export type DefaultComponentType = 'div';
  * Example: `<Flex component="button" ... />`
  * Example: `<Flex component={MyComponent} ... />`
  */
-export default function Flex<C extends React.ElementType = DefaultComponentType>(
+function Flex<C extends React.ElementType = DefaultComponentType>(
   props: FlexAllProps<C, { inferStyleProps: true }>
 ): JSX.Element {
   const { defaultUnit, defaultSize, defaultSizes } = useContext(FlexContext);
@@ -496,3 +496,7 @@ export default function Flex<C extends React.ElementType = DefaultComponentType>
     children
   );
 }
+
+Flex.reflexy = true;
+
+export default Flex;

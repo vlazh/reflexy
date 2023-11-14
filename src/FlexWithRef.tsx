@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import Flex, { type FlexAllProps, type DefaultComponentType } from './Flex';
 import type { AnyObject, WithFlexComponent } from './types';
+import { copyInternalProps } from './utils';
 
 type PropsWithRef<P extends AnyObject> = P &
   (P extends { componentRef?: any | undefined } ? { ref?: P['componentRef'] | undefined } : {});
@@ -48,4 +49,4 @@ const FlexWithRef = React.forwardRef(
   props: PropsWithRef<FlexWithRefProps<C>>
 ) => JSX.Element;
 
-export default FlexWithRef;
+export default copyInternalProps(Flex, FlexWithRef);
