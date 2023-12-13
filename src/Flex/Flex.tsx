@@ -260,7 +260,13 @@ export type FlexComponentProps<
   O extends PropsOptions = { omitProps: false; inferStyleProps: false },
 > = FlexOnlyProps & PropsWithStyles<FilterComponentProps<GetComponentProps<C>, O>, O>;
 
-type IfObject<T, P> = T extends never ? never : T extends AnyObject ? P : never;
+type IfObject<T, P> = T extends never
+  ? never
+  : T extends React.EventHandler<any> | React.Ref<any>
+    ? never
+    : T extends AnyObject
+      ? P
+      : never;
 
 type ExcludeObjectType<T extends AnyObject> = Omit<
   T,
