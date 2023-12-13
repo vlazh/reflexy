@@ -1,3 +1,12 @@
+## 3.52.0 (2023-12-13)
+
+* Add check for emotion styled components ([f5ffead](https://github.com/vlazh/reflexy/commit/f5ffead))
+* Refactor ([e405f04](https://github.com/vlazh/reflexy/commit/e405f04))
+* Refactor ([2fd6015](https://github.com/vlazh/reflexy/commit/2fd6015))
+* Update deps ([321c0e4](https://github.com/vlazh/reflexy/commit/321c0e4))
+
+
+
 ## 3.51.0 (2023-11-14)
 
 * Add reflexy detection ([1d9e8a9](https://github.com/vlazh/reflexy/commit/1d9e8a9))
