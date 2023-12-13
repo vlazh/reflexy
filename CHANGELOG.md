@@ -1,3 +1,10 @@
+## <small>3.52.1 (2023-12-13)</small>
+
+* Fix deps ([2529e27](https://github.com/vlazh/reflexy/commit/2529e27))
+* Fix props type ([097b7e3](https://github.com/vlazh/reflexy/commit/097b7e3))
+
+
+
 ## 3.52.0 (2023-12-13)
 
 * Add check for emotion styled components ([f5ffead](https://github.com/vlazh/reflexy/commit/f5ffead))
