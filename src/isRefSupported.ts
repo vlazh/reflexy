@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable dot-notation */
 import React from 'react';
 import type { AnyObject } from './types';
@@ -10,9 +11,14 @@ export function isRefSupported(
   // React component
   if (
     typeof component === 'string' ||
-    (typeof component === 'function' && component.prototype instanceof React.Component) ||
-    (component as AnyObject)['$$typeof'] === REACT_FORWARD_REF_TYPE
+    (typeof component === 'function' && component.prototype instanceof React.Component)
   ) {
+    return true;
+  }
+
+  if ((component as AnyObject)['$$typeof'] === REACT_FORWARD_REF_TYPE) {
+    if ((component as AnyObject).__emotion_base)
+      return isRefSupported((component as AnyObject).__emotion_base as React.ElementType<any>);
     return true;
   }
 
