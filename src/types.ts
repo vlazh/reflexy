@@ -9,7 +9,7 @@ export type OptionalToUndefined<T> = {
   [K in keyof T]: undefined extends T[K] ? T[K] | undefined : T[K];
 };
 
-type WithComponentRef<P extends AnyObject> = P extends { ref?: any | undefined }
+type WithComponentRef<P extends AnyObject> = P extends { ref?: any }
   ? { componentRef?: P['ref'] | undefined }
   : Record<never, never>;
 

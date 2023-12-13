@@ -5,16 +5,14 @@ import type { AnyObject, EmptyObject } from './types';
 //   ref?: P extends { componentRef?: any } ? P['componentRef'] : unknown;
 // };
 type PropsWithRef<P extends AnyObject> = P &
-  (P extends { componentRef?: any | undefined }
-    ? { ref?: P['componentRef'] | undefined }
-    : EmptyObject);
+  (P extends { componentRef?: any } ? { ref?: P['componentRef'] | undefined } : EmptyObject);
 
 // type ForwardedComponentType<P extends { componentRef?: React.Ref<any> }> =
 //   | ((props: P, context?: any) => JSX.Element | null)
 //   | (new (props: P, context?: any) => React.Component<P, any>);
 type ForwardedComponentType = React.ComponentType<any>;
 
-type GetProps<P extends AnyObject> = P extends { componentRef?: any | undefined }
+type GetProps<P extends AnyObject> = P extends { componentRef?: any }
   ? Omit<P, 'component'>
   : // : { error: 'Component should provide `componentRef` prop' };
     EmptyObject;

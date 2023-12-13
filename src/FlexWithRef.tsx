@@ -4,13 +4,13 @@ import type { AnyObject, WithFlexComponent } from './types';
 import { copyInternalProps } from './utils';
 
 type PropsWithRef<P extends AnyObject> = P &
-  (P extends { componentRef?: any | undefined } ? { ref?: P['componentRef'] | undefined } : {});
+  (P extends { componentRef?: any } ? { ref?: P['componentRef'] | undefined } : {});
 
 type GetProps<P extends AnyObject> = P extends { componentRef?: any }
   ? Omit<P, 'component'>
-  : P extends { ref?: any | undefined }
+  : P extends { ref?: any }
     ? P
-    : P & { ref?: never | undefined };
+    : P & { ref?: never };
 
 export type FlexWithRefProps<C extends React.ElementType> = { component: C } & GetProps<
   FlexAllProps<C>
