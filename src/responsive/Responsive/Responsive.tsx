@@ -1,7 +1,7 @@
 import React from 'react';
 import type { DefaultComponentType } from '../../Flex';
 import type { AnyObject, TweakableComponentProps } from '../../types';
-import { buildRefProps } from '../../buildRefProps';
+import { buildRefProps } from '../../utils';
 import { viewSizeValues, viewSizeValueList } from '../viewSizeValues';
 import useMediaQuery from '../useMediaQuery';
 import type ViewSize from '../ViewSize';

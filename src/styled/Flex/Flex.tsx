@@ -2,8 +2,7 @@ import React from 'react';
 import styled from '@mui/system/styled';
 import type { DefaultComponentType, FlexAllProps } from '../../Flex/Flex';
 import { toCssValue } from '../../Flex/utils';
-import { buildRefProps } from '../../buildRefProps';
-import { getSpaceSizeMultiplier } from '../../utils';
+import { buildRefProps, getSpaceSizeMultiplier } from '../../utils';
 import useFlexDefaults from '../useFlexDefaults';
 import { getFillValue, getOverflowValue } from './utils';
 
@@ -14,6 +13,7 @@ type FlexComponent = <C extends React.ElementType = DefaultComponentType>(
 const FlexRoot = styled<FlexComponent>(
   (props): JSX.Element => {
     const {
+      /* eslint-disable @typescript-eslint/no-unused-vars */
       flex,
       inline,
       row,
@@ -60,11 +60,11 @@ const FlexRoot = styled<FlexComponent>(
       scrollable,
       scrollableX,
       scrollableY,
-
       // className,
       // style,
       classNameTransformer,
       styleTransformer,
+      /* eslint-enable */
 
       component = 'div',
       componentRef,

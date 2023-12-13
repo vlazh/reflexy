@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import type { AnyObject, EmptyObject } from './types';
+import { buildRefCallback } from './utils';
 
 // type PropsWithRef<P extends AnyObject> = P & {
 //   ref?: P extends { componentRef?: any } ? P['componentRef'] : unknown;
@@ -29,19 +30,7 @@ const ForwardRef = React.forwardRef(
       >;
 
     const refCallback = useMemo<React.Ref<unknown> | undefined>(
-      () =>
-        ref && componentRef
-          ? (instance) => {
-              [ref, componentRef].forEach((r) => {
-                if (typeof r === 'function') {
-                  r(instance);
-                } else if (r) {
-                  // eslint-disable-next-line no-param-reassign
-                  (r as React.MutableRefObject<any>).current = instance;
-                }
-              });
-            }
-          : ref ?? componentRef,
+      () => (ref && componentRef ? buildRefCallback([ref, componentRef]) : ref ?? componentRef),
       [componentRef, ref]
     );
 

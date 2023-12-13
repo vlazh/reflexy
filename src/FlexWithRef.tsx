@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import Flex, { type FlexAllProps, type DefaultComponentType } from './Flex';
 import type { AnyObject, WithFlexComponent } from './types';
-import { copyInternalProps } from './utils';
+import { buildRefCallback, copyInternalProps } from './utils';
 
 type PropsWithRef<P extends AnyObject> = P &
   (P extends { componentRef?: any } ? { ref?: P['componentRef'] | undefined } : {});
@@ -27,19 +27,7 @@ const FlexWithRef = React.forwardRef(
     ref: React.Ref<any>
   ) => {
     const refCallback = useMemo<React.Ref<HTMLDivElement> | undefined>(
-      () =>
-        ref && componentRef
-          ? (instance) => {
-              [ref, componentRef].forEach((r) => {
-                if (typeof r === 'function') {
-                  r(instance);
-                } else if (r) {
-                  // eslint-disable-next-line no-param-reassign
-                  (r as React.MutableRefObject<any>).current = instance;
-                }
-              });
-            }
-          : ref ?? componentRef,
+      () => (ref && componentRef ? buildRefCallback([ref, componentRef]) : ref ?? componentRef),
       [componentRef, ref]
     );
 

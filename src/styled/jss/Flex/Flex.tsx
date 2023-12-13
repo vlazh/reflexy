@@ -9,12 +9,12 @@ import type {
   FlexSimpleProps,
 } from '../../../Flex/Flex';
 import {
+  buildRefProps,
   defaultClassNameTransformer,
   defaultStyleTransformer,
   getSpaceSizeMultiplier,
 } from '../../../utils';
 import { toCssValue } from '../../../Flex/utils';
-import { buildRefProps } from '../../../buildRefProps';
 import type { SharedDefaults } from '../../../sharedDefaults';
 import useFlexDefaults from '../../useFlexDefaults';
 import { getFillValue, getOverflowValue } from '../../Flex/utils';

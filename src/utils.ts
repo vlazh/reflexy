@@ -2,6 +2,7 @@ import type React from 'react';
 import type { Space, SpaceProps, SpaceSize, SpaceUnit, SSpaceSize } from './Flex';
 import type Flex from './Flex';
 import type { AnyObject } from './types';
+import { isRefSupported } from './isRefSupported';
 
 export function copyInternalProps<T extends React.ComponentType<any>>(
   source: typeof Flex,
@@ -10,6 +11,36 @@ export function copyInternalProps<T extends React.ComponentType<any>>(
   // eslint-disable-next-line no-param-reassign
   (target as AnyObject).reflexy = source.reflexy;
   return target;
+}
+
+export function buildRefCallback<T = any>(refs: readonly React.Ref<T>[]): React.RefCallback<T> {
+  return (instance: T | null) => {
+    refs.forEach((r) => {
+      if (typeof r === 'function') {
+        r(instance);
+      } else if (r) {
+        // eslint-disable-next-line no-param-reassign
+        (r as React.MutableRefObject<T | null>).current = instance;
+      }
+    });
+  };
+}
+
+export function buildRefProps(
+  Component: React.ElementType,
+  componentRefProp: unknown
+): { ref: unknown } | { componentRef: unknown } | undefined {
+  if (componentRefProp) {
+    if (isRefSupported(Component)) return { ref: componentRefProp };
+    return { componentRef: componentRefProp };
+    // Component may use `componentRef` prop for nested components so it is no way to granular check
+    // whether Component is Flex.
+    // if (isFlex(Component)) return { componentRef: componentRefProp };
+    // const componentString =
+    //   typeof Component === 'object' ? JSON.stringify(Component) : String(Component);
+    // console.warn(`Component '${componentString}' doesn't support 'ref'/'componentRef' prop.`);
+  }
+  return undefined;
 }
 
 export function defaultClassNameTransformer(
