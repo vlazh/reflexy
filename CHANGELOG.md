@@ -1,3 +1,10 @@
+## <small>3.52.2 (2024-1-8)</small>
+
+* Update css names ([8d8a6c4](https://github.com/vlazh/reflexy/commit/8d8a6c4))
+* Update deps ([95ac380](https://github.com/vlazh/reflexy/commit/95ac380))
+
+
+
 ## <small>3.52.1 (2023-12-13)</small>
 
 * Fix deps ([2529e27](https://github.com/vlazh/reflexy/commit/2529e27))
