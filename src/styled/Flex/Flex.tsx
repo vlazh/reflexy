@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@mui/system/styled';
+import type { MUIStyledCommonProps } from '@mui/system/createStyled';
 import type { DefaultComponentType, FlexAllProps } from '../../Flex/Flex';
 import { toCssValue } from '../../Flex/utils';
 import { buildRefProps, getSpaceSizeMultiplier } from '../../utils';
@@ -231,7 +232,7 @@ const FlexRoot = styled<FlexComponent>(
  * Example: `<Flex component={MyComponent} ... />`
  */
 function Flex<C extends React.ElementType = DefaultComponentType>(
-  props: FlexAllProps<C, { inferStyleProps: true }>
+  props: FlexAllProps<C, { inferStyleProps: true }> & Pick<MUIStyledCommonProps, 'theme'>
 ): JSX.Element {
   return <FlexRoot {...props} />;
 }
