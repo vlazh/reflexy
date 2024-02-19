@@ -1,3 +1,10 @@
+## <small>3.52.3 (2024-2-19)</small>
+
+* Improve props ([3f08d20](https://github.com/vlazh/reflexy/commit/3f08d20))
+* Update deps ([10c18d6](https://github.com/vlazh/reflexy/commit/10c18d6))
+
+
+
 ## <small>3.52.2 (2024-1-8)</small>
 
 * Update css names ([8d8a6c4](https://github.com/vlazh/reflexy/commit/8d8a6c4))
