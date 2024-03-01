@@ -2,8 +2,7 @@
 import React from 'react';
 import type { AnyObject } from './types';
 import type Flex from './Flex';
-
-const REACT_MEMO_TYPE = Symbol.for('react.memo');
+import { REACT_MEMO_TYPE } from './isRefSupported';
 
 export function isFlex(component: React.ElementType<any> | React.ReactElement<any, any>): boolean {
   // React component
@@ -13,12 +12,12 @@ export function isFlex(component: React.ElementType<any> | React.ReactElement<an
   }
 
   if ((component as AnyObject)['$$typeof'] === REACT_MEMO_TYPE) {
-    return isFlex((component as AnyObject)['type'] as React.ElementType<any>);
+    return isFlex((component as AnyObject).type as React.ElementType<any>);
   }
 
   // React element
   if (React.isValidElement(component)) {
-    return isFlex(component['type'] as React.ElementType<any>);
+    return isFlex(component.type as React.ElementType<any>);
   }
 
   return false;
