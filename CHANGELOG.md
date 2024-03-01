@@ -1,3 +1,10 @@
+## <small>3.52.4 (2024-3-1)</small>
+
+* Improve isRefSupported ([918aafb](https://github.com/vlazh/reflexy/commit/918aafb))
+* Update deps ([179fc81](https://github.com/vlazh/reflexy/commit/179fc81))
+
+
+
 ## <small>3.52.3 (2024-2-19)</small>
 
 * Improve props ([3f08d20](https://github.com/vlazh/reflexy/commit/3f08d20))
