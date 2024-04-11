@@ -232,7 +232,7 @@ const FlexRoot = styled<FlexComponent>(
  * Example: `<Flex component={MyComponent} ... />`
  */
 function Flex<C extends React.ElementType = DefaultComponentType>(
-  props: FlexAllProps<C, { inferStyleProps: true }> & Pick<MUIStyledCommonProps, 'theme'>
+  props: FlexAllProps<C, { inferStyleProps: true }> & Pick<MUIStyledCommonProps, 'theme' | 'sx'>
 ): JSX.Element {
   return <FlexRoot {...props} />;
 }
