@@ -84,7 +84,7 @@ const FlexRoot = styled<FlexComponent>(
   },
   {
     name: Flex.name,
-    skipSx: true,
+    skipSx: false,
     skipVariantsResolver: true,
     // overridesResolver(props, styles) {
     //   console.log('overridesResolver', props, styles);
