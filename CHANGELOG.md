@@ -1,3 +1,12 @@
+## <small>3.52.5 (2024-04-11)</small>
+
+* Enable sx ([11b49f8](https://github.com/vlazh/reflexy/commit/11b49f8))
+* Improve props ([72992a7](https://github.com/vlazh/reflexy/commit/72992a7))
+* Refactor ([a207ab4](https://github.com/vlazh/reflexy/commit/a207ab4))
+* Update deps ([0c8682e](https://github.com/vlazh/reflexy/commit/0c8682e))
+
+
+
 ## <small>3.52.4 (2024-3-1)</small>
 
 * Improve isRefSupported ([918aafb](https://github.com/vlazh/reflexy/commit/918aafb))
