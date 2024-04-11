@@ -180,25 +180,22 @@ interface StylesOptions {
 export type StylesProps<
   P extends AnyObject,
   O extends StylesOptions = { inferStyleProps: true },
-  InferClassName extends boolean = NonNullable<
-    O['inferStyleProps'] extends boolean
-      ? O['inferStyleProps']
-      : Exclude<O['inferStyleProps'], boolean | undefined>['className']
-  >,
-  InferStyle extends boolean = NonNullable<
-    O['inferStyleProps'] extends boolean
-      ? O['inferStyleProps']
-      : Exclude<O['inferStyleProps'], boolean | undefined>['style']
-  >,
-> = P extends Styleable<infer C, infer S>
-  ? Styleable<
-      InferClassName extends true ? C : string,
-      InferStyle extends true ? S : React.CSSProperties
-    >
-  : Styleable<
-      InferClassName extends true ? unknown : string,
-      InferStyle extends true ? unknown : React.CSSProperties
-    >;
+  InferClassName extends boolean = O['inferStyleProps'] extends boolean
+    ? O['inferStyleProps']
+    : NonNullable<Exclude<O['inferStyleProps'], boolean | undefined>['className']>,
+  InferStyle extends boolean = O['inferStyleProps'] extends boolean
+    ? O['inferStyleProps']
+    : NonNullable<Exclude<O['inferStyleProps'], boolean | undefined>['style']>,
+> =
+  P extends Styleable<infer C, infer S>
+    ? Styleable<
+        InferClassName extends true ? C : string,
+        InferStyle extends true ? S : React.CSSProperties
+      >
+    : Styleable<
+        InferClassName extends true ? unknown : string,
+        InferStyle extends true ? unknown : React.CSSProperties
+      >;
 
 type PropsWithStyles<P extends AnyObject, O extends StylesOptions> = StylesProps<
   // Pick keys in order to avoid `className: unknown` with `FlexAllProps<C>` in components.
