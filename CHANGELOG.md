@@ -1,3 +1,10 @@
+## <small>3.52.6 (2024-04-29)</small>
+
+* Remove name to clear output ([bf955df](https://github.com/vlazh/reflexy/commit/bf955df))
+* Update deps ([10d8c07](https://github.com/vlazh/reflexy/commit/10d8c07))
+
+
+
 ## <small>3.52.5 (2024-04-11)</small>
 
 * Enable sx ([11b49f8](https://github.com/vlazh/reflexy/commit/11b49f8))
