@@ -83,13 +83,8 @@ const FlexRoot = styled<FlexComponent>(
     );
   },
   {
-    name: Flex.name,
     skipSx: false,
     skipVariantsResolver: true,
-    // overridesResolver(props, styles) {
-    //   console.log('overridesResolver', props, styles);
-    //   return [];
-    // },
   }
 )(
   // ({ flex, inline, shrinkHeight, shrinkWidth }: FlexAllProps) => {
