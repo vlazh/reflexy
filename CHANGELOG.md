@@ -1,3 +1,9 @@
+## <small>3.52.7 (2024-07-01)</small>
+
+* Update eslint ([573c760](https://github.com/vlazh/reflexy/commit/573c760))
+
+
+
 ## <small>3.52.6 (2024-04-29)</small>
 
 * Remove name to clear output ([bf955df](https://github.com/vlazh/reflexy/commit/bf955df))
