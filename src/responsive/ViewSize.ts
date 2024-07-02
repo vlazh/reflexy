@@ -1,4 +1,5 @@
 enum ViewSize {
+  xxxxs = 'xxxxs',
   xxxs = 'xxxs',
   xxs = 'xxs',
   xs = 'xs',
@@ -7,6 +8,9 @@ enum ViewSize {
   l = 'l',
   xl = 'xl',
   xxl = 'xxl',
+  xxxl = 'xxxl',
+  xxxxl = 'xxxxl',
+  xxxxxl = 'xxxxxl',
 }
 
 export default ViewSize;
@@ -14,14 +18,18 @@ export default ViewSize;
 export type ViewSizeNumber = number;
 
 export const ViewSizeNumber: Record<ViewSize, ViewSizeNumber> = {
-  [ViewSize.xxxs]: 1,
-  [ViewSize.xxs]: 2,
-  [ViewSize.xs]: 3,
-  [ViewSize.s]: 4,
-  [ViewSize.m]: 5,
-  [ViewSize.l]: 6,
-  [ViewSize.xl]: 7,
-  [ViewSize.xxl]: 8,
+  [ViewSize.xxxxs]: 1,
+  [ViewSize.xxxs]: 2,
+  [ViewSize.xxs]: 3,
+  [ViewSize.xs]: 4,
+  [ViewSize.s]: 5,
+  [ViewSize.m]: 6,
+  [ViewSize.l]: 7,
+  [ViewSize.xl]: 8,
+  [ViewSize.xxl]: 9,
+  [ViewSize.xxxl]: 10,
+  [ViewSize.xxxxl]: 11,
+  [ViewSize.xxxxxl]: 12,
 };
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
