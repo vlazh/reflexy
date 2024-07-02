@@ -1,3 +1,10 @@
+## 3.53.0 (2024-07-02)
+
+* Add ViewSize item ([bd8fbdb](https://github.com/vlazh/reflexy/commit/bd8fbdb))
+* Update viewSizeValues ([0ce266a](https://github.com/vlazh/reflexy/commit/0ce266a))
+
+
+
 ## <small>3.52.7 (2024-07-01)</small>
 
 * Update eslint ([573c760](https://github.com/vlazh/reflexy/commit/573c760))
