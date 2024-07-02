@@ -7,7 +7,8 @@ export interface ViewSizeValue {
 
 /** All values are unique. */
 export const viewSizeValues: Record<ViewSize, ViewSizeValue> = {
-  [ViewSize.xxs]: { minWidth: 0, maxWidth: 479 },
+  [ViewSize.xxxs]: { minWidth: 0, maxWidth: 319 },
+  [ViewSize.xxs]: { minWidth: 320, maxWidth: 479 },
   [ViewSize.xs]: { minWidth: 480, maxWidth: 767 },
   [ViewSize.s]: { minWidth: 768, maxWidth: 991 },
   [ViewSize.m]: { minWidth: 992, maxWidth: 1279 },
