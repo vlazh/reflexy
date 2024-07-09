@@ -1,3 +1,9 @@
+## 3.54.0 (2024-07-09)
+
+* Rewrite ViewSize ([67e369f](https://github.com/vlazh/reflexy/commit/67e369f))
+
+
+
 ## 3.53.0 (2024-07-02)
 
 * Add ViewSize item ([bd8fbdb](https://github.com/vlazh/reflexy/commit/bd8fbdb))
