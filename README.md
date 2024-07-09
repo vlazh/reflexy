@@ -192,10 +192,10 @@ import { ResponsiveFlex } from 'reflexy/responsive';
 
 All props of [Flex](#Flex) and:
 
-| Prop          | Type                                    | Description                                                                                                                                                                                              |
-| :------------ | :-------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `merge?`      | `boolean \| BreakpointsMergeType`       | `down` - merge from top to down until current view size. `top` - merge from down to top until current view size. `true` treats as `down`. `false` - no merge, use only exact breakpoint. Default `true`. |
-| `breakpoints` | `{ [P in ViewSize]?: FlexAllProps<C> }` | Props per breakpoint.                                                                                                                                                                                    |
+| Prop          | Type                                         | Description                                                                                                                                                                                              |
+| :------------ | :------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `merge?`      | `boolean \| BreakpointsMergeType`            | `down` - merge from top to down until current view size. `top` - merge from down to top until current view size. `true` treats as `down`. `false` - no merge, use only exact breakpoint. Default `true`. |
+| `breakpoints` | `{ [P in ViewSize.Keys]?: FlexAllProps<C> }` | Props per breakpoint.                                                                                                                                                                                    |
 
 ### ViewSize
 

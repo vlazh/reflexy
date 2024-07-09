@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
+import '@js-toolkit/utils/types';
 import sharedDefaults, { type SharedDefaults } from './sharedDefaults';
-import type { OptionalToUndefined } from './types';
 
 export type FlexProviderProps = OptionalToUndefined<Partial<SharedDefaults>>;
 

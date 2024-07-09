@@ -1,6 +1,6 @@
 /* eslint-disable dot-notation */
 import React from 'react';
-import type { AnyObject } from './types';
+import '@js-toolkit/utils/types';
 import type Flex from './Flex';
 import { REACT_MEMO_TYPE } from './isRefSupported';
 

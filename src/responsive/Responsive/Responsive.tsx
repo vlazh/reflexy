@@ -1,10 +1,10 @@
 import React from 'react';
+import '@js-toolkit/utils/types';
 import type { DefaultComponentType } from '../../Flex';
-import type { AnyObject, TweakableComponentProps } from '../../types';
+import type { TweakableComponentProps } from '../../types';
 import { buildRefProps } from '../../utils';
-import { viewSizeValues, viewSizeValueList } from '../viewSizeValues';
 import useMediaQuery from '../useMediaQuery';
-import type ViewSize from '../ViewSize';
+import ViewSize from '../ViewSize';
 
 export type BreakpointsMergeType = 'up' | 'down';
 
@@ -17,7 +17,7 @@ export interface ResponsiveProps<Props extends AnyObject> {
    */
   merge?: boolean | BreakpointsMergeType | undefined;
   /** Props per breakpoint */
-  breakpoints: { [P in ViewSize]?: Partial<Props> | undefined };
+  breakpoints: { [P in ViewSize.Keys]?: Partial<Props> | undefined };
 }
 
 type Combine<P extends AnyObject> = P & ResponsiveProps<P>;
@@ -31,26 +31,26 @@ function mergeProps<Props extends AnyObject>(
   breakpoints: ResponsiveProps<Props>['breakpoints'],
   mergeType: BreakpointsMergeType
 ): Partial<Props> {
-  const currentSizeValue = viewSizeValues[viewSize];
+  const currentSizeValue = ViewSize.values[viewSize];
   const result = {};
 
   if (mergeType === 'up') {
     // Снизу вверх до текущего размера.
     for (
-      let i = 0, [sizeKey, { maxWidth }] = viewSizeValueList[i];
-      i < viewSizeValueList.length && maxWidth <= currentSizeValue.maxWidth;
-      i += 1, [sizeKey, { maxWidth }] = viewSizeValueList[i] || ['', { maxWidth: 0 }]
+      let i = 0, [sizeKey, { maxWidth }] = ViewSize.valueList[i];
+      i < ViewSize.valueList.length && maxWidth <= currentSizeValue.maxWidth;
+      i += 1, [sizeKey, { maxWidth }] = ViewSize.valueList[i] || ['', { maxWidth: 0 }]
     ) {
-      Object.assign(result, breakpoints[sizeKey]);
+      Object.assign(result, breakpoints[ViewSize.keyOf(sizeKey)]);
     }
   } else {
     // Сверху вниз до текущего размера.
     for (
-      let i = viewSizeValueList.length - 1, [sizeKey, { maxWidth }] = viewSizeValueList[i];
+      let i = ViewSize.valueList.length - 1, [sizeKey, { maxWidth }] = ViewSize.valueList[i];
       i >= 0 && maxWidth >= currentSizeValue.maxWidth;
-      i -= 1, [sizeKey, { maxWidth }] = viewSizeValueList[i] || ['', { maxWidth: 0 }]
+      i -= 1, [sizeKey, { maxWidth }] = ViewSize.valueList[i] || ['', { maxWidth: 0 }]
     ) {
-      Object.assign(result, breakpoints[sizeKey]);
+      Object.assign(result, breakpoints[ViewSize.keyOf(sizeKey)]);
     }
   }
 
@@ -62,7 +62,9 @@ export function mergeBreakpointProps<Props extends AnyObject>(
   { breakpoints, merge = true, ...rest }: ResponsiveProps<Props> & Props
 ): Partial<Props> {
   const mergeType: BreakpointsMergeType | false = merge === true ? 'down' : merge;
-  const merged = !mergeType ? breakpoints[viewSize] : mergeProps(viewSize, breakpoints, mergeType);
+  const merged = !mergeType
+    ? breakpoints[ViewSize.keyOf(viewSize)]
+    : mergeProps(viewSize, breakpoints, mergeType);
   if (merged) return { ...rest, ...merged };
   return rest as unknown as Partial<Props>;
 }

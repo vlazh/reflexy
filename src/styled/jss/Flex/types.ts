@@ -1,7 +1,7 @@
 declare module '@mui/styles/makeStyles' {
   import type { ClassNameMap, Styles, WithStylesOptions } from '@mui/styles/withStyles';
   import type { DefaultTheme } from '@mui/styles/defaultTheme';
-  import type { OptionalToUndefined } from 'types';
+  import '@js-toolkit/utils/types';
 
   export default function makeStyles<
     Theme = DefaultTheme,

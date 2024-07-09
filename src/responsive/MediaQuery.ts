@@ -4,7 +4,6 @@ import MediaQueryListener, {
   type MediaQueryEventHandler,
 } from './MediaQueryListener';
 import type ViewSize from './ViewSize';
-import type { ViewSizeValue } from './viewSizeValues';
 
 export * from './MediaQueryListener';
 
@@ -30,8 +29,8 @@ export default abstract class MediaQuery {
     return this.listener.currentViewSize;
   }
 
-  static get currentViewSizeValue(): ViewSizeValue {
-    return this.listener.currentViewSizeValue;
+  static get currentViewSizeValues(): ViewSize.Values {
+    return this.listener.currentViewSizeQuery;
   }
 
   static addListener(listener: MediaQueryEventHandler): void {

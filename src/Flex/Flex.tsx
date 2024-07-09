@@ -1,6 +1,7 @@
 import React, { useContext, useMemo } from 'react';
+import '@js-toolkit/utils/types';
 import { FlexContext } from '../FlexProvider';
-import type { AnyObject, GetComponentProps } from '../types';
+import type { GetComponentProps } from '../types';
 import {
   buildRefProps,
   defaultClassNameTransformer,

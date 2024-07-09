@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable dot-notation */
 import React from 'react';
-import type { AnyObject } from './types';
+import '@js-toolkit/utils/types';
 
 export const REACT_FORWARD_REF_TYPE = Symbol.for('react.forward_ref');
 export const REACT_MEMO_TYPE = Symbol.for('react.memo');

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import type { AnyObject, EmptyObject } from './types';
+import '@js-toolkit/utils/types';
 import { buildRefCallback } from './utils';
 
 // type PropsWithRef<P extends AnyObject> = P & {

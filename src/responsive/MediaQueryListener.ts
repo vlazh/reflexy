@@ -2,8 +2,7 @@
 /* https://mediag.com/news/popular-screen-resolutions-designing-for-all/ */
 /* http://viewportsizes.com */
 
-import type ViewSize from './ViewSize';
-import { viewSizeValues, type ViewSizeValue } from './viewSizeValues';
+import ViewSize from './ViewSize';
 import getViewSizeQueryMap, { type GetViewSizeQueryMapOptions } from './getViewSizeQueryMap';
 
 export interface MediaQueryEvent extends Pick<MediaQueryListEvent, 'matches'> {
@@ -31,8 +30,8 @@ export default class MediaQueryListener {
     return this._currentViewSize;
   }
 
-  get currentViewSizeValue(): ViewSizeValue {
-    return viewSizeValues[this.currentViewSize];
+  get currentViewSizeQuery(): ViewSize.Values {
+    return ViewSize.values[this.currentViewSize];
   }
 
   /** Init all media queries for handle changes. */
@@ -40,7 +39,7 @@ export default class MediaQueryListener {
     this.queries = getViewSizeQueryMap(options);
 
     Object.entries(this.queries).forEach(([key, query]) => {
-      const viewSize = key as ViewSize;
+      const viewSize = ViewSize.of(key);
       const mq = window.matchMedia(query);
       this.mediaQueries.push(mq);
       mq.onchange = ({ matches }) => {

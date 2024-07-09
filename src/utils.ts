@@ -1,7 +1,7 @@
 import type React from 'react';
+import '@js-toolkit/utils/types';
 import type { Space, SpaceProps, SpaceSize, SpaceUnit, SSpaceSize } from './Flex';
 import type Flex from './Flex';
-import type { AnyObject } from './types';
 import { isRefSupported } from './isRefSupported';
 
 export function copyInternalProps<T extends React.ComponentType<any>>(

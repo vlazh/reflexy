@@ -1,13 +1,13 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import MediaQueryListener from './MediaQueryListener';
 import MediaQuery, { type MediaQueryEventHandler, type MediaQueryInitOptions } from './MediaQuery';
-import ViewSize, { ViewSizeNumber } from './ViewSize';
+import ViewSize from './ViewSize';
 
 export interface UseMediaQueryProps extends MediaQueryInitOptions {
   localInstance?: boolean | undefined;
 }
 
-export type UseMediaQueryResult = [ViewSize, ViewSizeNumber];
+export type UseMediaQueryResult = [ViewSize, number];
 
 export default function useMediaQuery({
   localInstance,
@@ -37,5 +37,5 @@ export default function useMediaQuery({
     };
   }, [changeHandler, listener]);
 
-  return useMemo(() => [currentViewSize, ViewSizeNumber[currentViewSize]], [currentViewSize]);
+  return useMemo(() => [currentViewSize, currentViewSize], [currentViewSize]);
 }

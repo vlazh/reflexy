@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
+import '@js-toolkit/utils/types';
 import Flex, { type FlexAllProps, type DefaultComponentType } from './Flex';
-import type { AnyObject, WithFlexComponent } from './types';
+import type { WithFlexComponent } from './types';
 import { buildRefCallback, copyInternalProps } from './utils';
 
 type PropsWithRef<P extends AnyObject> = P &

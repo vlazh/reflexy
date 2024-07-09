@@ -1,5 +1,5 @@
 import type React from 'react';
-import type { AnyObject } from '../types';
+import '@js-toolkit/utils/types';
 import type { SpaceProps, FlexProps, SpaceSize } from './Flex';
 import { toCssValue } from './utils';
 

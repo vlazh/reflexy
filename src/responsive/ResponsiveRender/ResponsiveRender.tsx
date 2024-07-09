@@ -1,10 +1,9 @@
 import type React from 'react';
-import { viewSizeValues, viewSizeValueList } from '../viewSizeValues';
 import useMediaQuery from '../useMediaQuery';
-import type ViewSize from '../ViewSize';
+import ViewSize from '../ViewSize';
 import type { BreakpointsMergeType, ResponsiveProps } from '../Responsive';
 
-type Breakpoints = { [P in ViewSize]?: boolean | undefined };
+type Breakpoints = { [P in ViewSize.Keys]?: boolean | undefined };
 
 export type ResponsiveRenderProps = React.PropsWithChildren<
   Breakpoints & Pick<ResponsiveProps<{}>, 'merge'>
@@ -18,20 +17,20 @@ function mergeBreakpoints(
   const mergeType: BreakpointsMergeType | false = merge === true ? 'down' : merge;
 
   if (!mergeType) {
-    return breakpoints[viewSize] ?? fallback;
+    return breakpoints[ViewSize.keyOf(viewSize)] ?? fallback;
   }
 
-  const currentSizeValue = viewSizeValues[viewSize];
+  const currentSizeValue = ViewSize.values[viewSize];
   let lastValue = fallback;
 
   if (mergeType === 'up') {
     // Снизу вверх до текущего размера.
     for (
-      let i = 0, [sizeKey, { maxWidth }] = viewSizeValueList[i];
-      i < viewSizeValueList.length && maxWidth <= currentSizeValue.maxWidth;
-      i += 1, [sizeKey, { maxWidth }] = viewSizeValueList[i] || ['', { maxWidth: 0 }]
+      let i = 0, [sizeKey, { maxWidth }] = ViewSize.valueList[i];
+      i < ViewSize.valueList.length && maxWidth <= currentSizeValue.maxWidth;
+      i += 1, [sizeKey, { maxWidth }] = ViewSize.valueList[i] || ['', { maxWidth: 0 }]
     ) {
-      const value = breakpoints[sizeKey];
+      const value = breakpoints[ViewSize.keyOf(sizeKey)];
       if (value != null) {
         lastValue = value;
       }
@@ -39,11 +38,11 @@ function mergeBreakpoints(
   } else {
     // Сверху вниз до текущего размера.
     for (
-      let i = viewSizeValueList.length - 1, [sizeKey, { maxWidth }] = viewSizeValueList[i];
+      let i = ViewSize.valueList.length - 1, [sizeKey, { maxWidth }] = ViewSize.valueList[i];
       i >= 0 && maxWidth >= currentSizeValue.maxWidth;
-      i -= 1, [sizeKey, { maxWidth }] = viewSizeValueList[i] || ['', { maxWidth: 0 }]
+      i -= 1, [sizeKey, { maxWidth }] = ViewSize.valueList[i] || ['', { maxWidth: 0 }]
     ) {
-      const value = breakpoints[sizeKey];
+      const value = breakpoints[ViewSize.keyOf(sizeKey)];
       if (value != null) {
         lastValue = value;
       }
