@@ -1,3 +1,9 @@
+## <small>3.54.1 (2024-07-10)</small>
+
+* Rename types ([3b3eaae](https://github.com/vlazh/reflexy/commit/3b3eaae))
+
+
+
 ## 3.54.0 (2024-07-09)
 
 * Rewrite ViewSize ([67e369f](https://github.com/vlazh/reflexy/commit/67e369f))
