@@ -8,4 +8,3 @@ export { default as ForwardRef } from './ForwardRef';
 export * from './ForwardRef';
 export { default as FlexProvider } from './FlexProvider';
 export * from './FlexProvider';
-export type { GetComponentRef } from './types';

@@ -12,7 +12,7 @@ import ResponsiveFlex from '../responsive/ResponsiveFlex';
 import Responsive from '../responsive/Responsive';
 import TweakableElementWrapper from '../TweakableElementWrapper';
 import ForwardRef from '../ForwardRef';
-import type { GetComponentRef } from '..';
+import type { ComponentRefProps } from '../types';
 
 export const S = <C extends React.ElementType = DefaultComponentType>({
   mSize,
@@ -190,7 +190,7 @@ export function Component4({ type, ...rest }: FlexSimpleProps<'button'>) {
   return <Flex component="button" type={type} {...rest} />;
 }
 
-export function Component5(props: GetComponentRef<'button'> & { a: number }) {
+export function Component5(props: ComponentRefProps<'button'> & { a: number }) {
   return <Flex component="button" {...props} />;
 }
 

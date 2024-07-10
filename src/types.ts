@@ -25,7 +25,7 @@ export type TweakableComponentProps<C extends React.ElementType = any> = {
   component?: C | undefined;
 } & GetComponentProps<C>;
 
-export type GetComponentRef<C extends React.ElementType = any> = undefined extends C
+export type ComponentRefProps<C extends React.ElementType = any> = undefined extends C
   ? Record<never, never>
   : WithComponentRef<React.ComponentPropsWithRef<C>>;
 
