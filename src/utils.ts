@@ -1,7 +1,9 @@
 import type React from 'react';
 import '@js-toolkit/utils/types';
+import { hasIn } from '@js-toolkit/utils/hasIn';
 import type { Space, SpaceProps, SpaceSize, SpaceUnit, SSpaceSize } from './Flex';
 import type Flex from './Flex';
+import type { SharedDefaults } from './sharedDefaults';
 import { isRefSupported } from './isRefSupported';
 
 export function copyInternalProps<T extends React.ComponentType<any>>(
@@ -77,11 +79,22 @@ export const getSpaceSizeMultiplier = (
   return typeof size === 'number' ? size : sizeMultipliers[getAbsSpaceSize(size)];
 };
 
+export function spaceToCssValue(size: Space, defaults: SharedDefaults): string;
+
 export function spaceToCssValue(
   size: Space,
   sizeMultipliers: Record<SpaceSize, number>,
   unit: SpaceUnit
+): string;
+
+export function spaceToCssValue(
+  size: Space,
+  sizeMultipliersOrDefaults: Record<SpaceSize, number> | SharedDefaults,
+  unit0?: SpaceUnit
 ): string {
+  const [sizeMultipliers, unit] = hasIn(sizeMultipliersOrDefaults, 'defaultUnit')
+    ? [sizeMultipliersOrDefaults.defaultSizes, sizeMultipliersOrDefaults.defaultUnit]
+    : [sizeMultipliersOrDefaults, unit0!];
   if (typeof size === 'string') {
     if (size[0] === '-')
       return `-${getCssValue(sizeMultipliers[size.substring(1) as SpaceSize], unit)}`;
