@@ -5,6 +5,7 @@ import useFlexDefaults from './useFlexDefaults';
 
 export interface UseFlexUtilsResult {
   readonly spaceToCss: (space: Space) => string;
+  readonly spaceToNumber: (space: Space) => number;
 }
 
 export default function useFlexUtils(): UseFlexUtilsResult {
@@ -19,6 +20,10 @@ export default function useFlexUtils(): UseFlexUtilsResult {
     resultRef.current = {
       spaceToCss: (space: Space) =>
         spaceToCssValue(space, defaultsRef.current.defaultSizes, defaultsRef.current.defaultUnit),
+      spaceToNumber: (space: Space) =>
+        Number.parseFloat(
+          spaceToCssValue(space, defaultsRef.current.defaultSizes, defaultsRef.current.defaultUnit)
+        ),
     };
   }
 
