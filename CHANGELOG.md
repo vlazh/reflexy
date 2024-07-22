@@ -1,3 +1,10 @@
+## <small>3.54.3 (2024-07-22)</small>
+
+* Add spaceToNumber ([99b7229](https://github.com/vlazh/reflexy/commit/99b7229))
+* Reduce SpaceUnit ([ec4678d](https://github.com/vlazh/reflexy/commit/ec4678d))
+
+
+
 ## <small>3.54.2 (2024-07-22)</small>
 
 * Improve spaceToCssValue ([60198ff](https://github.com/vlazh/reflexy/commit/60198ff))
