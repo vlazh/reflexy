@@ -1,3 +1,10 @@
+## <small>3.54.2 (2024-07-22)</small>
+
+* Improve spaceToCssValue ([60198ff](https://github.com/vlazh/reflexy/commit/60198ff))
+* Update deps ([d6a5595](https://github.com/vlazh/reflexy/commit/d6a5595))
+
+
+
 ## <small>3.54.1 (2024-07-10)</small>
 
 * Rename types ([3b3eaae](https://github.com/vlazh/reflexy/commit/3b3eaae))
