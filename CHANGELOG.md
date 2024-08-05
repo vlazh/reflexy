@@ -1,3 +1,10 @@
+## 3.55.0 (2024-08-05)
+
+* Remove jss support ([f99e4ec](https://github.com/vlazh/reflexy/commit/f99e4ec))
+* Update configs ([75684d6](https://github.com/vlazh/reflexy/commit/75684d6))
+
+
+
 ## <small>3.54.3 (2024-07-22)</small>
 
 * Add spaceToNumber ([99b7229](https://github.com/vlazh/reflexy/commit/99b7229))
