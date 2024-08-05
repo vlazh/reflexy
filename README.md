@@ -3,15 +3,9 @@
 **Reflexy** is react components library for flexbox and responsive layouts:
 
 - **[Flex](#Flex)** - flexbox layout with paddings and margins support.
-- **[styled/Flex](#Flex)** - styled version of `Flex` powered by [@mui](https://mui.com/styles/basics/).
-
-  There are two versions of styled Flex:
-
-  - **`styled/Flex`** - powered by modern styling solution by `@mui` with `emotion` or `styled-components` or whatever.
-  - **`styled/jss/Flex`** - powered by `JSS`.
+- **[styled/Flex](#Flex)** - styled version of `Flex` powered by [@mui](https://mui.com/system/getting-started/).
 
 - **`styled/StyledReflexyWebpackPlugin`** - webpack plugin for replace regular imports of `Flex` with `styled/Flex`. Just import `Flex` like `import { Flex, FlexWithRef } from 'reflexy';` or `import { ResponsiveFlex } from 'reflexy/responsive';` and `styled/Flex` will be used instead.
-- **`styled/StyledReflexyJssWebpackPlugin`** - same as `styled/StyledReflexyWebpackPlugin` but for `styled/jss/Flex`.
 - **`FlexWithRef`** - `Flex` with forwarded ref.
 - **`TweakableElementWrapper`** - Wrapper for react element in order to use it with `component` prop of `Flex`.
 - **`responsive/Responsive`** - container with breakpoints.
@@ -61,7 +55,7 @@ yarn add react reflexy
 npm install --save react reflexy
 ```
 
-If you use styled version you should also install `@mui` packages and `jss-preset-default` if you use `JSS` version.
+> If you use styled version you should also install `@mui` packages.
 
 **Reflexy** has own css files so you need provide loader for css files placed in node_modules folder (only if you do not use styled version). With webpack it could be [css-loader](https://github.com/webpack-contrib/css-loader):
 
