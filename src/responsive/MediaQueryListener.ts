@@ -13,7 +13,7 @@ export type MediaQueryEventHandler = (event: MediaQueryEvent) => void;
 
 export type MediaQueryListenerOptions = GetViewSizeQueryMapOptions;
 
-export default class MediaQueryListener {
+export default class MediaQueryListener implements Disposable {
   private _currentViewSize: ViewSize | undefined;
   private readonly mediaQueries: MediaQueryList[] = [];
   private readonly listeners: Set<MediaQueryEventHandler> = new Set();
@@ -56,18 +56,23 @@ export default class MediaQueryListener {
     });
   }
 
-  destroy(): void {
-    this.mediaQueries.splice(0, this.mediaQueries.length).forEach((mq) => {
-      // eslint-disable-next-line no-param-reassign
-      mq.onchange = null;
-    });
-  }
-
   addListener(listener: MediaQueryEventHandler): void {
     this.listeners.add(listener);
   }
 
   removeListener(listener: MediaQueryEventHandler): boolean {
     return this.listeners.delete(listener);
+  }
+
+  destroy(): void {
+    this.mediaQueries.splice(0, this.mediaQueries.length).forEach((mq) => {
+      // eslint-disable-next-line no-param-reassign
+      mq.onchange = null;
+    });
+    this.listeners.clear();
+  }
+
+  [Symbol.dispose](): void {
+    return this.destroy();
   }
 }
