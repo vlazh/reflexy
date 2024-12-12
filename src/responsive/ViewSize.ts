@@ -68,11 +68,6 @@ namespace ViewSize {
     [ViewSize.xxxxxl]: { minWidth: 7680, maxWidth: Number.MAX_SAFE_INTEGER },
   };
 
-  /** Sorted values. */
-  export const valueList: readonly (readonly [ViewSize, Values])[] = Object.entries(values)
-    .map(([key, value]) => [of(key), value] as const)
-    .sort(([, a], [, b]) => a.minWidth - b.minWidth);
-
   export function of(viewSizeNumber: string): ViewSize {
     const num = +viewSizeNumber;
     const key = (Number.isFinite(num) ? ViewSize[num] : viewSizeNumber) as Keys;
@@ -82,6 +77,11 @@ namespace ViewSize {
   export function keyOf(viewSize: ViewSize): Keys {
     return ViewSize[viewSize] as Keys;
   }
+
+  /** Sorted values. */
+  export const valueList: readonly (readonly [ViewSize, Values])[] = Object.entries(values)
+    .map(([key, value]) => [of(key), value] as const)
+    .sort(([, a], [, b]) => a.minWidth - b.minWidth);
 
   export function get(width: number): ViewSize {
     const viewSize =

@@ -1,18 +1,14 @@
 import React from 'react';
 import styled from '@mui/system/styled';
 import type { MUIStyledCommonProps } from '@mui/system/createStyled';
-import type { DefaultComponentType, FlexAllProps } from '../../Flex/Flex';
+import type { DefaultComponentType, FlexAllProps } from '../../Flex';
 import { toCssValue } from '../../Flex/utils';
-import { buildRefProps, getSpaceSizeMultiplier } from '../../utils';
+import { getSpaceSizeMultiplier } from '../../utils';
 import useFlexDefaults from '../useFlexDefaults';
 import { getFillValue, getOverflowValue } from './utils';
 
-type FlexComponent = <C extends React.ElementType = DefaultComponentType>(
-  props: FlexAllProps<C>
-) => React.JSX.Element;
-
-const FlexRoot = styled<FlexComponent>(
-  (props): React.JSX.Element => {
+const FlexRoot = styled(
+  (props: FlexAllProps<React.ElementType>) => {
     const {
       /* eslint-disable @typescript-eslint/no-unused-vars */
       flex,
@@ -68,19 +64,12 @@ const FlexRoot = styled<FlexComponent>(
       /* eslint-enable */
 
       component = 'div',
-      componentRef,
       children,
 
       ...componentProps
-    } = props as React.PropsWithChildren<
-      typeof props & { componentRef?: React.Ref<any> | undefined }
-    >;
+    } = props as React.PropsWithChildren<typeof props>;
 
-    return React.createElement(
-      component,
-      Object.assign(componentProps, buildRefProps(component, componentRef)),
-      children
-    );
+    return React.createElement(component, componentProps, children);
   },
   {
     skipSx: false,

@@ -2,7 +2,6 @@ import React from 'react';
 import '@js-toolkit/utils/types';
 import type { DefaultComponentType } from '../../Flex';
 import type { TweakableComponentProps } from '../../types';
-import { buildRefProps } from '../../utils';
 import useMediaQuery from '../useMediaQuery';
 import ViewSize from '../ViewSize';
 
@@ -73,19 +72,7 @@ export default function Responsive<C extends React.ElementType = DefaultComponen
   props: ResponsiveAllProps<C>
 ): React.JSX.Element {
   const [viewSize] = useMediaQuery();
-  const {
-    component = 'div',
-    componentRef,
-    children,
-    ...rest
-  } = mergeBreakpointProps(viewSize, props);
+  const { component = 'div', children, ...rest } = mergeBreakpointProps(viewSize, props);
 
-  return React.createElement(
-    component as NonNullable<typeof component>,
-    Object.assign<AnyObject, AnyObject | undefined>(
-      rest,
-      buildRefProps(component as NonNullable<typeof component>, componentRef)
-    ),
-    children
-  );
+  return React.createElement(component as NonNullable<typeof component>, rest, children);
 }

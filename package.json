@@ -65,6 +65,6 @@
     "webpack": "^5.97.1"
   },
   "peerDependencies": {
-    "react": ">= 16.8.x"
+    "react": ">= 19"
   }
 }

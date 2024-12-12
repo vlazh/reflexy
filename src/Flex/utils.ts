@@ -1,5 +1,5 @@
 import { getCssValue, spaceToCssValue } from '../utils';
-import type { Space, SpaceSize, SpaceUnit } from './Flex';
+import type { Space, SpaceSize, SpaceUnit } from './types';
 
 export function toCssValue(
   size: boolean | Space,

@@ -1,4 +1,4 @@
-import type { FlexProps, OverflowProps } from './Flex';
+import type { FlexProps, OverflowProps } from './types';
 import css from './Flex.css';
 
 export default function props2className(

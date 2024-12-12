@@ -16,5 +16,5 @@ export default function FlexProvider({
     return Object.freeze<SharedDefaults>({ defaultUnit, defaultSize, defaultSizes });
   }, [defaultSize, defaultSizes, defaultUnit]);
 
-  return <FlexContext.Provider value={defaults} {...rest} />;
+  return <FlexContext value={defaults} {...rest} />;
 }

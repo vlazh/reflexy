@@ -66,7 +66,6 @@ export default class MediaQueryListener implements Disposable {
 
   destroy(): void {
     this.mediaQueries.splice(0, this.mediaQueries.length).forEach((mq) => {
-      // eslint-disable-next-line no-param-reassign
       mq.onchange = null;
     });
     this.listeners.clear();

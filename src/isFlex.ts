@@ -2,7 +2,8 @@
 import React from 'react';
 import '@js-toolkit/utils/types';
 import type Flex from './Flex';
-import { REACT_MEMO_TYPE } from './isRefSupported';
+
+const REACT_MEMO_TYPE = Symbol.for('react.memo');
 
 export function isFlex(component: React.ElementType<any> | React.ReactElement<any, any>): boolean {
   // React component

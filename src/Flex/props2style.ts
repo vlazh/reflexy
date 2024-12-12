@@ -1,6 +1,6 @@
 import type React from 'react';
 import '@js-toolkit/utils/types';
-import type { SpaceProps, FlexProps, SpaceSize } from './Flex';
+import type { SpaceProps, FlexProps, SpaceSize } from './types';
 import { toCssValue } from './utils';
 
 export default function props2style(
