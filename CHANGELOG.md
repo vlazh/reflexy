@@ -1,3 +1,11 @@
+## 3.56.0 (2024-12-12)
+
+* Implement Disposable ([e22595d](https://github.com/vlazh/reflexy/commit/e22595d))
+* Update configs ([6c0d6c9](https://github.com/vlazh/reflexy/commit/6c0d6c9))
+* Upgrade react and refactor ([0c470e0](https://github.com/vlazh/reflexy/commit/0c470e0))
+
+
+
 ## 3.55.0 (2024-08-05)
 
 * Remove jss support ([f99e4ec](https://github.com/vlazh/reflexy/commit/f99e4ec))
