@@ -1,3 +1,9 @@
+## 3.57.0 (2024-12-12)
+
+* Remove componentRef in favor of standard ref and refactor ([2898d9a](https://github.com/vlazh/reflexy/commit/2898d9a))
+
+
+
 ## 3.56.0 (2024-12-12)
 
 * Implement Disposable ([e22595d](https://github.com/vlazh/reflexy/commit/e22595d))
