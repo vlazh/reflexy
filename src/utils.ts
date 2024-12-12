@@ -10,7 +10,6 @@ export function copyInternalProps<T extends React.ComponentType<any>>(
   source: typeof Flex,
   target: T
 ): T {
-  // eslint-disable-next-line no-param-reassign
   (target as AnyObject).reflexy = source.reflexy;
   return target;
 }
@@ -45,17 +44,14 @@ export function buildRefProps(
   return undefined;
 }
 
-export function defaultClassNameTransformer(
-  calcClassName: string,
-  userClassName?: string | undefined
-): string {
+export function defaultClassNameTransformer(calcClassName: string, userClassName?: string): string {
   if (calcClassName && userClassName) return `${calcClassName} ${userClassName}`;
   return userClassName || calcClassName;
 }
 
 export function defaultStyleTransformer(
-  calcStyle?: React.CSSProperties | undefined,
-  userStyle?: React.CSSProperties | undefined
+  calcStyle?: React.CSSProperties,
+  userStyle?: React.CSSProperties
 ): React.CSSProperties | undefined {
   if (userStyle && calcStyle) return { ...calcStyle, ...userStyle };
   return userStyle || calcStyle;

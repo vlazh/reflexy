@@ -9,10 +9,10 @@ import { getFillValue, getOverflowValue } from './utils';
 
 type FlexComponent = <C extends React.ElementType = DefaultComponentType>(
   props: FlexAllProps<C>
-) => JSX.Element;
+) => React.JSX.Element;
 
 const FlexRoot = styled<FlexComponent>(
-  (props): JSX.Element => {
+  (props): React.JSX.Element => {
     const {
       /* eslint-disable @typescript-eslint/no-unused-vars */
       flex,
@@ -228,7 +228,7 @@ const FlexRoot = styled<FlexComponent>(
  */
 function Flex<C extends React.ElementType = DefaultComponentType>(
   props: FlexAllProps<C, { inferStyleProps: true }> & Pick<MUIStyledCommonProps, 'theme' | 'sx'>
-): JSX.Element {
+): React.JSX.Element {
   return <FlexRoot {...props} />;
 }
 

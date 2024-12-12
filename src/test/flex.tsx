@@ -90,10 +90,33 @@ export function test() {
       {/* @ts-expect-error */}
       <ForwardRef component={WithoutChildren} />
       {/*  */}
-      <FlexWithRef component={MyClass} aa="" ref={(el) => el} />
-      <FlexWithRef component="a" href="" ref={(el) => el} />
-      <FlexWithRef component="div" ref={(el) => el} />
-      <FlexWithRef component="button" hidden ref={(el) => el} />
+      <FlexWithRef
+        component={MyClass}
+        aa=""
+        ref={(el) => {
+          el;
+        }}
+      />
+      <FlexWithRef
+        component="a"
+        href=""
+        ref={(el) => {
+          el;
+        }}
+      />
+      <FlexWithRef
+        component="div"
+        ref={(el) => {
+          el;
+        }}
+      />
+      <FlexWithRef
+        component="button"
+        hidden
+        ref={(el) => {
+          el;
+        }}
+      />
       <FlexWithRef component={MYY} />
       <FlexWithRef component={Component2} />
       <FlexWithRef component={Component3} />

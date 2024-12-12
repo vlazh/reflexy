@@ -15,7 +15,7 @@ export default function TweakableElementWrapper({
   children,
   forwardProps = true,
   ...rest
-}: React.PropsWithChildren<TweakableElementWrapperProps>): JSX.Element {
+}: React.PropsWithChildren<TweakableElementWrapperProps>): React.JSX.Element {
   const cmp = React.Children.only(element);
   const nextProps: Styleable = {
     ...(forwardProps && rest),

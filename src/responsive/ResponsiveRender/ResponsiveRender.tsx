@@ -55,9 +55,9 @@ function mergeBreakpoints(
 export default function ResponsiveRender({
   children,
   ...rest
-}: ResponsiveRenderProps): JSX.Element | null {
+}: ResponsiveRenderProps): React.JSX.Element | null {
   const [viewSize] = useMediaQuery();
   const render = mergeBreakpoints(viewSize, rest, false);
   if (!render) return null;
-  return children as JSX.Element;
+  return children as React.JSX.Element;
 }

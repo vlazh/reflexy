@@ -11,7 +11,7 @@ export default function FlexProvider({
   defaultSize = sharedDefaults.defaultSize,
   defaultSizes = sharedDefaults.defaultSizes,
   ...rest
-}: React.PropsWithChildren<FlexProviderProps>): JSX.Element {
+}: React.PropsWithChildren<FlexProviderProps>): React.JSX.Element {
   const defaults = useMemo(() => {
     return Object.freeze<SharedDefaults>({ defaultUnit, defaultSize, defaultSizes });
   }, [defaultSize, defaultSizes, defaultUnit]);

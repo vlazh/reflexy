@@ -28,14 +28,19 @@ const FlexWithRef = React.forwardRef(
     ref: React.Ref<any>
   ) => {
     const refCallback = useMemo<React.Ref<HTMLDivElement> | undefined>(
-      () => (ref && componentRef ? buildRefCallback([ref, componentRef]) : ref ?? componentRef),
+      () => (ref && componentRef ? buildRefCallback([ref, componentRef]) : (ref ?? componentRef)),
       [componentRef, ref]
     );
 
     return <FlexComponent componentRef={refCallback} {...rest} />;
   }
-) as <C extends React.ElementType = DefaultComponentType>(
-  props: PropsWithRef<FlexWithRefProps<C>>
-) => JSX.Element;
+);
 
-export default copyInternalProps(Flex, FlexWithRef);
+FlexWithRef.displayName = 'FlexWithRef';
+
+export default copyInternalProps(
+  Flex,
+  FlexWithRef as <C extends React.ElementType = DefaultComponentType>(
+    props: PropsWithRef<FlexWithRefProps<C>>
+  ) => React.JSX.Element
+);

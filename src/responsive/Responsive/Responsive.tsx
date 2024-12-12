@@ -71,7 +71,7 @@ export function mergeBreakpointProps<Props extends AnyObject>(
 
 export default function Responsive<C extends React.ElementType = DefaultComponentType>(
   props: ResponsiveAllProps<C>
-): JSX.Element {
+): React.JSX.Element {
   const [viewSize] = useMediaQuery();
   const {
     component = 'div',

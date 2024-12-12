@@ -9,7 +9,7 @@ type PropsWithRef<P extends AnyObject> = P &
   (P extends { componentRef?: any } ? { ref?: P['componentRef'] | undefined } : EmptyObject);
 
 // type ForwardedComponentType<P extends { componentRef?: React.Ref<any> }> =
-//   | ((props: P, context?: any) => JSX.Element | null)
+//   | ((props: P, context?: any) => React.JSX.Element | null)
 //   | (new (props: P, context?: any) => React.Component<P, any>);
 type ForwardedComponentType = React.ComponentType<any>;
 
@@ -22,24 +22,28 @@ export type ForwardRefProps<C extends ForwardedComponentType> = { component: C }
   React.ComponentPropsWithoutRef<C>
 >;
 
-const ForwardRef = React.forwardRef(
-  (props: ForwardRefProps<ForwardedComponentType>, ref: React.Ref<any>) => {
-    const { component, componentRef, children, ...componentProps } =
-      props as React.PropsWithChildren<
-        typeof props & { componentRef?: React.Ref<any> | undefined }
-      >;
+const ForwardRef = React.forwardRef<
+  ForwardRefProps<ForwardedComponentType>,
+  ForwardRefProps<React.ComponentType>
+>((props: ForwardRefProps<ForwardedComponentType>, ref: React.Ref<any>) => {
+  const { component, componentRef, children, ...componentProps } = props as React.PropsWithChildren<
+    typeof props & { componentRef?: React.Ref<any> | undefined }
+  >;
 
-    const refCallback = useMemo<React.Ref<unknown> | undefined>(
-      () => (ref && componentRef ? buildRefCallback([ref, componentRef]) : ref ?? componentRef),
-      [componentRef, ref]
-    );
+  const refCallback = useMemo<React.Ref<unknown> | undefined>(
+    () => (ref && componentRef ? buildRefCallback([ref, componentRef]) : (ref ?? componentRef)),
+    [componentRef, ref]
+  );
 
-    return React.createElement(
-      component,
-      Object.assign(componentProps, { componentRef: refCallback }),
-      children
-    );
-  }
-) as <C extends ForwardedComponentType>(props: PropsWithRef<ForwardRefProps<C>>) => JSX.Element;
+  return React.createElement(
+    component,
+    Object.assign(componentProps, { componentRef: refCallback }),
+    children
+  );
+});
 
-export default ForwardRef;
+ForwardRef.displayName = 'ForwardRef';
+
+export default ForwardRef as <C extends ForwardedComponentType>(
+  props: PropsWithRef<ForwardRefProps<C>>
+) => React.JSX.Element;

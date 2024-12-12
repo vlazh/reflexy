@@ -304,7 +304,7 @@ export type DefaultComponentType = 'div';
  */
 function Flex<C extends React.ElementType = DefaultComponentType>(
   props: FlexAllProps<C, { inferStyleProps: true }>
-): JSX.Element {
+): React.JSX.Element {
   const { defaultUnit, defaultSize, defaultSizes } = useContext(FlexContext);
 
   const {

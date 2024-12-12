@@ -23,7 +23,7 @@ export default function FlexProvider({
   defaultSizes,
   children,
   ...rest
-}: React.PropsWithChildren<FlexProviderProps>): JSX.Element {
+}: React.PropsWithChildren<FlexProviderProps>): React.JSX.Element {
   const upperTheme = useTheme<Theme | undefined>();
 
   return (
