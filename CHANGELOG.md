@@ -1,3 +1,9 @@
+## <small>3.57.1 (2024-12-13)</small>
+
+* Update types ([a264d7d](https://github.com/vlazh/reflexy/commit/a264d7d))
+
+
+
 ## 3.57.0 (2024-12-12)
 
 * Remove componentRef in favor of standard ref and refactor ([2898d9a](https://github.com/vlazh/reflexy/commit/2898d9a))
