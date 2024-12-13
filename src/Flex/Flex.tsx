@@ -86,7 +86,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
 
     children,
     ...rest
-  } = props as React.PropsWithChildren<FlexAllProps<C, { inferStyleProps: true }>>;
+  } = props as React.PropsWithChildren<FlexAllProps<any, { inferStyleProps: true }>>;
 
   const calcClassName = useMemo(
     () =>

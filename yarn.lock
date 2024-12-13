@@ -4005,7 +4005,7 @@ __metadata:
     typescript-eslint: "npm:^8.18.0"
     webpack: "npm:^5.97.1"
   peerDependencies:
-    react: ">= 16.8.x"
+    react: ">= 19"
   languageName: unknown
   linkType: soft
 

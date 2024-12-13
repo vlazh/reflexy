@@ -1,11 +1,12 @@
 import '@js-toolkit/utils/types';
 import type React from 'react';
-import type Flex from './Flex';
-import type { DefaultComponentType } from './Flex';
 
-export type ComponentProps<C extends React.ElementType = any> = undefined extends C
-  ? Record<never, never>
-  : React.ComponentPropsWithRef<C>;
+export type ComponentProps<C extends React.ElementType = any> = IfExtends<
+  C,
+  React.ElementType,
+  OmitIndex<React.ComponentPropsWithRef<C>>,
+  Record<never, never>
+>;
 
 // Since TS 3.7.3
 // Use `Omit` (as copy of object type) to make TweakableComponentProps as object
@@ -21,7 +22,3 @@ export type TweakableComponentProps<C extends React.ElementType = any> = {
    * Component must accept className and style through props. */
   component?: C | undefined;
 } & GetComponentProps<C>;
-
-export interface WithFlexComponent<C extends React.ElementType = DefaultComponentType> {
-  FlexComponent?: typeof Flex<C>;
-}

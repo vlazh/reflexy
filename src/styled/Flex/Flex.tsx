@@ -207,7 +207,9 @@ const FlexRoot = styled(
       },
     };
   }
-);
+) as <C extends React.ElementType = DefaultComponentType>(
+  props: FlexAllProps<C, { inferStyleProps: true }>
+) => React.JSX.Element;
 
 /**
  * Flexbox container.

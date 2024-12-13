@@ -207,9 +207,9 @@ export type GetStylesTransformers<
             | ClassNameTransformer<StyledProps['className'], OriginProps['className']>
             | undefined;
         }) &
-      ([React.CSSProperties, React.CSSProperties] extends [
-        StyledProps['style'],
-        OriginProps['style'],
+      ([StyledProps['style'], OriginProps['style']] extends [
+        React.CSSProperties | undefined,
+        React.CSSProperties | undefined,
       ]
         ? {} // eslint-disable-line @typescript-eslint/no-empty-object-type
         : {
