@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React from 'react';
 import '@js-toolkit/utils/types';
 import { FlexContext } from '../FlexProvider';
 import {
@@ -24,7 +24,7 @@ import type {
 function Flex<C extends React.ElementType = DefaultComponentType>(
   props: FlexAllProps<C, { inferStyleProps: true }>
 ): React.JSX.Element {
-  const { defaultUnit, defaultSize, defaultSizes } = useContext(FlexContext);
+  const { defaultUnit, defaultSize, defaultSizes } = React.use(FlexContext);
 
   const {
     component = 'div',
@@ -88,7 +88,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
     ...rest
   } = props as React.PropsWithChildren<FlexAllProps<any, { inferStyleProps: true }>>;
 
-  const calcClassName = useMemo(
+  const calcClassName = React.useMemo(
     () =>
       props2className({
         flex,
@@ -143,7 +143,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
   const marginSize = getSpaceSizeMultiplier(mSize, defaultSizes);
   const paddingSize = getSpaceSizeMultiplier(pSize, defaultSizes);
 
-  const calcStyles = useMemo(
+  const calcStyles = React.useMemo(
     () =>
       props2style(
         {
@@ -194,7 +194,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
   );
 
   return React.createElement(
-    component,
+    component as C,
     Object.assign(rest, {
       className: (classNameTransformer as ClassNameTransformer<string>)(
         calcClassName,
