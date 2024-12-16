@@ -1,3 +1,10 @@
+## <small>3.57.2 (2024-12-16)</small>
+
+* Update deps ([045e216](https://github.com/vlazh/reflexy/commit/045e216))
+* Use React.use ([b49144f](https://github.com/vlazh/reflexy/commit/b49144f))
+
+
+
 ## <small>3.57.1 (2024-12-13)</small>
 
 * Update types ([a264d7d](https://github.com/vlazh/reflexy/commit/a264d7d))
