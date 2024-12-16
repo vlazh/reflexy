@@ -14,6 +14,7 @@ import type {
   FlexAllProps,
   StyleTransformer,
 } from './types';
+import { REFLEXY_KEY } from './utils';
 
 /**
  * Flexbox container.
@@ -209,6 +210,6 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
   );
 }
 
-Flex.reflexy = true;
+Flex[REFLEXY_KEY] = true;
 
 export default Flex;

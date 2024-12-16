@@ -2,6 +2,7 @@
 import React from 'react';
 import '@js-toolkit/utils/types';
 import type Flex from './Flex';
+import { REFLEXY_KEY } from './Flex/utils';
 
 const REACT_MEMO_TYPE = Symbol.for('react.memo');
 
@@ -9,7 +10,7 @@ export function isFlex(component: React.ElementType<any> | React.ReactElement<an
   // React component
   if (typeof component === 'function') {
     const flex = component as typeof Flex;
-    return flex.reflexy != null;
+    return flex[REFLEXY_KEY] != null;
   }
 
   if ((component as AnyObject)['$$typeof'] === REACT_MEMO_TYPE) {

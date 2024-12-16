@@ -1,6 +1,8 @@
 import { getCssValue, spaceToCssValue } from '../utils';
 import type { Space, SpaceSize, SpaceUnit } from './types';
 
+export const REFLEXY_KEY = Symbol.for('@reflexy');
+
 export function toCssValue(
   size: boolean | Space,
   sizeMultipliers: Record<SpaceSize, number>,

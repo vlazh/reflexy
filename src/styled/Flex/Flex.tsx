@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@mui/system/styled';
 import type { MUIStyledCommonProps } from '@mui/system/createStyled';
 import type { DefaultComponentType, FlexAllProps } from '../../Flex';
-import { toCssValue } from '../../Flex/utils';
+import { REFLEXY_KEY, toCssValue } from '../../Flex/utils';
 import { getSpaceSizeMultiplier } from '../../utils';
 import useFlexDefaults from '../useFlexDefaults';
 import { getFillValue, getOverflowValue } from './utils';
@@ -223,6 +223,6 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
   return <FlexRoot {...props} />;
 }
 
-Flex.reflexy = true;
+Flex[REFLEXY_KEY] = true;
 
 export default Flex;

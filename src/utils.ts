@@ -1,15 +1,16 @@
 import type React from 'react';
 import '@js-toolkit/utils/types';
 import { hasIn } from '@js-toolkit/utils/hasIn';
-import type { Space, SpaceProps, SpaceSize, SpaceUnit, SSpaceSize } from './Flex';
 import type Flex from './Flex';
+import type { Space, SpaceProps, SpaceSize, SpaceUnit, SSpaceSize } from './Flex';
 import type { SharedDefaults } from './sharedDefaults';
+import { REFLEXY_KEY } from './Flex/utils';
 
 export function copyInternalProps<T extends React.ComponentType<any>>(
   source: typeof Flex,
   target: T
 ): T {
-  (target as AnyObject).reflexy = source.reflexy;
+  (target as AnyObject)[REFLEXY_KEY] = source[REFLEXY_KEY];
   return target;
 }
 
