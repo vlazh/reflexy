@@ -2,7 +2,7 @@
 import React from 'react';
 import '@js-toolkit/utils/types';
 import type Flex from './Flex';
-import { REFLEXY_KEY } from './Flex/utils';
+import { REFLEXY_KEY } from './utils';
 
 const REACT_MEMO_TYPE = Symbol.for('react.memo');
 
