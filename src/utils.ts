@@ -4,7 +4,8 @@ import { hasIn } from '@js-toolkit/utils/hasIn';
 import type Flex from './Flex';
 import type { Space, SpaceProps, SpaceSize, SpaceUnit, SSpaceSize } from './Flex';
 import type { SharedDefaults } from './sharedDefaults';
-import { REFLEXY_KEY } from './Flex/utils';
+
+export const REFLEXY_KEY = Symbol.for('@reflexy');
 
 export function copyInternalProps<T extends React.ComponentType<any>>(
   source: typeof Flex,
@@ -67,4 +68,15 @@ export function spaceToCssValue(
     return getCssValue(sizeMultipliers[size as SpaceSize], unit);
   }
   return getCssValue(size, unit);
+}
+
+export function toCssValue(
+  size: boolean | Space,
+  sizeMultipliers: Record<SpaceSize, number>,
+  defaultMultiplier: number,
+  unit: SpaceUnit
+): string {
+  if (size === true) return getCssValue(defaultMultiplier, unit);
+  if (size === false) return `0`;
+  return spaceToCssValue(size, sizeMultipliers, unit);
 }

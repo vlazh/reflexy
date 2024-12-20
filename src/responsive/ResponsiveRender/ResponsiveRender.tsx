@@ -6,6 +6,7 @@ import type { BreakpointsMergeType, ResponsiveProps } from '../Responsive';
 type Breakpoints = { [P in ViewSize.Keys]?: boolean | undefined };
 
 export type ResponsiveRenderProps = React.PropsWithChildren<
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   Breakpoints & Pick<ResponsiveProps<{}>, 'merge'>
 >;
 

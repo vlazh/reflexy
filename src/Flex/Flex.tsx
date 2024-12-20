@@ -5,6 +5,7 @@ import {
   defaultClassNameTransformer,
   defaultStyleTransformer,
   getSpaceSizeMultiplier,
+  REFLEXY_KEY,
 } from '../utils';
 import props2className from './props2className';
 import props2style from './props2style';
@@ -14,7 +15,6 @@ import type {
   FlexAllProps,
   StyleTransformer,
 } from './types';
-import { REFLEXY_KEY } from './utils';
 
 /**
  * Flexbox container.

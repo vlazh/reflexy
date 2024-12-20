@@ -2,8 +2,7 @@ import React from 'react';
 import styled from '@mui/system/styled';
 import type { MUIStyledCommonProps } from '@mui/system/createStyled';
 import type { DefaultComponentType, FlexAllProps } from '../../Flex';
-import { REFLEXY_KEY, toCssValue } from '../../Flex/utils';
-import { getSpaceSizeMultiplier } from '../../utils';
+import { REFLEXY_KEY, toCssValue, getSpaceSizeMultiplier } from '../../utils';
 import useFlexDefaults from '../useFlexDefaults';
 import { getFillValue, getOverflowValue } from './utils';
 
