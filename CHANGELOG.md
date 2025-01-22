@@ -1,3 +1,10 @@
+## <small>3.57.5 (2025-01-22)</small>
+
+* Update configs ([7eb5488](https://github.com/vlazh/reflexy/commit/7eb5488))
+* Update deps ([a2dc2ca](https://github.com/vlazh/reflexy/commit/a2dc2ca))
+
+
+
 ## <small>3.57.4 (2024-12-20)</small>
 
 * Refactor ([81874a2](https://github.com/vlazh/reflexy/commit/81874a2))
