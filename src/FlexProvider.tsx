@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useMemo } from 'react';
 import '@js-toolkit/utils/types';
 import sharedDefaults, { type SharedDefaults } from './sharedDefaults';

@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import ThemeProvider, { type ThemeProviderProps } from '@mui/system/ThemeProvider';
 import useTheme from '@mui/system/useTheme';
