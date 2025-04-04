@@ -1,3 +1,10 @@
+## <small>3.57.6 (2025-04-04)</small>
+
+* Add 'use client' directive ([21c393a](https://github.com/vlazh/reflexy/commit/21c393a))
+* Update deps ([7a2c1a7](https://github.com/vlazh/reflexy/commit/7a2c1a7))
+
+
+
 ## <small>3.57.5 (2025-01-22)</small>
 
 * Update configs ([7eb5488](https://github.com/vlazh/reflexy/commit/7eb5488))
