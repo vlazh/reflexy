@@ -18,12 +18,9 @@ export default function useFlexUtils(): UseFlexUtilsResult {
 
   if (!resultRef.current) {
     resultRef.current = {
-      spaceToCss: (space: Space) =>
-        spaceToCssValue(space, defaultsRef.current.defaultSizes, defaultsRef.current.defaultUnit),
+      spaceToCss: (space: Space) => spaceToCssValue(space, defaultsRef.current),
       spaceToNumber: (space: Space) =>
-        Number.parseFloat(
-          spaceToCssValue(space, defaultsRef.current.defaultSizes, defaultsRef.current.defaultUnit)
-        ),
+        Number.parseFloat(spaceToCssValue(space, defaultsRef.current)),
     };
   }
 

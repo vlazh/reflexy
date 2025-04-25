@@ -1,6 +1,6 @@
 import type React from 'react';
 import '@js-toolkit/utils/types';
-import { toCssValue } from '../utils';
+import { getSpace, spaceToCssValue } from '../utils';
 import type { SpaceProps, FlexProps, SpaceSize } from './types';
 
 export default function props2style(
@@ -43,17 +43,20 @@ export default function props2style(
     width: typeof hfill === 'number' ? `${Math.min(hfill, 1) * 100}%` : undefined,
     height: typeof vfill === 'number' ? `${Math.min(vfill, 1) * 100}%` : undefined,
 
-    margin: m != null ? toCssValue(m, defaultSizes, mSize, mUnit) : undefined,
-    marginTop: mt != null ? toCssValue(mt, defaultSizes, mSize, mUnit) : undefined,
-    marginRight: mr != null ? toCssValue(mr, defaultSizes, mSize, mUnit) : undefined,
-    marginBottom: mb != null ? toCssValue(mb, defaultSizes, mSize, mUnit) : undefined,
-    marginLeft: ml != null ? toCssValue(ml, defaultSizes, mSize, mUnit) : undefined,
+    margin: m != null ? spaceToCssValue(getSpace(m, mSize), defaultSizes, mUnit) : undefined,
+    marginTop: mt != null ? spaceToCssValue(getSpace(mt, mSize), defaultSizes, mUnit) : undefined,
+    marginRight: mr != null ? spaceToCssValue(getSpace(mr, mSize), defaultSizes, mUnit) : undefined,
+    marginBottom:
+      mb != null ? spaceToCssValue(getSpace(mb, mSize), defaultSizes, mUnit) : undefined,
+    marginLeft: ml != null ? spaceToCssValue(getSpace(ml, mSize), defaultSizes, mUnit) : undefined,
 
-    padding: p != null ? toCssValue(p, defaultSizes, pSize, pUnit) : undefined,
-    paddingTop: pt != null ? toCssValue(pt, defaultSizes, pSize, pUnit) : undefined,
-    paddingRight: pr != null ? toCssValue(pr, defaultSizes, pSize, pUnit) : undefined,
-    paddingBottom: pb != null ? toCssValue(pb, defaultSizes, pSize, pUnit) : undefined,
-    paddingLeft: pl != null ? toCssValue(pl, defaultSizes, pSize, pUnit) : undefined,
+    padding: p != null ? spaceToCssValue(getSpace(p, pSize), defaultSizes, pUnit) : undefined,
+    paddingTop: pt != null ? spaceToCssValue(getSpace(pt, pSize), defaultSizes, pUnit) : undefined,
+    paddingRight:
+      pr != null ? spaceToCssValue(getSpace(pr, pSize), defaultSizes, pUnit) : undefined,
+    paddingBottom:
+      pb != null ? spaceToCssValue(getSpace(pb, pSize), defaultSizes, pUnit) : undefined,
+    paddingLeft: pl != null ? spaceToCssValue(getSpace(pl, pSize), defaultSizes, pUnit) : undefined,
   }).reduce((acc, [k, v]) => {
     if (v == null) return acc;
     acc[k] = v;

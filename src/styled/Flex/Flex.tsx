@@ -4,7 +4,7 @@ import React from 'react';
 import styled from '@mui/system/styled';
 import type { MUIStyledCommonProps } from '@mui/system/createStyled';
 import type { DefaultComponentType, FlexAllProps } from '../../Flex';
-import { REFLEXY_KEY, toCssValue, getSpaceSizeMultiplier } from '../../utils';
+import { REFLEXY_KEY, getSpaceSizeMultiplier, getSpace, spaceToCssValue } from '../../utils';
 import useFlexDefaults from '../useFlexDefaults';
 import { getFillValue, getOverflowValue } from './utils';
 
@@ -137,6 +137,9 @@ const FlexRoot = styled(
       scrollableY = scrollable,
     } = props;
 
+    const marginSize = getSpaceSizeMultiplier(mSize, defaultSizes);
+    const paddingSize = getSpaceSizeMultiplier(pSize, defaultSizes);
+
     const resetValue = null;
 
     return {
@@ -173,38 +176,22 @@ const FlexRoot = styled(
         overflowY: getOverflowValue(overflowY, scrollableY) ?? resetValue,
 
         marginTop:
-          mt != null
-            ? toCssValue(mt, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
-            : resetValue,
+          mt != null ? spaceToCssValue(getSpace(mt, marginSize), defaultSizes, mUnit) : resetValue,
         marginRight:
-          mr != null
-            ? toCssValue(mr, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
-            : resetValue,
+          mr != null ? spaceToCssValue(getSpace(mr, marginSize), defaultSizes, mUnit) : resetValue,
         marginBottom:
-          mb != null
-            ? toCssValue(mb, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
-            : resetValue,
+          mb != null ? spaceToCssValue(getSpace(mb, marginSize), defaultSizes, mUnit) : resetValue,
         marginLeft:
-          ml != null
-            ? toCssValue(ml, defaultSizes, getSpaceSizeMultiplier(mSize, defaultSizes), mUnit)
-            : resetValue,
+          ml != null ? spaceToCssValue(getSpace(ml, marginSize), defaultSizes, mUnit) : resetValue,
 
         paddingTop:
-          pt != null
-            ? toCssValue(pt, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
-            : resetValue,
+          pt != null ? spaceToCssValue(getSpace(pt, paddingSize), defaultSizes, pUnit) : resetValue,
         paddingRight:
-          pr != null
-            ? toCssValue(pr, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
-            : resetValue,
+          pr != null ? spaceToCssValue(getSpace(pr, paddingSize), defaultSizes, pUnit) : resetValue,
         paddingBottom:
-          pb != null
-            ? toCssValue(pb, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
-            : resetValue,
+          pb != null ? spaceToCssValue(getSpace(pb, paddingSize), defaultSizes, pUnit) : resetValue,
         paddingLeft:
-          pl != null
-            ? toCssValue(pl, defaultSizes, getSpaceSizeMultiplier(pSize, defaultSizes), pUnit)
-            : resetValue,
+          pl != null ? spaceToCssValue(getSpace(pl, paddingSize), defaultSizes, pUnit) : resetValue,
       },
     };
   }

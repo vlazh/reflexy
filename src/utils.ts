@@ -2,7 +2,7 @@ import type React from 'react';
 import '@js-toolkit/utils/types';
 import { hasIn } from '@js-toolkit/utils/hasIn';
 import type Flex from './Flex';
-import type { Space, SpaceProps, SpaceSize, SpaceUnit, SSpaceSize } from './Flex';
+import type { Space, SpaceSize, SpaceUnit, SSpaceSize } from './Flex';
 import type { SharedDefaults } from './sharedDefaults';
 
 export const REFLEXY_KEY = Symbol.for('@reflexy');
@@ -39,14 +39,21 @@ export function getAbsSpaceSize(size: SpaceSize | SSpaceSize): SpaceSize {
   return size as SpaceSize;
 }
 
-export const getSpaceSizeMultiplier = (
-  size: NonNullable<SpaceProps['mSize']>,
+export function getSpaceSizeMultiplier(
+  size: Space,
   sizeMultipliers: Record<SpaceSize, number>
-): number => {
+): number {
   return typeof size === 'number' ? size : sizeMultipliers[getAbsSpaceSize(size)];
-};
+}
 
-export function spaceToCssValue(size: Space, defaults: SharedDefaults): string;
+export function getSpace(space: Space | boolean, defaultSpace: Space): Space {
+  return space === true ? defaultSpace : 0;
+}
+
+export function spaceToCssValue(
+  size: Space,
+  defaults: Pick<SharedDefaults, 'defaultSizes' | 'defaultUnit'>
+): string;
 
 export function spaceToCssValue(
   size: Space,
@@ -56,7 +63,9 @@ export function spaceToCssValue(
 
 export function spaceToCssValue(
   size: Space,
-  sizeMultipliersOrDefaults: Record<SpaceSize, number> | SharedDefaults,
+  sizeMultipliersOrDefaults:
+    | Record<SpaceSize, number>
+    | Pick<SharedDefaults, 'defaultSizes' | 'defaultUnit'>,
   unit0?: SpaceUnit
 ): string {
   const [sizeMultipliers, unit] = hasIn(sizeMultipliersOrDefaults, 'defaultUnit')
@@ -68,15 +77,4 @@ export function spaceToCssValue(
     return getCssValue(sizeMultipliers[size as SpaceSize], unit);
   }
   return getCssValue(size, unit);
-}
-
-export function toCssValue(
-  size: boolean | Space,
-  sizeMultipliers: Record<SpaceSize, number>,
-  defaultMultiplier: number,
-  unit: SpaceUnit
-): string {
-  if (size === true) return getCssValue(defaultMultiplier, unit);
-  if (size === false) return `0`;
-  return spaceToCssValue(size, sizeMultipliers, unit);
 }

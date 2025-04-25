@@ -139,8 +139,6 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
     ]
   );
 
-  // const marginSize = typeof mSize === 'number' ? mSize : sharedDefaults.defaultSizes[mSize];
-  // const paddingSize = typeof pSize === 'number' ? pSize : sharedDefaults.defaultSizes[pSize];
   const marginSize = getSpaceSizeMultiplier(mSize, defaultSizes);
   const paddingSize = getSpaceSizeMultiplier(pSize, defaultSizes);
 
