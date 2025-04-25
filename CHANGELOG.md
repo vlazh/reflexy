@@ -1,3 +1,10 @@
+## 3.58.0 (2025-04-25)
+
+* Improve utils and refactor ([d43f131](https://github.com/vlazh/reflexy/commit/d43f131))
+* Update deps ([044e054](https://github.com/vlazh/reflexy/commit/044e054))
+
+
+
 ## <small>3.57.6 (2025-04-04)</small>
 
 * Add 'use client' directive ([21c393a](https://github.com/vlazh/reflexy/commit/21c393a))
