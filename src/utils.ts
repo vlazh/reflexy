@@ -47,7 +47,8 @@ export function getSpaceSizeMultiplier(
 }
 
 export function getSpace(space: Space | boolean, defaultSpace: Space): Space {
-  return space === true ? defaultSpace : 0;
+  if (space === true) return defaultSpace;
+  return space === false ? 0 : space;
 }
 
 export function spaceToCssValue(
