@@ -1,3 +1,10 @@
+## <small>3.58.1 (2025-04-27)</small>
+
+* Fix getSpace ([edb1fae](https://github.com/vlazh/reflexy/commit/edb1fae))
+* Update deps ([780a234](https://github.com/vlazh/reflexy/commit/780a234))
+
+
+
 ## 3.58.0 (2025-04-25)
 
 * Improve utils and refactor ([d43f131](https://github.com/vlazh/reflexy/commit/d43f131))
