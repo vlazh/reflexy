@@ -1,24 +1,36 @@
-/* BASE */
+/* DISPLAY */
+.display--initial {
+  display: initial;
+}
+.display--block {
+  display: block;
+}
+.display--inline-block {
+  display: inline-block;
+}
+.display--inline {
+  display: inline;
+}
 .display--flex {
   display: flex;
 }
-
 .display--inline-flex {
   display: inline-flex;
 }
+.display--none {
+  display: none;
+}
 
+/* BASE */
 .fill-v {
   height: 100%;
 }
-
 .fill-h {
   width: 100%;
 }
-
 .shrink-width {
   min-width: 0;
 }
-
 .shrink-height {
   min-height: 0;
 }
@@ -27,7 +39,6 @@
 .column {
   flex-direction: column;
 }
-
 .column-reverse {
   flex-direction: column-reverse;
 }
@@ -36,7 +47,6 @@
 .row {
   flex-direction: row;
 }
-
 .row-reverse {
   flex-direction: row-reverse;
 }
@@ -45,23 +55,18 @@
 .wrap--inherit {
   flex-wrap: inherit;
 }
-
 .wrap--initial {
   flex-wrap: initial;
 }
-
 .wrap--unset {
   flex-wrap: unset;
 }
-
 .wrap--wrap {
   flex-wrap: wrap;
 }
-
 .wrap--nowrap {
   flex-wrap: nowrap;
 }
-
 .wrap--wrap-reverse {
   flex-wrap: wrap-reverse;
 }
@@ -70,31 +75,24 @@
 .align-items--inherit {
   align-items: inherit;
 }
-
 .align-items--initial {
   align-items: initial;
 }
-
 .align-items--unset {
   align-items: unset;
 }
-
 .align-items--center {
   align-items: center;
 }
-
 .align-items--flex-end {
   align-items: flex-end;
 }
-
 .align-items--flex-start {
   align-items: flex-start;
 }
-
 .align-items--baseline {
   align-items: baseline;
 }
-
 .align-items--stretch {
   align-items: stretch;
 }
@@ -103,35 +101,27 @@
 .align-self--inherit {
   align-self: inherit;
 }
-
 .align-self--initial {
   align-self: initial;
 }
-
 .align-self--unset {
   align-self: unset;
 }
-
 .align-self--center {
   align-self: center;
 }
-
 .align-self--stretch {
   align-self: stretch;
 }
-
 .align-self--baseline {
   align-self: baseline;
 }
-
 .align-self--auto {
   align-self: auto;
 }
-
 .align-self--flex-end {
   align-self: flex-end;
 }
-
 .align-self--flex-start {
   align-self: flex-start;
 }
@@ -140,35 +130,27 @@
 .align-content--inherit {
   align-content: inherit;
 }
-
 .align-content--initial {
   align-content: initial;
 }
-
 .align-content--unset {
   align-content: unset;
 }
-
 .align-content--center {
   align-content: center;
 }
-
 .align-content--stretch {
   align-content: stretch;
 }
-
 .align-content--space-around {
   align-content: space-around;
 }
-
 .align-content--space-between {
   align-content: space-between;
 }
-
 .align-content--flex-end {
   align-content: flex-end;
 }
-
 .align-content--flex-start {
   align-content: flex-start;
 }
@@ -177,35 +159,27 @@
 .justify-content--inherit {
   justify-content: inherit;
 }
-
 .justify-content--initial {
   justify-content: initial;
 }
-
 .justify-content--unset {
   justify-content: unset;
 }
-
 .justify-content--flex-start {
   justify-content: flex-start;
 }
-
 .justify-content--flex-end {
   justify-content: flex-end;
 }
-
 .justify-content--center {
   justify-content: center;
 }
-
 .justify-content--space-around {
   justify-content: space-around;
 }
-
 .justify-content--space-between {
   justify-content: space-between;
 }
-
 .justify-content--space-evenly {
   justify-content: space-evenly;
 }
@@ -214,23 +188,27 @@
 .basis--inherit {
   flex-basis: inherit;
 }
-
 .basis--initial {
   flex-basis: initial;
 }
-
 .basis--unset {
   flex-basis: unset;
 }
-
 .basis--auto {
   flex-basis: auto;
 }
-
 .basis--content {
   flex-basis: content;
 }
-
+.basis--fit-content {
+  flex-basis: fit-content;
+}
+.basis--max-content {
+  flex-basis: max-content;
+}
+.basis--min-content {
+  flex-basis: min-content;
+}
 .basis--0 {
   flex-basis: 0;
 }
@@ -239,99 +217,75 @@
 .grow--0 {
   flex-grow: 0;
 }
-
 .grow--1 {
   flex-grow: 1;
 }
-
 .grow--2 {
   flex-grow: 2;
 }
-
 .grow--3 {
   flex-grow: 3;
 }
-
 .grow--4 {
   flex-grow: 4;
 }
-
 .grow--5 {
   flex-grow: 5;
 }
-
 .grow--6 {
   flex-grow: 6;
 }
-
 .grow--7 {
   flex-grow: 7;
 }
-
 .grow--8 {
   flex-grow: 8;
 }
-
 .grow--9 {
   flex-grow: 9;
 }
-
 .grow--10 {
   flex-grow: 10;
 }
-
 .grow--11 {
   flex-grow: 11;
 }
-
 .grow--12 {
   flex-grow: 12;
 }
-
 .grow--13 {
   flex-grow: 13;
 }
-
 .grow--14 {
   flex-grow: 14;
 }
-
 .grow--15 {
   flex-grow: 15;
 }
-
 .grow--16 {
   flex-grow: 16;
 }
-
 .grow--17 {
   flex-grow: 17;
 }
-
 .grow--18 {
   flex-grow: 18;
 }
-
 .grow--19 {
   flex-grow: 19;
 }
-
 .grow--20 {
   flex-grow: 20;
 }
-
 .grow--21 {
   flex-grow: 21;
 }
-
 .grow--22 {
   flex-grow: 22;
 }
-
 .grow--23 {
   flex-grow: 23;
 }
-
 .grow--24 {
   flex-grow: 24;
 }
@@ -340,99 +294,75 @@
 .shrink--0 {
   flex-shrink: 0;
 }
-
 .shrink--1 {
   flex-shrink: 1;
 }
-
 .shrink--2 {
   flex-shrink: 2;
 }
-
 .shrink--3 {
   flex-shrink: 3;
 }
-
 .shrink--4 {
   flex-shrink: 4;
 }
-
 .shrink--5 {
   flex-shrink: 5;
 }
-
 .shrink--6 {
   flex-shrink: 6;
 }
-
 .shrink--7 {
   flex-shrink: 7;
 }
-
 .shrink--8 {
   flex-shrink: 8;
 }
-
 .shrink--9 {
   flex-shrink: 9;
 }
-
 .shrink--10 {
   flex-shrink: 10;
 }
-
 .shrink--11 {
   flex-shrink: 11;
 }
-
 .shrink--12 {
   flex-shrink: 12;
 }
-
 .shrink--13 {
   flex-shrink: 13;
 }
-
 .shrink--14 {
   flex-shrink: 14;
 }
-
 .shrink--15 {
   flex-shrink: 15;
 }
-
 .shrink--16 {
   flex-shrink: 16;
 }
-
 .shrink--17 {
   flex-shrink: 17;
 }
-
 .shrink--18 {
   flex-shrink: 18;
 }
-
 .shrink--19 {
   flex-shrink: 19;
 }
-
 .shrink--20 {
   flex-shrink: 20;
 }
-
 .shrink--21 {
   flex-shrink: 21;
 }
-
 .shrink--22 {
   flex-shrink: 22;
 }
-
 .shrink--23 {
   flex-shrink: 23;
 }
-
 .shrink--24 {
   flex-shrink: 24;
 }
@@ -441,55 +371,42 @@
 .overflow-x--inherit {
   overflow-x: inherit;
 }
-
 .overflow-x--initial {
   overflow-x: initial;
 }
-
 .overflow-x--unset {
   overflow-x: unset;
 }
-
 .overflow-x--auto {
   overflow-x: auto;
 }
-
 .overflow-x--hidden {
   overflow-x: hidden;
 }
-
 .overflow-x--scroll {
   overflow-x: scroll;
 }
-
 .overflow-x--visible {
   overflow-x: visible;
 }
-
 .overflow-y--inherit {
   overflow-y: inherit;
 }
-
 .overflow-y--initial {
   overflow-y: initial;
 }
-
 .overflow-y--unset {
   overflow-y: unset;
 }
-
 .overflow-y--auto {
   overflow-y: auto;
 }
-
 .overflow-y--hidden {
   overflow-y: hidden;
 }
-
 .overflow-y--scroll {
   overflow-y: scroll;
 }
-
 .overflow-y--visible {
   overflow-y: visible;
 }

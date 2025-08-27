@@ -26,13 +26,18 @@ export default function props2style(
     pl,
     pr,
     pt,
-  }: FlexProps &
-    Omit<SpaceProps, 'mSize' | 'mUnit' | 'pSize' | 'pUnit'> & {
-      mSize: number;
-      mUnit: NonNullable<SpaceProps['mUnit']>;
-      pSize: number;
-      pUnit: NonNullable<SpaceProps['pUnit']>;
-    },
+  }: RequiredKeepUndefined<
+    Pick<FlexProps, 'basis' | 'order' | 'grow' | 'shrink' | 'hfill' | 'vfill'> &
+      OmitStrict<
+        SpaceProps,
+        'mSize' | 'mUnit' | 'pSize' | 'pUnit' | 'unit' | 'mx' | 'my' | 'px' | 'py'
+      > & {
+        mSize: number;
+        mUnit: NonNullable<SpaceProps['mUnit']>;
+        pSize: number;
+        pUnit: NonNullable<SpaceProps['pUnit']>;
+      }
+  >,
   defaultSizes: Record<SpaceSize, number>
 ): React.CSSProperties {
   return Object.entries({

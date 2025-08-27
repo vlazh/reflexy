@@ -12,6 +12,7 @@ const FlexRoot = styled(
   (props: FlexAllProps<React.ElementType>) => {
     const {
       /* eslint-disable @typescript-eslint/no-unused-vars */
+      display,
       flex,
       inline,
       row,
@@ -89,7 +90,8 @@ const FlexRoot = styled(
     const { defaultUnit, defaultSize, defaultSizes } = useFlexDefaults();
 
     const {
-      flex /*  = true */,
+      display /* = 'flex' */,
+      flex /* = true */,
       inline,
       row,
       column,
@@ -152,7 +154,7 @@ const FlexRoot = styled(
       // higher specificity to override component styles
       '&': {
         // eslint-disable-next-line no-nested-ternary
-        display: flex == null || flex ? (inline ? 'inline-flex' : 'flex') : resetValue,
+        display: display || (flex == null || flex ? (inline ? 'inline-flex' : 'flex') : resetValue),
         flexDirection: reverse
           ? (column && 'column-reverse') || 'row-reverse'
           : (column && 'column') || (row && 'row') || resetValue,

@@ -1,29 +1,50 @@
+import type { Globals as Globals0, Property, DataType } from 'csstype';
 import type { ComponentProps, GetComponentProps } from '../types';
 
-type Globals = 'inherit' | 'initial' | 'unset';
+type Globals = ExtractStrict<Globals0, 'inherit' | 'initial' | 'unset'>;
 
-type FlexPosition = 'center' | 'flex-end' | 'flex-start';
+type ContentPosition = ExtractStrict<
+  DataType.ContentPosition,
+  'center' | 'flex-end' | 'flex-start'
+>;
 
-type ContentDistribution = 'space-around' | 'space-between' | 'space-evenly' | 'stretch';
+type JustifyContent = ExtractStrict<
+  Property.JustifyContent,
+  Globals | DataType.ContentDistribution | ContentPosition
+>;
 
-type JustifyContent = Globals | ContentDistribution | FlexPosition;
+type AlignItems = ExtractStrict<
+  Property.AlignItems,
+  Globals | ContentPosition | 'baseline' | 'stretch'
+>;
 
-type AlignItems = Globals | FlexPosition | 'baseline' | 'stretch';
+type AlignSelf = ExtractStrict<Property.AlignSelf, AlignItems | 'auto'>;
 
-type AlignSelf = AlignItems | 'auto';
+type AlignContent = ExtractStrict<
+  Property.AlignContent,
+  Globals | DataType.ContentDistribution | ContentPosition
+>;
 
-type AlignContent = Globals | ContentDistribution | FlexPosition;
+type FlexBasis = ExtractStrict<
+  Property.FlexBasis,
+  Globals | 'auto' | 'content' | 'fit-content' | 'max-content' | 'min-content' | 0
+>;
 
-type FlexBasis = Globals | 'auto' | 'content' | number;
+type FlexWrap = ExtractStrict<Property.FlexWrap, Globals | 'nowrap' | 'wrap' | 'wrap-reverse'>;
 
-type FlexWrap = Globals | 'nowrap' | 'wrap' | 'wrap-reverse';
+type Display = ExtractStrict<
+  Property.Display,
+  'initial' | 'block' | 'inline-block' | 'inline' | 'flex' | 'inline-flex' | 'none'
+>;
 
 type Column = number | string | boolean;
 
 export interface FlexProps {
-  /** Whether sets `display` to `flex` or not. Default `true`. */
+  /** Defaults to `flex`. */
+  display?: Display | undefined;
+  /** @deprecated Use `display` instead. `display` takes priority. */
   flex?: boolean | undefined;
-  /** Sets `display` to `inline-flex`. */
+  /** @deprecated Use `display` instead. `display` takes priority. Sets `display` to `inline-flex`. */
   inline?: boolean | undefined;
   /** Sets `flow-direction` to `row`. */
   row?: boolean | undefined;

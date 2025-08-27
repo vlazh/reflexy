@@ -4,6 +4,7 @@ import css from './Flex.css';
 export default function props2className(
   props: Pick<
     FlexProps,
+    | 'display'
     | 'column'
     | 'row'
     | 'reverse'
@@ -56,8 +57,10 @@ export default function props2className(
   const overflowX = props.overflowX ?? scrollableX;
   const overflowY = props.overflowY ?? scrollableY;
 
+  const display = props.display ?? (props.flex && (props.inline ? 'inline-flex' : 'flex'));
+
   const className = [
-    props.flex && css[`display--${props.inline ? 'inline-flex' : 'flex'}`],
+    display && css[`display--${display}`],
     row && css[`row${reverse}`],
     column && css[`column${reverse}`],
     wrap && css[`wrap--${wrap}`],

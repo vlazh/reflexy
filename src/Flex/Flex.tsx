@@ -29,6 +29,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
 
   const {
     component = 'div',
+    display = 'flex',
     flex = true,
     inline,
     row,
@@ -92,6 +93,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
   const calcClassName = React.useMemo(
     () =>
       props2className({
+        display,
         flex,
         inline,
         row,
@@ -115,6 +117,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
         scrollableY,
       }),
     [
+      display,
       flex,
       inline,
       row,
@@ -146,6 +149,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
     () =>
       props2style(
         {
+          basis,
           order,
           grow,
           shrink,
@@ -169,6 +173,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
         defaultSizes
       ),
     [
+      basis,
       defaultSizes,
       grow,
       hfill,
