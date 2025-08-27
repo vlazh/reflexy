@@ -1,3 +1,11 @@
+## 3.59.0 (2025-08-27)
+
+* Add display prop ([5676bab](https://github.com/vlazh/reflexy/commit/5676bab))
+* Update deps ([a94a708](https://github.com/vlazh/reflexy/commit/a94a708))
+* Update jsdocs ([43b19c7](https://github.com/vlazh/reflexy/commit/43b19c7))
+
+
+
 ## <small>3.58.1 (2025-04-27)</small>
 
 * Fix getSpace ([edb1fae](https://github.com/vlazh/reflexy/commit/edb1fae))
