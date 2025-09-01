@@ -4,7 +4,13 @@ import React from 'react';
 import styled from '@mui/system/styled';
 import type { MUIStyledCommonProps } from '@mui/system/createStyled';
 import type { DefaultComponentType, FlexAllProps } from '../../Flex';
-import { REFLEXY_KEY, getSpaceSizeMultiplier, getSpace, spaceToCssValue } from '../../utils';
+import {
+  REFLEXY_KEY,
+  getSpaceSizeMultiplier,
+  getSpace,
+  spaceToCssValue,
+  gapToCssValue,
+} from '../../utils';
 import useFlexDefaults from '../useFlexDefaults';
 import { getFillValue, getOverflowValue } from './utils';
 
@@ -53,6 +59,11 @@ const FlexRoot = styled(
       pb,
       pr,
       pl,
+      gapSize,
+      gapUnit,
+      gap,
+      columnGap,
+      rowGap,
       overflow,
       overflowX,
       overflowY,
@@ -131,6 +142,11 @@ const FlexRoot = styled(
       pb = py,
       pr = px,
       pl = px,
+      gapSize: gSize = defaultSize,
+      gapUnit = unit,
+      gap,
+      columnGap,
+      rowGap,
       overflow,
       overflowX = overflow,
       overflowY = overflow,
@@ -141,6 +157,7 @@ const FlexRoot = styled(
 
     const marginSize = getSpaceSizeMultiplier(mSize, defaultSizes);
     const paddingSize = getSpaceSizeMultiplier(pSize, defaultSizes);
+    const gapSize = getSpaceSizeMultiplier(gSize, defaultSizes);
 
     const resetValue = null;
 
@@ -194,6 +211,17 @@ const FlexRoot = styled(
           pb != null ? spaceToCssValue(getSpace(pb, paddingSize), defaultSizes, pUnit) : resetValue,
         paddingLeft:
           pl != null ? spaceToCssValue(getSpace(pl, paddingSize), defaultSizes, pUnit) : resetValue,
+
+        gap:
+          gap != null ? gapToCssValue(getSpace(gap, gapSize), defaultSizes, gapUnit) : resetValue,
+        columnGap:
+          columnGap != null
+            ? spaceToCssValue(getSpace(columnGap, gapSize), defaultSizes, gapUnit)
+            : resetValue,
+        rowGap:
+          rowGap != null
+            ? spaceToCssValue(getSpace(rowGap, gapSize), defaultSizes, gapUnit)
+            : resetValue,
       },
     };
   }

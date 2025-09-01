@@ -91,10 +91,14 @@ export interface FlexProps {
 }
 
 export type SpaceSize = 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
+/** Signed `SpaceSize`. */
 export type SSpaceSize = `-${SpaceSize}`;
-export type Space = number | SpaceSize | SSpaceSize;
+/** Unsigned space. */
+export type USpace = number | SpaceSize;
+/** Unsigned and signed space. */
+export type Space = USpace | SSpaceSize;
 
-/** `number` treat as number of pixels */
+/** `number` is treated as number of pixels (px). */
 export type SpaceUnit =
   | 'px'
   | 'em'
@@ -110,6 +114,8 @@ export type SpaceUnit =
   | 'pt'
   | 'pc'
   | number;
+
+export type Gap = USpace | `${USpace} ${USpace}`;
 
 export interface SpaceProps {
   /** Measure unit of space */
@@ -150,6 +156,16 @@ export interface SpaceProps {
   px?: boolean | Space | undefined;
   /** padding by y axis: padding-top & padding-bottom */
   py?: boolean | Space | undefined;
+  /** Size of gap */
+  gapSize?: USpace | undefined;
+  /** Measure unit of gap */
+  gapUnit?: SpaceUnit | undefined;
+  /* gap */
+  gap?: boolean | Gap | undefined;
+  /* column-gap */
+  columnGap?: boolean | USpace | undefined;
+  /* row-gap */
+  rowGap?: boolean | USpace | undefined;
 }
 
 export type Overflow = Globals | 'auto' | 'hidden' | 'scroll' | 'visible';

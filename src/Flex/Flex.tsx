@@ -73,6 +73,11 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
     pr = px,
     pb = py,
     pl = px,
+    gapSize: gSize = defaultSize,
+    gapUnit = unit,
+    gap,
+    columnGap,
+    rowGap,
 
     scrollable,
     scrollableX = scrollable,
@@ -144,6 +149,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
 
   const marginSize = getSpaceSizeMultiplier(mSize, defaultSizes);
   const paddingSize = getSpaceSizeMultiplier(pSize, defaultSizes);
+  const gapSize = getSpaceSizeMultiplier(gSize, defaultSizes);
 
   const calcStyles = React.useMemo(
     () =>
@@ -169,31 +175,41 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
           pl,
           pr,
           pt,
+          gapSize,
+          gapUnit,
+          gap,
+          columnGap,
+          rowGap,
         },
         defaultSizes
       ),
     [
       basis,
-      defaultSizes,
+      order,
       grow,
+      shrink,
       hfill,
-      m,
-      mUnit,
+      vfill,
       marginSize,
+      mUnit,
+      m,
       mb,
       ml,
       mr,
       mt,
-      order,
-      p,
-      pUnit,
       paddingSize,
+      pUnit,
+      p,
       pb,
       pl,
       pr,
       pt,
-      shrink,
-      vfill,
+      gapSize,
+      gapUnit,
+      gap,
+      columnGap,
+      rowGap,
+      defaultSizes,
     ]
   );
 

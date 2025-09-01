@@ -1,6 +1,6 @@
 import type React from 'react';
 import '@js-toolkit/utils/types';
-import { getSpace, spaceToCssValue } from '../utils';
+import { gapToCssValue, getSpace, spaceToCssValue } from '../utils';
 import type { SpaceProps, FlexProps, SpaceSize } from './types';
 
 export default function props2style(
@@ -26,16 +26,33 @@ export default function props2style(
     pl,
     pr,
     pt,
+    gapSize,
+    gapUnit,
+    gap,
+    columnGap,
+    rowGap,
   }: RequiredKeepUndefined<
     Pick<FlexProps, 'basis' | 'order' | 'grow' | 'shrink' | 'hfill' | 'vfill'> &
       OmitStrict<
         SpaceProps,
-        'mSize' | 'mUnit' | 'pSize' | 'pUnit' | 'unit' | 'mx' | 'my' | 'px' | 'py'
+        | 'mSize'
+        | 'mUnit'
+        | 'pSize'
+        | 'pUnit'
+        | 'gapSize'
+        | 'gapUnit'
+        | 'unit'
+        | 'mx'
+        | 'my'
+        | 'px'
+        | 'py'
       > & {
         mSize: number;
         mUnit: NonNullable<SpaceProps['mUnit']>;
         pSize: number;
         pUnit: NonNullable<SpaceProps['pUnit']>;
+        gapSize: number;
+        gapUnit: NonNullable<SpaceProps['gapUnit']>;
       }
   >,
   defaultSizes: Record<SpaceSize, number>
@@ -62,6 +79,16 @@ export default function props2style(
     paddingBottom:
       pb != null ? spaceToCssValue(getSpace(pb, pSize), defaultSizes, pUnit) : undefined,
     paddingLeft: pl != null ? spaceToCssValue(getSpace(pl, pSize), defaultSizes, pUnit) : undefined,
+
+    gap: gap != null ? gapToCssValue(getSpace(gap, gapSize), defaultSizes, gapUnit) : undefined,
+    columnGap:
+      columnGap != null
+        ? spaceToCssValue(getSpace(columnGap, gapSize), defaultSizes, gapUnit)
+        : undefined,
+    rowGap:
+      rowGap != null
+        ? spaceToCssValue(getSpace(rowGap, gapSize), defaultSizes, gapUnit)
+        : undefined,
   }).reduce((acc, [k, v]) => {
     if (v == null) return acc;
     acc[k] = v;
