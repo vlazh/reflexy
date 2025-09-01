@@ -14,14 +14,12 @@ export default function props2style(
 
     mSize,
     mUnit,
-    m,
     mb,
     ml,
     mr,
     mt,
     pSize,
     pUnit,
-    p,
     pb,
     pl,
     pr,
@@ -42,8 +40,10 @@ export default function props2style(
         | 'gapSize'
         | 'gapUnit'
         | 'unit'
+        | 'm'
         | 'mx'
         | 'my'
+        | 'p'
         | 'px'
         | 'py'
       > & {
@@ -65,14 +65,12 @@ export default function props2style(
     width: typeof hfill === 'number' ? `${Math.min(hfill, 1) * 100}%` : undefined,
     height: typeof vfill === 'number' ? `${Math.min(vfill, 1) * 100}%` : undefined,
 
-    margin: m != null ? spaceToCssValue(getSpace(m, mSize), defaultSizes, mUnit) : undefined,
     marginTop: mt != null ? spaceToCssValue(getSpace(mt, mSize), defaultSizes, mUnit) : undefined,
     marginRight: mr != null ? spaceToCssValue(getSpace(mr, mSize), defaultSizes, mUnit) : undefined,
     marginBottom:
       mb != null ? spaceToCssValue(getSpace(mb, mSize), defaultSizes, mUnit) : undefined,
     marginLeft: ml != null ? spaceToCssValue(getSpace(ml, mSize), defaultSizes, mUnit) : undefined,
 
-    padding: p != null ? spaceToCssValue(getSpace(p, pSize), defaultSizes, pUnit) : undefined,
     paddingTop: pt != null ? spaceToCssValue(getSpace(pt, pSize), defaultSizes, pUnit) : undefined,
     paddingRight:
       pr != null ? spaceToCssValue(getSpace(pr, pSize), defaultSizes, pUnit) : undefined,
