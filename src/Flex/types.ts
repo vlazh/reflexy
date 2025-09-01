@@ -117,6 +117,14 @@ export type SpaceUnit =
 
 export type Gap = USpace | `${USpace} ${USpace}`;
 
+type Padding = USpace;
+// export type Padding =
+//   | USpace
+//   | `${USpace} ${USpace}`
+//   | `${USpace} ${USpace} ${USpace}`
+//   // error TS2859: Excessive complexity comparing types
+//   | `${USpace} ${USpace} ${USpace} ${USpace}`;
+
 export interface SpaceProps {
   /** Measure unit of space */
   unit?: SpaceUnit | undefined;
@@ -139,23 +147,23 @@ export interface SpaceProps {
   /** margin by y axis: margin-top & margin-bottom */
   my?: boolean | Space | undefined;
   /** Size of padding */
-  pSize?: Space | undefined;
+  pSize?: USpace | undefined;
   /** Measure unit of padding */
   pUnit?: SpaceUnit | undefined;
   /** padding */
-  p?: boolean | Space | undefined;
+  p?: boolean | Padding | undefined;
   /** padding-top */
-  pt?: boolean | Space | undefined;
+  pt?: boolean | USpace | undefined;
   /** padding-right */
-  pr?: boolean | Space | undefined;
+  pr?: boolean | USpace | undefined;
   /** padding-bottom */
-  pb?: boolean | Space | undefined;
+  pb?: boolean | USpace | undefined;
   /** padding-left */
-  pl?: boolean | Space | undefined;
+  pl?: boolean | USpace | undefined;
   /** padding by x axis: padding-left & padding-right */
-  px?: boolean | Space | undefined;
+  px?: boolean | USpace | undefined;
   /** padding by y axis: padding-top & padding-bottom */
-  py?: boolean | Space | undefined;
+  py?: boolean | USpace | undefined;
   /** Size of gap */
   gapSize?: USpace | undefined;
   /** Measure unit of gap */
