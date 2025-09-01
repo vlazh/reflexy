@@ -1,3 +1,11 @@
+## 3.60.0 (2025-09-01)
+
+* Add gap props ([d9348bd](https://github.com/vlazh/reflexy/commit/d9348bd))
+* Use  p and m as default values ([8e4cb8d](https://github.com/vlazh/reflexy/commit/8e4cb8d))
+* Use USpace for padding ([48ae7dc](https://github.com/vlazh/reflexy/commit/48ae7dc))
+
+
+
 ## 3.59.0 (2025-08-27)
 
 * Add display prop ([5676bab](https://github.com/vlazh/reflexy/commit/5676bab))
