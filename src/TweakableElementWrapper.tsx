@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Children, cloneElement } from 'react';
 import type { Styleable } from './Flex';
 import { defaultClassNameTransformer, defaultStyleTransformer } from './utils';
 
 export interface TweakableElementWrapperProps extends Styleable {
   element: React.ReactElement<React.PropsWithChildren<Styleable>>;
+  /** Defaults to `true`. */
   forwardProps?: boolean;
 }
 
@@ -16,7 +17,7 @@ export default function TweakableElementWrapper({
   forwardProps = true,
   ...rest
 }: React.PropsWithChildren<TweakableElementWrapperProps>): React.JSX.Element {
-  const cmp = React.Children.only(element);
+  const cmp = Children.only(element);
   const nextProps: Styleable = {
     ...(forwardProps && rest),
     ...cmp.props,
@@ -25,7 +26,7 @@ export default function TweakableElementWrapper({
   };
   // For elements such as input which does not supports children
   if (!cmp.props.children && !children) {
-    return React.cloneElement(cmp, nextProps);
+    return cloneElement(cmp, nextProps);
   }
-  return React.cloneElement(cmp, nextProps, children, cmp.props.children);
+  return cloneElement(cmp, nextProps, children, cmp.props.children);
 }
