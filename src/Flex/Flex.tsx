@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createElement, use, useMemo } from 'react';
 import '@js-toolkit/utils/types';
 import { FlexContext } from '../FlexProvider';
 import {
@@ -25,12 +25,12 @@ import type {
 function Flex<C extends React.ElementType = DefaultComponentType>(
   props: FlexAllProps<C, { inferStyleProps: true }>
 ): React.JSX.Element {
-  const { defaultUnit, defaultSize, defaultSizes } = React.use(FlexContext);
+  const { defaultUnit, defaultSize, defaultSizes } = use(FlexContext);
 
   const {
     component = 'div',
-    display = 'flex',
-    flex = true,
+    display /* = 'flex' */,
+    flex /* = true */,
     inline,
     row,
     column,
@@ -50,7 +50,10 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
     vfill = fill,
     hfill = fill,
 
-    shrinkByContent = flex,
+    shrinkByContent = (display == null && flex) ||
+      (display == null && flex == null) ||
+      display === 'flex' ||
+      display === 'inline-flex',
     shrinkHeight = shrinkByContent,
     shrinkWidth = shrinkByContent,
 
@@ -95,7 +98,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
     ...rest
   } = props as React.PropsWithChildren<FlexAllProps<any, { inferStyleProps: true }>>;
 
-  const calcClassName = React.useMemo(
+  const calcClassName = useMemo(
     () =>
       props2className({
         display,
@@ -151,7 +154,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
   const paddingSize = getSpaceSizeMultiplier(pSize, defaultSizes);
   const gapSize = getSpaceSizeMultiplier(gSize, defaultSizes);
 
-  const calcStyles = React.useMemo(
+  const calcStyles = useMemo(
     () =>
       props2style(
         {
@@ -209,7 +212,7 @@ function Flex<C extends React.ElementType = DefaultComponentType>(
     ]
   );
 
-  return React.createElement(
+  return createElement(
     component as C,
     Object.assign(rest, {
       className: (classNameTransformer as ClassNameTransformer<string>)(

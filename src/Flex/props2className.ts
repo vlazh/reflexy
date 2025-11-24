@@ -57,7 +57,11 @@ export default function props2className(
   const overflowX = props.overflowX ?? scrollableX;
   const overflowY = props.overflowY ?? scrollableY;
 
-  const display = props.display ?? (props.flex && (props.inline ? 'inline-flex' : 'flex'));
+  // const display = props.display ?? (props.flex && (props.inline ? 'inline-flex' : 'flex'));
+  const display =
+    props.display ||
+    // eslint-disable-next-line no-nested-ternary
+    (props.flex == null || props.flex ? (props.inline ? 'inline-flex' : 'flex') : undefined);
 
   const className = [
     display && css[`display--${display}`],

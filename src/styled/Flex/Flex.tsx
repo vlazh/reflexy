@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { createElement } from 'react';
 import styled from '@mui/system/styled';
 import type { MUIStyledCommonProps } from '@mui/system/createStyled';
 import type { DefaultComponentType, FlexAllProps } from '../../Flex';
@@ -82,7 +82,7 @@ const FlexRoot = styled(
       ...componentProps
     } = props as React.PropsWithChildren<typeof props>;
 
-    return React.createElement(component, componentProps, children);
+    return createElement(component, componentProps, children);
   },
   {
     skipSx: false,
@@ -120,7 +120,10 @@ const FlexRoot = styled(
       fill,
       hfill = fill,
       vfill = fill,
-      shrinkByContent = flex,
+      shrinkByContent = (display == null && flex) ||
+        (display == null && flex == null) ||
+        display === 'flex' ||
+        display === 'inline-flex',
       shrinkWidth = shrinkByContent,
       shrinkHeight = shrinkByContent,
       unit = defaultUnit,
