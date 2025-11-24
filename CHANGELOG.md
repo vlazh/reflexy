@@ -1,3 +1,11 @@
+## 3.61.0 (2025-11-24)
+
+* Refactor ([982d07e](https://github.com/vlazh/reflexy/commit/982d07e))
+* Set shrinkByContent only for flex display ([4bd65f0](https://github.com/vlazh/reflexy/commit/4bd65f0))
+* Update deps ([6f732ff](https://github.com/vlazh/reflexy/commit/6f732ff))
+
+
+
 ## 3.60.0 (2025-09-01)
 
 * Add gap props ([d9348bd](https://github.com/vlazh/reflexy/commit/d9348bd))
