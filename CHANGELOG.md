@@ -1,3 +1,11 @@
+## 3.62.0 (2026-01-20)
+
+* Add custom elements ([ab19782](https://github.com/vlazh/reflexy/commit/ab19782))
+* Reorganize and refactor ([98dbe35](https://github.com/vlazh/reflexy/commit/98dbe35))
+* Update deps ([8fe5224](https://github.com/vlazh/reflexy/commit/8fe5224))
+
+
+
 ## 3.61.0 (2025-11-24)
 
 * Refactor ([982d07e](https://github.com/vlazh/reflexy/commit/982d07e))
