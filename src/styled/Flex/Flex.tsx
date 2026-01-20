@@ -1,18 +1,19 @@
 'use client';
 
-import React, { createElement } from 'react';
+import { createElement } from 'react';
 import styled from '@mui/system/styled';
 import type { MUIStyledCommonProps } from '@mui/system/createStyled';
-import type { DefaultComponentType, FlexAllProps } from '../../Flex';
+import type { DefaultComponentType, FlexAllProps } from '../../propsTypes';
 import {
-  REFLEXY_KEY,
   getSpaceSizeMultiplier,
   getSpace,
   spaceToCssValue,
   gapToCssValue,
+  fillToCssValue,
+  scrollableToCssValue,
 } from '../../utils';
-import useFlexDefaults from '../useFlexDefaults';
-import { getFillValue, getOverflowValue } from './utils';
+import { REFLEXY_KEY } from '../../copyInternalProps';
+import { useFlexDefaults } from '../useFlexDefaults';
 
 const FlexRoot = styled(
   (props: FlexAllProps<React.ElementType>) => {
@@ -191,11 +192,11 @@ const FlexRoot = styled(
 
         minHeight: shrinkHeight ? 0 : resetValue,
         minWidth: shrinkWidth ? 0 : resetValue,
-        height: getFillValue(vfill) ?? resetValue,
-        width: getFillValue(hfill) ?? resetValue,
+        height: fillToCssValue(vfill) ?? resetValue,
+        width: fillToCssValue(hfill) ?? resetValue,
 
-        overflowX: getOverflowValue(overflowX, scrollableX) ?? resetValue,
-        overflowY: getOverflowValue(overflowY, scrollableY) ?? resetValue,
+        overflowX: overflowX ?? scrollableToCssValue(scrollableX) ?? resetValue,
+        overflowY: overflowY ?? scrollableToCssValue(scrollableY) ?? resetValue,
 
         marginTop:
           mt != null ? spaceToCssValue(getSpace(mt, marginSize), defaultSizes, mUnit) : resetValue,

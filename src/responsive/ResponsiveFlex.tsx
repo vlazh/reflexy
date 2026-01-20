@@ -1,8 +1,7 @@
-import React from 'react';
-import Flex, { type FlexAllProps, type DefaultComponentType } from '../../Flex';
-import useMediaQuery from '../useMediaQuery';
-import { type ResponsiveProps, mergeBreakpointProps } from '../Responsive';
-import { copyInternalProps } from '../../utils';
+import { useMediaQuery } from '@js-toolkit/react-hooks/useMediaQuery';
+import Flex, { type FlexAllProps, type DefaultComponentType } from '../Flex';
+import { copyInternalProps } from '../copyInternalProps';
+import { type ResponsiveProps, mergeBreakpointProps } from './Responsive';
 
 export type ResponsiveFlexAllProps<C extends React.ElementType = DefaultComponentType> =
   ResponsiveProps<FlexAllProps<C>> & FlexAllProps<C>;

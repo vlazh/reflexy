@@ -1,4 +1,4 @@
-import React from 'react';
+import { use } from 'react';
 import useTheme from '@mui/system/useTheme';
 import { FlexContext } from '../FlexProvider';
 import type { SharedDefaults } from '../sharedDefaults';
@@ -6,8 +6,8 @@ import type { Theme } from './theme';
 
 export type UseFlexDefaultsResult = SharedDefaults;
 
-export default function useFlexDefaults(): UseFlexDefaultsResult {
-  const context = React.use(FlexContext);
+export function useFlexDefaults(): UseFlexDefaultsResult {
+  const context = use(FlexContext);
   const theme = useTheme<Theme | undefined>();
 
   const defaultUnit = theme?.reflexy?.defaultUnit ?? context.defaultUnit;

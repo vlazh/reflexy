@@ -1,14 +1,15 @@
+/* eslint-disable react-hooks/refs */
 import { useRef } from 'react';
 import { spaceToCssValue } from '../utils';
 import type { Space } from '../Flex';
-import useFlexDefaults from './useFlexDefaults';
+import { useFlexDefaults } from './useFlexDefaults';
 
 export interface UseFlexUtilsResult {
   readonly spaceToCss: (space: Space) => string;
   readonly spaceToNumber: (space: Space) => number;
 }
 
-export default function useFlexUtils(): UseFlexUtilsResult {
+export function useFlexUtils(): UseFlexUtilsResult {
   const defaults = useFlexDefaults();
 
   const defaultsRef = useRef(defaults);

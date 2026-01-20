@@ -20,11 +20,7 @@
     "src/propsTypes.ts",
     "src/utils.ts",
     "src/sharedDefaults.ts",
-    "src/responsive/utils.ts",
-    "../web-utils/src/responsive/ViewSize.ts",
-    "../web-utils/src/responsive/getViewSizeQueryMap.ts",
-    "../web-utils/src/responsive/MediaQuery.ts",
-    "../web-utils/src/responsive/MediaQueryListener.ts"
+    "src/responsive/utils.ts"
   ],
   "exclude": []
 }

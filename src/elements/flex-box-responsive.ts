@@ -1,12 +1,12 @@
 import type { PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { ViewSize } from '@js-toolkit/web-utils/responsive/ViewSize';
 import {
   forEachBreakpoints,
   type Breakpoints,
   type BreakpointsMergeType,
   type MergeBreakpointsOptions,
 } from '../responsive/utils';
-import ViewSize from '../../../web-utils/src/responsive/ViewSize';
 import { FlexBox } from './flex-box';
 import { stringAndBooleanConverter } from './converters';
 import { MediaQueryController } from './MediaQueryController';

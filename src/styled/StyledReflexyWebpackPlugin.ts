@@ -9,7 +9,7 @@ export default class StyledReflexyWebpackPlugin extends NormalModuleReplacementP
 
     // Workaround for webpack v5.49.0+: https://github.com/webpack/webpack/issues/13957
     super(resourceRegex, (resource) => {
-      if (resource.createData && resource.createData.userRequest) {
+      if (resource.createData?.userRequest) {
         const resolvedRequest = resource.createData.userRequest;
         resource.createData.resource = resolvedRequest.replace(
           resourceRegex,

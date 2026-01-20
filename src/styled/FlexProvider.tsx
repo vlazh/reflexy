@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import { use, useMemo } from 'react';
 import ThemeProvider, { type ThemeProviderProps } from '@mui/system/ThemeProvider';
 import useTheme from '@mui/system/useTheme';
 import FlexProviderBase, { FlexContext, type FlexProviderProps } from '../FlexProvider';
@@ -9,9 +9,9 @@ import type { Theme } from './theme';
 export { type FlexProviderProps };
 
 function ReflexyThemeProvider(props: Omit<ThemeProviderProps, 'theme'>): React.JSX.Element {
-  const { defaultUnit, defaultSize, defaultSizes } = React.use(FlexContext);
+  const { defaultUnit, defaultSize, defaultSizes } = use(FlexContext);
 
-  const theme = React.useMemo(
+  const theme = useMemo(
     () => Object.freeze<Theme>({ reflexy: { defaultUnit, defaultSize, defaultSizes } }),
     [defaultSize, defaultSizes, defaultUnit]
   );

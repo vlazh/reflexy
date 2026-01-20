@@ -1,19 +1,17 @@
 import type React from 'react';
 import '@js-toolkit/utils/types';
 import { hasIn } from '@js-toolkit/utils/hasIn';
-import type Flex from './Flex';
-import type { Gap, Space, SpaceSize, SpaceUnit, SSpaceSize, USpace } from './Flex/types';
+import type {
+  FlexProps,
+  Gap,
+  OverflowProps,
+  Space,
+  SpaceSize,
+  SpaceUnit,
+  SSpaceSize,
+  USpace,
+} from './propsTypes';
 import type { SharedDefaults } from './sharedDefaults';
-
-export const REFLEXY_KEY = Symbol.for('@reflexy');
-
-export function copyInternalProps<T extends React.ComponentType<any>>(
-  source: typeof Flex,
-  target: T
-): T {
-  (target as AnyObject)[REFLEXY_KEY] = source[REFLEXY_KEY];
-  return target;
-}
 
 export function defaultClassNameTransformer(calcClassName: string, userClassName?: string): string {
   if (calcClassName && userClassName) return `${calcClassName} ${userClassName}`;
@@ -25,7 +23,7 @@ export function defaultStyleTransformer(
   userStyle?: React.CSSProperties
 ): React.CSSProperties | undefined {
   if (userStyle && calcStyle) return { ...calcStyle, ...userStyle };
-  return userStyle || calcStyle;
+  return userStyle ?? calcStyle;
 }
 
 export function getCssValue(space: number, unit: SpaceUnit): string {
@@ -35,7 +33,7 @@ export function getCssValue(space: number, unit: SpaceUnit): string {
 }
 
 export function getAbsSpaceSize(size: SpaceSize | SSpaceSize): SpaceSize {
-  if (size[0] === '-') return size.substring(1) as SpaceSize;
+  if (size.startsWith('-')) return size.substring(1) as SpaceSize;
   return size as SpaceSize;
 }
 
@@ -81,7 +79,7 @@ export function spaceToCssValue(
     ? [sizeMultipliersOrDefaults.defaultSizes, sizeMultipliersOrDefaults.defaultUnit]
     : [sizeMultipliersOrDefaults, unit0!];
   if (typeof size === 'string') {
-    if (size[0] === '-')
+    if (size.startsWith('-'))
       return `-${getCssValue(sizeMultipliers[size.substring(1) as SpaceSize], unit)}`;
     return getCssValue(sizeMultipliers[size as SpaceSize], unit);
   }
@@ -168,4 +166,18 @@ export function gapToCssValue(
     }
   }
   return spaceToCssValue(gap as USpace, sizeMultipliersOrDefaults, unit);
+}
+
+export function fillToCssValue(propValue: FlexProps['vfill']): string | undefined {
+  return typeof propValue === 'number'
+    ? `${Math.min(propValue, 1) * 100}%`
+    : (propValue && '100%') || undefined;
+}
+
+export function scrollableToCssValue(
+  scrollableValue: OverflowProps['scrollable']
+): OverflowProps['overflow'] {
+  return typeof scrollableValue === 'string'
+    ? scrollableValue
+    : (scrollableValue === true && 'auto') || (scrollableValue === false && 'hidden') || undefined;
 }

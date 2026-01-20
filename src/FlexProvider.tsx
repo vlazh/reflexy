@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import { createContext, useMemo } from 'react';
 import '@js-toolkit/utils/types';
 import sharedDefaults, { type SharedDefaults } from './sharedDefaults';
 
 export type FlexProviderProps = OptionalToUndefined<Partial<SharedDefaults>>;
 
-export const FlexContext = React.createContext<SharedDefaults>(sharedDefaults);
+export const FlexContext = createContext<SharedDefaults>(sharedDefaults);
 
 export default function FlexProvider({
   defaultUnit = sharedDefaults.defaultUnit,

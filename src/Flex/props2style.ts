@@ -1,7 +1,6 @@
 import type React from 'react';
-import '@js-toolkit/utils/types';
+import type { SpaceProps, FlexProps, SpaceSize } from '../propsTypes';
 import { gapToCssValue, getSpace, spaceToCssValue } from '../utils';
-import type { SpaceProps, FlexProps, SpaceSize } from './types';
 
 export default function props2style(
   {
@@ -59,7 +58,7 @@ export default function props2style(
 ): React.CSSProperties {
   return Object.entries({
     flexBasis: typeof basis === 'number' && basis !== 0 ? basis : undefined,
-    order: order != null ? order : undefined,
+    order: order ?? undefined,
     grow: grow != null && +grow > 24 ? grow : undefined,
     shrink: shrink != null && +shrink > 24 ? shrink : undefined,
     width: typeof hfill === 'number' ? `${Math.min(hfill, 1) * 100}%` : undefined,

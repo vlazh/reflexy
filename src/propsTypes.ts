@@ -1,5 +1,5 @@
 import type { Globals as Globals0, Property, DataType } from 'csstype';
-import type { ComponentProps, GetComponentProps } from '../types';
+import type { ComponentProps, GetComponentProps } from './types';
 
 type Globals = ExtractStrict<Globals0, 'inherit' | 'initial' | 'unset'>;
 
@@ -37,7 +37,7 @@ type Display = ExtractStrict<
   'initial' | 'block' | 'inline-block' | 'inline' | 'flex' | 'inline-flex' | 'none'
 >;
 
-type Column = number | string | boolean;
+type Column = /* string | */ number | boolean;
 
 export interface FlexProps {
   /** Defaults to `flex`. */
@@ -46,11 +46,11 @@ export interface FlexProps {
   flex?: boolean | undefined;
   /** @deprecated Use `display` instead. `display` takes priority. Sets `display` to `inline-flex`. */
   inline?: boolean | undefined;
-  /** Sets `flow-direction` to `row`. */
+  /** Sets `flex-direction` to `row`. */
   row?: boolean | undefined;
-  /** Sets `flow-direction` to `column`. Takes a precedence over `row`. */
+  /** Sets `flex-direction` to `column`. Takes a precedence over `row`. */
   column?: boolean | undefined;
-  /** Used with `row` or `col`. Sets `flow-direction` to `column-reverse` or `row-reverse`. */
+  /** Used with `row` or `col`. Sets `flex-direction` to `column-reverse` or `row-reverse`. */
   reverse?: boolean | undefined;
   /** Sets `flex-wrap` to corresponding value. Also accepts boolean value: `true` equals to `wrap`, `false` equals to `nowrap`. */
   wrap?: FlexWrap | boolean | undefined;

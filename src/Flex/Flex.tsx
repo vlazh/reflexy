@@ -1,20 +1,20 @@
 import React, { createElement, use, useMemo } from 'react';
 import '@js-toolkit/utils/types';
 import { FlexContext } from '../FlexProvider';
-import {
-  defaultClassNameTransformer,
-  defaultStyleTransformer,
-  getSpaceSizeMultiplier,
-  REFLEXY_KEY,
-} from '../utils';
-import props2className from './props2className';
-import props2style from './props2style';
 import type {
   ClassNameTransformer,
   DefaultComponentType,
   FlexAllProps,
   StyleTransformer,
-} from './types';
+} from '../propsTypes';
+import {
+  defaultClassNameTransformer,
+  defaultStyleTransformer,
+  getSpaceSizeMultiplier,
+} from '../utils';
+import { REFLEXY_KEY } from '../copyInternalProps';
+import props2className from './props2className';
+import props2style from './props2style';
 
 /**
  * Flexbox container.

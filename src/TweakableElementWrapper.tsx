@@ -1,5 +1,5 @@
 import React, { Children, cloneElement } from 'react';
-import type { Styleable } from './Flex';
+import type { Styleable } from './propsTypes';
 import { defaultClassNameTransformer, defaultStyleTransformer } from './utils';
 
 export interface TweakableElementWrapperProps extends Styleable {

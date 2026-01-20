@@ -1,6 +1,9 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
-import MediaQuery, { type MediaQueryEventHandler } from '../../../web-utils/src/responsive/MediaQuery';
-import type ViewSize from '../../../web-utils/src/responsive/ViewSize';
+import type { ViewSize } from '@js-toolkit/web-utils/responsive/ViewSize';
+import {
+  MediaQuery,
+  type MediaQueryEventHandler,
+} from '@js-toolkit/web-utils/responsive/MediaQuery';
 
 export class MediaQueryController implements ReactiveController {
   private changeHandler: MediaQueryEventHandler = ({ matches }) => {

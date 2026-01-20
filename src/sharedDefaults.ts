@@ -1,4 +1,4 @@
-import type { SpaceSize, SpaceUnit } from './Flex';
+import type { SpaceSize, SpaceUnit } from './propsTypes';
 
 const sharedDefaults = {
   /** Default measure of space. Defaults to `rem`. */

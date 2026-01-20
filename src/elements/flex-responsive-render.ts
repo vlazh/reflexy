@@ -1,12 +1,12 @@
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import type { ViewSize } from '@js-toolkit/web-utils/responsive/ViewSize';
 import {
   getLastMergedBreakpointsValue,
   type Breakpoints,
   type BreakpointsMergeType,
   type MergeBreakpointsOptions,
 } from '../responsive/utils';
-import type ViewSize from '../../../web-utils/src/responsive/ViewSize';
 import { stringAndBooleanConverter } from './converters';
 import { MediaQueryController } from './MediaQueryController';
 
