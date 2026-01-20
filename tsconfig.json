@@ -10,6 +10,6 @@
     "diagnostics": true
   },
   "include": ["src"],
-  "exclude": ["src/**/*WebpackPlugin.ts"],
-  "references": [{ "path": "./tsconfig.plugins.json" }]
+  "exclude": ["src/**/*WebpackPlugin.ts", "src/elements"],
+  "references": [{ "path": "./tsconfig.plugins.json" }, { "path": "./tsconfig.elements.json" }]
 }

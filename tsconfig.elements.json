@@ -1,0 +1,30 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "src",
+    "tsBuildInfoFile": "dist/elements.tsbuildinfo",
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "isolatedModules": true
+  },
+  "plugins": [
+    {
+      "name": "ts-lit-plugin",
+      "strict": true
+    }
+  ],
+  "include": [
+    "src/elements",
+    "src/types.ts",
+    "src/propsTypes.ts",
+    "src/utils.ts",
+    "src/sharedDefaults.ts",
+    "src/responsive/utils.ts",
+    "../web-utils/src/responsive/ViewSize.ts",
+    "../web-utils/src/responsive/getViewSizeQueryMap.ts",
+    "../web-utils/src/responsive/MediaQuery.ts",
+    "../web-utils/src/responsive/MediaQueryListener.ts"
+  ],
+  "exclude": []
+}
