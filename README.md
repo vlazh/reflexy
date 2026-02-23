@@ -1,35 +1,190 @@
-# Reflexy [![npm package](https://img.shields.io/npm/v/reflexy.svg?style=flat-square)](https://www.npmjs.org/package/reflexy)
+# Reflexy
 
-**Reflexy** is react components library for flexbox and responsive layouts:
+[![npm package](https://img.shields.io/npm/v/reflexy.svg?style=flat-square)](https://www.npmjs.org/package/reflexy)
+[![license](https://img.shields.io/npm/l/reflexy.svg?style=flat-square)](https://www.npmjs.org/package/reflexy)
 
-- **[Flex](#Flex)** - flexbox layout with paddings and margins support.
-- **[styled/Flex](#Flex)** - styled version of `Flex` powered by [@mui](https://mui.com/system/getting-started/).
+React component library for flexbox and responsive layouts. Supports paddings, margins, spacing sizes, responsive breakpoints, and styled (MUI) versions.
 
-- **`styled/StyledReflexyWebpackPlugin`** - webpack plugin for replace regular imports of `Flex` with `styled/Flex`. Just import `Flex` like `import { Flex, FlexWithRef } from 'reflexy';` or `import { ResponsiveFlex } from 'reflexy/responsive';` and `styled/Flex` will be used instead.
-- **`FlexWithRef`** - `Flex` with forwarded ref.
-- **`TweakableElementWrapper`** - Wrapper for react element in order to use it with `component` prop of `Flex`.
-- **`responsive/Responsive`** - container with breakpoints.
-- **`responsive/ResponsiveRender`** - conditional render by breakpoints.
-- **[responsive/ResponsiveFlex](#ResponsiveFlex)** - Like `Flex` but with breakpoints.
-- **`responsive/useMediaQuery`** - React hook for media queries.
-- **`responsive/MediaQuery`** - utils for work with media queries and breakpoints.
+## Install
 
-## <a id="mq" />Custom media queries
+```bash
+yarn add react reflexy
+# or
+npm install react reflexy
+```
 
-Used in CSS.
+> If you use the styled version, also install `@mui/system`.
 
-| Name    | Value                                                         |
-| :------ | :------------------------------------------------------------ |
-| `--xxs` | `only screen and (max-width: 479px)`                          |
-| `--xs`  | `only screen and (min-width: 480px) and (max-width: 767px)`   |
-| `--s`   | `only screen and (min-width: 768px) and (max-width: 991px)`   |
-| `--m`   | `only screen and (min-width: 992px) and (max-width: 1279px)`  |
-| `--l`   | `only screen and (min-width: 1280px) and (max-width: 1919px)` |
-| `--xl`  | `only screen and (min-width: 1920px) and (max-width: 2559px)` |
-| `--xxl` | `only screen and (min-width: 2560px)`                         |
+## Components
 
-Custom media queries can be used with [postcss-custom-media](https://github.com/postcss/postcss-custom-media#importfrom).
-Example of configuration with [preset-env](https://preset-env.cssdb.org/):
+| Component | Import | Description |
+|-----------|--------|-------------|
+| **[Flex](#flex)** | `reflexy` | Flexbox layout with paddings and margins |
+| **[styled/Flex](#styledflex)** | `reflexy/styled` | Styled version powered by [@mui/system](https://mui.com/system/getting-started/) |
+| **FlexWithRef** | `reflexy` | `Flex` with forwarded ref |
+| **[FlexProvider](#flexprovider)** | `reflexy` | Context provider for Flex defaults |
+| **TweakableElementWrapper** | `reflexy` | Wrapper to use any element with `component` prop |
+| **[ResponsiveFlex](#responsiveflex)** | `reflexy/responsive` | Flex with responsive breakpoints |
+| **[Responsive](#responsive)** | `reflexy/responsive` | Generic container with breakpoint props |
+| **[ResponsiveRender](#responsiverender)** | `reflexy/responsive` | Conditional render by breakpoints |
+| **useMediaQuery** | `reflexy/responsive` | React hook for media queries |
+| **MediaQuery** | `reflexy/responsive` | Static media query utilities |
+
+### Web Components (Lit)
+
+| Element | Import | Description |
+|---------|--------|-------------|
+| **[`<flex-box>`](#flex-box)** | `reflexy/elements` | Lit custom element with the same flex props as React `Flex` |
+| **[`<flex-box-responsive>`](#flex-box-responsive)** | `reflexy/elements` | Responsive version with per-breakpoint classes |
+| **[`<flex-responsive-render>`](#flex-responsive-render)** | `reflexy/elements` | Conditional render by viewport breakpoint |
+
+### Webpack Plugin
+
+`styled/StyledReflexyWebpackPlugin` replaces regular `Flex` imports with `styled/Flex` at build time, so you can write `import { Flex } from 'reflexy'` and get the styled version automatically.
+
+## <a id="flex" />Flex
+
+### Usage
+
+```tsx
+import { Flex, TweakableElementWrapper } from 'reflexy';
+
+<Flex row justifyContent="center">
+  <span>Left</span>
+  <span>Right</span>
+</Flex>
+
+<Flex column center p>
+  <h1>Centered content</h1>
+</Flex>
+
+<Flex row component="nav" ml pb>
+  <a href="/">Home</a>
+  <a href="/about">About</a>
+</Flex>
+
+<Flex fill column grow>
+  <Flex shrinkByContent>Shrinks to fit content</Flex>
+  <Flex grow>Takes remaining space</Flex>
+</Flex>
+
+<Flex row component={TweakableElementWrapper} element={<button type="button" />}>
+  Click me
+</Flex>
+```
+
+### Props
+
+Default style is just `display: flex`.
+
+| Prop | Type | Description |
+| :--- | :--- | :---------- |
+| `flex?` | `boolean` | Sets `display` to `flex`. |
+| `inline?` | `boolean` | Sets `display` to `inline-flex`. |
+| `row?` | `boolean` | Sets `flex-direction` to `row`. |
+| `column?` | `boolean` | Sets `flex-direction` to `column`. Takes precedence over `row`. |
+| `reverse?` | `boolean` | Used with `row` or `column`. Sets `flex-direction` to `*-reverse`. |
+| `wrap?` | `boolean \| 'nowrap' \| 'wrap' \| 'wrap-reverse'` | Sets `flex-wrap`. `true` = `wrap`, `false` = `nowrap`. |
+| `alignContent?` | `'center' \| 'flex-start' \| 'flex-end' \| 'space-between' \| 'space-around' \| 'space-evenly' \| 'stretch'` | Sets `align-content`. |
+| `alignItems?` | `'center' \| 'flex-start' \| 'flex-end' \| 'stretch' \| 'baseline'` | Sets `align-items`. |
+| `alignSelf?` | `'center' \| 'flex-start' \| 'flex-end' \| 'stretch' \| 'baseline' \| 'auto'` | Sets `align-self`. |
+| `justifyContent?` | `'center' \| 'flex-start' \| 'flex-end' \| 'space-between' \| 'space-around' \| 'space-evenly'` | Sets `justify-content`. |
+| `center?` | `boolean` | Sets `justifyContent` and `alignItems` to `center`. Individual values take precedence. |
+| `basis?` | `'auto' \| 'content' \| number` | Sets `flex-basis`. |
+| `grow?` | `0..24 \| boolean` | Sets `flex-grow`. `true` = `1`, `false` = `0`. |
+| `shrink?` | `0..24 \| boolean` | Sets `flex-shrink`. `true` = `1`, `false` = `0`. |
+| `order?` | `number` | Sets `order`. |
+| `hfill?` | `boolean \| number` | Stretch horizontally or set width as fraction (0.0–1.0). |
+| `vfill?` | `boolean \| number` | Stretch vertically or set height as fraction (0.0–1.0). |
+| `fill?` | `boolean` | Stretch both horizontally and vertically. |
+| `shrinkByContent?` | `boolean` | Sets `min-width: 0` and `min-height: 0` so flex items can shrink past content size. Default `true`. |
+| `shrinkWidth?` | `boolean` | Sets `min-width: 0`. Takes precedence over `shrinkByContent`. |
+| `shrinkHeight?` | `boolean` | Sets `min-height: 0`. Takes precedence over `shrinkByContent`. |
+| `component?` | `React.ElementType` | Custom component to render. Must accept `className` and `style`. |
+| `className?` | `string` | CSS class name. |
+| `style?` | `React.CSSProperties` | Inline styles. |
+
+#### Spacing props
+
+| Prop | Description |
+| :--- | :---------- |
+| `unit?` | Measure unit for spacing. Default: `rem`. |
+| `mSize?` / `pSize?` | Size preset: `'xs' \| 's' \| 'm' \| 'l' \| 'xl' \| 'xxl' \| number` |
+| `m?` | `margin` (uses `mSize`) |
+| `mt?`, `mr?`, `mb?`, `ml?` | Individual margins |
+| `mx?`, `my?` | Horizontal / vertical margins |
+| `p?` | `padding` (uses `pSize`) |
+| `pt?`, `pr?`, `pb?`, `pl?` | Individual paddings |
+| `px?`, `py?` | Horizontal / vertical paddings |
+
+All spacing props accept `boolean` (uses size preset) or a specific size value.
+
+### Flex Statics
+
+| Property | Type | Default |
+| :--- | :--- | :--- |
+| `defaultUnit` | `string` | `'rem'` |
+| `defaultSize` | `'xs' \| 's' \| 'm' \| 'l' \| 'xl' \| 'xxl'` | `'m'` |
+| `defaultSizes` | `Record<Size, number>` | `{ xs: 0.25, s: 0.5, m: 1, l: 1.5, xl: 2, xxl: 2.5 }` |
+
+## <a id="flexprovider" />FlexProvider
+
+Provides default spacing values (`unit`, `size`, `sizes`) to all nested `Flex` components via context.
+
+```tsx
+import { Flex, FlexProvider } from 'reflexy';
+
+<FlexProvider defaultUnit="px" defaultSize="l" defaultSizes={{ xs: 4, s: 8, m: 16, l: 24, xl: 32, xxl: 48 }}>
+  <Flex p>16px padding (size "m" = 16)</Flex>
+  <Flex p pSize="l">24px padding</Flex>
+</FlexProvider>
+```
+
+The styled version (`reflexy/styled`) also reads defaults from the MUI theme (`theme.reflexy`).
+
+## <a id="styledflex" />styled/Flex
+
+CSS-in-JS version of `Flex` powered by `@mui/system/styled`. Supports `sx` prop and MUI theme integration.
+
+```tsx
+import { Flex } from 'reflexy/styled';
+
+<Flex row center p sx={{ backgroundColor: 'primary.main', borderRadius: 2 }}>
+  Styled content
+</Flex>
+```
+
+No CSS loader setup is needed for the styled version.
+
+## CSS Loader Setup
+
+The regular (non-styled) `Flex` uses its own CSS files, so you need a loader for CSS in `node_modules`. With webpack and [css-loader](https://github.com/webpack-contrib/css-loader):
+
+```js
+{
+  test: /\.css$/,
+  include: /reflexy/,
+  use: [
+    { loader: 'css-loader', options: { modules: true } },
+  ],
+}
+```
+
+## <a id="mq" />Custom Media Queries
+
+Built-in breakpoints for CSS:
+
+| Name | Value |
+| :--- | :---- |
+| `--xxs` | `(max-width: 479px)` |
+| `--xs` | `(min-width: 480px) and (max-width: 767px)` |
+| `--s` | `(min-width: 768px) and (max-width: 991px)` |
+| `--m` | `(min-width: 992px) and (max-width: 1279px)` |
+| `--l` | `(min-width: 1280px) and (max-width: 1919px)` |
+| `--xl` | `(min-width: 1920px) and (max-width: 2559px)` |
+| `--xxl` | `(min-width: 2560px)` |
+
+Use with [postcss-custom-media](https://github.com/postcss/postcss-custom-media):
 
 ```js
 const exportMediaQueries = require('reflexy/responsive/exportMediaQueries');
@@ -47,153 +202,143 @@ module.exports = {
 };
 ```
 
-## Installation
+## <a id="responsiveflex" />ResponsiveFlex
 
-```sh
-yarn add react reflexy
-# or
-npm install --save react reflexy
-```
+`Flex` with responsive breakpoints. Props from `breakpoints` override the default props at the matching viewport size.
 
-> If you use styled version you should also install `@mui` packages.
-
-**Reflexy** has own css files so you need provide loader for css files placed in node_modules folder (only if you do not use styled version). With webpack it could be [css-loader](https://github.com/webpack-contrib/css-loader):
-
-```js
-{
-  test: /\.css$/,
-  include: path.join(__dirname, 'node_modules'),
-  // or
-  include: /reflexy/,
-  use: [
-    // ...
-    { loader: 'css-loader', options: { modules: true } }, // enabled css-modules is necessary
-    // ...
-  ],
-},
-```
-
-## <a id="Flex" />Flex
-
-### Usage
-
-```jsx
-import { Flex, TweakableElementWrapper } from 'reflexy';
-
-<Flex row justifyContent="center">
-  ...
-</Flex>
-
-<Flex row justifyContent="center" component={TweakableElementWrapper} element={<button />}>
-  ...
-</Flex>
-
-<Flex row justifyContent="center" component="button" onClick={...}>
-  ...
-</Flex>
-
-<Flex row justifyContent="center" ref={ref}>
-  ...
-</Flex>
-
-<Flex row justifyContent="center" component={CustomComponent} componentProp1={...} componentProp2={...}>
-  ...
-</Flex>
-
-<Flex ml pb>
-  ...
-</Flex>;
-```
-
-### Props
-
-Default style is just `display: flex`.
-
-| Prop               | Type                                                                                                                                              | Description                                                                                                                                                                                                                                                                                                                                |
-| :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `flex?`            | `boolean`                                                                                                                                         | Sets `display` to `flex`.                                                                                                                                                                                                                                                                                                                  |
-| `inline?`          | `boolean`                                                                                                                                         | Sets `display` to `inline-flex`.                                                                                                                                                                                                                                                                                                           |
-| `row?`             | `boolean`                                                                                                                                         | Sets `flow-direction` to `row`.                                                                                                                                                                                                                                                                                                            |
-| `column?`          | `boolean`                                                                                                                                         | Sets `flow-direction` to `column`. Takes a precedence over `row`.                                                                                                                                                                                                                                                                          |
-| `reverse?`         | `boolean`                                                                                                                                         | Used with `row` or `col`. Sets `flow-direction` to `column-reverse` or `row-reverse`.                                                                                                                                                                                                                                                      |
-| `wrap?`            | `boolean \| 'inherit' \| 'initial' \| 'unset' \| 'nowrap' \| 'wrap' \| 'wrap-reverse'`                                                            | Sets `flex-wrap` to corresponding value. Also accepts boolean value: `true` equals to `wrap`, `false` equals to `nowrap`.                                                                                                                                                                                                                  |
-| `alignContent?`    | `'inherit' \| 'initial' \| 'unset' \| 'center' \| 'flex-start' \| 'flex-end' \| 'space-between' \| 'space-around' \| 'space-evenly' \| 'stretch'` | Sets `align-content` to corresponding value.                                                                                                                                                                                                                                                                                               |
-| `alignItems?`      | `'inherit' \| 'initial' \| 'unset' \| 'center' \| 'flex-start' \| 'flex-end' \| 'stretch' \| 'baseline'`                                          | Sets `align-items` to corresponding value.                                                                                                                                                                                                                                                                                                 |
-| `alignSelf?`       | `'inherit' \| 'initial' \| 'unset' \| 'center' \| 'flex-start' \| 'flex-end' \| 'stretch' \| 'baseline' \| 'auto' \| 'initial' \| 'inherit'`      | Sets `align-self` to corresponding value.                                                                                                                                                                                                                                                                                                  |
-| `justifyContent?`  | `'inherit' \| 'initial' \| 'unset' \| 'center' \| 'flex-start' \| 'flex-end' \| 'space-between' \| 'space-around' \| 'space-evenly'`              | Sets `justify-content` to corresponding value.                                                                                                                                                                                                                                                                                             |
-| `center?`          | `boolean`                                                                                                                                         | Sets `justifyContent` and `alignItems` to `center`. `justifyContent` and `alignItems` take a precedence over `center`.                                                                                                                                                                                                                     |
-| `basis?`           | `'inherit' \| 'initial' \| 'unset' \| 'auto' \| 'content' \| 'number'`                                                                            | Sets `flex-basis` to corresponding value.                                                                                                                                                                                                                                                                                                  |
-| `grow?`            | `0..24 \| boolean`                                                                                                                                | Sets `flex-grow` to corresponding value. `true` is equals to `1`, `false` is equals to `0`.                                                                                                                                                                                                                                                |
-| `shrink?`          | `0..24 \| boolean`                                                                                                                                | Sets `flex-shrink` to corresponding value. `true` is equals to `1`, `false` is equals to `0`.                                                                                                                                                                                                                                              |
-| `order?`           | `number`                                                                                                                                          | Sets `order` to corresponding value.                                                                                                                                                                                                                                                                                                       |
-| `hfill?`           | `boolean \| number in range 0.0 to 1.0 inclusive`                                                                                                 | Stretch by horizontal or sets width in percentage (numbers in range 0.0 to 1.0 inclusive).                                                                                                                                                                                                                                                 |
-| `vfill?`           | `boolean \| number in range 0.0 to 1.0 inclusive`                                                                                                 | Stretch by vertical or sets height in percentage (numbers in range 0.0 to 1.0 inclusive).                                                                                                                                                                                                                                                  |
-| `fill?`            | `boolean`                                                                                                                                         | Stretch by vertical and horizontal.                                                                                                                                                                                                                                                                                                        |
-| `shrinkByContent?` | `boolean`                                                                                                                                         | Sets `min-width: 0` and `min-height: 0`. By default, a flex item cannot be smaller than the size of its content. The initial setting on flex items is `min-width: auto` and `min-height: auto`. One way to enable flex items to shrink past their content is to set a flex item to `min-width: 0` or `min-height: 0`.<br>`true` by default |
-| `shrinkWidth?`     | `boolean`                                                                                                                                         | Sets `min-width` to `0`. Takes a precedence over `shrinkByContent`.                                                                                                                                                                                                                                                                        |
-| `shrinkHeight?`    | `boolean`                                                                                                                                         | Sets `min-height` to `0`. Takes a precedence over `shrinkByContent`.                                                                                                                                                                                                                                                                       |
-| `className?`       | `string`                                                                                                                                          | CSS class name.                                                                                                                                                                                                                                                                                                                            |
-| `style?`           | `React.CSSProperties`                                                                                                                             | Inline styles.                                                                                                                                                                                                                                                                                                                             |
-| `component?`       | `React.ElementType<P>`                                                                                                                            | Sets custom react component as a container. Component must accept className and style through props.                                                                                                                                                                                                                                       |
-| `unit?`            | `string`                                                                                                                                          | Measure unit of space                                                                                                                                                                                                                                                                                                                      |
-| `mSize?`           | `'xs' \| 's' \| 'm' \| 'l' \| 'xl' \| 'xxl' \| number`                                                                                            | Size of `margin`                                                                                                                                                                                                                                                                                                                           |
-| `m?`               | `typeof mSize \| boolean`                                                                                                                         | `margin`. Scaling value.                                                                                                                                                                                                                                                                                                                   |
-| `mt?`              | `typeof mSize \| boolean`                                                                                                                         | `margin-top`                                                                                                                                                                                                                                                                                                                               |
-| `mr?`              | `typeof mSize \| boolean`                                                                                                                         | `margin-right`                                                                                                                                                                                                                                                                                                                             |
-| `mb?`              | `typeof mSize \| boolean`                                                                                                                         | `margin-bottom`                                                                                                                                                                                                                                                                                                                            |
-| `ml?`              | `typeof mSize \| boolean`                                                                                                                         | `margin-left`                                                                                                                                                                                                                                                                                                                              |
-| `mx?`              | `typeof mSize \| boolean`                                                                                                                         | `margin` by x axis: `margin-left` & `margin-right`                                                                                                                                                                                                                                                                                         |
-| `my?`              | `typeof mSize \| boolean`                                                                                                                         | `margin` by y axis: `margin-top` & `margin-bottom`                                                                                                                                                                                                                                                                                         |
-| `pSize?`           | `'xs' \| 's' \| 'm' \| 'l' \| 'xl' \| 'xxl' \| number`                                                                                            | Size of `padding`                                                                                                                                                                                                                                                                                                                          |
-| `p?`               | `typeof pSize \| boolean`                                                                                                                         | `padding`. Scaling value.                                                                                                                                                                                                                                                                                                                  |
-| `pt?`              | `typeof pSize \| boolean`                                                                                                                         | `padding-top`                                                                                                                                                                                                                                                                                                                              |
-| `pr?`              | `typeof pSize \| boolean`                                                                                                                         | `padding-right`                                                                                                                                                                                                                                                                                                                            |
-| `pb?`              | `typeof pSize \| boolean`                                                                                                                         | `padding-bottom`                                                                                                                                                                                                                                                                                                                           |
-| `pl?`              | `typeof pSize \| boolean`                                                                                                                         | `padding-left`                                                                                                                                                                                                                                                                                                                             |
-| `px?`              | `typeof pSize \| boolean`                                                                                                                         | `padding` by x axis: `padding-left` & `padding-right`                                                                                                                                                                                                                                                                                      |
-| `py?`              | `typeof pSize \| boolean`                                                                                                                         | `padding` by y axis: `padding-top` & `padding-bottom`                                                                                                                                                                                                                                                                                      |
-
-### Flex Statics
-
-| Prop           | Type                                                         | Description                                                                  |
-| :------------- | :----------------------------------------------------------- | :--------------------------------------------------------------------------- |
-| `defaultUnit`  | `string`                                                     | Measure unit of space. Default: `rem`.                                       |
-| `defaultSize`  | `'xs' \| 's' \| 'm' \| 'l' \| 'xl' \| 'xxl'`                 | Default: `'m'`.                                                              |
-| `defaultSizes` | `Record<'xs' \| 's' \| 'm' \| 'l' \| 'xl' \| 'xxl', number>` | Space sizes. Default: `{ xs: 0.25, s: 0.5, m: 1, l: 1.5, xl: 2, xxl: 2.5 }`. |
-
-## <a id="ResponsiveFlex" />ResponsiveFlex
-
-### Usage
-
-```jsx
+```tsx
 import { ResponsiveFlex } from 'reflexy/responsive';
 
-// `breakpoints` values will override default values for `row` and `order`.
 <ResponsiveFlex
   row
-  order={1}
+  justifyContent="space-between"
   breakpoints={{
-    l: { column: true, order: 2 },
-    xxs: { alignItems: 'center', order: 4 },
+    s: { column: true, alignItems: 'stretch' },
+    xxs: { column: true, center: true },
   }}
 >
-  ...
-</ResponsiveFlex>;
+  <div>Section A</div>
+  <div>Section B</div>
+</ResponsiveFlex>
 ```
 
 ### Props
 
-All props of [Flex](#Flex) and:
+All props of [Flex](#flex) plus:
 
-| Prop          | Type                                         | Description                                                                                                                                                                                              |
-| :------------ | :------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `merge?`      | `boolean \| BreakpointsMergeType`            | `down` - merge from top to down until current view size. `top` - merge from down to top until current view size. `true` treats as `down`. `false` - no merge, use only exact breakpoint. Default `true`. |
-| `breakpoints` | `{ [P in ViewSize.Keys]?: FlexAllProps<C> }` | Props per breakpoint.                                                                                                                                                                                    |
+| Prop | Type | Description |
+| :--- | :--- | :---------- |
+| `merge?` | `boolean \| 'up' \| 'down'` | How to merge breakpoint props. `'down'` (default): merge from largest to current. `'up'`: merge from smallest to current. `false`: exact match only. |
+| `breakpoints` | `{ [P in ViewSize]?: FlexProps }` | Props per breakpoint. |
 
-### ViewSize
+ViewSize keys: `xxs`, `xs`, `s`, `m`, `l`, `xl`, `xxl`.
 
-Same as [Custom media queries](#mq) but names without prefix `--`.
+## <a id="responsive" />Responsive
+
+Generic container that applies different props at different breakpoints — not limited to Flex props.
+
+```tsx
+import { Responsive } from 'reflexy/responsive';
+
+<Responsive
+  component={MyCard}
+  variant="horizontal"
+  breakpoints={{
+    s: { variant: 'vertical' },
+    xxs: { variant: 'compact' },
+  }}
+/>
+```
+
+## <a id="responsiverender" />ResponsiveRender
+
+Conditionally render children based on viewport size.
+
+```tsx
+import { ResponsiveRender } from 'reflexy/responsive';
+
+<ResponsiveRender breakpoints={{ xxs: true, xs: true }}>
+  <MobileNavigation />
+</ResponsiveRender>
+```
+
+## Web Components (Lit)
+
+Framework-agnostic [Lit](https://lit.dev/) custom elements with the same flexbox capabilities as the React components. Configurable via CSS custom properties and HTML attributes.
+
+```typescript
+import 'reflexy/elements';
+```
+
+### <a id="flex-box" />`<flex-box>`
+
+Custom element with the same flex, spacing, gap, overflow, and scrollable props as React `Flex`. All props are reflected as HTML attributes (kebab-case).
+
+```html
+<flex-box row justify-content="center" gap p>
+  <span>Left</span>
+  <span>Right</span>
+</flex-box>
+
+<flex-box column center p="l">
+  <h1>Centered</h1>
+</flex-box>
+
+<flex-box as="nav" row m-size="s" ml pb>
+  <a href="/">Home</a>
+  <a href="/about">About</a>
+</flex-box>
+```
+
+Defaults are configurable via CSS custom properties:
+
+```css
+flex-box {
+  --default-unit: px;
+  --default-size: m;
+  --default-size-xs: 4;
+  --default-size-s: 8;
+  --default-size-m: 16;
+  --default-size-l: 24;
+  --default-size-xl: 32;
+  --default-size-xxl: 48;
+}
+```
+
+### <a id="flex-box-responsive" />`<flex-box-responsive>`
+
+Extends `<flex-box>` with responsive breakpoints for CSS classes. Apply different classes at different viewport sizes.
+
+```html
+<flex-box-responsive row class-xxs="compact" class-s="medium" class-l="wide">
+  Responsive content
+</flex-box-responsive>
+```
+
+| Attribute | Description |
+|-----------|-------------|
+| `merge` | Merge strategy: `true` (default, same as `down`), `false`, `up`, `down` |
+| `class-xxs` … `class-xxl` | CSS class to apply at the given breakpoint |
+
+### <a id="flex-responsive-render" />`<flex-responsive-render>`
+
+Conditionally renders its slot content based on the current viewport size.
+
+```html
+<flex-responsive-render xxs xs>
+  <nav>Mobile navigation</nav>
+</flex-responsive-render>
+```
+
+| Attribute | Description |
+|-----------|-------------|
+| `merge` | Merge strategy (same as above) |
+| `xxs` … `xxl` | Boolean — show content at this breakpoint |
 
 ## License
 
 [MIT](https://opensource.org/licenses/mit-license.php)
+
+## Repository
+
+[https://github.com/vlazh/reflexy](https://github.com/vlazh/reflexy)
